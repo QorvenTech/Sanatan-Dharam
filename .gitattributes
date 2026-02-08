@@ -1,0 +1,2 @@
+*.pdf !text !filter !merge !diff
+7_UttarKand.pdf !text !filter !merge !diff
