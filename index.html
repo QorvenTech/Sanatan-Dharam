@@ -4,687 +4,569 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanatan Dharm - Sacred Texts & Religious Resources</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --saffron: #ff6b35; --saffron-light: #ff8c42;
+            --brown: #8b4513; --cream: #fff5e6; --gold: #ffd700; --text: #4a2c0f;
         }
+        body { font-family: 'Crimson Pro', Georgia, serif; background: linear-gradient(135deg, #fff5e6 0%, #ffe4cc 100%); color: var(--text); }
 
-        body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #fff5e6 0%, #ffe4cc 100%);
-            color: #4a2c0f;
-        }
+        /* HEADER */
+        header { background: linear-gradient(135deg, #ff6b35 0%, #c94a00 100%); color: white; padding: 1.2rem 1.5rem 1.8rem; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        .header-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .lang-btn { background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.5); padding: 0.45rem 1rem; border-radius: 25px; cursor: pointer; font-size: 0.88rem; font-weight: bold; transition: all 0.3s; white-space: nowrap; font-family: inherit; }
+        .lang-btn:hover { background: rgba(255,255,255,0.35); }
+        .btn-login-header { background: white; color: var(--brown); border: none; padding: 0.45rem 1.1rem; border-radius: 25px; cursor: pointer; font-size: 0.88rem; font-weight: 700; transition: all 0.3s; font-family: inherit; }
+        .btn-login-header:hover { background: var(--gold); transform: scale(1.04); }
+        .user-pill { display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.18); padding: 0.35rem 0.9rem 0.35rem 0.35rem; border-radius: 25px; cursor: pointer; transition: background 0.3s; position: relative; }
+        .user-pill:hover { background: rgba(255,255,255,0.3); }
+        .user-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--saffron)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; color: white; flex-shrink: 0; }
+        .user-name { color: white; font-size: 0.88rem; font-weight: 600; }
+        .user-dropdown { position: absolute; top: calc(100% + 8px); right: 0; background: white; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.18); min-width: 140px; overflow: hidden; display: none; z-index: 2000; }
+        .user-dropdown.open { display: block; animation: dropDown 0.2s ease; }
+        @keyframes dropDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+        .user-dropdown a { display: block; padding: 0.75rem 1.1rem; color: var(--text) !important; font-size: 0.88rem; border-bottom: 1px solid #f5f5f5; transition: background 0.2s; cursor: pointer; }
+        .user-dropdown a:hover { background: var(--cream); }
+        .logout-link { color: #e53e3e !important; }
+        .header-centre { text-align: center; }
+        .om-symbol { font-size: 2.6rem; margin-bottom: 0.3rem; }
+        header h1 { font-family: 'Tiro Devanagari Sanskrit', serif; font-size: 2.3rem; margin-bottom: 0.3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+        header p { font-size: 1rem; opacity: 0.93; }
 
-        header {
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+        /* NAV */
+        nav { background: var(--brown); padding: 0.9rem 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 999; }
+        nav ul { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 1.6rem; }
+        nav a { color: white; text-decoration: none; font-weight: bold; transition: color 0.3s; font-size: 0.97rem; }
+        nav a:hover { color: var(--gold); }
 
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
+        /* MODAL */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(4px); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .modal-overlay.open { opacity: 1; pointer-events: all; }
+        .modal { background: white; border-radius: 20px; padding: 2.5rem; width: 90%; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); position: relative; transform: translateY(30px) scale(0.95); transition: transform 0.3s; }
+        .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+        .modal-close { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #aaa; transition: color 0.2s; line-height: 1; }
+        .modal-close:hover { color: var(--text); }
+        .modal-header { text-align: center; margin-bottom: 1.8rem; }
+        .modal-header .om { font-size: 2rem; margin-bottom: 0.5rem; }
+        .modal-header h2 { font-family: 'Tiro Devanagari Sanskrit', serif; color: var(--brown); font-size: 1.6rem; margin-bottom: 0.3rem; }
+        .modal-header p { color: #888; font-size: 0.95rem; }
+        .btn-google { width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.8rem; padding: 0.9rem; border: 2px solid #e0e0e0; border-radius: 12px; background: white; cursor: pointer; font-size: 1rem; font-weight: 600; color: #333; transition: all 0.3s; margin-bottom: 1.2rem; font-family: inherit; }
+        .btn-google:hover { border-color: #ff6b35; background: #fff5f0; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,107,53,0.15); }
+        .google-icon { width: 22px; height: 22px; flex-shrink: 0; }
+        .divider { display: flex; align-items: center; gap: 1rem; margin: 1.2rem 0; color: #bbb; font-size: 0.9rem; }
+        .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #e5e5e5; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-size: 0.88rem; font-weight: 600; color: var(--brown); margin-bottom: 0.4rem; }
+        .form-group input { width: 100%; padding: 0.8rem 1rem; border: 2px solid #e5e5e5; border-radius: 10px; font-size: 1rem; font-family: inherit; transition: border-color 0.3s; outline: none; color: var(--text); }
+        .form-group input:focus { border-color: var(--saffron); }
+        .btn-submit { width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--saffron), var(--saffron-light)); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 0.5rem; font-family: inherit; }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,107,53,0.35); }
+        .modal-switch { text-align: center; margin-top: 1.2rem; font-size: 0.9rem; color: #888; }
+        .modal-switch a { color: var(--saffron); font-weight: 600; cursor: pointer; }
+        .error-msg { background: #fff0f0; color: #c53030; border-radius: 8px; padding: 0.7rem 1rem; font-size: 0.88rem; margin-bottom: 1rem; display: none; }
 
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.95;
-        }
+        /* MAIN */
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .section { display: none; animation: fadeIn 0.5s; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.8rem; margin-top: 2rem; }
+        .card { background: white; border-radius: 12px; padding: 1.8rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; border-top: 4px solid var(--saffron); }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.13); }
+        .card h3 { color: var(--saffron); margin-bottom: 0.8rem; font-size: 1.4rem; }
+        .card p { line-height: 1.6; color: #666; font-size: 0.97rem; }
+        .icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
+        .text-content { background: white; border-radius: 12px; padding: 2.5rem; margin-top: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); line-height: 1.8; max-height: 70vh; overflow-y: auto; }
+        .text-content h2 { color: var(--saffron); margin-bottom: 1.5rem; border-bottom: 3px solid var(--saffron); padding-bottom: 0.5rem; font-size: 2rem; }
+        .text-content h3 { color: var(--brown); margin-top: 1.8rem; margin-bottom: 0.8rem; font-size: 1.4rem; }
+        .verse { background: var(--cream); padding: 1.2rem 1.5rem; margin: 1.2rem 0; border-left: 4px solid var(--saffron); font-style: italic; font-size: 1.1rem; }
+        .back-btn { background: var(--saffron); color: white; border: none; padding: 0.7rem 1.8rem; border-radius: 25px; cursor: pointer; font-size: 1rem; margin-bottom: 1rem; transition: background 0.3s; font-family: inherit; }
+        .back-btn:hover { background: var(--saffron-light); }
+        .welcome-text { text-align: center; font-size: 1.15rem; line-height: 1.8; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .quote-box { background: linear-gradient(135deg, var(--saffron), var(--saffron-light)); color: white; padding: 2rem; border-radius: 12px; margin: 2rem 0; text-align: center; font-size: 1.4rem; font-style: italic; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 
-        .om-symbol {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
+        /* COMMENTS */
+        .comments-section { background: white; border-radius: 16px; padding: 2rem; margin-top: 2rem; box-shadow: 0 4px 16px rgba(0,0,0,0.07); border-top: 4px solid var(--saffron); }
+        .comments-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.8rem; padding-bottom: 1rem; border-bottom: 1px solid #f0e6d3; }
+        .comments-header h3 { font-family: 'Tiro Devanagari Sanskrit', serif; color: var(--brown); font-size: 1.4rem; }
+        .comment-count-badge { background: var(--saffron); color: white; border-radius: 20px; padding: 0.2rem 0.7rem; font-size: 0.82rem; font-weight: 700; }
+        .comment-box { background: #fdf8f3; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #f0e6d3; }
+        .comment-box-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
+        .comment-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--saffron)); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 1rem; flex-shrink: 0; }
+        .comment-textarea { width: 100%; padding: 0.9rem 1rem; border: 2px solid #e5d5c5; border-radius: 10px; font-size: 1rem; font-family: 'Crimson Pro', Georgia, serif; resize: vertical; min-height: 85px; outline: none; transition: border-color 0.3s; color: var(--text); background: white; }
+        .comment-textarea:focus { border-color: var(--saffron); }
+        .comment-submit-row { display: flex; justify-content: flex-end; margin-top: 0.8rem; }
+        .btn-post-comment { background: linear-gradient(135deg, var(--saffron), var(--saffron-light)); color: white; border: none; padding: 0.65rem 1.6rem; border-radius: 25px; cursor: pointer; font-size: 0.95rem; font-weight: 700; font-family: inherit; transition: all 0.3s; }
+        .btn-post-comment:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(255,107,53,0.35); }
+        .comment-login-prompt { text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0, #fff0e0); border-radius: 12px; border: 2px dashed #f0d0b0; margin-bottom: 2rem; }
+        .comment-login-prompt p { color: var(--brown); margin-bottom: 1rem; font-size: 1.05rem; }
+        .btn-login-prompt { background: linear-gradient(135deg, var(--saffron), var(--saffron-light)); color: white; border: none; padding: 0.65rem 1.6rem; border-radius: 25px; cursor: pointer; font-size: 0.95rem; font-weight: 700; font-family: inherit; transition: all 0.3s; }
+        .btn-login-prompt:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(255,107,53,0.35); }
+        .comments-list { display: flex; flex-direction: column; gap: 1.1rem; }
+        .comment-card { background: white; border-radius: 12px; padding: 1.1rem 1.4rem; border: 1px solid #f0e6d3; transition: box-shadow 0.2s; animation: slideInComment 0.3s ease; }
+        @keyframes slideInComment { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+        .comment-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+        .comment-meta { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.6rem; }
+        .comment-user-name { font-weight: 700; color: var(--brown); font-size: 0.95rem; }
+        .comment-date { color: #aaa; font-size: 0.82rem; margin-left: auto; }
+        .comment-text { color: #444; line-height: 1.6; font-size: 1rem; }
+        .comment-actions { display: flex; align-items: center; gap: 1rem; margin-top: 0.7rem; }
+        .btn-like { background: none; border: 1px solid #e5d5c5; border-radius: 20px; padding: 0.28rem 0.8rem; cursor: pointer; font-size: 0.85rem; color: #888; transition: all 0.2s; display: flex; align-items: center; gap: 0.3rem; font-family: inherit; }
+        .btn-like:hover, .btn-like.liked { background: #fff0e6; border-color: var(--saffron); color: var(--saffron); }
+        .no-comments { text-align: center; padding: 2rem; color: #bbb; font-size: 1rem; }
+        .no-comments-icon { font-size: 2.2rem; margin-bottom: 0.5rem; }
 
-        .language-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-
-        .language-toggle button {
-            background: #ff6b35;
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: all 0.3s;
-        }
-
-        .language-toggle button:hover {
-            background: #ff8c42;
-            transform: scale(1.05);
-        }
-
-        nav {
-            background: #8b4513;
-            padding: 1rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 999;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #ffd700;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .section {
-            display: none;
-            animation: fadeIn 0.5s;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            border-top: 4px solid #ff6b35;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-
-        .card h3 {
-            color: #ff6b35;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .card p {
-            line-height: 1.6;
-            color: #666;
-        }
-
-        .icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .text-content {
-            background: white;
-            border-radius: 12px;
-            padding: 2.5rem;
-            margin-top: 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            line-height: 1.8;
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-
-        .text-content h2 {
-            color: #ff6b35;
-            margin-bottom: 1.5rem;
-            border-bottom: 3px solid #ff6b35;
-            padding-bottom: 0.5rem;
-            font-size: 2rem;
-        }
-
-        .text-content h3 {
-            color: #8b4513;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .verse {
-            background: #fff5e6;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-left: 4px solid #ff6b35;
-            font-style: italic;
-            font-size: 1.1rem;
-        }
-
-        .back-btn {
-            background: #ff6b35;
-            color: white;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            transition: background 0.3s;
-        }
-
-        .back-btn:hover {
-            background: #ff8c42;
-        }
-
-        footer {
-            background: #8b4513;
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-        }
-
-        .welcome-text {
-            text-align: center;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            padding: 2rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .quote-box {
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            text-align: center;
-            font-size: 1.4rem;
-            font-style: italic;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
+        footer { background: var(--brown); color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
 
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8rem;
-            }
-            
-            nav ul {
-                gap: 1rem;
-                font-size: 0.9rem;
-            }
-            
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .text-content {
-                padding: 1.5rem;
-                font-size: 1rem;
-            }
+            header h1 { font-size: 1.6rem; }
+            .om-symbol { font-size: 2rem; }
+            nav ul { gap: 0.8rem; font-size: 0.85rem; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .text-content { padding: 1.2rem; }
         }
     </style>
 </head>
 <body>
-    <div class="language-toggle">
-        <button onclick="toggleLanguage()" id="langBtn">हिंदी में पढ़ें</button>
-    </div>
 
-    <header>
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal" onclick="handleOverlayClick(event)">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-header">
+            <div class="om">🕉️</div>
+            <h2 id="modalTitle">Welcome Back</h2>
+            <p id="modalSubtitle">Sign in to join the conversation</p>
+        </div>
+        <div class="error-msg" id="errorMsg"></div>
+        <div id="loginForm">
+            <button class="btn-google" onclick="loginWithGoogle()">
+                <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                Continue with Google
+            </button>
+            <div class="divider">or sign in with email</div>
+            <div class="form-group"><label>Email Address</label><input type="email" id="loginEmail" placeholder="your@email.com"></div>
+            <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="••••••••"></div>
+            <button class="btn-submit" onclick="loginWithEmail()">Sign In 🙏</button>
+            <div class="modal-switch">Don't have an account? <a onclick="switchToRegister()">Create one</a></div>
+        </div>
+        <div id="registerForm" style="display:none;">
+            <button class="btn-google" onclick="loginWithGoogle()">
+                <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                Sign up with Google
+            </button>
+            <div class="divider">or create with email</div>
+            <div class="form-group"><label>Full Name</label><input type="text" id="regName" placeholder="Your name"></div>
+            <div class="form-group"><label>Email Address</label><input type="email" id="regEmail" placeholder="your@email.com"></div>
+            <div class="form-group"><label>Password</label><input type="password" id="regPassword" placeholder="Minimum 6 characters"></div>
+            <button class="btn-submit" onclick="registerWithEmail()">Create Account 🙏</button>
+            <div class="modal-switch">Already have an account? <a onclick="switchToLogin()">Sign in</a></div>
+        </div>
+    </div>
+</div>
+
+<!-- HEADER — lang toggle LEFT · login RIGHT · title CENTRE -->
+<header>
+    <div class="header-top-bar">
+        <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">हिंदी में पढ़ें</button>
+        <div></div>
+        <div>
+            <div id="headerLoginBtn">
+                <button class="btn-login-header" onclick="openModal()">👤 Login / Register</button>
+            </div>
+            <div id="headerUserPill" style="display:none;">
+                <div class="user-pill" onclick="toggleDropdown()">
+                    <div class="user-avatar" id="headerAvatar">U</div>
+                    <span class="user-name" id="headerUserName">User</span>
+                    <span style="color:white;font-size:0.7rem;margin-left:2px;">▾</span>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a class="logout-link" onclick="logout()">🚪 Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-centre">
         <div class="om-symbol">ॐ</div>
-        <h1>Sanatan Dharm</h1>
-        <p>Sacred Texts, Mantras & Spiritual Knowledge</p>
-    </header>
+        <h1 data-en="Sanatan Dharm" data-hi="सनातन धर्म">Sanatan Dharm</h1>
+        <p data-en="Sacred Texts, Mantras & Spiritual Knowledge" data-hi="पवित्र ग्रंथ, मंत्र और आध्यात्मिक ज्ञान">Sacred Texts, Mantras & Spiritual Knowledge</p>
+    </div>
+</header>
 
-    <nav>
-        <ul>
-            <li><a href="#" onclick="showSection('home')" data-en="Home" data-hi="होम">Home</a></li>
-            <li><a href="#" onclick="showSection('texts')" data-en="Sacred Texts" data-hi="पवित्र ग्रंथ">Sacred Texts</a></li>
-            <li><a href="#" onclick="showSection('mantras')" data-en="Mantras" data-hi="मंत्र">Mantras</a></li>
-            <li><a href="#" onclick="showSection('deities')" data-en="Deities" data-hi="देवी-देवता">Deities</a></li>
-            <li><a href="#" onclick="showSection('festivals')" data-en="Festivals" data-hi="त्यौहार">Festivals</a></li>
-            <li><a href="#" onclick="showSection('rituals')" data-en="Rituals" data-hi="रीति-रिवाज">Rituals</a></li>
-            <li><a href="#" onclick="showSection('panchang')" data-en="Panchang" data-hi="पंचांग">Panchang</a></li>
-        </ul>
-    </nav>
+<!-- NAV — clean, no login button here -->
+<nav>
+    <ul>
+        <li><a href="#" onclick="showSection('home')"      data-en="Home"         data-hi="होम">Home</a></li>
+        <li><a href="#" onclick="showSection('texts')"     data-en="Sacred Texts" data-hi="पवित्र ग्रंथ">Sacred Texts</a></li>
+        <li><a href="#" onclick="showSection('mantras')"   data-en="Mantras"      data-hi="मंत्र">Mantras</a></li>
+        <li><a href="#" onclick="showSection('deities')"   data-en="Deities"      data-hi="देवी-देवता">Deities</a></li>
+        <li><a href="#" onclick="showSection('festivals')" data-en="Festivals"    data-hi="त्यौहार">Festivals</a></li>
+        <li><a href="#" onclick="showSection('rituals')"   data-en="Rituals"      data-hi="रीति-रिवाज">Rituals</a></li>
+        <li><a href="#" onclick="showSection('panchang')"  data-en="Panchang"     data-hi="पंचांग">Panchang</a></li>
+    </ul>
+</nav>
 
-    <div class="container">
-        <!-- Home Section -->
-        <div id="home" class="section active">
-            <div class="welcome-text">
-                <h2 style="color: #ff6b35; margin-bottom: 1rem;" data-en="Welcome to Sanatan Dharm Portal" data-hi="सनातन धर्म पोर्टल में आपका स्वागत है">Welcome to Sanatan Dharm Portal</h2>
-                <p data-en="Explore the timeless wisdom of Sanatan Dharm. Access sacred texts like Ramayan and Bhagavad Gita, learn powerful mantras, discover the stories of deities, understand festivals, and explore spiritual practices—all in one place." data-hi="सनातन धर्म के कालातीत ज्ञान का अन्वेषण करें। रामायण और भगवद गीता जैसे पवित्र ग्रंथों तक पहुंचें, शक्तिशाली मंत्र सीखें, देवी-देवताओं की कहानियां जानें, त्यौहारों को समझें, और आध्यात्मिक प्रथाओं का अन्वेषण करें—सब एक ही जगह।">Explore the timeless wisdom of Sanatan Dharm. Access sacred texts like Ramayan and Bhagavad Gita, learn powerful mantras, discover the stories of deities, understand festivals, and explore spiritual practices—all in one place.</p>
-                <p style="margin-top: 1rem;" data-en="Navigate through the sections above to begin your spiritual journey." data-hi="अपनी आध्यात्मिक यात्रा शुरू करने के लिए ऊपर दिए गए अनुभागों में जाएं।">Navigate through the sections above to begin your spiritual journey.</p>
-            </div>
-            
-            <div class="quote-box">
-                "वसुधैव कुटुम्बकम्"<br>
-                <span style="font-size: 1.1rem; opacity: 0.9; font-style: normal;">The World is One Family</span>
-            </div>
+<div class="container">
+
+    <!-- HOME -->
+    <div id="home" class="section active">
+        <div class="welcome-text">
+            <h2 style="color:var(--saffron);margin-bottom:1rem;"
+                data-en="Welcome to Sanatan Dharm Portal" data-hi="सनातन धर्म पोर्टल में आपका स्वागत है">Welcome to Sanatan Dharm Portal</h2>
+            <p data-en="Explore the timeless wisdom of Sanatan Dharm. Access sacred texts like Ramayan and Bhagavad Gita, learn powerful mantras, discover the stories of deities, understand festivals, and explore spiritual practices—all in one place."
+               data-hi="सनातन धर्म के कालातीत ज्ञान का अन्वेषण करें। रामायण और भगवद गीता जैसे पवित्र ग्रंथों तक पहुंचें, शक्तिशाली मंत्र सीखें, देवी-देवताओं की कहानियां जानें, त्यौहारों को समझें और आध्यात्मिक प्रथाओं का अन्वेषण करें — सब एक ही जगह।">Explore the timeless wisdom of Sanatan Dharm. Access sacred texts like Ramayan and Bhagavad Gita, learn powerful mantras, discover the stories of deities, understand festivals, and explore spiritual practices—all in one place.</p>
+            <p style="margin-top:1rem;"
+               data-en="Navigate through the sections above to begin your spiritual journey."
+               data-hi="अपनी आध्यात्मिक यात्रा शुरू करने के लिए ऊपर दिए गए अनुभागों में जाएं।">Navigate through the sections above to begin your spiritual journey.</p>
         </div>
-
-        <!-- Sacred Texts Section -->
-        <div id="texts" class="section">
-            <h2 style="text-align: center; color: #ff6b35; font-size: 2rem; margin-bottom: 2rem;" data-en="Sacred Texts" data-hi="पवित्र ग्रंथ">Sacred Texts</h2>
-            <div class="cards-grid">
-                <div class="card" onclick="showText('bhagavad-gita')">
-                    <div class="icon">📖</div>
-                    <h3 data-en="Bhagavad Gita" data-hi="भगवद गीता">Bhagavad Gita</h3>
-                    <p data-en="The divine discourse between Lord Krishna and Arjuna. Contains 700 verses of eternal wisdom on dharma, karma, and moksha." data-hi="भगवान कृष्ण और अर्जुन के बीच दिव्य संवाद। धर्म, कर्म और मोक्ष पर शाश्वत ज्ञान के 700 श्लोक।">The divine discourse between Lord Krishna and Arjuna. Contains 700 verses of eternal wisdom on dharma, karma, and moksha.</p>
-                </div>
-                <div class="card" onclick="showText('ramayan')">
-                    <div class="icon">🏹</div>
-                    <h3 data-en="Ramayan" data-hi="रामायण">Ramayan</h3>
-                    <p data-en="Epic tale of Lord Rama composed by Sage Valmiki with 24,000 verses teaching dharma and devotion." data-hi="ऋषि वाल्मीकि द्वारा रचित भगवान राम की महाकाव्य कथा। धर्म और भक्ति सिखाने वाले 24,000 श्लोक।">Epic tale of Lord Rama composed by Sage Valmiki with 24,000 verses teaching dharma and devotion.</p>
-                </div>
-                <div class="card" onclick="showText('mahabharata')">
-                    <div class="icon">⚔️</div>
-                    <h3 data-en="Mahabharata" data-hi="महाभारत">Mahabharata</h3>
-                    <p data-en="World's longest epic with 100,000 verses narrating the great war between Pandavas and Kauravas." data-hi="विश्व का सबसे लंबा महाकाव्य। पांडवों और कौरवों के बीच महायुद्ध का वर्णन करने वाले 100,000 श्लोक।">World's longest epic with 100,000 verses narrating the great war between Pandavas and Kauravas.</p>
-                </div>
-                <div class="card" onclick="showText('vedas')">
-                    <div class="icon">📜</div>
-                    <h3 data-en="Four Vedas" data-hi="चार वेद">Four Vedas</h3>
-                    <p data-en="The oldest scriptures - Rigveda, Yajurveda, Samaveda, and Atharvaveda. Foundation of Hindu philosophy." data-hi="सबसे प्राचीन धर्मग्रंथ - ऋग्वेद, यजुर्वेद, सामवेद और अथर्ववेद। हिंदू दर्शन की नींव।">The oldest scriptures - Rigveda, Yajurveda, Samaveda, and Atharvaveda. Foundation of Hindu philosophy.</p>
-                </div>
-                <div class="card" onclick="showText('upanishads')">
-                    <div class="icon">🕉️</div>
-                    <h3 data-en="Upanishads" data-hi="उपनिषद">Upanishads</h3>
-                    <p data-en="Philosophical texts exploring Atman and Brahman. Core of Vedantic philosophy with 108 major Upanishads." data-hi="आत्मा और ब्रह्म की खोज करने वाले दार्शनिक ग्रंथ। 108 प्रमुख उपनिषदों के साथ वेदांत दर्शन का मूल।">Philosophical texts exploring Atman and Brahman. Core of Vedantic philosophy with 108 major Upanishads.</p>
-                </div>
-                <div class="card" onclick="showText('puranas')">
-                    <div class="icon">📚</div>
-                    <h3 data-en="Puranas" data-hi="पुराण">Puranas</h3>
-                    <p data-en="18 major Puranas with creation stories, genealogies, cosmic cycles, and divine teachings." data-hi="सृष्टि की कहानियां, वंशावली, ब्रह्मांडीय चक्र और दिव्य शिक्षाओं वाले 18 प्रमुख पुराण।">18 major Puranas with creation stories, genealogies, cosmic cycles, and divine teachings.</p>
-                </div>
-            </div>
+        <div class="quote-box">
+            "वसुधैव कुटुम्बकम्"<br>
+            <span style="font-size:1.1rem;opacity:0.9;font-style:normal;"
+                  data-en="The World is One Family" data-hi="विश्व एक परिवार है">The World is One Family</span>
         </div>
-
-        <!-- Mantras Section -->
-        <div id="mantras" class="section">
-            <h2 style="text-align: center; color: #ff6b35; font-size: 2rem; margin-bottom: 2rem;" data-en="Mantras & Prayers" data-hi="मंत्र और प्रार्थनाएं">Mantras & Prayers</h2>
-            <div class="cards-grid">
-                <div class="card" onclick="showText('gayatri-mantra')">
-                    <div class="icon">☀️</div>
-                    <h3 data-en="Gayatri Mantra" data-hi="गायत्री मंत्र">Gayatri Mantra</h3>
-                    <p data-en="Most sacred Rigvedic mantra invoking divine light for wisdom and spiritual awakening." data-hi="ज्ञान और आध्यात्मिक जागृति के लिए दिव्य प्रकाश का आह्वान करने वाला सबसे पवित्र ऋग्वैदिक मंत्र।">Most sacred Rigvedic mantra invoking divine light for wisdom and spiritual awakening.</p>
-                </div>
-                <div class="card" onclick="showText('maha-mrityunjaya')">
-                    <div class="icon">🔱</div>
-                    <h3 data-en="Maha Mrityunjaya" data-hi="महा मृत्युंजय मंत्र">Maha Mrityunjaya</h3>
-                    <p data-en="Powerful Shiva mantra for health, healing, protection, and liberation from death cycles." data-hi="स्वास्थ्य, उपचार, सुरक्षा और मृत्यु चक्र से मुक्ति के लिए शक्तिशाली शिव मंत्र।">Powerful Shiva mantra for health, healing, protection, and liberation from death cycles.</p>
-                </div>
-                <div class="card" onclick="showText('om-mantra')">
-                    <div class="icon">🕉️</div>
-                    <h3 data-en="Om - Pranava" data-hi="ॐ - प्रणव">Om - Pranava</h3>
-                    <p data-en="Primordial sound of cosmic consciousness. Foundation of all mantras and meditation." data-hi="ब्रह्मांडीय चेतना की आदि ध्वनि। सभी मंत्रों और ध्यान की नींव।">Primordial sound of cosmic consciousness. Foundation of all mantras and meditation.</p>
-                </div>
-                <div class="card" onclick="showText('ganesh-mantra')">
-                    <div class="icon">🐘</div>
-                    <h3 data-en="Ganesh Mantras" data-hi="गणेश मंत्र">Ganesh Mantras</h3>
-                    <p data-en="Mantras for removing obstacles and success in new beginnings. Om Gan Ganapataye Namaha." data-hi="विघ्न हटाने और नई शुरुआत में सफलता के लिए मंत्र। ॐ गं गणपतये नमः।">Mantras for removing obstacles and success in new beginnings. Om Gan Ganapataye Namaha.</p>
-                </div>
-                <div class="card" onclick="showText('hanuman-chalisa')">
-                    <div class="icon">💪</div>
-                    <h3 data-en="Hanuman Chalisa" data-hi="हनुमान चालीसा">Hanuman Chalisa</h3>
-                    <p data-en="40-verse hymn by Tulsidas for strength, courage, and protection from negativity." data-hi="तुलसीदास द्वारा रचित 40 छंदों की स्तुति। शक्ति, साहस और नकारात्मकता से सुरक्षा के लिए।">40-verse hymn by Tulsidas for strength, courage, and protection from negativity.</p>
-                </div>
-                <div class="card" onclick="showText('lakshmi-mantra')">
-                    <div class="icon">💫</div>
-                    <h3 data-en="Lakshmi Mantras" data-hi="लक्ष्मी मंत्र">Lakshmi Mantras</h3>
-                    <p data-en="Sacred mantras for prosperity, wealth, abundance, and spiritual well-being." data-hi="समृद्धि, धन, प्रचुरता और आध्यात्मिक कल्याण के लिए पवित्र मंत्र।">Sacred mantras for prosperity, wealth, abundance, and spiritual well-being.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Deities Section -->
-        <div id="deities" class="section">
-            <h2 style="text-align: center; color: #ff6b35; font-size: 2rem; margin-bottom: 2rem;" data-en="Divine Deities" data-hi="दिव्य देवी-देवता">Divine Deities</h2>
-            <div class="cards-grid">
-                <div class="card" onclick="showText('brahma')">
-                    <div class="icon">🌟</div>
-                    <h3 data-en="Brahma" data-hi="ब्रह्मा">Brahma</h3>
-                    <p data-en="Creator of the universe in the Trimurti. Associated with creation, knowledge, and Vedas." data-hi="त्रिमूर्ति में ब्रह्मांड के निर्माता। सृजन, ज्ञान और वेदों से जुड़े हैं।">Creator of the universe in the Trimurti. Associated with creation, knowledge, and Vedas.</p>
-                </div>
-                <div class="card" onclick="showText('vishnu')">
-                    <div class="icon">🪷</div>
-                    <h3 data-en="Vishnu" data-hi="विष्णु">Vishnu</h3>
-                    <p data-en="Preserver with ten avatars including Rama and Krishna. Maintains cosmic dharma." data-hi="राम और कृष्ण सहित दस अवतारों वाले पालनकर्ता। ब्रह्मांडीय धर्म की रक्षा करते हैं।">Preserver with ten avatars including Rama and Krishna. Maintains cosmic dharma.</p>
-                </div>
-                <div class="card" onclick="showText('shiva')">
-                    <div class="icon">🔱</div>
-                    <h3 data-en="Shiva" data-hi="शिव">Shiva</h3>
-                    <p data-en="The transformer, supreme yogi, lord of cosmic dance (Nataraja), and meditation." data-hi="संहारकर्ता, परम योगी, ब्रह्मांडीय नृत्य (नटराज) और ध्यान के स्वामी।">The transformer, supreme yogi, lord of cosmic dance (Nataraja), and meditation.</p>
-                </div>
-                <div class="card" onclick="showText('krishna')">
-                    <div class="icon">🦚</div>
-                    <h3 data-en="Krishna" data-hi="कृष्ण">Krishna</h3>
-                    <p data-en="Eighth Vishnu avatar, Gita teacher, embodiment of divine love and wisdom." data-hi="विष्णु के आठवें अवतार, गीता के शिक्षक, दिव्य प्रेम और ज्ञान के अवतार।">Eighth Vishnu avatar, Gita teacher, embodiment of divine love and wisdom.</p>
-                </div>
-                <div class="card" onclick="showText('rama')">
-                    <div class="icon">🏹</div>
-                    <h3 data-en="Rama" data-hi="राम">Rama</h3>
-                    <p data-en="Seventh Vishnu avatar, ideal king (Maryada Purushottam), Ramayana hero." data-hi="विष्णु के सातवें अवतार, आदर्श राजा (मर्यादा पुरुषोत्तम), रामायण के नायक।">Seventh Vishnu avatar, ideal king (Maryada Purushottam), Ramayana hero.</p>
-                </div>
-                <div class="card" onclick="showText('durga')">
-                    <div class="icon">🦁</div>
-                    <h3 data-en="Durga" data-hi="दुर्गा">Durga</h3>
-                    <p data-en="Divine mother, warrior goddess with ten arms who destroys evil forces." data-hi="दिव्य माता, दस भुजाओं वाली योद्धा देवी जो बुरी शक्तियों का विनाश करती हैं।">Divine mother, warrior goddess with ten arms who destroys evil forces.</p>
-                </div>
-                <div class="card" onclick="showText('lakshmi')">
-                    <div class="icon">💫</div>
-                    <h3 data-en="Lakshmi" data-hi="लक्ष्मी">Lakshmi</h3>
-                    <p data-en="Goddess of wealth, prosperity, fortune. Vishnu's consort and symbol of abundance." data-hi="धन, समृद्धि, भाग्य की देवी। विष्णु की पत्नी और प्रचुरता का प्रतीक।">Goddess of wealth, prosperity, fortune. Vishnu's consort and symbol of abundance.</p>
-                </div>
-                <div class="card" onclick="showText('saraswati')">
-                    <div class="icon">🎵</div>
-                    <h3 data-en="Saraswati" data-hi="सरस्वती">Saraswati</h3>
-                    <p data-en="Goddess of knowledge, music, arts, wisdom. Brahma's consort, patron of learning." data-hi="ज्ञान, संगीत, कला, बुद्धि की देवी। ब्रह्मा की पत्नी, शिक्षा की संरक्षक।">Goddess of knowledge, music, arts, wisdom. Brahma's consort, patron of learning.</p>
-                </div>
-                <div class="card" onclick="showText('ganesha')">
-                    <div class="icon">🐘</div>
-                    <h3 data-en="Ganesha" data-hi="गणेश">Ganesha</h3>
-                    <p data-en="Elephant-headed remover of obstacles, lord of beginnings and sciences." data-hi="हाथी के सिर वाले विघ्नहर्ता, नई शुरुआत और विज्ञान के स्वामी।">Elephant-headed remover of obstacles, lord of beginnings and sciences.</p>
-                </div>
-                <div class="card" onclick="showText('hanuman')">
-                    <div class="icon">💪</div>
-                    <h3 data-en="Hanuman" data-hi="हनुमान">Hanuman</h3>
-                    <p data-en="Monkey god, Rama's devotee, symbol of strength, courage, and selfless service." data-hi="वानर देवता, राम के भक्त, शक्ति, साहस और निस्वार्थ सेवा के प्रतीक।">Monkey god, Rama's devotee, symbol of strength, courage, and selfless service.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Festivals Section -->
-        <div id="festivals" class="section">
-            <h2 style="text-align: center; color: #ff6b35; font-size: 2rem; margin-bottom: 2rem;" data-en="Hindu Festivals" data-hi="हिंदू त्यौहार">Hindu Festivals</h2>
-            <div class="cards-grid">
-                <div class="card" onclick="showText('diwali')">
-                    <div class="icon">🪔</div>
-                    <h3 data-en="Diwali" data-hi="दिवाली">Diwali</h3>
-                    <p data-en="Festival of lights celebrating victory of light over darkness and Rama's return." data-hi="अंधकार पर प्रकाश की विजय और राम की वापसी का उत्सव मनाने वाला प्रकाश का त्योहार।">Festival of lights celebrating victory of light over darkness and Rama's return.</p>
-                </div>
-                <div class="card" onclick="showText('holi')">
-                    <div class="icon">🎨</div>
-                    <h3 data-en="Holi" data-hi="होली">Holi</h3>
-                    <p data-en="Festival of colors celebrating spring and good over evil through Prahlad's story." data-hi="प्रह्लाद की कहानी के माध्यम से वसंत और बुराई पर अच्छाई का उत्सव मनाने वाला रंगों का त्योहार।">Festival of colors celebrating spring and good over evil through Prahlad's story.</p>
-                </div>
-                <div class="card" onclick="showText('navratri')">
-                    <div class="icon">💃</div>
-                    <h3 data-en="Navratri" data-hi="नवरात्रि">Navratri</h3>
-                    <p data-en="Nine nights worshipping nine forms of Goddess Durga with fasting and dance." data-hi="उपवास और नृत्य के साथ देवी दुर्गा के नौ रूपों की पूजा करने वाली नौ रातें।">Nine nights worshipping nine forms of Goddess Durga with fasting and dance.</p>
-                </div>
-                <div class="card" onclick="showText('janmashtami')">
-                    <div class="icon">🦚</div>
-                    <h3 data-en="Janmashtami" data-hi="जन्माष्टमी">Janmashtami</h3>
-                    <p data-en="Krishna's midnight birth celebration with fasting, prayers, and Dahi Handi." data-hi="उपवास, प्रार्थना और दही हांडी के साथ कृष्ण के आधी रात के जन्म का उत्सव।">Krishna's midnight birth celebration with fasting, prayers, and Dahi Handi.</p>
-                </div>
-                <div class="card" onclick="showText('maha-shivratri')">
-                    <div class="icon">🌙</div>
-                    <h3 data-en="Maha Shivratri" data-hi="महा शिवरात्रि">Maha Shivratri</h3>
-                    <p data-en="Great night of Shiva with fasting, night vigil, and Shiva linga worship." data-hi="उपवास, रात्रि जागरण और शिव लिंग पूजा के साथ शिव की महान रात्रि।">Great night of Shiva with fasting, night vigil, and Shiva linga worship.</p>
-                </div>
-                <div class="card" onclick="showText('ram-navami')">
-                    <div class="icon">🏹</div>
-                    <h3 data-en="Ram Navami" data-hi="राम नवमी">Ram Navami</h3>
-                    <p data-en="Rama's birthday with Ramayana readings, devotional singing, and fasting." data-hi="रामायण पाठ, भक्ति गायन और उपवास के साथ राम का जन्मदिन।">Rama's birthday with Ramayana readings, devotional singing, and fasting.</p>
-                </div>
-                <div class="card" onclick="showText('ganesh-chaturthi')">
-                    <div class="icon">🐘</div>
-                    <h3 data-en="Ganesh Chaturthi" data-hi="गणेश चतुर्थी">Ganesh Chaturthi</h3>
-                    <p data-en="10-day Ganesha festival with prayers culminating in immersion ceremony." data-hi="विसर्जन समारोह में समाप्त होने वाली प्रार्थनाओं के साथ 10 दिवसीय गणेश उत्सव।">10-day Ganesha festival with prayers culminating in immersion ceremony.</p>
-                </div>
-                <div class="card" onclick="showText('dussehra')">
-                    <div class="icon">🏹</div>
-                    <h3 data-en="Dussehra" data-hi="दशहरा">Dussehra</h3>
-                    <p data-en="Victory of good over evil - Rama over Ravana and Durga over Mahishasura." data-hi="बुराई पर अच्छाई की विजय - रावण पर राम और महिषासुर पर दुर्गा की विजय।">Victory of good over evil - Rama over Ravana and Durga over Mahishasura.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Rituals Section -->
-        <div id="rituals" class="section">
-            <h2 style="text-align: center; color: #ff6b35; font-size: 2rem; margin-bottom: 2rem;" data-en="Rituals & Practices" data-hi="रीति-रिवाज और प्रथाएं">Rituals & Practices</h2>
-            <div class="cards-grid">
-                <div class="card" onclick="showText('puja')">
-                    <div class="icon">🙏</div>
-                    <h3 data-en="Puja" data-hi="पूजा">Puja</h3>
-                    <p data-en="Worship with sixteen steps (shodasha upachara) including offerings and aarti." data-hi="प्रसाद और आरती सहित सोलह चरणों (षोडशोपचार) के साथ पूजा।">Worship with sixteen steps (shodasha upachara) including offerings and aarti.</p>
-                </div>
-                <div class="card" onclick="showText('yoga')">
-                    <div class="icon">🧘</div>
-                    <h3 data-en="Yoga" data-hi="योग">Yoga</h3>
-                    <p data-en="Eight-limbed practice combining asanas, pranayama, and meditation for self-realization." data-hi="आत्म-साक्षात्कार के लिए आसन, प्राणायाम और ध्यान को मिलाकर आठ अंगों वाली साधना।">Eight-limbed practice combining asanas, pranayama, and meditation for self-realization.</p>
-                </div>
-                <div class="card" onclick="showText('meditation')">
-                    <div class="icon">🕉️</div>
-                    <h3 data-en="Dhyana" data-hi="ध्यान">Dhyana</h3>
-                    <p data-en="Meditation practice for spiritual clarity, inner peace, and divine connection." data-hi="आध्यात्मिक स्पष्टता, आंतरिक शांति और दिव्य संबंध के लिए ध्यान साधना।">Meditation practice for spiritual clarity, inner peace, and divine connection.</p>
-                </div>
-                <div class="card" onclick="showText('aarti')">
-                    <div class="icon">🔥</div>
-                    <h3 data-en="Aarti" data-hi="आरती">Aarti</h3>
-                    <p data-en="Devotional songs with light offering expressing love and removing darkness." data-hi="प्रेम व्यक्त करने और अंधकार दूर करने के लिए दीप अर्पण के साथ भक्ति गीत।">Devotional songs with light offering expressing love and removing darkness.</p>
-                </div>
-                <div class="card" onclick="showText('fasting')">
-                    <div class="icon">🌾</div>
-                    <h3 data-en="Vrat" data-hi="व्रत">Vrat</h3>
-                    <p data-en="Spiritual fasting to purify body and mind on specific days and festivals." data-hi="विशिष्ट दिनों और त्योहारों पर शरीर और मन को शुद्ध करने के लिए आध्यात्मिक उपवास।">Spiritual fasting to purify body and mind on specific days and festivals.</p>
-                </div>
-                <div class="card" onclick="showText('charity')">
-                    <div class="icon">💝</div>
-                    <h3 data-en="Daan" data-hi="दान">Daan</h3>
-                    <p data-en="Charitable giving - anna daan (food), vidya daan (knowledge) for spiritual growth." data-hi="दान देना - अन्न दान (भोजन), विद्या दान (ज्ञान) आध्यात्मिक विकास के लिए।">Charitable giving - anna daan (food), vidya daan (knowledge) for spiritual growth.</p>
-                </div>
-                <div class="card" onclick="showText('yagna')">
-                    <div class="icon">🔥</div>
-                    <h3 data-en="Yagna" data-hi="यज्ञ">Yagna</h3>
-                    <p data-en="Vedic fire ceremony with mantras for purification and cosmic harmony." data-hi="शुद्धि और ब्रह्मांडीय सामंजस्य के लिए मंत्रों के साथ वैदिक अग्नि समारोह।">Vedic fire ceremony with mantras for purification and cosmic harmony.</p>
-                </div>
-                <div class="card" onclick="showText('japa')">
-                    <div class="icon">📿</div>
-                    <h3 data-en="Japa" data-hi="जप">Japa</h3>
-                    <p data-en="Repetitive mantra chanting with mala (108 beads) for concentration and progress." data-hi="एकाग्रता और प्रगति के लिए माला (108 मनकों) के साथ बार-बार मंत्र जाप।">Repetitive mantra chanting with mala (108 beads) for concentration and progress.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Panchang Section -->
-        <div id="panchang" class="section">
-            <h2 style="text-align: center; color: #ff6b35; font-size: 2rem; margin-bottom: 2rem;" data-en="Hindu Panchang (Calendar)" data-hi="हिंदू पंचांग (कैलेंडर)">Hindu Panchang (Calendar)</h2>
-            
-            <div class="text-content">
-                <h3 data-en="What is Panchang?" data-hi="पंचांग क्या है?">What is Panchang?</h3>
-                <p data-en="Panchang, meaning 'five limbs,' is the Hindu calendar providing astronomical and astrological information for determining auspicious timings (muhurat) for religious ceremonies and important activities." data-hi="पंचांग, जिसका अर्थ है 'पांच अंग,' हिंदू कैलेंडर है जो धार्मिक समारोहों और महत्वपूर्ण गतिविधियों के लिए शुभ समय (मुहूर्त) निर्धारित करने हेतु खगोलीय और ज्योतिषीय जानकारी प्रदान करता है।">Panchang, meaning 'five limbs,' is the Hindu calendar providing astronomical and astrological information for determining auspicious timings (muhurat) for religious ceremonies and important activities.</p>
-                
-                <h3 data-en="The Five Elements" data-hi="पांच तत्व">The Five Elements</h3>
-                
-                <div class="verse">
-                    <strong data-en="1. Tithi - Lunar Day" data-hi="1. तिथि - चंद्र दिवस">1. Tithi - Lunar Day</strong><br>
-                    <span data-en="30 lunar days in a month divided into Shukla Paksha (waxing) and Krishna Paksha (waning) based on moon's position." data-hi="सूर्य के सापेक्ष चंद्रमा की स्थिति के आधार पर एक मास में 30 तिथियां - शुक्ल पक्ष (बढ़ता) और कृष्ण पक्ष (घटता)।">30 lunar days in a month divided into Shukla Paksha (waxing) and Krishna Paksha (waning) based on moon's position.</span>
-                </div>
-                
-                <div class="verse">
-                    <strong data-en="2. Vara - Weekday" data-hi="2. वार - सप्ताह का दिन">2. Vara - Weekday</strong><br>
-                    <span data-en="Seven days ruled by celestial bodies: Sunday (Sun), Monday (Moon), Tuesday (Mars), Wednesday (Mercury), Thursday (Jupiter), Friday (Venus), Saturday (Saturn)." data-hi="खगोलीय पिंडों द्वारा शासित सात दिन: रविवार (सूर्य), सोमवार (चंद्र), मंगलवार (मंगल), बुधवार (बुध), गुरुवार (बृहस्पति), शुक्रवार (शुक्र), शनिवार (शनि)।">Seven days ruled by celestial bodies: Sunday (Sun), Monday (Moon), Tuesday (Mars), Wednesday (Mercury), Thursday (Jupiter), Friday (Venus), Saturday (Saturn).</span>
-                </div>
-                
-                <div class="verse">
-                    <strong data-en="3. Nakshatra - Lunar Constellation" data-hi="3. नक्षत्र - चंद्र नक्षत्र">3. Nakshatra - Lunar Constellation</strong><br>
-                    <span data-en="27 lunar mansions through which the moon passes, each with specific influences and qualities." data-hi="27 चंद्र नक्षत्र जिनसे चंद्रमा गुजरता है, प्रत्येक के विशिष्ट प्रभाव और गुण होते हैं।">27 lunar mansions through which the moon passes, each with specific influences and qualities.</span>
-                </div>
-                
-                <div class="verse">
-                    <strong data-en="4. Yoga - Auspicious Period" data-hi="4. योग - शुभ अवधि">4. Yoga - Auspicious Period</strong><br>
-                    <span data-en="27 yogas calculated from combined sun and moon motion, each having significance for activities." data-hi="सूर्य और चंद्र की संयुक्त गति से गणना किए गए 27 योग, प्रत्येक का गतिविधियों के लिए महत्व है।">27 yogas calculated from combined sun and moon motion, each having significance for activities.</span>
-                </div>
-                
-                <div class="verse">
-                    <strong data-en="5. Karana - Half Tithi" data-hi="5. करण - आधी तिथि">5. Karana - Half Tithi</strong><br>
-                    <span data-en="Each tithi divided into two karanas. 11 karanas repeat in specific pattern throughout the month." data-hi="प्रत्येक तिथि दो करणों में विभाजित। 11 करण महीने भर एक विशिष्ट पैटर्न में दोहराते हैं।">Each tithi divided into two karanas. 11 karanas repeat in specific pattern throughout the month.</span>
-                </div>
-                
-                <h3 data-en="Hindu Months" data-hi="हिंदू महीने">Hindu Months</h3>
-                <p data-en="Chaitra (Mar-Apr), Vaishakha (Apr-May), Jyeshtha (May-Jun), Ashadha (Jun-Jul), Shravana (Jul-Aug), Bhadrapada (Aug-Sep), Ashwin (Sep-Oct), Kartik (Oct-Nov), Margashirsha (Nov-Dec), Pausha (Dec-Jan), Magha (Jan-Feb), Phalguna (Feb-Mar)" data-hi="चैत्र (मार्च-अप्रैल), वैशाख (अप्रैल-मई), ज्येष्ठ (मई-जून), आषाढ़ (जून-जुलाई), श्रावण (जुलाई-अगस्त), भाद्रपद (अगस्त-सितंबर), आश्विन (सितंबर-अक्टूबर), कार्तिक (अक्टूबर-नवंबर), मार्गशीर्ष (नवंबर-दिसंबर), पौष (दिसंबर-जनवरी), माघ (जनवरी-फरवरी), फाल्गुन (फरवरी-मार्च)">Chaitra (Mar-Apr), Vaishakha (Apr-May), Jyeshtha (May-Jun), Ashadha (Jun-Jul), Shravana (Jul-Aug), Bhadrapada (Aug-Sep), Ashwin (Sep-Oct), Kartik (Oct-Nov), Margashirsha (Nov-Dec), Pausha (Dec-Jan), Magha (Jan-Feb), Phalguna (Feb-Mar)</p>
-                
-                <h3 data-en="Used For" data-hi="उपयोग">Used For</h3>
-                <p data-en="• Determining wedding dates and ceremonies • Festival dates • Agricultural planning • Daily prayers and fasting • Understanding planetary influences" data-hi="• विवाह की तिथियां और समारोह निर्धारित करना • त्योहार की तिथियां • कृषि योजना • दैनिक प्रार्थना और उपवास • ग्रहों के प्रभाव को समझना">• Determining wedding dates and ceremonies • Festival dates • Agricultural planning • Daily prayers and fasting • Understanding planetary influences</p>
-            </div>
-        </div>
-
-        <!-- Text Content Display -->
-        <div id="text-display" style="display: none;"></div>
+        <div id="home-comments" class="comments-section"></div>
     </div>
 
-    <footer>
-        <p>ॐ शान्ति शान्ति शान्तिः</p>
-        <p style="margin-top: 0.5rem;">Om Shanti Shanti Shanti</p>
-        <p style="margin-top: 1rem; font-size: 0.9rem;">© 2026 Sanatan Dharm Portal - Preserving Ancient Wisdom</p>
-    </footer>
+    <!-- SACRED TEXTS -->
+    <div id="texts" class="section">
+        <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;"
+            data-en="Sacred Texts" data-hi="पवित्र ग्रंथ">Sacred Texts</h2>
+        <div class="cards-grid">
+            <div class="card" onclick="showText('bhagavad-gita')"><div class="icon">📖</div><h3 data-en="Bhagavad Gita" data-hi="भगवद गीता">Bhagavad Gita</h3><p data-en="The divine discourse between Lord Krishna and Arjuna. Contains 700 verses of eternal wisdom on dharma, karma, and moksha." data-hi="भगवान कृष्ण और अर्जुन के बीच दिव्य संवाद। धर्म, कर्म और मोक्ष पर शाश्वत ज्ञान के 700 श्लोक।">The divine discourse between Lord Krishna and Arjuna. Contains 700 verses of eternal wisdom on dharma, karma, and moksha.</p></div>
+            <div class="card" onclick="showText('ramayan')"><div class="icon">🏹</div><h3 data-en="Ramayan" data-hi="रामायण">Ramayan</h3><p data-en="Epic tale of Lord Rama composed by Sage Valmiki with 24,000 verses teaching dharma and devotion." data-hi="ऋषि वाल्मीकि द्वारा रचित भगवान राम की महाकाव्य कथा। धर्म और भक्ति सिखाने वाले 24,000 श्लोक।">Epic tale of Lord Rama composed by Sage Valmiki with 24,000 verses teaching dharma and devotion.</p></div>
+            <div class="card" onclick="showText('mahabharata')"><div class="icon">⚔️</div><h3 data-en="Mahabharata" data-hi="महाभारत">Mahabharata</h3><p data-en="World's longest epic with 100,000 verses narrating the great war between Pandavas and Kauravas." data-hi="विश्व का सबसे लंबा महाकाव्य जिसमें पांडवों और कौरवों के बीच महायुद्ध का वर्णन है।">World's longest epic with 100,000 verses narrating the great war between Pandavas and Kauravas.</p></div>
+            <div class="card" onclick="showText('vedas')"><div class="icon">📜</div><h3 data-en="Four Vedas" data-hi="चार वेद">Four Vedas</h3><p data-en="The oldest scriptures - Rigveda, Yajurveda, Samaveda, and Atharvaveda. Foundation of Hindu philosophy." data-hi="सबसे प्राचीन धर्मग्रंथ — ऋग्वेद, यजुर्वेद, सामवेद और अथर्ववेद। हिंदू दर्शन की नींव।">The oldest scriptures - Rigveda, Yajurveda, Samaveda, and Atharvaveda. Foundation of Hindu philosophy.</p></div>
+            <div class="card" onclick="showText('upanishads')"><div class="icon">🕉️</div><h3 data-en="Upanishads" data-hi="उपनिषद">Upanishads</h3><p data-en="Philosophical texts exploring Atman and Brahman. Core of Vedantic philosophy with 108 major Upanishads." data-hi="आत्मा और ब्रह्म की खोज करने वाले दार्शनिक ग्रंथ। 108 प्रमुख उपनिषदों के साथ वेदांत दर्शन का मूल।">Philosophical texts exploring Atman and Brahman. Core of Vedantic philosophy with 108 major Upanishads.</p></div>
+            <div class="card" onclick="showText('puranas')"><div class="icon">📚</div><h3 data-en="Puranas" data-hi="पुराण">Puranas</h3><p data-en="18 major Puranas with creation stories, genealogies, cosmic cycles, and divine teachings." data-hi="सृष्टि की कहानियां, वंशावली, ब्रह्मांडीय चक्र और दिव्य शिक्षाओं वाले 18 प्रमुख पुराण।">18 major Puranas with creation stories, genealogies, cosmic cycles, and divine teachings.</p></div>
+        </div>
+        <div id="texts-comments" class="comments-section" style="margin-top:2rem;"></div>
+    </div>
 
-    <script>
-        let currentLanguage = 'en';
+    <!-- MANTRAS -->
+    <div id="mantras" class="section">
+        <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Mantras & Prayers" data-hi="मंत्र और प्रार्थनाएं">Mantras & Prayers</h2>
+        <div class="cards-grid">
+            <div class="card" onclick="showText('gayatri-mantra')"><div class="icon">☀️</div><h3 data-en="Gayatri Mantra" data-hi="गायत्री मंत्र">Gayatri Mantra</h3><p data-en="Most sacred Rigvedic mantra invoking divine light for wisdom and spiritual awakening." data-hi="ज्ञान और आध्यात्मिक जागृति के लिए दिव्य प्रकाश का आह्वान करने वाला सबसे पवित्र ऋग्वैदिक मंत्र।">Most sacred Rigvedic mantra invoking divine light for wisdom and spiritual awakening.</p></div>
+            <div class="card" onclick="showText('maha-mrityunjaya')"><div class="icon">🔱</div><h3 data-en="Maha Mrityunjaya" data-hi="महा मृत्युंजय मंत्र">Maha Mrityunjaya</h3><p data-en="Powerful Shiva mantra for health, healing, protection, and liberation from death cycles." data-hi="स्वास्थ्य, उपचार, सुरक्षा और मृत्यु चक्र से मुक्ति के लिए शक्तिशाली शिव मंत्र।">Powerful Shiva mantra for health, healing, protection, and liberation from death cycles.</p></div>
+            <div class="card" onclick="showText('om-mantra')"><div class="icon">🕉️</div><h3 data-en="Om - Pranava" data-hi="ॐ - प्रणव">Om - Pranava</h3><p data-en="Primordial sound of cosmic consciousness. Foundation of all mantras and meditation." data-hi="ब्रह्मांडीय चेतना की आदि ध्वनि। सभी मंत्रों और ध्यान की नींव।">Primordial sound of cosmic consciousness. Foundation of all mantras and meditation.</p></div>
+            <div class="card" onclick="showText('ganesh-mantra')"><div class="icon">🐘</div><h3 data-en="Ganesh Mantras" data-hi="गणेश मंत्र">Ganesh Mantras</h3><p data-en="Mantras for removing obstacles and success in new beginnings. Om Gan Ganapataye Namaha." data-hi="विघ्न हटाने और नई शुरुआत में सफलता के लिए मंत्र। ॐ गं गणपतये नमः।">Mantras for removing obstacles and success in new beginnings. Om Gan Ganapataye Namaha.</p></div>
+            <div class="card" onclick="showText('hanuman-chalisa')"><div class="icon">💪</div><h3 data-en="Hanuman Chalisa" data-hi="हनुमान चालीसा">Hanuman Chalisa</h3><p data-en="40-verse hymn by Tulsidas for strength, courage, and protection from negativity." data-hi="तुलसीदास द्वारा रचित 40 छंदों की स्तुति। शक्ति, साहस और नकारात्मकता से सुरक्षा के लिए।">40-verse hymn by Tulsidas for strength, courage, and protection from negativity.</p></div>
+            <div class="card" onclick="showText('lakshmi-mantra')"><div class="icon">💫</div><h3 data-en="Lakshmi Mantras" data-hi="लक्ष्मी मंत्र">Lakshmi Mantras</h3><p data-en="Sacred mantras for prosperity, wealth, abundance, and spiritual well-being." data-hi="समृद्धि, धन, प्रचुरता और आध्यात्मिक कल्याण के लिए पवित्र मंत्र।">Sacred mantras for prosperity, wealth, abundance, and spiritual well-being.</p></div>
+        </div>
+        <div id="mantras-comments" class="comments-section" style="margin-top:2rem;"></div>
+    </div>
 
-        function toggleLanguage() {
-            currentLanguage = currentLanguage === 'en' ? 'hi' : 'en';
-            document.getElementById('langBtn').textContent = currentLanguage === 'en' ? 'हिंदी में पढ़ें' : 'Read in English';
-            
-            document.querySelectorAll('[data-en][data-hi]').forEach(el => {
-                el.textContent = el.getAttribute('data-' + currentLanguage);
-            });
+    <!-- DEITIES -->
+    <div id="deities" class="section">
+        <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Divine Deities" data-hi="दिव्य देवी-देवता">Divine Deities</h2>
+        <div class="cards-grid">
+            <div class="card" onclick="showText('brahma')"><div class="icon">🌟</div><h3 data-en="Brahma" data-hi="ब्रह्मा">Brahma</h3><p data-en="Creator of the universe in the Trimurti. Associated with creation, knowledge, and Vedas." data-hi="त्रिमूर्ति में ब्रह्मांड के निर्माता। सृजन, ज्ञान और वेदों से जुड़े हैं।">Creator of the universe in the Trimurti. Associated with creation, knowledge, and Vedas.</p></div>
+            <div class="card" onclick="showText('vishnu')"><div class="icon">🪷</div><h3 data-en="Vishnu" data-hi="विष्णु">Vishnu</h3><p data-en="Preserver with ten avatars including Rama and Krishna. Maintains cosmic dharma." data-hi="राम और कृष्ण सहित दस अवतारों वाले पालनकर्ता। ब्रह्मांडीय धर्म की रक्षा करते हैं।">Preserver with ten avatars including Rama and Krishna. Maintains cosmic dharma.</p></div>
+            <div class="card" onclick="showText('shiva')"><div class="icon">🔱</div><h3 data-en="Shiva" data-hi="शिव">Shiva</h3><p data-en="The transformer, supreme yogi, lord of cosmic dance (Nataraja), and meditation." data-hi="संहारकर्ता, परम योगी, ब्रह्मांडीय नृत्य (नटराज) और ध्यान के स्वामी।">The transformer, supreme yogi, lord of cosmic dance (Nataraja), and meditation.</p></div>
+            <div class="card" onclick="showText('krishna')"><div class="icon">🦚</div><h3 data-en="Krishna" data-hi="कृष्ण">Krishna</h3><p data-en="Eighth Vishnu avatar, Gita teacher, embodiment of divine love and wisdom." data-hi="विष्णु के आठवें अवतार, गीता के शिक्षक, दिव्य प्रेम और ज्ञान के अवतार।">Eighth Vishnu avatar, Gita teacher, embodiment of divine love and wisdom.</p></div>
+            <div class="card" onclick="showText('rama')"><div class="icon">🏹</div><h3 data-en="Rama" data-hi="राम">Rama</h3><p data-en="Seventh Vishnu avatar, ideal king (Maryada Purushottam), Ramayana hero." data-hi="विष्णु के सातवें अवतार, आदर्श राजा (मर्यादा पुरुषोत्तम), रामायण के नायक।">Seventh Vishnu avatar, ideal king (Maryada Purushottam), Ramayana hero.</p></div>
+            <div class="card" onclick="showText('durga')"><div class="icon">🦁</div><h3 data-en="Durga" data-hi="दुर्गा">Durga</h3><p data-en="Divine mother, warrior goddess with ten arms who destroys evil forces." data-hi="दिव्य माता, दस भुजाओं वाली योद्धा देवी जो बुरी शक्तियों का विनाश करती हैं।">Divine mother, warrior goddess with ten arms who destroys evil forces.</p></div>
+            <div class="card" onclick="showText('lakshmi')"><div class="icon">💫</div><h3 data-en="Lakshmi" data-hi="लक्ष्मी">Lakshmi</h3><p data-en="Goddess of wealth, prosperity, fortune. Vishnu's consort and symbol of abundance." data-hi="धन, समृद्धि, भाग्य की देवी। विष्णु की पत्नी और प्रचुरता का प्रतीक।">Goddess of wealth, prosperity, fortune. Vishnu's consort and symbol of abundance.</p></div>
+            <div class="card" onclick="showText('saraswati')"><div class="icon">🎵</div><h3 data-en="Saraswati" data-hi="सरस्वती">Saraswati</h3><p data-en="Goddess of knowledge, music, arts, wisdom. Brahma's consort, patron of learning." data-hi="ज्ञान, संगीत, कला, बुद्धि की देवी। ब्रह्मा की पत्नी, शिक्षा की संरक्षक।">Goddess of knowledge, music, arts, wisdom. Brahma's consort, patron of learning.</p></div>
+            <div class="card" onclick="showText('ganesha')"><div class="icon">🐘</div><h3 data-en="Ganesha" data-hi="गणेश">Ganesha</h3><p data-en="Elephant-headed remover of obstacles, lord of beginnings and sciences." data-hi="हाथी के सिर वाले विघ्नहर्ता, नई शुरुआत और विज्ञान के स्वामी।">Elephant-headed remover of obstacles, lord of beginnings and sciences.</p></div>
+            <div class="card" onclick="showText('hanuman')"><div class="icon">💪</div><h3 data-en="Hanuman" data-hi="हनुमान">Hanuman</h3><p data-en="Monkey god, Rama's devotee, symbol of strength, courage, and selfless service." data-hi="वानर देवता, राम के भक्त, शक्ति, साहस और निस्वार्थ सेवा के प्रतीक।">Monkey god, Rama's devotee, symbol of strength, courage, and selfless service.</p></div>
+        </div>
+        <div id="deities-comments" class="comments-section" style="margin-top:2rem;"></div>
+    </div>
+
+    <!-- FESTIVALS -->
+    <div id="festivals" class="section">
+        <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Hindu Festivals" data-hi="हिंदू त्यौहार">Hindu Festivals</h2>
+        <div class="cards-grid">
+            <div class="card" onclick="showText('diwali')"><div class="icon">🪔</div><h3 data-en="Diwali" data-hi="दिवाली">Diwali</h3><p data-en="Festival of lights celebrating victory of light over darkness and Rama's return." data-hi="अंधकार पर प्रकाश की विजय और राम की वापसी का उत्सव — प्रकाश का त्योहार।">Festival of lights celebrating victory of light over darkness and Rama's return.</p></div>
+            <div class="card" onclick="showText('holi')"><div class="icon">🎨</div><h3 data-en="Holi" data-hi="होली">Holi</h3><p data-en="Festival of colors celebrating spring and good over evil through Prahlad's story." data-hi="प्रह्लाद की कहानी के माध्यम से वसंत और बुराई पर अच्छाई का उत्सव — रंगों का त्योहार।">Festival of colors celebrating spring and good over evil through Prahlad's story.</p></div>
+            <div class="card" onclick="showText('navratri')"><div class="icon">💃</div><h3 data-en="Navratri" data-hi="नवरात्रि">Navratri</h3><p data-en="Nine nights worshipping nine forms of Goddess Durga with fasting and dance." data-hi="उपवास और नृत्य के साथ देवी दुर्गा के नौ रूपों की पूजा करने वाली नौ रातें।">Nine nights worshipping nine forms of Goddess Durga with fasting and dance.</p></div>
+            <div class="card" onclick="showText('janmashtami')"><div class="icon">🦚</div><h3 data-en="Janmashtami" data-hi="जन्माष्टमी">Janmashtami</h3><p data-en="Krishna's midnight birth celebration with fasting, prayers, and Dahi Handi." data-hi="उपवास, प्रार्थना और दही हांडी के साथ कृष्ण के आधी रात के जन्म का उत्सव।">Krishna's midnight birth celebration with fasting, prayers, and Dahi Handi.</p></div>
+            <div class="card" onclick="showText('maha-shivratri')"><div class="icon">🌙</div><h3 data-en="Maha Shivratri" data-hi="महा शिवरात्रि">Maha Shivratri</h3><p data-en="Great night of Shiva with fasting, night vigil, and Shiva linga worship." data-hi="उपवास, रात्रि जागरण और शिव लिंग पूजा के साथ शिव की महान रात्रि।">Great night of Shiva with fasting, night vigil, and Shiva linga worship.</p></div>
+            <div class="card" onclick="showText('ram-navami')"><div class="icon">🏹</div><h3 data-en="Ram Navami" data-hi="राम नवमी">Ram Navami</h3><p data-en="Rama's birthday with Ramayana readings, devotional singing, and fasting." data-hi="रामायण पाठ, भक्ति गायन और उपवास के साथ राम का जन्मदिन।">Rama's birthday with Ramayana readings, devotional singing, and fasting.</p></div>
+            <div class="card" onclick="showText('ganesh-chaturthi')"><div class="icon">🐘</div><h3 data-en="Ganesh Chaturthi" data-hi="गणेश चतुर्थी">Ganesh Chaturthi</h3><p data-en="10-day Ganesha festival with prayers culminating in immersion ceremony." data-hi="विसर्जन समारोह में समाप्त होने वाली प्रार्थनाओं के साथ 10 दिवसीय गणेश उत्सव।">10-day Ganesha festival with prayers culminating in immersion ceremony.</p></div>
+            <div class="card" onclick="showText('dussehra')"><div class="icon">🏹</div><h3 data-en="Dussehra" data-hi="दशहरा">Dussehra</h3><p data-en="Victory of good over evil - Rama over Ravana and Durga over Mahishasura." data-hi="बुराई पर अच्छाई की विजय — रावण पर राम और महिषासुर पर दुर्गा की विजय।">Victory of good over evil - Rama over Ravana and Durga over Mahishasura.</p></div>
+        </div>
+        <div id="festivals-comments" class="comments-section" style="margin-top:2rem;"></div>
+    </div>
+
+    <!-- RITUALS -->
+    <div id="rituals" class="section">
+        <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Rituals & Practices" data-hi="रीति-रिवाज और प्रथाएं">Rituals & Practices</h2>
+        <div class="cards-grid">
+            <div class="card" onclick="showText('puja')"><div class="icon">🙏</div><h3 data-en="Puja" data-hi="पूजा">Puja</h3><p data-en="Worship with sixteen steps (shodasha upachara) including offerings and aarti." data-hi="प्रसाद और आरती सहित सोलह चरणों (षोडशोपचार) के साथ पूजा।">Worship with sixteen steps (shodasha upachara) including offerings and aarti.</p></div>
+            <div class="card" onclick="showText('yoga')"><div class="icon">🧘</div><h3 data-en="Yoga" data-hi="योग">Yoga</h3><p data-en="Eight-limbed practice combining asanas, pranayama, and meditation for self-realization." data-hi="आत्म-साक्षात्कार के लिए आसन, प्राणायाम और ध्यान को मिलाकर आठ अंगों वाली साधना।">Eight-limbed practice combining asanas, pranayama, and meditation for self-realization.</p></div>
+            <div class="card" onclick="showText('meditation')"><div class="icon">🕉️</div><h3 data-en="Dhyana" data-hi="ध्यान">Dhyana</h3><p data-en="Meditation practice for spiritual clarity, inner peace, and divine connection." data-hi="आध्यात्मिक स्पष्टता, आंतरिक शांति और दिव्य संबंध के लिए ध्यान साधना।">Meditation practice for spiritual clarity, inner peace, and divine connection.</p></div>
+            <div class="card" onclick="showText('aarti')"><div class="icon">🔥</div><h3 data-en="Aarti" data-hi="आरती">Aarti</h3><p data-en="Devotional songs with light offering expressing love and removing darkness." data-hi="प्रेम व्यक्त करने और अंधकार दूर करने के लिए दीप अर्पण के साथ भक्ति गीत।">Devotional songs with light offering expressing love and removing darkness.</p></div>
+            <div class="card" onclick="showText('fasting')"><div class="icon">🌾</div><h3 data-en="Vrat" data-hi="व्रत">Vrat</h3><p data-en="Spiritual fasting to purify body and mind on specific days and festivals." data-hi="विशिष्ट दिनों और त्योहारों पर शरीर और मन को शुद्ध करने के लिए आध्यात्मिक उपवास।">Spiritual fasting to purify body and mind on specific days and festivals.</p></div>
+            <div class="card" onclick="showText('charity')"><div class="icon">💝</div><h3 data-en="Daan" data-hi="दान">Daan</h3><p data-en="Charitable giving - anna daan (food), vidya daan (knowledge) for spiritual growth." data-hi="दान देना — अन्न दान (भोजन), विद्या दान (ज्ञान) आध्यात्मिक विकास के लिए।">Charitable giving - anna daan (food), vidya daan (knowledge) for spiritual growth.</p></div>
+            <div class="card" onclick="showText('yagna')"><div class="icon">🔥</div><h3 data-en="Yagna" data-hi="यज्ञ">Yagna</h3><p data-en="Vedic fire ceremony with mantras for purification and cosmic harmony." data-hi="शुद्धि और ब्रह्मांडीय सामंजस्य के लिए मंत्रों के साथ वैदिक अग्नि समारोह।">Vedic fire ceremony with mantras for purification and cosmic harmony.</p></div>
+            <div class="card" onclick="showText('japa')"><div class="icon">📿</div><h3 data-en="Japa" data-hi="जप">Japa</h3><p data-en="Repetitive mantra chanting with mala (108 beads) for concentration and progress." data-hi="एकाग्रता और प्रगति के लिए माला (108 मनकों) के साथ बार-बार मंत्र जाप।">Repetitive mantra chanting with mala (108 beads) for concentration and progress.</p></div>
+        </div>
+        <div id="rituals-comments" class="comments-section" style="margin-top:2rem;"></div>
+    </div>
+
+    <!-- PANCHANG -->
+    <div id="panchang" class="section">
+        <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Hindu Panchang (Calendar)" data-hi="हिंदू पंचांग (कैलेंडर)">Hindu Panchang (Calendar)</h2>
+        <div class="text-content">
+            <h3 data-en="What is Panchang?" data-hi="पंचांग क्या है?">What is Panchang?</h3>
+            <p data-en="Panchang, meaning 'five limbs,' is the Hindu calendar providing astronomical and astrological information for determining auspicious timings (muhurat) for religious ceremonies and important activities."
+               data-hi="पंचांग, जिसका अर्थ है 'पांच अंग,' हिंदू कैलेंडर है जो धार्मिक समारोहों और महत्वपूर्ण गतिविधियों के लिए शुभ समय (मुहूर्त) निर्धारित करने हेतु खगोलीय और ज्योतिषीय जानकारी प्रदान करता है।">Panchang, meaning 'five limbs,' is the Hindu calendar providing astronomical and astrological information for determining auspicious timings (muhurat) for religious ceremonies and important activities.</p>
+            <h3 data-en="The Five Elements" data-hi="पांच तत्व">The Five Elements</h3>
+            <div class="verse">
+                <strong data-en="1. Tithi - Lunar Day" data-hi="1. तिथि - चंद्र दिवस">1. Tithi - Lunar Day</strong><br>
+                <span data-en="30 lunar days in a month divided into Shukla Paksha (waxing) and Krishna Paksha (waning) based on moon's position." data-hi="सूर्य के सापेक्ष चंद्रमा की स्थिति के आधार पर एक मास में 30 तिथियां — शुक्ल पक्ष (बढ़ता) और कृष्ण पक्ष (घटता)।">30 lunar days in a month divided into Shukla Paksha (waxing) and Krishna Paksha (waning) based on moon's position.</span>
+            </div>
+            <div class="verse">
+                <strong data-en="2. Vara - Weekday" data-hi="2. वार - सप्ताह का दिन">2. Vara - Weekday</strong><br>
+                <span data-en="Seven days ruled by celestial bodies: Sunday (Sun), Monday (Moon), Tuesday (Mars), Wednesday (Mercury), Thursday (Jupiter), Friday (Venus), Saturday (Saturn)." data-hi="खगोलीय पिंडों द्वारा शासित सात दिन: रविवार (सूर्य), सोमवार (चंद्र), मंगलवार (मंगल), बुधवार (बुध), गुरुवार (बृहस्पति), शुक्रवार (शुक्र), शनिवार (शनि)।">Seven days ruled by celestial bodies: Sunday (Sun), Monday (Moon), Tuesday (Mars), Wednesday (Mercury), Thursday (Jupiter), Friday (Venus), Saturday (Saturn).</span>
+            </div>
+            <div class="verse">
+                <strong data-en="3. Nakshatra - Lunar Constellation" data-hi="3. नक्षत्र - चंद्र नक्षत्र">3. Nakshatra - Lunar Constellation</strong><br>
+                <span data-en="27 lunar mansions through which the moon passes, each with specific influences and qualities." data-hi="27 चंद्र नक्षत्र जिनसे चंद्रमा गुजरता है, प्रत्येक के विशिष्ट प्रभाव और गुण होते हैं।">27 lunar mansions through which the moon passes, each with specific influences and qualities.</span>
+            </div>
+            <div class="verse">
+                <strong data-en="4. Yoga - Auspicious Period" data-hi="4. योग - शुभ अवधि">4. Yoga - Auspicious Period</strong><br>
+                <span data-en="27 yogas calculated from combined sun and moon motion, each having significance for activities." data-hi="सूर्य और चंद्र की संयुक्त गति से गणना किए गए 27 योग, प्रत्येक का गतिविधियों के लिए महत्व है।">27 yogas calculated from combined sun and moon motion, each having significance for activities.</span>
+            </div>
+            <div class="verse">
+                <strong data-en="5. Karana - Half Tithi" data-hi="5. करण - आधी तिथि">5. Karana - Half Tithi</strong><br>
+                <span data-en="Each tithi divided into two karanas. 11 karanas repeat in specific pattern throughout the month." data-hi="प्रत्येक तिथि दो करणों में विभाजित। 11 करण महीने भर एक विशिष्ट पैटर्न में दोहराते हैं।">Each tithi divided into two karanas. 11 karanas repeat in specific pattern throughout the month.</span>
+            </div>
+            <h3 data-en="Hindu Months" data-hi="हिंदू महीने">Hindu Months</h3>
+            <p data-en="Chaitra (Mar-Apr), Vaishakha (Apr-May), Jyeshtha (May-Jun), Ashadha (Jun-Jul), Shravana (Jul-Aug), Bhadrapada (Aug-Sep), Ashwin (Sep-Oct), Kartik (Oct-Nov), Margashirsha (Nov-Dec), Pausha (Dec-Jan), Magha (Jan-Feb), Phalguna (Feb-Mar)"
+               data-hi="चैत्र (मार्च-अप्रैल), वैशाख (अप्रैल-मई), ज्येष्ठ (मई-जून), आषाढ़ (जून-जुलाई), श्रावण (जुलाई-अगस्त), भाद्रपद (अगस्त-सितंबर), आश्विन (सितंबर-अक्टूबर), कार्तिक (अक्टूबर-नवंबर), मार्गशीर्ष (नवंबर-दिसंबर), पौष (दिसंबर-जनवरी), माघ (जनवरी-फरवरी), फाल्गुन (फरवरी-मार्च)">Chaitra (Mar-Apr), Vaishakha (Apr-May), Jyeshtha (May-Jun), Ashadha (Jun-Jul), Shravana (Jul-Aug), Bhadrapada (Aug-Sep), Ashwin (Sep-Oct), Kartik (Oct-Nov), Margashirsha (Nov-Dec), Pausha (Dec-Jan), Magha (Jan-Feb), Phalguna (Feb-Mar)</p>
+            <h3 data-en="Used For" data-hi="उपयोग">Used For</h3>
+            <p data-en="• Determining wedding dates and ceremonies • Festival dates • Agricultural planning • Daily prayers and fasting • Understanding planetary influences"
+               data-hi="• विवाह की तिथियां और समारोह निर्धारित करना • त्योहार की तिथियां • कृषि योजना • दैनिक प्रार्थना और उपवास • ग्रहों के प्रभाव को समझना">• Determining wedding dates and ceremonies • Festival dates • Agricultural planning • Daily prayers and fasting • Understanding planetary influences</p>
+        </div>
+        <div id="panchang-comments" class="comments-section" style="margin-top:2rem;"></div>
+    </div>
+
+    <div id="text-display" style="display:none;"></div>
+</div>
+
+<footer>
+    <p>ॐ शान्ति शान्ति शान्तिः</p>
+    <p style="margin-top:0.5rem;" data-en="Om Shanti Shanti Shanti" data-hi="ॐ शांति शांति शांति">Om Shanti Shanti Shanti</p>
+    <p style="margin-top:1rem;font-size:0.9rem;" data-en="© 2026 Sanatan Dharm Portal - Preserving Ancient Wisdom" data-hi="© 2026 सनातन धर्म पोर्टल — प्राचीन ज्ञान का संरक्षण">© 2026 Sanatan Dharm Portal - Preserving Ancient Wisdom</p>
+</footer>
+
+<script>
+let currentLanguage = 'en';
+let currentUser     = null;
+let currentSection  = 'home';
+
+const savedComments = JSON.parse(localStorage.getItem('sd_comments') || '{}');
+const savedLikes    = JSON.parse(localStorage.getItem('sd_likes')    || '{}');
+
+const savedUser = localStorage.getItem('sd_user');
+if (savedUser) { currentUser = JSON.parse(savedUser); updateNavUser(); }
+
+// ── LANGUAGE ──────────────────────────────────────────────
+function toggleLanguage() {
+    currentLanguage = currentLanguage === 'en' ? 'hi' : 'en';
+    document.getElementById('langBtn').textContent =
+        currentLanguage === 'en' ? 'हिंदी में पढ़ें' : 'Read in English';
+    document.querySelectorAll('[data-en][data-hi]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + currentLanguage);
+    });
+}
+
+// ── AUTH ──────────────────────────────────────────────────
+function openModal()  { switchToLogin(); document.getElementById('loginModal').classList.add('open'); document.getElementById('errorMsg').style.display = 'none'; }
+function closeModal() { document.getElementById('loginModal').classList.remove('open'); }
+function handleOverlayClick(e) { if (e.target.id === 'loginModal') closeModal(); }
+
+function switchToRegister() {
+    document.getElementById('loginForm').style.display    = 'none';
+    document.getElementById('registerForm').style.display = 'block';
+    document.getElementById('modalTitle').textContent     = 'Create Account';
+    document.getElementById('modalSubtitle').textContent  = 'Join the Sanatan Dharm community';
+    document.getElementById('errorMsg').style.display     = 'none';
+}
+function switchToLogin() {
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('loginForm').style.display    = 'block';
+    document.getElementById('modalTitle').textContent     = 'Welcome Back';
+    document.getElementById('modalSubtitle').textContent  = 'Sign in to join the conversation';
+    document.getElementById('errorMsg').style.display     = 'none';
+}
+function showError(msg) { const el=document.getElementById('errorMsg'); el.textContent=msg; el.style.display='block'; }
+
+function loginWithGoogle() {
+    const names=['Arjun Sharma','Priya Verma','Rahul Singh','Anita Patel','Vikram Nair'];
+    const name=names[Math.floor(Math.random()*names.length)];
+    setLoggedIn({name, email:name.toLowerCase().replace(' ','.')+'@gmail.com', avatar:name[0].toUpperCase(), provider:'google'});
+}
+function loginWithEmail() {
+    const email=document.getElementById('loginEmail').value.trim();
+    const pass =document.getElementById('loginPassword').value;
+    if (!email||!pass) return showError('Please fill in all fields.');
+    if (!email.includes('@')) return showError('Please enter a valid email address.');
+    const users=JSON.parse(localStorage.getItem('sd_users')||'{}');
+    if (!users[email]) return showError('No account found. Please register first.');
+    if (users[email].password!==pass) return showError('Incorrect password.');
+    setLoggedIn({name:users[email].name,email,avatar:users[email].name[0].toUpperCase(),provider:'email'});
+}
+function registerWithEmail() {
+    const name =document.getElementById('regName').value.trim();
+    const email=document.getElementById('regEmail').value.trim();
+    const pass =document.getElementById('regPassword').value;
+    if (!name||!email||!pass) return showError('Please fill in all fields.');
+    if (!email.includes('@')) return showError('Please enter a valid email address.');
+    if (pass.length<6) return showError('Password must be at least 6 characters.');
+    const users=JSON.parse(localStorage.getItem('sd_users')||'{}');
+    if (users[email]) return showError('An account with this email already exists.');
+    users[email]={name,password:pass};
+    localStorage.setItem('sd_users',JSON.stringify(users));
+    setLoggedIn({name,email,avatar:name[0].toUpperCase(),provider:'email'});
+}
+function setLoggedIn(user) {
+    currentUser=user; localStorage.setItem('sd_user',JSON.stringify(user));
+    updateNavUser(); closeModal(); renderComments(currentSection);
+}
+function logout() {
+    currentUser=null; localStorage.removeItem('sd_user');
+    updateNavUser(); renderComments(currentSection);
+    document.getElementById('userDropdown').classList.remove('open');
+}
+function updateNavUser() {
+    if (currentUser) {
+        document.getElementById('headerLoginBtn').style.display='none';
+        document.getElementById('headerUserPill').style.display='block';
+        document.getElementById('headerAvatar').textContent=currentUser.avatar;
+        document.getElementById('headerUserName').textContent=currentUser.name.split(' ')[0];
+    } else {
+        document.getElementById('headerLoginBtn').style.display='block';
+        document.getElementById('headerUserPill').style.display='none';
+    }
+}
+function toggleDropdown() { document.getElementById('userDropdown').classList.toggle('open'); }
+document.addEventListener('click', e => {
+    const pill=document.querySelector('.user-pill');
+    if (pill&&!pill.contains(e.target)) document.getElementById('userDropdown').classList.remove('open');
+});
+
+// ── COMMENTS ─────────────────────────────────────────────
+function getComments(s)        { return savedComments[s]||[]; }
+function saveComments(s,list)  { savedComments[s]=list; localStorage.setItem('sd_comments',JSON.stringify(savedComments)); }
+
+function renderComments(section) {
+    const container=document.getElementById(section+'-comments');
+    if (!container) return;
+    const comments=getComments(section);
+
+    const writeBox = currentUser ? `
+        <div class="comment-box">
+            <div class="comment-box-header">
+                <div class="comment-avatar">${currentUser.avatar}</div>
+                <strong style="color:var(--brown);">${currentUser.name}</strong>
+            </div>
+            <textarea class="comment-textarea" id="commentInput-${section}" placeholder="Share your thoughts, questions, or blessings... 🙏"></textarea>
+            <div class="comment-submit-row">
+                <button class="btn-post-comment" onclick="postComment('${section}')">Post Comment 🙏</button>
+            </div>
+        </div>` : `
+        <div class="comment-login-prompt">
+            <p>🙏 Login to share your thoughts and blessings with the community</p>
+            <button class="btn-login-prompt" onclick="openModal()">Login / Register to Comment</button>
+        </div>`;
+
+    const commentsList = comments.length===0
+        ? `<div class="no-comments"><div class="no-comments-icon">🙏</div><p>Be the first to share your thoughts!</p></div>`
+        : `<div class="comments-list">`+comments.map((c,i)=>{
+            const lk=section+'-'+i, liked=savedLikes[lk];
+            return `<div class="comment-card">
+                <div class="comment-meta">
+                    <div class="comment-avatar" style="width:36px;height:36px;font-size:0.85rem;">${c.avatar}</div>
+                    <span class="comment-user-name">${c.name}</span>
+                    <span class="comment-date">${c.date}</span>
+                </div>
+                <div class="comment-text">${c.text}</div>
+                <div class="comment-actions">
+                    <button class="btn-like ${liked?'liked':''}" onclick="toggleLike('${section}',${i},this)">
+                        🙏 <span class="like-count">${c.likes||0}</span>
+                    </button>
+                </div>
+            </div>`;
+        }).join('')+`</div>`;
+
+    container.innerHTML=`
+        <div class="comments-header">
+            <h3>💬 Community Comments</h3>
+            <span class="comment-count-badge">${comments.length}</span>
+        </div>${writeBox}${commentsList}`;
+}
+
+function postComment(section) {
+    const input=document.getElementById('commentInput-'+section);
+    const text=input.value.trim();
+    if (!text) return;
+    if (!currentUser) return openModal();
+    const comments=getComments(section);
+    comments.unshift({
+        name:currentUser.name, avatar:currentUser.avatar,
+        text:text.replace(/</g,'&lt;').replace(/>/g,'&gt;'),
+        date:new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}),
+        likes:0
+    });
+    saveComments(section,comments); renderComments(section);
+}
+
+function toggleLike(section,index,btn) {
+    if (!currentUser) return openModal();
+    const lk=section+'-'+index, comments=getComments(section);
+    if (!savedLikes[lk]) { savedLikes[lk]=true; comments[index].likes=(comments[index].likes||0)+1; btn.classList.add('liked'); }
+    else { delete savedLikes[lk]; comments[index].likes=Math.max(0,(comments[index].likes||1)-1); btn.classList.remove('liked'); }
+    localStorage.setItem('sd_likes',JSON.stringify(savedLikes));
+    saveComments(section,comments);
+    btn.querySelector('.like-count').textContent=comments[index].likes;
+}
+
+// ── NAVIGATION ────────────────────────────────────────────
+function showSection(id) {
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.getElementById('text-display').style.display='none';
+    currentSection=id; renderComments(id);
+}
+function showText(id) {
+    const display=document.getElementById('text-display');
+    const active=document.querySelector('.section.active');
+    display.innerHTML=`<button class="back-btn" onclick="goBack()">← Back</button>`+getTextContent(id);
+    display.style.display='block';
+    if (active) active.style.display='none';
+}
+function goBack() {
+    document.getElementById('text-display').style.display='none';
+    const active=document.querySelector('.section.active');
+    if (active) active.style.display='block';
+}
+
+// ── TEXT CONTENT ──────────────────────────────────────────
+function getTextContent(id) {
+    const lang=currentLanguage;
+    const contents={
+        'bhagavad-gita':{
+            en:`<div class="text-content"><h2>Bhagavad Gita — The Song of God</h2><p>The Bhagavad Gita is a 700-verse scripture forming part of the Mahabharata — a sacred dialogue between Lord Krishna and Arjuna on the battlefield of Kurukshetra.</p><h3>Key Teachings</h3><p><strong>Dharma:</strong> Perform your duty without attachment to results.<br><strong>Karma Yoga:</strong> Path of selfless action.<br><strong>Bhakti Yoga:</strong> Path of devotion and love.<br><strong>Jnana Yoga:</strong> Path of knowledge and wisdom.</p><div class="verse"><strong>Chapter 2, Verse 47:</strong><br>"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।"<br>You have the right to perform your duty, but never to the fruits thereof.</div><div class="verse"><strong>Chapter 18, Verse 66:</strong><br>"सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज।"<br>Abandon all dharmas and surrender unto Me alone.</div></div>`,
+            hi:`<div class="text-content"><h2>भगवद गीता — भगवान का गीत</h2><p>भगवद गीता 700 श्लोकों का हिंदू धर्मग्रंथ है जो महाभारत का हिस्सा है। यह कुरुक्षेत्र के युद्धक्षेत्र में भगवान कृष्ण और अर्जुन के बीच पवित्र संवाद है।</p><h3>मुख्य शिक्षाएं</h3><p><strong>धर्म:</strong> परिणामों की चिंता किए बिना अपना कर्तव्य निभाएं।<br><strong>कर्म योग:</strong> निस्वार्थ कर्म का मार्ग।<br><strong>भक्ति योग:</strong> भक्ति और प्रेम का मार्ग।<br><strong>ज्ञान योग:</strong> ज्ञान और बुद्धि का मार्ग।</p><div class="verse"><strong>अध्याय 2, श्लोक 47:</strong><br>"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।"<br>तुम्हारा अधिकार केवल कर्म करने में है, फलों में कभी नहीं।</div><div class="verse"><strong>अध्याय 18, श्लोक 66:</strong><br>"सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज।"<br>सभी धर्मों को त्यागकर केवल मेरी शरण में आओ।</div></div>`
+        },
+        'diwali':{
+            en:`<div class="text-content"><h2>Diwali — Festival of Lights</h2><p>Diwali is the most significant Hindu festival, celebrated across five days. It symbolizes the victory of light over darkness and good over evil.</p><h3>The Five Days</h3><p><strong>Day 1 — Dhanteras:</strong> Worship of wealth and buying gold.<br><strong>Day 2 — Naraka Chaturdashi:</strong> Krishna's victory over Narakasura.<br><strong>Day 3 — Diwali:</strong> Main day — Lakshmi worship, diyas, fireworks.<br><strong>Day 4 — Govardhan Puja:</strong> Krishna lifting Govardhan mountain.<br><strong>Day 5 — Bhai Dooj:</strong> Celebration of the brother-sister bond.</p></div>`,
+            hi:`<div class="text-content"><h2>दिवाली — प्रकाश का त्यौहार</h2><p>दिवाली पांच दिनों तक मनाया जाने वाला सबसे महत्वपूर्ण हिंदू त्योहार है। यह अंधकार पर प्रकाश और बुराई पर अच्छाई की विजय का प्रतीक है।</p><h3>पांच दिन</h3><p><strong>दिन 1 — धनतेरस:</strong> धन की पूजा और सोना खरीदना।<br><strong>दिन 2 — नरक चतुर्दशी:</strong> नरकासुर पर कृष्ण की विजय।<br><strong>दिन 3 — दिवाली:</strong> मुख्य दिन — लक्ष्मी पूजा, दीये, पटाखे।<br><strong>दिन 4 — गोवर्धन पूजा:</strong> कृष्ण द्वारा गोवर्धन पर्वत उठाना।<br><strong>दिन 5 — भाई दूज:</strong> भाई-बहन के बंधन का उत्सव।</p></div>`
         }
+    };
+    const def=lang==='en'
+        ?`<div class="text-content"><h2>Content Coming Soon</h2><p>This section is being updated with detailed information. 🙏</p></div>`
+        :`<div class="text-content"><h2>सामग्री जल्द आ रही है</h2><p>इस अनुभाग को विस्तृत जानकारी के साथ अपडेट किया जा रहा है। 🙏</p></div>`;
+    return (contents[id]&&contents[id][lang])||def;
+}
 
-        function showSection(id) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            document.getElementById('text-display').style.display = 'none';
-        }
-
-        function showText(id) {
-            const display = document.getElementById('text-display');
-            const content = getTextContent(id);
-            display.innerHTML = '<button class="back-btn" onclick="goBack()">← Back</button>' + content;
-            display.style.display = 'block';
-            
-            document.querySelector('.section.active').style.display = 'none';
-        }
-
-        function goBack() {
-            document.getElementById('text-display').style.display = 'none';
-            document.querySelector('.section.active').style.display = 'block';
-        }
-
-        function getTextContent(id) {
-            const lang = currentLanguage;
-            const contents = {
-                'bhagavad-gita': {
-                    en: `<div class="text-content">
-                        <h2>Bhagavad Gita - The Song of God</h2>
-                        <p>The Bhagavad Gita is a 700-verse Hindu scripture forming part of the Mahabharata. It's a sacred dialogue between Lord Krishna and warrior prince Arjuna on Kurukshetra battlefield.</p>
-                        <h3>Key Teachings:</h3>
-                        <p><strong>Dharma:</strong> Perform your duty without attachment to results</p>
-                        <p><strong>Karma Yoga:</strong> Path of selfless action</p>
-                        <p><strong>Bhakti Yoga:</strong> Path of devotion and love</p>
-                        <p><strong>Jnana Yoga:</strong> Path of knowledge and wisdom</p>
-                        <div class="verse">
-                            <strong>Chapter 2, Verse 47:</strong><br>
-                            "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।"<br>
-                            You have the right to perform your duty, but not to the fruits.
-                        </div>
-                        <div class="verse">
-                            <strong>Chapter 18, Verse 66:</strong><br>
-                            "सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज।"<br>
-                            Abandon all dharmas and surrender unto Me alone.
-                        </div>
-                        <p>The Gita addresses moral dilemmas and spiritual confusion, providing timeless wisdom for modern life.</p>
-                    </div>`,
-                    hi: `<div class="text-content">
-                        <h2>भगवद गीता - भगवान का गीत</h2>
-                        <p>भगवद गीता 700 श्लोकों का हिंदू धर्मग्रंथ है जो महाभारत का हिस्सा है। यह कुरुक्षेत्र के युद्धक्षेत्र में भगवान कृष्ण और योद्धा अर्जुन के बीच पवित्र संवाद है।</p>
-                        <h3>मुख्य शिक्षाएं:</h3>
-                        <p><strong>धर्म:</strong> परिणामों से आसक्ति के बिना अपना कर्तव्य निभाएं</p>
-                        <p><strong>कर्म योग:</strong> निस्वार्थ कर्म का मार्ग</p>
-                        <p><strong>भक्ति योग:</strong> भक्ति और प्रेम का मार्ग</p>
-                        <p><strong>ज्ञान योग:</strong> ज्ञान और बुद्धि का मार्ग</p>
-                        <div class="verse">
-                            <strong>अध्याय 2, श्लोक 47:</strong><br>
-                            "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।"<br>
-                            तुम्हारा अधिकार केवल कर्म में है, फलों में कभी नहीं।
-                        </div>
-                        <div class="verse">
-                            <strong>अध्याय 18, श्लोक 66:</strong><br>
-                            "सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज।"<br>
-                            सभी धर्मों को त्यागकर केवल मेरी शरण में आओ।
-                        </div>
-                        <p>गीता नैतिक दुविधाओं और आध्यात्मिक भ्रम को संबोधित करती है, आधुनिक जीवन के लिए कालातीत ज्ञान प्रदान करती है।</p>
-                    </div>`
-                },
-                'diwali': {
-                    en: `<div class="text-content">
-                        <h2>Diwali - Festival of Lights</h2>
-                        <p>Diwali is the most significant Hindu festival, celebrated over five days. It symbolizes victory of light over darkness and good over evil.</p>
-                        <h3>The Five Days:</h3>
-                        <p><strong>Day 1 - Dhanteras:</strong> Worship of wealth, buying gold</p>
-                        <p><strong>Day 2 - Naraka Chaturdashi:</strong> Krishna's victory over Narakasura</p>
-                        <p><strong>Day 3 - Diwali:</strong> Main day - Lakshmi worship, diyas, fireworks</p>
-                        <p><strong>Day 4 - Govardhan Puja:</strong> Krishna lifting mountain</p>
-                        <p><strong>Day 5 - Bhai Dooj:</strong> Brother-sister bond</p>
-                        <h3>Significance:</h3>
-                        <p>Commemorates Rama's return to Ayodhya after 14 years of exile. People lit lamps to welcome him home.</p>
-                        <h3>Celebrations:</h3>
-                        <p>• Lighting diyas and candles • Rangoli decorations • Lakshmi and Ganesha worship • Exchanging gifts and sweets • Firecrackers</p>
-                    </div>`,
-                    hi: `<div class="text-content">
-                        <h2>दिवाली - प्रकाश का त्यौहार</h2>
-                        <p>दिवाली सबसे महत्वपूर्ण हिंदू त्योहार है, जो पांच दिनों तक मनाया जाता है। यह अंधकार पर प्रकाश और बुराई पर अच्छाई की विजय का प्रतीक है।</p>
-                        <h3>पांच दिन:</h3>
-                        <p><strong>दिन 1 - धनतेरस:</strong> धन की पूजा, सोना खरीदना</p>
-                        <p><strong>दिन 2 - नरक चतुर्दशी:</strong> नरकासुर पर कृष्ण की विजय</p>
-                        <p><strong>दिन 3 - दिवाली:</strong> मुख्य दिन - लक्ष्मी पूजा, दीये, पटाखे</p>
-                        <p><strong>दिन 4 - गोवर्धन पूजा:</strong> कृष्ण द्वारा पर्वत उठाना</p>
-                        <p><strong>दिन 5 - भाई दूज:</strong> भाई-बहन का बंधन</p>
-                        <h3>महत्व:</h3>
-                        <p>14 वर्षों के निर्वासन के बाद राम की अयोध्या वापसी का स्मरण। लोगों ने उनका स्वागत करने के लिए दीये जलाए।</p>
-                        <h3>उत्सव:</h3>
-                        <p>• दीये और मोमबत्तियां जलाना • रंगोली सजावट • लक्ष्मी और गणेश पूजा • उपहार और मिठाइयों का आदान-प्रदान • पटाखे</p>
-                    </div>`
-                }
-            };
-            
-            const defaultContent = lang === 'en' ? 
-                '<div class="text-content"><h2>Content Coming Soon</h2><p>This section is being updated with detailed information.</p></div>' :
-                '<div class="text-content"><h2>सामग्री जल्द आ रही है</h2><p>इस अनुभाग को विस्तृत जानकारी के साथ अपडेट किया जा रहा है।</p></div>';
-            
-            return (contents[id] && contents[id][lang]) || defaultContent;
-        }
-    </script>
+renderComments('home');
+</script>
 </body>
 </html>
