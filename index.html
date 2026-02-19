@@ -633,21 +633,31 @@ function renderComments(section) {
         ${writeBox}
         <div id="commentsList-${section}" class="comments-loading">🙏 Loading comments...</div>`;
 
-    // Real-time listener
+    // Real-time listener — no composite index needed
     unsubComments = db.collection('comments')
-        .where('section', '==', section)
-        .orderBy('timestamp', 'desc')
         .onSnapshot(snap => {
             const badge = document.getElementById('badge-' + section);
-            if (badge) badge.textContent = snap.size;
-            const list = document.getElementById('commentsList-' + section);
+            const list  = document.getElementById('commentsList-' + section);
             if (!list) return;
-            if (snap.empty) {
+
+            // Filter and sort in JS to avoid needing a Firestore composite index
+            const docs = snap.docs
+                .filter(doc => doc.data().section === section)
+                .sort((a, b) => {
+                    const ta = a.data().timestamp;
+                    const tb = b.data().timestamp;
+                    if (!ta || !tb) return 0;
+                    return tb.toMillis() - ta.toMillis();
+                });
+
+            if (badge) badge.textContent = docs.length;
+
+            if (docs.length === 0) {
                 list.innerHTML = `<div class="no-comments"><div class="no-comments-icon">🙏</div><p>Be the first to share your thoughts!</p></div>`;
                 return;
             }
             list.innerHTML = `<div class="comments-list">` +
-                snap.docs.map(doc => {
+                docs.map(doc => {
                     const c = doc.data();
                     const liked = currentUser && c.likedBy && c.likedBy.includes(currentUser.uid);
                     const date  = c.timestamp ? new Date(c.timestamp.toDate()).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : 'Just now';
@@ -669,6 +679,7 @@ function renderComments(section) {
                     </div>`;
                 }).join('') + `</div>`;
         }, err => {
+            console.error('Comments error:', err);
             const list = document.getElementById('commentsList-' + section);
             if (list) list.innerHTML = `<div class="no-comments"><p>Could not load comments. Please refresh.</p></div>`;
         });
