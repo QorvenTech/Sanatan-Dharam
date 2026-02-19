@@ -22,12 +22,13 @@
         .btn-login-header:hover { background: var(--gold); transform: scale(1.04); }
         .user-pill { display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.18); padding: 0.35rem 0.9rem 0.35rem 0.35rem; border-radius: 25px; cursor: pointer; transition: background 0.3s; position: relative; }
         .user-pill:hover { background: rgba(255,255,255,0.3); }
-        .user-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--saffron)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; color: white; flex-shrink: 0; }
-        .user-name { color: white; font-size: 0.88rem; font-weight: 600; }
-        .user-dropdown { position: absolute; top: calc(100% + 8px); right: 0; background: white; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.18); min-width: 140px; overflow: hidden; display: none; z-index: 2000; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--saffron)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; color: white; flex-shrink: 0; overflow: hidden; }
+        .user-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .user-name { color: white; font-size: 0.88rem; font-weight: 600; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .user-dropdown { position: absolute; top: calc(100% + 8px); right: 0; background: white; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.18); min-width: 160px; overflow: hidden; display: none; z-index: 2000; }
         .user-dropdown.open { display: block; animation: dropDown 0.2s ease; }
         @keyframes dropDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
-        .user-dropdown a { display: block; padding: 0.75rem 1.1rem; color: var(--text) !important; font-size: 0.88rem; border-bottom: 1px solid #f5f5f5; transition: background 0.2s; cursor: pointer; }
+        .user-dropdown a { display: block; padding: 0.75rem 1.1rem; color: var(--text) !important; font-size: 0.88rem; border-bottom: 1px solid #f5f5f5; transition: background 0.2s; cursor: pointer; text-decoration: none; }
         .user-dropdown a:hover { background: var(--cream); }
         .logout-link { color: #e53e3e !important; }
         .header-centre { text-align: center; }
@@ -52,38 +53,55 @@
         .modal-header .om { font-size: 2rem; margin-bottom: 0.5rem; }
         .modal-header h2 { font-family: 'Tiro Devanagari Sanskrit', serif; color: var(--brown); font-size: 1.6rem; margin-bottom: 0.3rem; }
         .modal-header p { color: #888; font-size: 0.95rem; }
+
         .btn-google { width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.8rem; padding: 0.9rem; border: 2px solid #e0e0e0; border-radius: 12px; background: white; cursor: pointer; font-size: 1rem; font-weight: 600; color: #333; transition: all 0.3s; margin-bottom: 1.2rem; font-family: inherit; }
         .btn-google:hover { border-color: #ff6b35; background: #fff5f0; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,107,53,0.15); }
+        .btn-google:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .google-icon { width: 22px; height: 22px; flex-shrink: 0; }
+
         .divider { display: flex; align-items: center; gap: 1rem; margin: 1.2rem 0; color: #bbb; font-size: 0.9rem; }
         .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #e5e5e5; }
+
         .form-group { margin-bottom: 1rem; }
         .form-group label { display: block; font-size: 0.88rem; font-weight: 600; color: var(--brown); margin-bottom: 0.4rem; }
         .form-group input { width: 100%; padding: 0.8rem 1rem; border: 2px solid #e5e5e5; border-radius: 10px; font-size: 1rem; font-family: inherit; transition: border-color 0.3s; outline: none; color: var(--text); }
         .form-group input:focus { border-color: var(--saffron); }
+
         .btn-submit { width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--saffron), var(--saffron-light)); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 0.5rem; font-family: inherit; }
         .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,107,53,0.35); }
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+
         .modal-switch { text-align: center; margin-top: 1.2rem; font-size: 0.9rem; color: #888; }
         .modal-switch a { color: var(--saffron); font-weight: 600; cursor: pointer; }
-        .error-msg { background: #fff0f0; color: #c53030; border-radius: 8px; padding: 0.7rem 1rem; font-size: 0.88rem; margin-bottom: 1rem; display: none; }
+
+        .error-msg { background: #fff0f0; color: #c53030; border-radius: 8px; padding: 0.7rem 1rem; font-size: 0.88rem; margin-bottom: 1rem; display: none; border-left: 3px solid #e53e3e; }
+        .success-msg { background: #f0fff4; color: #276749; border-radius: 8px; padding: 0.7rem 1rem; font-size: 0.88rem; margin-bottom: 1rem; display: none; border-left: 3px solid #38a169; }
+
+        /* Loading spinner */
+        .spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 6px; vertical-align: middle; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         /* MAIN */
         .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
         .section { display: none; animation: fadeIn 0.5s; }
         .section.active { display: block; }
         @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.8rem; margin-top: 2rem; }
         .card { background: white; border-radius: 12px; padding: 1.8rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; border-top: 4px solid var(--saffron); }
         .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.13); }
         .card h3 { color: var(--saffron); margin-bottom: 0.8rem; font-size: 1.4rem; }
         .card p { line-height: 1.6; color: #666; font-size: 0.97rem; }
         .icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
+
         .text-content { background: white; border-radius: 12px; padding: 2.5rem; margin-top: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); line-height: 1.8; max-height: 70vh; overflow-y: auto; }
         .text-content h2 { color: var(--saffron); margin-bottom: 1.5rem; border-bottom: 3px solid var(--saffron); padding-bottom: 0.5rem; font-size: 2rem; }
         .text-content h3 { color: var(--brown); margin-top: 1.8rem; margin-bottom: 0.8rem; font-size: 1.4rem; }
         .verse { background: var(--cream); padding: 1.2rem 1.5rem; margin: 1.2rem 0; border-left: 4px solid var(--saffron); font-style: italic; font-size: 1.1rem; }
+
         .back-btn { background: var(--saffron); color: white; border: none; padding: 0.7rem 1.8rem; border-radius: 25px; cursor: pointer; font-size: 1rem; margin-bottom: 1rem; transition: background 0.3s; font-family: inherit; }
         .back-btn:hover { background: var(--saffron-light); }
+
         .welcome-text { text-align: center; font-size: 1.15rem; line-height: 1.8; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
         .quote-box { background: linear-gradient(135deg, var(--saffron), var(--saffron-light)); color: white; padding: 2rem; border-radius: 12px; margin: 2rem 0; text-align: center; font-size: 1.4rem; font-style: italic; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 
@@ -92,18 +110,24 @@
         .comments-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.8rem; padding-bottom: 1rem; border-bottom: 1px solid #f0e6d3; }
         .comments-header h3 { font-family: 'Tiro Devanagari Sanskrit', serif; color: var(--brown); font-size: 1.4rem; }
         .comment-count-badge { background: var(--saffron); color: white; border-radius: 20px; padding: 0.2rem 0.7rem; font-size: 0.82rem; font-weight: 700; }
+
         .comment-box { background: #fdf8f3; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #f0e6d3; }
         .comment-box-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
-        .comment-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--saffron)); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 1rem; flex-shrink: 0; }
+        .comment-avatar-sm { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--saffron)); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 1rem; flex-shrink: 0; overflow: hidden; }
+        .comment-avatar-sm img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
         .comment-textarea { width: 100%; padding: 0.9rem 1rem; border: 2px solid #e5d5c5; border-radius: 10px; font-size: 1rem; font-family: 'Crimson Pro', Georgia, serif; resize: vertical; min-height: 85px; outline: none; transition: border-color 0.3s; color: var(--text); background: white; }
         .comment-textarea:focus { border-color: var(--saffron); }
         .comment-submit-row { display: flex; justify-content: flex-end; margin-top: 0.8rem; }
         .btn-post-comment { background: linear-gradient(135deg, var(--saffron), var(--saffron-light)); color: white; border: none; padding: 0.65rem 1.6rem; border-radius: 25px; cursor: pointer; font-size: 0.95rem; font-weight: 700; font-family: inherit; transition: all 0.3s; }
         .btn-post-comment:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(255,107,53,0.35); }
+        .btn-post-comment:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+
         .comment-login-prompt { text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #fff8f0, #fff0e0); border-radius: 12px; border: 2px dashed #f0d0b0; margin-bottom: 2rem; }
         .comment-login-prompt p { color: var(--brown); margin-bottom: 1rem; font-size: 1.05rem; }
         .btn-login-prompt { background: linear-gradient(135deg, var(--saffron), var(--saffron-light)); color: white; border: none; padding: 0.65rem 1.6rem; border-radius: 25px; cursor: pointer; font-size: 0.95rem; font-weight: 700; font-family: inherit; transition: all 0.3s; }
         .btn-login-prompt:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(255,107,53,0.35); }
+
         .comments-list { display: flex; flex-direction: column; gap: 1.1rem; }
         .comment-card { background: white; border-radius: 12px; padding: 1.1rem 1.4rem; border: 1px solid #f0e6d3; transition: box-shadow 0.2s; animation: slideInComment 0.3s ease; }
         @keyframes slideInComment { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
@@ -115,6 +139,8 @@
         .comment-actions { display: flex; align-items: center; gap: 1rem; margin-top: 0.7rem; }
         .btn-like { background: none; border: 1px solid #e5d5c5; border-radius: 20px; padding: 0.28rem 0.8rem; cursor: pointer; font-size: 0.85rem; color: #888; transition: all 0.2s; display: flex; align-items: center; gap: 0.3rem; font-family: inherit; }
         .btn-like:hover, .btn-like.liked { background: #fff0e6; border-color: var(--saffron); color: var(--saffron); }
+
+        .comments-loading { text-align: center; padding: 2rem; color: #bbb; }
         .no-comments { text-align: center; padding: 2rem; color: #bbb; font-size: 1rem; }
         .no-comments-icon { font-size: 2.2rem; margin-bottom: 0.5rem; }
 
@@ -131,7 +157,9 @@
 </head>
 <body>
 
-<!-- LOGIN MODAL -->
+<!-- ══════════════════════════════════════
+     LOGIN MODAL
+══════════════════════════════════════ -->
 <div class="modal-overlay" id="loginModal" onclick="handleOverlayClick(event)">
     <div class="modal">
         <button class="modal-close" onclick="closeModal()">✕</button>
@@ -140,34 +168,63 @@
             <h2 id="modalTitle">Welcome Back</h2>
             <p id="modalSubtitle">Sign in to join the conversation</p>
         </div>
-        <div class="error-msg" id="errorMsg"></div>
+
+        <div class="error-msg"   id="errorMsg"></div>
+        <div class="success-msg" id="successMsg"></div>
+
+        <!-- LOGIN FORM -->
         <div id="loginForm">
-            <button class="btn-google" onclick="loginWithGoogle()">
-                <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            <button class="btn-google" id="googleBtn" onclick="loginWithGoogle()">
+                <svg class="google-icon" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
                 Continue with Google
             </button>
             <div class="divider">or sign in with email</div>
             <div class="form-group"><label>Email Address</label><input type="email" id="loginEmail" placeholder="your@email.com"></div>
-            <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="••••••••"></div>
-            <button class="btn-submit" onclick="loginWithEmail()">Sign In 🙏</button>
+            <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter') loginWithEmail()"></div>
+            <button class="btn-submit" id="loginBtn" onclick="loginWithEmail()">Sign In 🙏</button>
+            <div style="text-align:center;margin-top:0.8rem;">
+                <a href="#" onclick="showForgotPassword()" style="color:var(--saffron);font-size:0.88rem;">Forgot password?</a>
+            </div>
             <div class="modal-switch">Don't have an account? <a onclick="switchToRegister()">Create one</a></div>
         </div>
+
+        <!-- REGISTER FORM -->
         <div id="registerForm" style="display:none;">
             <button class="btn-google" onclick="loginWithGoogle()">
-                <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                <svg class="google-icon" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
                 Sign up with Google
             </button>
             <div class="divider">or create with email</div>
             <div class="form-group"><label>Full Name</label><input type="text" id="regName" placeholder="Your name"></div>
             <div class="form-group"><label>Email Address</label><input type="email" id="regEmail" placeholder="your@email.com"></div>
-            <div class="form-group"><label>Password</label><input type="password" id="regPassword" placeholder="Minimum 6 characters"></div>
-            <button class="btn-submit" onclick="registerWithEmail()">Create Account 🙏</button>
+            <div class="form-group"><label>Password (min 6 chars)</label><input type="password" id="regPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter') registerWithEmail()"></div>
+            <button class="btn-submit" id="registerBtn" onclick="registerWithEmail()">Create Account 🙏</button>
             <div class="modal-switch">Already have an account? <a onclick="switchToLogin()">Sign in</a></div>
+        </div>
+
+        <!-- FORGOT PASSWORD FORM -->
+        <div id="forgotForm" style="display:none;">
+            <p style="color:#666;margin-bottom:1rem;font-size:0.95rem;">Enter your email and we'll send you a password reset link.</p>
+            <div class="form-group"><label>Email Address</label><input type="email" id="forgotEmail" placeholder="your@email.com"></div>
+            <button class="btn-submit" onclick="sendResetEmail()">Send Reset Link 📧</button>
+            <div class="modal-switch"><a onclick="switchToLogin()">← Back to Sign In</a></div>
         </div>
     </div>
 </div>
 
-<!-- HEADER — lang toggle LEFT · login RIGHT · title CENTRE -->
+<!-- ══════════════════════════════════════
+     HEADER
+══════════════════════════════════════ -->
 <header>
     <div class="header-top-bar">
         <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">हिंदी में पढ़ें</button>
@@ -195,7 +252,7 @@
     </div>
 </header>
 
-<!-- NAV — clean, no login button here -->
+<!-- NAV -->
 <nav>
     <ul>
         <li><a href="#" onclick="showSection('home')"      data-en="Home"         data-hi="होम">Home</a></li>
@@ -213,26 +270,21 @@
     <!-- HOME -->
     <div id="home" class="section active">
         <div class="welcome-text">
-            <h2 style="color:var(--saffron);margin-bottom:1rem;"
-                data-en="Welcome to Sanatan Dharm Portal" data-hi="सनातन धर्म पोर्टल में आपका स्वागत है">Welcome to Sanatan Dharm Portal</h2>
+            <h2 style="color:var(--saffron);margin-bottom:1rem;" data-en="Welcome to Sanatan Dharm Portal" data-hi="सनातन धर्म पोर्टल में आपका स्वागत है">Welcome to Sanatan Dharm Portal</h2>
             <p data-en="Explore the timeless wisdom of Sanatan Dharm. Access sacred texts like Ramayan and Bhagavad Gita, learn powerful mantras, discover the stories of deities, understand festivals, and explore spiritual practices—all in one place."
                data-hi="सनातन धर्म के कालातीत ज्ञान का अन्वेषण करें। रामायण और भगवद गीता जैसे पवित्र ग्रंथों तक पहुंचें, शक्तिशाली मंत्र सीखें, देवी-देवताओं की कहानियां जानें, त्यौहारों को समझें और आध्यात्मिक प्रथाओं का अन्वेषण करें — सब एक ही जगह।">Explore the timeless wisdom of Sanatan Dharm. Access sacred texts like Ramayan and Bhagavad Gita, learn powerful mantras, discover the stories of deities, understand festivals, and explore spiritual practices—all in one place.</p>
-            <p style="margin-top:1rem;"
-               data-en="Navigate through the sections above to begin your spiritual journey."
-               data-hi="अपनी आध्यात्मिक यात्रा शुरू करने के लिए ऊपर दिए गए अनुभागों में जाएं।">Navigate through the sections above to begin your spiritual journey.</p>
+            <p style="margin-top:1rem;" data-en="Navigate through the sections above to begin your spiritual journey." data-hi="अपनी आध्यात्मिक यात्रा शुरू करने के लिए ऊपर दिए गए अनुभागों में जाएं।">Navigate through the sections above to begin your spiritual journey.</p>
         </div>
         <div class="quote-box">
             "वसुधैव कुटुम्बकम्"<br>
-            <span style="font-size:1.1rem;opacity:0.9;font-style:normal;"
-                  data-en="The World is One Family" data-hi="विश्व एक परिवार है">The World is One Family</span>
+            <span style="font-size:1.1rem;opacity:0.9;font-style:normal;" data-en="The World is One Family" data-hi="विश्व एक परिवार है">The World is One Family</span>
         </div>
         <div id="home-comments" class="comments-section"></div>
     </div>
 
     <!-- SACRED TEXTS -->
     <div id="texts" class="section">
-        <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;"
-            data-en="Sacred Texts" data-hi="पवित्र ग्रंथ">Sacred Texts</h2>
+        <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Sacred Texts" data-hi="पवित्र ग्रंथ">Sacred Texts</h2>
         <div class="cards-grid">
             <div class="card" onclick="showText('bhagavad-gita')"><div class="icon">📖</div><h3 data-en="Bhagavad Gita" data-hi="भगवद गीता">Bhagavad Gita</h3><p data-en="The divine discourse between Lord Krishna and Arjuna. Contains 700 verses of eternal wisdom on dharma, karma, and moksha." data-hi="भगवान कृष्ण और अर्जुन के बीच दिव्य संवाद। धर्म, कर्म और मोक्ष पर शाश्वत ज्ञान के 700 श्लोक।">The divine discourse between Lord Krishna and Arjuna. Contains 700 verses of eternal wisdom on dharma, karma, and moksha.</p></div>
             <div class="card" onclick="showText('ramayan')"><div class="icon">🏹</div><h3 data-en="Ramayan" data-hi="रामायण">Ramayan</h3><p data-en="Epic tale of Lord Rama composed by Sage Valmiki with 24,000 verses teaching dharma and devotion." data-hi="ऋषि वाल्मीकि द्वारा रचित भगवान राम की महाकाव्य कथा। धर्म और भक्ति सिखाने वाले 24,000 श्लोक।">Epic tale of Lord Rama composed by Sage Valmiki with 24,000 verses teaching dharma and devotion.</p></div>
@@ -280,8 +332,8 @@
     <div id="festivals" class="section">
         <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Hindu Festivals" data-hi="हिंदू त्यौहार">Hindu Festivals</h2>
         <div class="cards-grid">
-            <div class="card" onclick="showText('diwali')"><div class="icon">🪔</div><h3 data-en="Diwali" data-hi="दिवाली">Diwali</h3><p data-en="Festival of lights celebrating victory of light over darkness and Rama's return." data-hi="अंधकार पर प्रकाश की विजय और राम की वापसी का उत्सव — प्रकाश का त्योहार।">Festival of lights celebrating victory of light over darkness and Rama's return.</p></div>
-            <div class="card" onclick="showText('holi')"><div class="icon">🎨</div><h3 data-en="Holi" data-hi="होली">Holi</h3><p data-en="Festival of colors celebrating spring and good over evil through Prahlad's story." data-hi="प्रह्लाद की कहानी के माध्यम से वसंत और बुराई पर अच्छाई का उत्सव — रंगों का त्योहार।">Festival of colors celebrating spring and good over evil through Prahlad's story.</p></div>
+            <div class="card" onclick="showText('diwali')"><div class="icon">🪔</div><h3 data-en="Diwali" data-hi="दिवाली">Diwali</h3><p data-en="Festival of lights celebrating victory of light over darkness and Rama's return." data-hi="अंधकार पर प्रकाश की विजय और राम की वापसी का उत्सव।">Festival of lights celebrating victory of light over darkness and Rama's return.</p></div>
+            <div class="card" onclick="showText('holi')"><div class="icon">🎨</div><h3 data-en="Holi" data-hi="होली">Holi</h3><p data-en="Festival of colors celebrating spring and good over evil through Prahlad's story." data-hi="प्रह्लाद की कहानी के माध्यम से वसंत और बुराई पर अच्छाई का उत्सव।">Festival of colors celebrating spring and good over evil through Prahlad's story.</p></div>
             <div class="card" onclick="showText('navratri')"><div class="icon">💃</div><h3 data-en="Navratri" data-hi="नवरात्रि">Navratri</h3><p data-en="Nine nights worshipping nine forms of Goddess Durga with fasting and dance." data-hi="उपवास और नृत्य के साथ देवी दुर्गा के नौ रूपों की पूजा करने वाली नौ रातें।">Nine nights worshipping nine forms of Goddess Durga with fasting and dance.</p></div>
             <div class="card" onclick="showText('janmashtami')"><div class="icon">🦚</div><h3 data-en="Janmashtami" data-hi="जन्माष्टमी">Janmashtami</h3><p data-en="Krishna's midnight birth celebration with fasting, prayers, and Dahi Handi." data-hi="उपवास, प्रार्थना और दही हांडी के साथ कृष्ण के आधी रात के जन्म का उत्सव।">Krishna's midnight birth celebration with fasting, prayers, and Dahi Handi.</p></div>
             <div class="card" onclick="showText('maha-shivratri')"><div class="icon">🌙</div><h3 data-en="Maha Shivratri" data-hi="महा शिवरात्रि">Maha Shivratri</h3><p data-en="Great night of Shiva with fasting, night vigil, and Shiva linga worship." data-hi="उपवास, रात्रि जागरण और शिव लिंग पूजा के साथ शिव की महान रात्रि।">Great night of Shiva with fasting, night vigil, and Shiva linga worship.</p></div>
@@ -313,35 +365,17 @@
         <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Hindu Panchang (Calendar)" data-hi="हिंदू पंचांग (कैलेंडर)">Hindu Panchang (Calendar)</h2>
         <div class="text-content">
             <h3 data-en="What is Panchang?" data-hi="पंचांग क्या है?">What is Panchang?</h3>
-            <p data-en="Panchang, meaning 'five limbs,' is the Hindu calendar providing astronomical and astrological information for determining auspicious timings (muhurat) for religious ceremonies and important activities."
-               data-hi="पंचांग, जिसका अर्थ है 'पांच अंग,' हिंदू कैलेंडर है जो धार्मिक समारोहों और महत्वपूर्ण गतिविधियों के लिए शुभ समय (मुहूर्त) निर्धारित करने हेतु खगोलीय और ज्योतिषीय जानकारी प्रदान करता है।">Panchang, meaning 'five limbs,' is the Hindu calendar providing astronomical and astrological information for determining auspicious timings (muhurat) for religious ceremonies and important activities.</p>
+            <p data-en="Panchang, meaning 'five limbs,' is the Hindu calendar providing astronomical and astrological information for determining auspicious timings (muhurat) for religious ceremonies and important activities." data-hi="पंचांग, जिसका अर्थ है 'पांच अंग,' हिंदू कैलेंडर है जो धार्मिक समारोहों और महत्वपूर्ण गतिविधियों के लिए शुभ समय (मुहूर्त) निर्धारित करने हेतु खगोलीय और ज्योतिषीय जानकारी प्रदान करता है।">Panchang, meaning 'five limbs,' is the Hindu calendar providing astronomical and astrological information for determining auspicious timings (muhurat) for religious ceremonies and important activities.</p>
             <h3 data-en="The Five Elements" data-hi="पांच तत्व">The Five Elements</h3>
-            <div class="verse">
-                <strong data-en="1. Tithi - Lunar Day" data-hi="1. तिथि - चंद्र दिवस">1. Tithi - Lunar Day</strong><br>
-                <span data-en="30 lunar days in a month divided into Shukla Paksha (waxing) and Krishna Paksha (waning) based on moon's position." data-hi="सूर्य के सापेक्ष चंद्रमा की स्थिति के आधार पर एक मास में 30 तिथियां — शुक्ल पक्ष (बढ़ता) और कृष्ण पक्ष (घटता)।">30 lunar days in a month divided into Shukla Paksha (waxing) and Krishna Paksha (waning) based on moon's position.</span>
-            </div>
-            <div class="verse">
-                <strong data-en="2. Vara - Weekday" data-hi="2. वार - सप्ताह का दिन">2. Vara - Weekday</strong><br>
-                <span data-en="Seven days ruled by celestial bodies: Sunday (Sun), Monday (Moon), Tuesday (Mars), Wednesday (Mercury), Thursday (Jupiter), Friday (Venus), Saturday (Saturn)." data-hi="खगोलीय पिंडों द्वारा शासित सात दिन: रविवार (सूर्य), सोमवार (चंद्र), मंगलवार (मंगल), बुधवार (बुध), गुरुवार (बृहस्पति), शुक्रवार (शुक्र), शनिवार (शनि)।">Seven days ruled by celestial bodies: Sunday (Sun), Monday (Moon), Tuesday (Mars), Wednesday (Mercury), Thursday (Jupiter), Friday (Venus), Saturday (Saturn).</span>
-            </div>
-            <div class="verse">
-                <strong data-en="3. Nakshatra - Lunar Constellation" data-hi="3. नक्षत्र - चंद्र नक्षत्र">3. Nakshatra - Lunar Constellation</strong><br>
-                <span data-en="27 lunar mansions through which the moon passes, each with specific influences and qualities." data-hi="27 चंद्र नक्षत्र जिनसे चंद्रमा गुजरता है, प्रत्येक के विशिष्ट प्रभाव और गुण होते हैं।">27 lunar mansions through which the moon passes, each with specific influences and qualities.</span>
-            </div>
-            <div class="verse">
-                <strong data-en="4. Yoga - Auspicious Period" data-hi="4. योग - शुभ अवधि">4. Yoga - Auspicious Period</strong><br>
-                <span data-en="27 yogas calculated from combined sun and moon motion, each having significance for activities." data-hi="सूर्य और चंद्र की संयुक्त गति से गणना किए गए 27 योग, प्रत्येक का गतिविधियों के लिए महत्व है।">27 yogas calculated from combined sun and moon motion, each having significance for activities.</span>
-            </div>
-            <div class="verse">
-                <strong data-en="5. Karana - Half Tithi" data-hi="5. करण - आधी तिथि">5. Karana - Half Tithi</strong><br>
-                <span data-en="Each tithi divided into two karanas. 11 karanas repeat in specific pattern throughout the month." data-hi="प्रत्येक तिथि दो करणों में विभाजित। 11 करण महीने भर एक विशिष्ट पैटर्न में दोहराते हैं।">Each tithi divided into two karanas. 11 karanas repeat in specific pattern throughout the month.</span>
-            </div>
+            <div class="verse"><strong data-en="1. Tithi - Lunar Day" data-hi="1. तिथि - चंद्र दिवस">1. Tithi - Lunar Day</strong><br><span data-en="30 lunar days in a month divided into Shukla Paksha (waxing) and Krishna Paksha (waning) based on moon's position." data-hi="सूर्य के सापेक्ष चंद्रमा की स्थिति के आधार पर एक मास में 30 तिथियां — शुक्ल पक्ष (बढ़ता) और कृष्ण पक्ष (घटता)।">30 lunar days in a month divided into Shukla Paksha (waxing) and Krishna Paksha (waning) based on moon's position.</span></div>
+            <div class="verse"><strong data-en="2. Vara - Weekday" data-hi="2. वार - सप्ताह का दिन">2. Vara - Weekday</strong><br><span data-en="Seven days ruled by celestial bodies: Sunday (Sun), Monday (Moon), Tuesday (Mars), Wednesday (Mercury), Thursday (Jupiter), Friday (Venus), Saturday (Saturn)." data-hi="खगोलीय पिंडों द्वारा शासित सात दिन: रविवार (सूर्य), सोमवार (चंद्र), मंगलवार (मंगल), बुधवार (बुध), गुरुवार (बृहस्पति), शुक्रवार (शुक्र), शनिवार (शनि)।">Seven days ruled by celestial bodies: Sunday (Sun), Monday (Moon), Tuesday (Mars), Wednesday (Mercury), Thursday (Jupiter), Friday (Venus), Saturday (Saturn).</span></div>
+            <div class="verse"><strong data-en="3. Nakshatra - Lunar Constellation" data-hi="3. नक्षत्र - चंद्र नक्षत्र">3. Nakshatra - Lunar Constellation</strong><br><span data-en="27 lunar mansions through which the moon passes, each with specific influences and qualities." data-hi="27 चंद्र नक्षत्र जिनसे चंद्रमा गुजरता है, प्रत्येक के विशिष्ट प्रभाव और गुण होते हैं।">27 lunar mansions through which the moon passes, each with specific influences and qualities.</span></div>
+            <div class="verse"><strong data-en="4. Yoga - Auspicious Period" data-hi="4. योग - शुभ अवधि">4. Yoga - Auspicious Period</strong><br><span data-en="27 yogas calculated from combined sun and moon motion, each having significance for activities." data-hi="सूर्य और चंद्र की संयुक्त गति से गणना किए गए 27 योग, प्रत्येक का गतिविधियों के लिए महत्व है।">27 yogas calculated from combined sun and moon motion, each having significance for activities.</span></div>
+            <div class="verse"><strong data-en="5. Karana - Half Tithi" data-hi="5. करण - आधी तिथि">5. Karana - Half Tithi</strong><br><span data-en="Each tithi divided into two karanas. 11 karanas repeat in specific pattern throughout the month." data-hi="प्रत्येक तिथि दो करणों में विभाजित। 11 करण महीने भर एक विशिष्ट पैटर्न में दोहराते हैं।">Each tithi divided into two karanas. 11 karanas repeat in specific pattern throughout the month.</span></div>
             <h3 data-en="Hindu Months" data-hi="हिंदू महीने">Hindu Months</h3>
-            <p data-en="Chaitra (Mar-Apr), Vaishakha (Apr-May), Jyeshtha (May-Jun), Ashadha (Jun-Jul), Shravana (Jul-Aug), Bhadrapada (Aug-Sep), Ashwin (Sep-Oct), Kartik (Oct-Nov), Margashirsha (Nov-Dec), Pausha (Dec-Jan), Magha (Jan-Feb), Phalguna (Feb-Mar)"
-               data-hi="चैत्र (मार्च-अप्रैल), वैशाख (अप्रैल-मई), ज्येष्ठ (मई-जून), आषाढ़ (जून-जुलाई), श्रावण (जुलाई-अगस्त), भाद्रपद (अगस्त-सितंबर), आश्विन (सितंबर-अक्टूबर), कार्तिक (अक्टूबर-नवंबर), मार्गशीर्ष (नवंबर-दिसंबर), पौष (दिसंबर-जनवरी), माघ (जनवरी-फरवरी), फाल्गुन (फरवरी-मार्च)">Chaitra (Mar-Apr), Vaishakha (Apr-May), Jyeshtha (May-Jun), Ashadha (Jun-Jul), Shravana (Jul-Aug), Bhadrapada (Aug-Sep), Ashwin (Sep-Oct), Kartik (Oct-Nov), Margashirsha (Nov-Dec), Pausha (Dec-Jan), Magha (Jan-Feb), Phalguna (Feb-Mar)</p>
+            <p data-en="Chaitra (Mar-Apr), Vaishakha (Apr-May), Jyeshtha (May-Jun), Ashadha (Jun-Jul), Shravana (Jul-Aug), Bhadrapada (Aug-Sep), Ashwin (Sep-Oct), Kartik (Oct-Nov), Margashirsha (Nov-Dec), Pausha (Dec-Jan), Magha (Jan-Feb), Phalguna (Feb-Mar)" data-hi="चैत्र (मार्च-अप्रैल), वैशाख (अप्रैल-मई), ज्येष्ठ (मई-जून), आषाढ़ (जून-जुलाई), श्रावण (जुलाई-अगस्त), भाद्रपद (अगस्त-सितंबर), आश्विन (सितंबर-अक्टूबर), कार्तिक (अक्टूबर-नवंबर), मार्गशीर्ष (नवंबर-दिसंबर), पौष (दिसंबर-जनवरी), माघ (जनवरी-फरवरी), फाल्गुन (फरवरी-मार्च)">Chaitra (Mar-Apr), Vaishakha (Apr-May), Jyeshtha (May-Jun), Ashadha (Jun-Jul), Shravana (Jul-Aug), Bhadrapada (Aug-Sep), Ashwin (Sep-Oct), Kartik (Oct-Nov), Margashirsha (Nov-Dec), Pausha (Dec-Jan), Magha (Jan-Feb), Phalguna (Feb-Mar)</p>
             <h3 data-en="Used For" data-hi="उपयोग">Used For</h3>
-            <p data-en="• Determining wedding dates and ceremonies • Festival dates • Agricultural planning • Daily prayers and fasting • Understanding planetary influences"
-               data-hi="• विवाह की तिथियां और समारोह निर्धारित करना • त्योहार की तिथियां • कृषि योजना • दैनिक प्रार्थना और उपवास • ग्रहों के प्रभाव को समझना">• Determining wedding dates and ceremonies • Festival dates • Agricultural planning • Daily prayers and fasting • Understanding planetary influences</p>
+            <p data-en="• Determining wedding dates and ceremonies • Festival dates • Agricultural planning • Daily prayers and fasting • Understanding planetary influences" data-hi="• विवाह की तिथियां और समारोह निर्धारित करना • त्योहार की तिथियां • कृषि योजना • दैनिक प्रार्थना और उपवास • ग्रहों के प्रभाव को समझना">• Determining wedding dates and ceremonies • Festival dates • Agricultural planning • Daily prayers and fasting • Understanding planetary influences</p>
         </div>
         <div id="panchang-comments" class="comments-section" style="margin-top:2rem;"></div>
     </div>
@@ -355,217 +389,399 @@
     <p style="margin-top:1rem;font-size:0.9rem;" data-en="© 2026 Sanatan Dharm Portal - Preserving Ancient Wisdom" data-hi="© 2026 सनातन धर्म पोर्टल — प्राचीन ज्ञान का संरक्षण">© 2026 Sanatan Dharm Portal - Preserving Ancient Wisdom</p>
 </footer>
 
+<!-- ══════════════════════════════════════
+     FIREBASE SDK (compat version - works in plain HTML)
+══════════════════════════════════════ -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
 <script>
-let currentLanguage = 'en';
-let currentUser     = null;
-let currentSection  = 'home';
+// ══════════════════════════════════════
+// FIREBASE INIT
+// ══════════════════════════════════════
+const firebaseConfig = {
+    apiKey:            "AIzaSyDktQUU_CshrGdOZDxwNsqKV4vCzYZhZSg",
+    authDomain:        "sanatan-dharam-4f205.firebaseapp.com",
+    projectId:         "sanatan-dharam-4f205",
+    storageBucket:     "sanatan-dharam-4f205.firebasestorage.app",
+    messagingSenderId: "126413594707",
+    appId:             "1:126413594707:web:0a834be30ab620bc69a6a6",
+    measurementId:     "G-S7XCYH7G1S"
+};
 
-const savedComments = JSON.parse(localStorage.getItem('sd_comments') || '{}');
-const savedLikes    = JSON.parse(localStorage.getItem('sd_likes')    || '{}');
+firebase.initializeApp(firebaseConfig);
+const auth      = firebase.auth();
+const db        = firebase.firestore();
+const provider  = new firebase.auth.GoogleAuthProvider();
 
-const savedUser = localStorage.getItem('sd_user');
-if (savedUser) { currentUser = JSON.parse(savedUser); updateNavUser(); }
+// ══════════════════════════════════════
+// STATE
+// ══════════════════════════════════════
+let currentUser    = null;
+let currentSection = 'home';
+let currentLang    = 'en';
+let unsubComments  = null; // real-time listener unsubscribe
 
-// ── LANGUAGE ──────────────────────────────────────────────
+// Auth state observer — runs whenever login/logout happens
+auth.onAuthStateChanged(user => {
+    currentUser = user;
+    updateHeaderUI();
+    renderComments(currentSection);
+});
+
+// ══════════════════════════════════════
+// LANGUAGE
+// ══════════════════════════════════════
 function toggleLanguage() {
-    currentLanguage = currentLanguage === 'en' ? 'hi' : 'en';
-    document.getElementById('langBtn').textContent =
-        currentLanguage === 'en' ? 'हिंदी में पढ़ें' : 'Read in English';
+    currentLang = currentLang === 'en' ? 'hi' : 'en';
+    document.getElementById('langBtn').textContent = currentLang === 'en' ? 'हिंदी में पढ़ें' : 'Read in English';
     document.querySelectorAll('[data-en][data-hi]').forEach(el => {
-        el.textContent = el.getAttribute('data-' + currentLanguage);
+        el.textContent = el.getAttribute('data-' + currentLang);
     });
 }
 
-// ── AUTH ──────────────────────────────────────────────────
-function openModal()  { switchToLogin(); document.getElementById('loginModal').classList.add('open'); document.getElementById('errorMsg').style.display = 'none'; }
-function closeModal() { document.getElementById('loginModal').classList.remove('open'); }
+// ══════════════════════════════════════
+// MODAL HELPERS
+// ══════════════════════════════════════
+function openModal()  { switchToLogin(); document.getElementById('loginModal').classList.add('open'); }
+function closeModal() { document.getElementById('loginModal').classList.remove('open'); clearMessages(); }
 function handleOverlayClick(e) { if (e.target.id === 'loginModal') closeModal(); }
 
+function switchToLogin() {
+    document.getElementById('loginForm').style.display    = 'block';
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('forgotForm').style.display   = 'none';
+    document.getElementById('modalTitle').textContent     = 'Welcome Back';
+    document.getElementById('modalSubtitle').textContent  = 'Sign in to join the conversation';
+    clearMessages();
+}
 function switchToRegister() {
     document.getElementById('loginForm').style.display    = 'none';
     document.getElementById('registerForm').style.display = 'block';
+    document.getElementById('forgotForm').style.display   = 'none';
     document.getElementById('modalTitle').textContent     = 'Create Account';
     document.getElementById('modalSubtitle').textContent  = 'Join the Sanatan Dharm community';
-    document.getElementById('errorMsg').style.display     = 'none';
+    clearMessages();
 }
-function switchToLogin() {
+function showForgotPassword() {
+    document.getElementById('loginForm').style.display    = 'none';
     document.getElementById('registerForm').style.display = 'none';
-    document.getElementById('loginForm').style.display    = 'block';
-    document.getElementById('modalTitle').textContent     = 'Welcome Back';
-    document.getElementById('modalSubtitle').textContent  = 'Sign in to join the conversation';
-    document.getElementById('errorMsg').style.display     = 'none';
+    document.getElementById('forgotForm').style.display   = 'block';
+    document.getElementById('modalTitle').textContent     = 'Reset Password';
+    document.getElementById('modalSubtitle').textContent  = 'We\'ll send a reset link to your email';
+    clearMessages();
 }
-function showError(msg) { const el=document.getElementById('errorMsg'); el.textContent=msg; el.style.display='block'; }
 
-function loginWithGoogle() {
-    const names=['Arjun Sharma','Priya Verma','Rahul Singh','Anita Patel','Vikram Nair'];
-    const name=names[Math.floor(Math.random()*names.length)];
-    setLoggedIn({name, email:name.toLowerCase().replace(' ','.')+'@gmail.com', avatar:name[0].toUpperCase(), provider:'google'});
+function showError(msg)   { const e=document.getElementById('errorMsg');   e.textContent=msg; e.style.display='block'; document.getElementById('successMsg').style.display='none'; }
+function showSuccess(msg) { const e=document.getElementById('successMsg'); e.textContent=msg; e.style.display='block'; document.getElementById('errorMsg').style.display='none'; }
+function clearMessages()  { document.getElementById('errorMsg').style.display='none'; document.getElementById('successMsg').style.display='none'; }
+
+function setLoading(btnId, loading, defaultText) {
+    const btn = document.getElementById(btnId);
+    if (!btn) return;
+    btn.disabled = loading;
+    btn.innerHTML = loading ? `<span class="spinner"></span> Please wait...` : defaultText;
 }
-function loginWithEmail() {
-    const email=document.getElementById('loginEmail').value.trim();
-    const pass =document.getElementById('loginPassword').value;
-    if (!email||!pass) return showError('Please fill in all fields.');
-    if (!email.includes('@')) return showError('Please enter a valid email address.');
-    const users=JSON.parse(localStorage.getItem('sd_users')||'{}');
-    if (!users[email]) return showError('No account found. Please register first.');
-    if (users[email].password!==pass) return showError('Incorrect password.');
-    setLoggedIn({name:users[email].name,email,avatar:users[email].name[0].toUpperCase(),provider:'email'});
+
+// Firebase error code → friendly message
+function friendlyError(code) {
+    const map = {
+        'auth/user-not-found':       'No account found with this email. Please register first.',
+        'auth/wrong-password':       'Incorrect password. Please try again.',
+        'auth/email-already-in-use': 'An account with this email already exists. Please sign in.',
+        'auth/weak-password':        'Password must be at least 6 characters.',
+        'auth/invalid-email':        'Please enter a valid email address.',
+        'auth/too-many-requests':    'Too many attempts. Please try again later.',
+        'auth/popup-closed-by-user': 'Google sign-in was cancelled. Please try again.',
+        'auth/network-request-failed': 'Network error. Please check your connection.',
+        'auth/invalid-credential':   'Incorrect email or password. Please try again.',
+    };
+    return map[code] || 'Something went wrong. Please try again.';
 }
-function registerWithEmail() {
-    const name =document.getElementById('regName').value.trim();
-    const email=document.getElementById('regEmail').value.trim();
-    const pass =document.getElementById('regPassword').value;
-    if (!name||!email||!pass) return showError('Please fill in all fields.');
-    if (!email.includes('@')) return showError('Please enter a valid email address.');
-    if (pass.length<6) return showError('Password must be at least 6 characters.');
-    const users=JSON.parse(localStorage.getItem('sd_users')||'{}');
-    if (users[email]) return showError('An account with this email already exists.');
-    users[email]={name,password:pass};
-    localStorage.setItem('sd_users',JSON.stringify(users));
-    setLoggedIn({name,email,avatar:name[0].toUpperCase(),provider:'email'});
-}
-function setLoggedIn(user) {
-    currentUser=user; localStorage.setItem('sd_user',JSON.stringify(user));
-    updateNavUser(); closeModal(); renderComments(currentSection);
-}
-function logout() {
-    currentUser=null; localStorage.removeItem('sd_user');
-    updateNavUser(); renderComments(currentSection);
-    document.getElementById('userDropdown').classList.remove('open');
-}
-function updateNavUser() {
-    if (currentUser) {
-        document.getElementById('headerLoginBtn').style.display='none';
-        document.getElementById('headerUserPill').style.display='block';
-        document.getElementById('headerAvatar').textContent=currentUser.avatar;
-        document.getElementById('headerUserName').textContent=currentUser.name.split(' ')[0];
-    } else {
-        document.getElementById('headerLoginBtn').style.display='block';
-        document.getElementById('headerUserPill').style.display='none';
+
+// ══════════════════════════════════════
+// AUTH — GOOGLE
+// ══════════════════════════════════════
+async function loginWithGoogle() {
+    const btn = document.getElementById('googleBtn');
+    if (btn) { btn.disabled = true; btn.innerHTML = `<span class="spinner" style="border-top-color:#333;border-color:rgba(0,0,0,0.15);"></span> Opening Google...`; }
+    try {
+        await auth.signInWithPopup(provider);
+        closeModal();
+    } catch(err) {
+        showError(friendlyError(err.code));
+        if (btn) { btn.disabled = false; btn.innerHTML = `<svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg> Continue with Google`; }
     }
 }
+
+// ══════════════════════════════════════
+// AUTH — EMAIL LOGIN
+// ══════════════════════════════════════
+async function loginWithEmail() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const pass  = document.getElementById('loginPassword').value;
+    if (!email || !pass) return showError('Please fill in all fields.');
+    setLoading('loginBtn', true, 'Sign In 🙏');
+    try {
+        await auth.signInWithEmailAndPassword(email, pass);
+        closeModal();
+    } catch(err) {
+        showError(friendlyError(err.code));
+    } finally {
+        setLoading('loginBtn', false, 'Sign In 🙏');
+    }
+}
+
+// ══════════════════════════════════════
+// AUTH — EMAIL REGISTER
+// ══════════════════════════════════════
+async function registerWithEmail() {
+    const name  = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const pass  = document.getElementById('regPassword').value;
+    if (!name || !email || !pass) return showError('Please fill in all fields.');
+    if (pass.length < 6)           return showError('Password must be at least 6 characters.');
+    setLoading('registerBtn', true, 'Create Account 🙏');
+    try {
+        const result = await auth.createUserWithEmailAndPassword(email, pass);
+        // Save display name to Firebase profile
+        await result.user.updateProfile({ displayName: name });
+        closeModal();
+    } catch(err) {
+        showError(friendlyError(err.code));
+    } finally {
+        setLoading('registerBtn', false, 'Create Account 🙏');
+    }
+}
+
+// ══════════════════════════════════════
+// AUTH — FORGOT PASSWORD
+// ══════════════════════════════════════
+async function sendResetEmail() {
+    const email = document.getElementById('forgotEmail').value.trim();
+    if (!email) return showError('Please enter your email address.');
+    try {
+        await auth.sendPasswordResetEmail(email);
+        showSuccess('✅ Reset link sent! Please check your email inbox.');
+    } catch(err) {
+        showError(friendlyError(err.code));
+    }
+}
+
+// ══════════════════════════════════════
+// AUTH — LOGOUT
+// ══════════════════════════════════════
+async function logout() {
+    await auth.signOut();
+    document.getElementById('userDropdown').classList.remove('open');
+}
+
+// ══════════════════════════════════════
+// HEADER UI
+// ══════════════════════════════════════
+function updateHeaderUI() {
+    if (currentUser) {
+        document.getElementById('headerLoginBtn').style.display = 'none';
+        document.getElementById('headerUserPill').style.display = 'block';
+
+        const name  = currentUser.displayName || currentUser.email.split('@')[0];
+        const photo = currentUser.photoURL;
+
+        // Avatar: photo if Google, else initial letter
+        const avatarEl = document.getElementById('headerAvatar');
+        if (photo) {
+            avatarEl.innerHTML = `<img src="${photo}" alt="${name}">`;
+        } else {
+            avatarEl.textContent = name[0].toUpperCase();
+        }
+        document.getElementById('headerUserName').textContent = name.split(' ')[0];
+    } else {
+        document.getElementById('headerLoginBtn').style.display = 'block';
+        document.getElementById('headerUserPill').style.display = 'none';
+    }
+}
+
 function toggleDropdown() { document.getElementById('userDropdown').classList.toggle('open'); }
 document.addEventListener('click', e => {
-    const pill=document.querySelector('.user-pill');
-    if (pill&&!pill.contains(e.target)) document.getElementById('userDropdown').classList.remove('open');
+    const pill = document.querySelector('.user-pill');
+    if (pill && !pill.contains(e.target)) document.getElementById('userDropdown').classList.remove('open');
 });
 
-// ── COMMENTS ─────────────────────────────────────────────
-function getComments(s)        { return savedComments[s]||[]; }
-function saveComments(s,list)  { savedComments[s]=list; localStorage.setItem('sd_comments',JSON.stringify(savedComments)); }
-
+// ══════════════════════════════════════
+// COMMENTS — FIRESTORE REAL-TIME
+// ══════════════════════════════════════
 function renderComments(section) {
-    const container=document.getElementById(section+'-comments');
+    const container = document.getElementById(section + '-comments');
     if (!container) return;
-    const comments=getComments(section);
 
-    const writeBox = currentUser ? `
-        <div class="comment-box">
-            <div class="comment-box-header">
-                <div class="comment-avatar">${currentUser.avatar}</div>
-                <strong style="color:var(--brown);">${currentUser.name}</strong>
-            </div>
-            <textarea class="comment-textarea" id="commentInput-${section}" placeholder="Share your thoughts, questions, or blessings... 🙏"></textarea>
-            <div class="comment-submit-row">
-                <button class="btn-post-comment" onclick="postComment('${section}')">Post Comment 🙏</button>
-            </div>
-        </div>` : `
-        <div class="comment-login-prompt">
-            <p>🙏 Login to share your thoughts and blessings with the community</p>
-            <button class="btn-login-prompt" onclick="openModal()">Login / Register to Comment</button>
-        </div>`;
+    // Unsubscribe old real-time listener
+    if (unsubComments) { unsubComments(); unsubComments = null; }
 
-    const commentsList = comments.length===0
-        ? `<div class="no-comments"><div class="no-comments-icon">🙏</div><p>Be the first to share your thoughts!</p></div>`
-        : `<div class="comments-list">`+comments.map((c,i)=>{
-            const lk=section+'-'+i, liked=savedLikes[lk];
-            return `<div class="comment-card">
-                <div class="comment-meta">
-                    <div class="comment-avatar" style="width:36px;height:36px;font-size:0.85rem;">${c.avatar}</div>
-                    <span class="comment-user-name">${c.name}</span>
-                    <span class="comment-date">${c.date}</span>
-                </div>
-                <div class="comment-text">${c.text}</div>
-                <div class="comment-actions">
-                    <button class="btn-like ${liked?'liked':''}" onclick="toggleLike('${section}',${i},this)">
-                        🙏 <span class="like-count">${c.likes||0}</span>
-                    </button>
-                </div>
-            </div>`;
-        }).join('')+`</div>`;
+    const writeBox = currentUser
+        ? buildWriteBox(section)
+        : `<div class="comment-login-prompt">
+               <p>🙏 Login to share your thoughts and blessings with the community</p>
+               <button class="btn-login-prompt" onclick="openModal()">Login / Register to Comment</button>
+           </div>`;
 
-    container.innerHTML=`
+    container.innerHTML = `
         <div class="comments-header">
             <h3>💬 Community Comments</h3>
-            <span class="comment-count-badge">${comments.length}</span>
-        </div>${writeBox}${commentsList}`;
+            <span class="comment-count-badge" id="badge-${section}">0</span>
+        </div>
+        ${writeBox}
+        <div id="commentsList-${section}" class="comments-loading">🙏 Loading comments...</div>`;
+
+    // Real-time listener
+    unsubComments = db.collection('comments')
+        .where('section', '==', section)
+        .orderBy('timestamp', 'desc')
+        .onSnapshot(snap => {
+            const badge = document.getElementById('badge-' + section);
+            if (badge) badge.textContent = snap.size;
+            const list = document.getElementById('commentsList-' + section);
+            if (!list) return;
+            if (snap.empty) {
+                list.innerHTML = `<div class="no-comments"><div class="no-comments-icon">🙏</div><p>Be the first to share your thoughts!</p></div>`;
+                return;
+            }
+            list.innerHTML = `<div class="comments-list">` +
+                snap.docs.map(doc => {
+                    const c = doc.data();
+                    const liked = currentUser && c.likedBy && c.likedBy.includes(currentUser.uid);
+                    const date  = c.timestamp ? new Date(c.timestamp.toDate()).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : 'Just now';
+                    const avatarContent = c.photoURL
+                        ? `<img src="${c.photoURL}" alt="${c.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+                        : (c.name || '?')[0].toUpperCase();
+                    return `<div class="comment-card">
+                        <div class="comment-meta">
+                            <div class="comment-avatar-sm">${avatarContent}</div>
+                            <span class="comment-user-name">${c.name || 'Anonymous'}</span>
+                            <span class="comment-date">${date}</span>
+                        </div>
+                        <div class="comment-text">${c.text}</div>
+                        <div class="comment-actions">
+                            <button class="btn-like ${liked?'liked':''}" onclick="toggleLike('${doc.id}','${section}',this)">
+                                🙏 <span>${(c.likedBy||[]).length}</span>
+                            </button>
+                        </div>
+                    </div>`;
+                }).join('') + `</div>`;
+        }, err => {
+            const list = document.getElementById('commentsList-' + section);
+            if (list) list.innerHTML = `<div class="no-comments"><p>Could not load comments. Please refresh.</p></div>`;
+        });
 }
 
-function postComment(section) {
-    const input=document.getElementById('commentInput-'+section);
-    const text=input.value.trim();
+function buildWriteBox(section) {
+    const user  = currentUser;
+    const name  = user.displayName || user.email.split('@')[0];
+    const photo = user.photoURL;
+    const avatarContent = photo
+        ? `<img src="${photo}" alt="${name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+        : name[0].toUpperCase();
+    return `<div class="comment-box">
+        <div class="comment-box-header">
+            <div class="comment-avatar-sm">${avatarContent}</div>
+            <strong style="color:var(--brown);">${name}</strong>
+        </div>
+        <textarea class="comment-textarea" id="commentInput-${section}" placeholder="Share your thoughts, questions, or blessings... 🙏"></textarea>
+        <div class="comment-submit-row">
+            <button class="btn-post-comment" id="postBtn-${section}" onclick="postComment('${section}')">Post Comment 🙏</button>
+        </div>
+    </div>`;
+}
+
+async function postComment(section) {
+    if (!currentUser) return openModal();
+    const input = document.getElementById('commentInput-' + section);
+    const text  = input.value.trim();
     if (!text) return;
-    if (!currentUser) return openModal();
-    const comments=getComments(section);
-    comments.unshift({
-        name:currentUser.name, avatar:currentUser.avatar,
-        text:text.replace(/</g,'&lt;').replace(/>/g,'&gt;'),
-        date:new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}),
-        likes:0
-    });
-    saveComments(section,comments); renderComments(section);
+
+    const btn = document.getElementById('postBtn-' + section);
+    if (btn) btn.disabled = true;
+
+    const name = currentUser.displayName || currentUser.email.split('@')[0];
+    try {
+        await db.collection('comments').add({
+            section,
+            text:      text.replace(/</g,'&lt;').replace(/>/g,'&gt;'),
+            name,
+            uid:       currentUser.uid,
+            photoURL:  currentUser.photoURL || null,
+            likedBy:   [],
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        input.value = '';
+    } catch(err) {
+        alert('Could not post comment. Please try again.');
+    } finally {
+        if (btn) btn.disabled = false;
+    }
 }
 
-function toggleLike(section,index,btn) {
+async function toggleLike(docId, section, btn) {
     if (!currentUser) return openModal();
-    const lk=section+'-'+index, comments=getComments(section);
-    if (!savedLikes[lk]) { savedLikes[lk]=true; comments[index].likes=(comments[index].likes||0)+1; btn.classList.add('liked'); }
-    else { delete savedLikes[lk]; comments[index].likes=Math.max(0,(comments[index].likes||1)-1); btn.classList.remove('liked'); }
-    localStorage.setItem('sd_likes',JSON.stringify(savedLikes));
-    saveComments(section,comments);
-    btn.querySelector('.like-count').textContent=comments[index].likes;
+    const uid = currentUser.uid;
+    const ref = db.collection('comments').doc(docId);
+    try {
+        const doc = await ref.get();
+        if (!doc.exists) return;
+        const likedBy = doc.data().likedBy || [];
+        if (likedBy.includes(uid)) {
+            await ref.update({ likedBy: firebase.firestore.FieldValue.arrayRemove(uid) });
+        } else {
+            await ref.update({ likedBy: firebase.firestore.FieldValue.arrayUnion(uid) });
+        }
+    } catch(err) { console.error(err); }
 }
 
-// ── NAVIGATION ────────────────────────────────────────────
+// ══════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════
 function showSection(id) {
-    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    document.getElementById('text-display').style.display='none';
-    currentSection=id; renderComments(id);
+    document.getElementById('text-display').style.display = 'none';
+    currentSection = id;
+    renderComments(id);
 }
 function showText(id) {
-    const display=document.getElementById('text-display');
-    const active=document.querySelector('.section.active');
-    display.innerHTML=`<button class="back-btn" onclick="goBack()">← Back</button>`+getTextContent(id);
-    display.style.display='block';
-    if (active) active.style.display='none';
+    const display = document.getElementById('text-display');
+    const active  = document.querySelector('.section.active');
+    display.innerHTML = `<button class="back-btn" onclick="goBack()">← Back</button>` + getTextContent(id);
+    display.style.display = 'block';
+    if (active) active.style.display = 'none';
 }
 function goBack() {
-    document.getElementById('text-display').style.display='none';
-    const active=document.querySelector('.section.active');
-    if (active) active.style.display='block';
+    document.getElementById('text-display').style.display = 'none';
+    const active = document.querySelector('.section.active');
+    if (active) active.style.display = 'block';
 }
 
-// ── TEXT CONTENT ──────────────────────────────────────────
+// ══════════════════════════════════════
+// TEXT CONTENT
+// ══════════════════════════════════════
 function getTextContent(id) {
-    const lang=currentLanguage;
-    const contents={
-        'bhagavad-gita':{
-            en:`<div class="text-content"><h2>Bhagavad Gita — The Song of God</h2><p>The Bhagavad Gita is a 700-verse scripture forming part of the Mahabharata — a sacred dialogue between Lord Krishna and Arjuna on the battlefield of Kurukshetra.</p><h3>Key Teachings</h3><p><strong>Dharma:</strong> Perform your duty without attachment to results.<br><strong>Karma Yoga:</strong> Path of selfless action.<br><strong>Bhakti Yoga:</strong> Path of devotion and love.<br><strong>Jnana Yoga:</strong> Path of knowledge and wisdom.</p><div class="verse"><strong>Chapter 2, Verse 47:</strong><br>"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।"<br>You have the right to perform your duty, but never to the fruits thereof.</div><div class="verse"><strong>Chapter 18, Verse 66:</strong><br>"सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज।"<br>Abandon all dharmas and surrender unto Me alone.</div></div>`,
-            hi:`<div class="text-content"><h2>भगवद गीता — भगवान का गीत</h2><p>भगवद गीता 700 श्लोकों का हिंदू धर्मग्रंथ है जो महाभारत का हिस्सा है। यह कुरुक्षेत्र के युद्धक्षेत्र में भगवान कृष्ण और अर्जुन के बीच पवित्र संवाद है।</p><h3>मुख्य शिक्षाएं</h3><p><strong>धर्म:</strong> परिणामों की चिंता किए बिना अपना कर्तव्य निभाएं।<br><strong>कर्म योग:</strong> निस्वार्थ कर्म का मार्ग।<br><strong>भक्ति योग:</strong> भक्ति और प्रेम का मार्ग।<br><strong>ज्ञान योग:</strong> ज्ञान और बुद्धि का मार्ग।</p><div class="verse"><strong>अध्याय 2, श्लोक 47:</strong><br>"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।"<br>तुम्हारा अधिकार केवल कर्म करने में है, फलों में कभी नहीं।</div><div class="verse"><strong>अध्याय 18, श्लोक 66:</strong><br>"सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज।"<br>सभी धर्मों को त्यागकर केवल मेरी शरण में आओ।</div></div>`
+    const lang = currentLang;
+    const contents = {
+        'bhagavad-gita': {
+            en: `<div class="text-content"><h2>Bhagavad Gita — The Song of God</h2><p>The Bhagavad Gita is a 700-verse scripture forming part of the Mahabharata — a sacred dialogue between Lord Krishna and Arjuna on the battlefield of Kurukshetra.</p><h3>Key Teachings</h3><p><strong>Dharma:</strong> Perform your duty without attachment to results.<br><strong>Karma Yoga:</strong> Path of selfless action.<br><strong>Bhakti Yoga:</strong> Path of devotion and love.<br><strong>Jnana Yoga:</strong> Path of knowledge and wisdom.</p><div class="verse"><strong>Chapter 2, Verse 47:</strong><br>"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।"<br>You have the right to perform your duty, but never to the fruits thereof.</div><div class="verse"><strong>Chapter 18, Verse 66:</strong><br>"सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज।"<br>Abandon all dharmas and surrender unto Me alone.</div></div>`,
+            hi: `<div class="text-content"><h2>भगवद गीता — भगवान का गीत</h2><p>भगवद गीता 700 श्लोकों का हिंदू धर्मग्रंथ है। यह कुरुक्षेत्र के युद्धक्षेत्र में भगवान कृष्ण और अर्जुन के बीच पवित्र संवाद है।</p><h3>मुख्य शिक्षाएं</h3><p><strong>धर्म:</strong> परिणामों की चिंता किए बिना अपना कर्तव्य निभाएं।<br><strong>कर्म योग:</strong> निस्वार्थ कर्म का मार्ग।<br><strong>भक्ति योग:</strong> भक्ति और प्रेम का मार्ग।<br><strong>ज्ञान योग:</strong> ज्ञान और बुद्धि का मार्ग।</p><div class="verse"><strong>अध्याय 2, श्लोक 47:</strong><br>"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।"<br>तुम्हारा अधिकार केवल कर्म करने में है, फलों में कभी नहीं।</div><div class="verse"><strong>अध्याय 18, श्लोक 66:</strong><br>"सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज।"<br>सभी धर्मों को त्यागकर केवल मेरी शरण में आओ।</div></div>`
         },
-        'diwali':{
-            en:`<div class="text-content"><h2>Diwali — Festival of Lights</h2><p>Diwali is the most significant Hindu festival, celebrated across five days. It symbolizes the victory of light over darkness and good over evil.</p><h3>The Five Days</h3><p><strong>Day 1 — Dhanteras:</strong> Worship of wealth and buying gold.<br><strong>Day 2 — Naraka Chaturdashi:</strong> Krishna's victory over Narakasura.<br><strong>Day 3 — Diwali:</strong> Main day — Lakshmi worship, diyas, fireworks.<br><strong>Day 4 — Govardhan Puja:</strong> Krishna lifting Govardhan mountain.<br><strong>Day 5 — Bhai Dooj:</strong> Celebration of the brother-sister bond.</p></div>`,
-            hi:`<div class="text-content"><h2>दिवाली — प्रकाश का त्यौहार</h2><p>दिवाली पांच दिनों तक मनाया जाने वाला सबसे महत्वपूर्ण हिंदू त्योहार है। यह अंधकार पर प्रकाश और बुराई पर अच्छाई की विजय का प्रतीक है।</p><h3>पांच दिन</h3><p><strong>दिन 1 — धनतेरस:</strong> धन की पूजा और सोना खरीदना।<br><strong>दिन 2 — नरक चतुर्दशी:</strong> नरकासुर पर कृष्ण की विजय।<br><strong>दिन 3 — दिवाली:</strong> मुख्य दिन — लक्ष्मी पूजा, दीये, पटाखे।<br><strong>दिन 4 — गोवर्धन पूजा:</strong> कृष्ण द्वारा गोवर्धन पर्वत उठाना।<br><strong>दिन 5 — भाई दूज:</strong> भाई-बहन के बंधन का उत्सव।</p></div>`
+        'diwali': {
+            en: `<div class="text-content"><h2>Diwali — Festival of Lights</h2><p>Diwali is the most significant Hindu festival, celebrated across five days. It symbolizes the victory of light over darkness and good over evil.</p><h3>The Five Days</h3><p><strong>Day 1 — Dhanteras:</strong> Worship of wealth and buying gold.<br><strong>Day 2 — Naraka Chaturdashi:</strong> Krishna's victory over Narakasura.<br><strong>Day 3 — Diwali:</strong> Main day — Lakshmi worship, diyas, fireworks.<br><strong>Day 4 — Govardhan Puja:</strong> Krishna lifting Govardhan mountain.<br><strong>Day 5 — Bhai Dooj:</strong> Celebration of the brother-sister bond.</p></div>`,
+            hi: `<div class="text-content"><h2>दिवाली — प्रकाश का त्यौहार</h2><p>दिवाली पांच दिनों तक मनाया जाने वाला सबसे महत्वपूर्ण हिंदू त्योहार है। यह अंधकार पर प्रकाश और बुराई पर अच्छाई की विजय का प्रतीक है।</p><h3>पांच दिन</h3><p><strong>दिन 1 — धनतेरस:</strong> धन की पूजा और सोना खरीदना।<br><strong>दिन 2 — नरक चतुर्दशी:</strong> नरकासुर पर कृष्ण की विजय।<br><strong>दिन 3 — दिवाली:</strong> मुख्य दिन — लक्ष्मी पूजा, दीये, पटाखे।<br><strong>दिन 4 — गोवर्धन पूजा:</strong> कृष्ण द्वारा गोवर्धन पर्वत उठाना।<br><strong>दिन 5 — भाई दूज:</strong> भाई-बहन के बंधन का उत्सव।</p></div>`
         }
     };
-    const def=lang==='en'
-        ?`<div class="text-content"><h2>Content Coming Soon</h2><p>This section is being updated with detailed information. 🙏</p></div>`
-        :`<div class="text-content"><h2>सामग्री जल्द आ रही है</h2><p>इस अनुभाग को विस्तृत जानकारी के साथ अपडेट किया जा रहा है। 🙏</p></div>`;
-    return (contents[id]&&contents[id][lang])||def;
+    const def = lang === 'en'
+        ? `<div class="text-content"><h2>Content Coming Soon</h2><p>This section is being updated with detailed information. 🙏</p></div>`
+        : `<div class="text-content"><h2>सामग्री जल्द आ रही है</h2><p>इस अनुभाग को विस्तृत जानकारी के साथ अपडेट किया जा रहा है। 🙏</p></div>`;
+    return (contents[id] && contents[id][lang]) || def;
 }
 
+// Initial render
 renderComments('home');
 </script>
 </body>
