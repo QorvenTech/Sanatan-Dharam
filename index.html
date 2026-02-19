@@ -139,6 +139,8 @@
         .comment-actions { display: flex; align-items: center; gap: 1rem; margin-top: 0.7rem; }
         .btn-like { background: none; border: 1px solid #e5d5c5; border-radius: 20px; padding: 0.28rem 0.8rem; cursor: pointer; font-size: 0.85rem; color: #888; transition: all 0.2s; display: flex; align-items: center; gap: 0.3rem; font-family: inherit; }
         .btn-like:hover, .btn-like.liked { background: #fff0e6; border-color: var(--saffron); color: var(--saffron); }
+        .btn-delete { background: none; border: 1px solid #fecaca; border-radius: 20px; padding: 0.28rem 0.8rem; cursor: pointer; font-size: 0.85rem; color: #e53e3e; transition: all 0.2s; font-family: inherit; }
+        .btn-delete:hover { background: #fff0f0; border-color: #e53e3e; }
 
         .comments-loading { text-align: center; padding: 2rem; color: #bbb; }
         .no-comments { text-align: center; padding: 2rem; color: #bbb; font-size: 1rem; }
@@ -675,6 +677,7 @@ function renderComments(section) {
                             <button class="btn-like ${liked?'liked':''}" onclick="toggleLike('${doc.id}','${section}',this)">
                                 🙏 <span>${(c.likedBy||[]).length}</span>
                             </button>
+                            ${currentUser && currentUser.uid === c.uid ? `<button class="btn-delete" onclick="deleteComment('${doc.id}')">🗑️ Delete</button>` : ''}
                         </div>
                     </div>`;
                 }).join('') + `</div>`;
@@ -729,6 +732,16 @@ async function postComment(section) {
         alert('Could not post comment. Please try again.');
     } finally {
         if (btn) btn.disabled = false;
+    }
+}
+
+async function deleteComment(docId) {
+    if (!currentUser) return;
+    if (!confirm('Delete this comment?')) return;
+    try {
+        await db.collection('comments').doc(docId).delete();
+    } catch(err) {
+        alert('Could not delete comment. Please try again.');
     }
 }
 
