@@ -2565,10 +2565,36 @@ function showPaath(id) {
     }
 }
 
-// Initial render
-renderComments('home');
 <script>
-// Theme toggle functionality
+// ======================================
+// FIREBASE (YOUR EXISTING CONFIG)
+// ======================================
+const firebaseConfig = {
+    apiKey: "AIzaSyDktQUU_CshrGdOZDxwNsqKV4vCzYZhZSg",
+    authDomain: "sanatan-dharam-4f205.firebaseapp.com",
+    projectId: "sanatan-dharam-4f205",
+    storageBucket: "sanatan-dharam-4f205.firebasestorage.app",
+    messagingSenderId: "126413594707",
+    appId: "1:126413594707:web:0a834be30ab620bc69a6a6",
+    measurementId: "G-S7XCYH7G1S"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const provider = new firebase.auth.GoogleAuthProvider();
+
+// ======================================
+// STATE
+// ======================================
+let currentUser = null;
+let currentSection = 'home';
+let currentLang = 'en';
+let unsubComments = null;
+
+// ======================================
+// THEME TOGGLE (NEW)
+// ======================================
 function toggleTheme() {
     const body = document.body;
     const toggleBtn = document.getElementById('themeToggle');
@@ -2584,15 +2610,438 @@ function toggleTheme() {
     }
 }
 
-// Check for saved theme preference on page load
+// Load saved theme
 window.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('siteTheme');
     const toggleBtn = document.getElementById('themeToggle');
-    
-    if (savedTheme === 'dark') {
+    if (savedTheme === 'dark' && toggleBtn) {
         document.body.classList.add('dark-theme');
         toggleBtn.innerHTML = '☀️ Light Mode';
     }
+});
+
+// ======================================
+// LANGUAGE
+// ======================================
+function toggleLanguage() {
+    currentLang = currentLang === 'en' ? 'hi' : 'en';
+    const btn = document.getElementById('langBtn');
+    if (btn) btn.textContent = currentLang === 'en' ? 'हिंदी में पढ़ें' : 'Read in English';
+    document.querySelectorAll('[data-en][data-hi]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + currentLang);
+    });
+}
+
+// ======================================
+// AUTH STATE
+// ======================================
+auth.onAuthStateChanged(user => {
+    currentUser = user;
+    updateHeaderUI();
+    if (currentSection) renderComments(currentSection);
+});
+
+// ======================================
+// MODAL FUNCTIONS
+// ======================================
+function openModal() { 
+    switchToLogin(); 
+    const modal = document.getElementById('loginModal');
+    if (modal) modal.classList.add('open'); 
+}
+
+function closeModal() { 
+    const modal = document.getElementById('loginModal');
+    if (modal) modal.classList.remove('open'); 
+    clearMessages(); 
+}
+
+function handleOverlayClick(e) { 
+    if (e.target.id === 'loginModal') closeModal(); 
+}
+
+function switchToLogin() {
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const forgotForm = document.getElementById('forgotForm');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSubtitle = document.getElementById('modalSubtitle');
+    
+    if (loginForm) loginForm.style.display = 'block';
+    if (registerForm) registerForm.style.display = 'none';
+    if (forgotForm) forgotForm.style.display = 'none';
+    if (modalTitle) modalTitle.textContent = 'Welcome Back';
+    if (modalSubtitle) modalSubtitle.textContent = 'Sign in to join the conversation';
+    clearMessages();
+}
+
+function switchToRegister() {
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const forgotForm = document.getElementById('forgotForm');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSubtitle = document.getElementById('modalSubtitle');
+    
+    if (loginForm) loginForm.style.display = 'none';
+    if (registerForm) registerForm.style.display = 'block';
+    if (forgotForm) forgotForm.style.display = 'none';
+    if (modalTitle) modalTitle.textContent = 'Create Account';
+    if (modalSubtitle) modalSubtitle.textContent = 'Join the Sanatan Dharm community';
+    clearMessages();
+}
+
+function showForgotPassword() {
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const forgotForm = document.getElementById('forgotForm');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSubtitle = document.getElementById('modalSubtitle');
+    
+    if (loginForm) loginForm.style.display = 'none';
+    if (registerForm) registerForm.style.display = 'none';
+    if (forgotForm) forgotForm.style.display = 'block';
+    if (modalTitle) modalTitle.textContent = 'Reset Password';
+    if (modalSubtitle) modalSubtitle.textContent = 'We\'ll send a reset link to your email';
+    clearMessages();
+}
+
+function showError(msg) { 
+    const e = document.getElementById('errorMsg'); 
+    if (e) { 
+        e.textContent = msg; 
+        e.style.display = 'block'; 
+    }
+    const s = document.getElementById('successMsg');
+    if (s) s.style.display = 'none';
+}
+
+function showSuccess(msg) { 
+    const e = document.getElementById('successMsg'); 
+    if (e) { 
+        e.textContent = msg; 
+        e.style.display = 'block'; 
+    }
+    const s = document.getElementById('errorMsg');
+    if (s) s.style.display = 'none';
+}
+
+function clearMessages() { 
+    const e = document.getElementById('errorMsg');
+    const s = document.getElementById('successMsg');
+    if (e) e.style.display = 'none';
+    if (s) s.style.display = 'none';
+}
+
+// ======================================
+// AUTH FUNCTIONS
+// ======================================
+async function loginWithGoogle() {
+    try {
+        await auth.signInWithPopup(provider);
+        closeModal();
+    } catch(err) {
+        showError('Google login failed. Please try again.');
+    }
+}
+
+async function loginWithEmail() {
+    const email = document.getElementById('loginEmail')?.value.trim();
+    const pass = document.getElementById('loginPassword')?.value;
+    if (!email || !pass) return showError('Please fill in all fields.');
+    try {
+        await auth.signInWithEmailAndPassword(email, pass);
+        closeModal();
+    } catch(err) {
+        showError('Invalid email or password.');
+    }
+}
+
+async function registerWithEmail() {
+    const name = document.getElementById('regName')?.value.trim();
+    const email = document.getElementById('regEmail')?.value.trim();
+    const pass = document.getElementById('regPassword')?.value;
+    if (!name || !email || !pass) return showError('Please fill in all fields.');
+    if (pass.length < 6) return showError('Password must be at least 6 characters.');
+    try {
+        const result = await auth.createUserWithEmailAndPassword(email, pass);
+        await result.user.updateProfile({ displayName: name });
+        closeModal();
+    } catch(err) {
+        showError('Registration failed. Email may already be in use.');
+    }
+}
+
+async function logout() {
+    await auth.signOut();
+    const dropdown = document.getElementById('userDropdown');
+    if (dropdown) dropdown.classList.remove('open');
+}
+
+// ======================================
+// HEADER UI
+// ======================================
+function updateHeaderUI() {
+    const loginBtn = document.getElementById('headerLoginBtn');
+    const userPill = document.getElementById('headerUserPill');
+    const avatarEl = document.getElementById('headerAvatar');
+    const userNameEl = document.getElementById('headerUserName');
+    
+    if (!loginBtn || !userPill) return;
+    
+    if (currentUser) {
+        loginBtn.style.display = 'none';
+        userPill.style.display = 'block';
+        
+        const name = currentUser.displayName || currentUser.email?.split('@')[0] || 'User';
+        const photo = currentUser.photoURL;
+        
+        if (avatarEl) {
+            if (photo) {
+                avatarEl.innerHTML = `<img src="${photo}" alt="${name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+            } else {
+                avatarEl.textContent = name[0].toUpperCase();
+            }
+        }
+        if (userNameEl) userNameEl.textContent = name.split(' ')[0];
+    } else {
+        loginBtn.style.display = 'block';
+        userPill.style.display = 'none';
+    }
+}
+
+function toggleDropdown() { 
+    const dropdown = document.getElementById('userDropdown');
+    if (dropdown) dropdown.classList.toggle('open'); 
+}
+
+// Click outside dropdown to close
+document.addEventListener('click', e => {
+    const pill = document.querySelector('.user-pill');
+    const dropdown = document.getElementById('userDropdown');
+    if (pill && dropdown && !pill.contains(e.target)) {
+        dropdown.classList.remove('open');
+    }
+});
+
+// ======================================
+// COMMENTS
+// ======================================
+function renderComments(section) {
+    const container = document.getElementById(section + '-comments');
+    if (!container) return;
+    
+    if (unsubComments) { unsubComments(); unsubComments = null; }
+    
+    const writeBox = currentUser ? buildWriteBox(section) : 
+        `<div class="comment-login-prompt">
+            <p>🙏 Login to share your thoughts and blessings with the community</p>
+            <button class="btn-login-prompt" onclick="openModal()">Login / Register to Comment</button>
+        </div>`;
+    
+    container.innerHTML = `
+        <div class="comments-header">
+            <h3>💬 Community Comments</h3>
+            <span class="comment-count-badge" id="badge-${section}">0</span>
+        </div>
+        ${writeBox}
+        <div id="commentsList-${section}" class="comments-loading">🙏 Loading comments...</div>`;
+    
+    unsubComments = db.collection('comments').onSnapshot(snap => {
+        const badge = document.getElementById('badge-' + section);
+        const list = document.getElementById('commentsList-' + section);
+        if (!list) return;
+        
+        const docs = snap.docs
+            .filter(doc => doc.data().section === section)
+            .sort((a, b) => {
+                const ta = a.data().timestamp;
+                const tb = b.data().timestamp;
+                if (!ta || !tb) return 0;
+                return tb.toMillis() - ta.toMillis();
+            });
+        
+        if (badge) badge.textContent = docs.length;
+        
+        if (docs.length === 0) {
+            list.innerHTML = `<div class="no-comments"><div class="no-comments-icon">🙏</div><p>Be the first to share your thoughts!</p></div>`;
+            return;
+        }
+        
+        list.innerHTML = `<div class="comments-list">` + docs.map(doc => {
+            const c = doc.data();
+            const liked = currentUser && c.likedBy && c.likedBy.includes(currentUser.uid);
+            const date = c.timestamp ? new Date(c.timestamp.toDate()).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : 'Just now';
+            const avatarContent = c.photoURL ? 
+                `<img src="${c.photoURL}" alt="${c.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">` : 
+                (c.name || '?')[0].toUpperCase();
+            return `<div class="comment-card">
+                <div class="comment-meta">
+                    <div class="comment-avatar-sm">${avatarContent}</div>
+                    <span class="comment-user-name">${c.name || 'Anonymous'}</span>
+                    <span class="comment-date">${date}</span>
+                </div>
+                <div class="comment-text">${c.text}</div>
+                <div class="comment-actions">
+                    <button class="btn-like ${liked ? 'liked' : ''}" onclick="toggleLike('${doc.id}','${section}',this)">
+                        🙏 <span>${(c.likedBy || []).length}</span>
+                    </button>
+                    ${currentUser && currentUser.uid === c.uid ? `<button class="btn-delete" onclick="deleteComment('${doc.id}')">🗑️ Delete</button>` : ''}
+                </div>
+            </div>`;
+        }).join('') + `</div>`;
+    });
+}
+
+function buildWriteBox(section) {
+    const user = currentUser;
+    const name = user.displayName || user.email?.split('@')[0] || 'User';
+    const photo = user.photoURL;
+    const avatarContent = photo ? 
+        `<img src="${photo}" alt="${name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">` : 
+        name[0].toUpperCase();
+    return `<div class="comment-box">
+        <div class="comment-box-header">
+            <div class="comment-avatar-sm">${avatarContent}</div>
+            <strong style="color:var(--brown);">${name}</strong>
+        </div>
+        <textarea class="comment-textarea" id="commentInput-${section}" placeholder="Share your thoughts, questions, or blessings... 🙏"></textarea>
+        <div class="comment-submit-row">
+            <button class="btn-post-comment" id="postBtn-${section}" onclick="postComment('${section}')">Post Comment 🙏</button>
+        </div>
+    </div>`;
+}
+
+async function postComment(section) {
+    if (!currentUser) return openModal();
+    const input = document.getElementById('commentInput-' + section);
+    if (!input) return;
+    const text = input.value.trim();
+    if (!text) return;
+    
+    const btn = document.getElementById('postBtn-' + section);
+    if (btn) btn.disabled = true;
+    
+    const name = currentUser.displayName || currentUser.email?.split('@')[0] || 'User';
+    try {
+        await db.collection('comments').add({
+            section,
+            text: text.replace(/</g,'&lt;').replace(/>/g,'&gt;'),
+            name,
+            uid: currentUser.uid,
+            photoURL: currentUser.photoURL || null,
+            likedBy: [],
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        input.value = '';
+    } catch(err) {
+        alert('Could not post comment. Please try again.');
+    } finally {
+        if (btn) btn.disabled = false;
+    }
+}
+
+async function deleteComment(docId) {
+    if (!currentUser) return;
+    if (!confirm('Delete this comment?')) return;
+    try {
+        await db.collection('comments').doc(docId).delete();
+    } catch(err) {
+        alert('Could not delete comment. Please try again.');
+    }
+}
+
+async function toggleLike(docId, section, btn) {
+    if (!currentUser) return openModal();
+    const uid = currentUser.uid;
+    const ref = db.collection('comments').doc(docId);
+    try {
+        const doc = await ref.get();
+        if (!doc.exists) return;
+        const likedBy = doc.data().likedBy || [];
+        if (likedBy.includes(uid)) {
+            await ref.update({ likedBy: firebase.firestore.FieldValue.arrayRemove(uid) });
+        } else {
+            await ref.update({ likedBy: firebase.firestore.FieldValue.arrayUnion(uid) });
+        }
+    } catch(err) { console.error(err); }
+}
+
+// ======================================
+// NAVIGATION
+// ======================================
+function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    const section = document.getElementById(id);
+    if (section) section.classList.add('active');
+    
+    const display = document.getElementById('text-display');
+    if (display) display.style.display = 'none';
+    
+    currentSection = id;
+    renderComments(id);
+}
+
+function showText(id) {
+    const display = document.getElementById('text-display');
+    const active = document.querySelector('.section.active');
+    
+    if (display) {
+        display.innerHTML = `<button class="back-btn" onclick="goBack()">← Back</button>` + getTextContent(id);
+        display.style.display = 'block';
+    }
+    if (active) active.style.display = 'none';
+}
+
+function goBack() {
+    const display = document.getElementById('text-display');
+    const active = document.querySelector('.section.active');
+    
+    if (display) display.style.display = 'none';
+    if (active) active.style.display = 'block';
+}
+
+function showPaath(id) {
+    if (id === 'sundarkand') {
+        const grid = document.getElementById('paathGrid');
+        const text = document.getElementById('sundarkand-text');
+        const comments = document.getElementById('paathmandir-comments-main');
+        
+        if (grid) grid.style.display = 'none';
+        if (text) text.style.display = 'block';
+        if (comments) comments.style.display = 'none';
+        renderComments('paathmandir');
+    }
+}
+
+function closePaath() {
+    document.querySelectorAll('[id$="-page"]').forEach(p => p.style.display = 'none');
+    showSection('paath');
+}
+
+// ======================================
+// TEXT CONTENT
+// ======================================
+function getTextContent(id) {
+    const lang = currentLang || 'en';
+    const contents = {
+        'bhagavad-gita': {
+            en: `<div class="text-content"><h2>Bhagavad Gita — The Song of God</h2><p>The Bhagavad Gita is a 700-verse scripture forming part of the Mahabharata — a sacred dialogue between Lord Krishna and Arjuna on the battlefield of Kurukshetra.</p><h3>Key Teachings</h3><p><strong>Dharma:</strong> Perform your duty without attachment to results.<br><strong>Karma Yoga:</strong> Path of selfless action.<br><strong>Bhakti Yoga:</strong> Path of devotion and love.<br><strong>Jnana Yoga:</strong> Path of knowledge and wisdom.</p><div class="verse"><strong>Chapter 2, Verse 47:</strong><br>"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।"<br>You have the right to perform your duty, but never to the fruits thereof.</div><div class="verse"><strong>Chapter 18, Verse 66:</strong><br>"सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज।"<br>Abandon all dharmas and surrender unto Me alone.</div></div>`,
+            hi: `<div class="text-content"><h2>भगवद गीता — भगवान का गीत</h2><p>भगवद गीता 700 श्लोकों का हिंदू धर्मग्रंथ है। यह कुरुक्षेत्र के युद्धक्षेत्र में भगवान कृष्ण और अर्जुन के बीच पवित्र संवाद है।</p><h3>मुख्य शिक्षाएं</h3><p><strong>धर्म:</strong> परिणामों की चिंता किए बिना अपना कर्तव्य निभाएं।<br><strong>कर्म योग:</strong> निस्वार्थ कर्म का मार्ग।<br><strong>भक्ति योग:</strong> भक्ति और प्रेम का मार्ग।<br><strong>ज्ञान योग:</strong> ज्ञान और बुद्धि का मार्ग।</p><div class="verse"><strong>अध्याय 2, श्लोक 47:</strong><br>"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।"<br>तुम्हारा अधिकार केवल कर्म करने में है, फलों में कभी नहीं।</div><div class="verse"><strong>अध्याय 18, श्लोक 66:</strong><br>"सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज।"<br>सभी धर्मों को त्यागकर केवल मेरी शरण में आओ।</div></div>`
+        }
+    };
+    
+    const def = lang === 'en'
+        ? `<div class="text-content"><h2>Content Coming Soon</h2><p>This section is being updated with detailed information. 🙏</p></div>`
+        : `<div class="text-content"><h2>सामग्री जल्द आ रही है</h2><p>इस अनुभाग को विस्तृत जानकारी के साथ अपडेट किया जा रहा है। 🙏</p></div>`;
+    
+    return (contents[id] && contents[id][lang]) || def;
+}
+
+// ======================================
+// INITIAL RENDER
+// ======================================
+window.addEventListener('load', () => {
+    renderComments('home');
 });
 </script>
 </body>
