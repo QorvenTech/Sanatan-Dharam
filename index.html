@@ -8,10 +8,74 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --saffron: #ff6b35; --saffron-light: #ff8c42;
-            --brown: #8b4513; --cream: #fff5e6; --gold: #ffd700; --text: #4a2c0f;
-        }
-        body { font-family: 'Crimson Pro', Georgia, serif; background: linear-gradient(135deg, #fff5e6 0%, #ffe4cc 100%); color: var(--text); }
+    --saffron: #ff6b35; --saffron-light: #ff8c42;
+    --brown: #8b4513; --cream: #fff5e6; --gold: #ffd700; --text: #4a2c0f;
+    --bg: linear-gradient(135deg, #fff5e6 0%, #ffe4cc 100%);
+    --card-bg: white;
+    --comment-bg: #fdf8f3;
+    --border-light: #f0e6d3;
+}
+
+/* Dark mode - automatically applies when user has dark theme on their device */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --saffron: #ff8c42; --saffron-light: #ffaa33;
+        --brown: #d4a574; --cream: #3d2a1a; --gold: #e6b422; --text: #f0e0d0;
+        --bg: linear-gradient(135deg, #1a1a1a 0%, #2d2a24 100%);
+        --card-bg: #2d2d2d;
+        --comment-bg: #2a2a2a;
+        --border-light: #4a3a2a;
+    }
+    
+    /* Force specific elements to use the variables */
+    body {
+        background: var(--bg) !important;
+        color: var(--text) !important;
+    }
+    
+    .card, .text-content, .comments-section, .comment-box, .welcome-text {
+        background: var(--card-bg) !important;
+        color: var(--text) !important;
+    }
+    
+    .comment-box, .sk-intro-box {
+        background: var(--comment-bg) !important;
+    }
+    
+    .card p, .comment-text {
+        color: var(--text) !important;
+        opacity: 0.9;
+    }
+    
+    .verse, .bhavaarth-box {
+        background: var(--cream) !important;
+        color: var(--text) !important;
+    }
+    
+    input, textarea {
+        background: #3d3d3d !important;
+        color: #f0f0f0 !important;
+        border-color: var(--brown) !important;
+    }
+    
+    /* Keep saffron colors vibrant */
+    .card h3, h2, .saffron-text {
+        color: var(--saffron) !important;
+    }
+    
+    header {
+        background: linear-gradient(135deg, #b34a1a 0%, #8a3800 100%) !important;
+    }
+    
+    nav {
+        background: var(--brown) !important;
+    }
+    
+    footer {
+        background: var(--brown) !important;
+    }
+}
+        body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color: var(--text); }
 
         /* HEADER */
         header { background: linear-gradient(135deg, #ff6b35 0%, #c94a00 100%); color: white; padding: 1.2rem 1.5rem 1.8rem; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
