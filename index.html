@@ -76,72 +76,48 @@
     @media (prefers-color-scheme: dark) {
     /* ... your existing dark mode code ... */
 
-    /* NEW: Fix comments section */
-    .comments-section {
-        background: var(--card-bg) !important;
-        border-top: 4px solid var(--saffron) !important;
+    @media (prefers-color-scheme: dark) {
+    /* ... your existing dark mode code ... */
+
+    /* 💪 STRONGER COMMENTS FIX */
+    .comments-section,
+    div[class*="comments"],
+    #home-comments,
+    #texts-comments,
+    #mantras-comments,
+    #deities-comments,
+    #festivals-comments,
+    #rituals-comments,
+    #panchang-comments,
+    #paathmandir-comments,
+    #sundarkand-comments {
+        background-color: #2d2d2d !important;
+        border-top: 4px solid #ff8c42 !important;
     }
     
-    .comment-box {
-        background: #2a2a2a !important;
+    .comment-box,
+    .comment-card,
+    .comment-login-prompt {
+        background-color: #2a2a2a !important;
         border: 1px solid #4a3a2a !important;
     }
     
-    .comment-card {
-        background: #2d2d2d !important;
-        border: 1px solid #4a3a2a !important;
-    }
-    
-    .comment-text {
+    .comment-text,
+    .comment-login-prompt p {
         color: #f0e0d0 !important;
     }
     
     .comment-user-name {
-        color: var(--saffron) !important;
+        color: #ff8c42 !important;
     }
     
     .comment-date {
         color: #aaa !important;
     }
     
-    .comment-textarea {
-        background: #3d3d3d !important;
-        color: #f0f0f0 !important;
-        border-color: #5a4a3a !important;
-    }
-    
-    .comment-textarea:focus {
-        border-color: var(--saffron) !important;
-    }
-    
-    .btn-post-comment, .btn-login-prompt {
-        background: linear-gradient(135deg, var(--saffron), var(--saffron-light)) !important;
-    }
-    
-    .comment-login-prompt {
-        background: #2a2a2a !important;
-        border-color: #4a3a2a !important;
-    }
-    
-    .comment-login-prompt p {
-        color: #f0e0d0 !important;
-    }
-    
-    .btn-like {
-        background: #3d3d3d !important;
-        border-color: #5a4a3a !important;
-        color: #ccc !important;
-    }
-    
-    .btn-like:hover, .btn-like.liked {
-        background: #4a3a2a !important;
-        border-color: var(--saffron) !important;
-        color: var(--saffron) !important;
-    }
-    
-    .btn-delete {
-        background: #3d3d3d !important;
-        border-color: #5a4a3a !important;
+    /* Force background on all comment containers */
+    div[id$="-comments"] {
+        background-color: #2d2d2d !important;
     }
 }
         body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color: var(--text); }
