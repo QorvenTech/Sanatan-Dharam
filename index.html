@@ -73,51 +73,17 @@
     
     footer {
         background: var(--brown) !important;
-    @media (prefers-color-scheme: dark) {
-    /* ... your existing dark mode code ... */
-
-    @media (prefers-color-scheme: dark) {
-    /* ... your existing dark mode code ... */
-
-    /* 💪 STRONGER COMMENTS FIX */
-    .comments-section,
-    div[class*="comments"],
-    #home-comments,
-    #texts-comments,
-    #mantras-comments,
-    #deities-comments,
-    #festivals-comments,
-    #rituals-comments,
-    #panchang-comments,
-    #paathmandir-comments,
-    #sundarkand-comments {
+    /* 💥 EMERGENCY DARK MODE FOR COMMENTS */
+@media (prefers-color-scheme: dark) {
+    .comments-section, .comment-box, .comment-card, 
+    .comment-login-prompt, [id*="comments"] {
         background-color: #2d2d2d !important;
-        border-top: 4px solid #ff8c42 !important;
-    }
-    
-    .comment-box,
-    .comment-card,
-    .comment-login-prompt {
-        background-color: #2a2a2a !important;
-        border: 1px solid #4a3a2a !important;
-    }
-    
-    .comment-text,
-    .comment-login-prompt p {
         color: #f0e0d0 !important;
+        border-color: #4a3a2a !important;
     }
     
-    .comment-user-name {
-        color: #ff8c42 !important;
-    }
-    
-    .comment-date {
-        color: #aaa !important;
-    }
-    
-    /* Force background on all comment containers */
-    div[id$="-comments"] {
-        background-color: #2d2d2d !important;
+    .comment-text, p, span {
+        color: #f0e0d0 !important;
     }
 }
         body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color: var(--text); }
