@@ -47,17 +47,24 @@ body.dark-theme {
     .user-dropdown a { color: #f0e0d0; border-bottom: 1px solid #4a3a2a; }
     .logout-link { color: #ff6b6b; }
 
-    /* Fix Sundarkand - IMPORTANT PART */
-        .sk-chand {
-        background: #1a1a1a;
-        color: #ffffff;
-        border: 2px solid #ff8c42;
-        padding: 1.2rem;
-        border-radius: 10px;
+        /* 🌙 FORCE CHAND BOX TO BE DARK - EVEN WITH BRAVE OFF */
+    .sk-chand {
+        background: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 2px solid #ff8c42 !important;
+        padding: 1.2rem !important;
+        border-radius: 10px !important;
+        background-image: none !important;  /* Remove any gradients */
     }
     
     .sk-chand strong {
-        color: #ffaa33;
+        color: #ffaa33 !important;
+    }
+    
+    /* Also fix the parent container if needed */
+    .sk-chand, 
+    .sk-chand * {
+        background-color: #1a1a1a !important;
     }
     .bhavaarth-box { background: #2d2d2d; border-left: 4px solid #38a169; padding: 1rem; border-radius: 8px; }
     .bhavaarth-title { color: #98c379; }
