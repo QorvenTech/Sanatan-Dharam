@@ -71,6 +71,61 @@ body.dark-theme {
     .bhavaarth-prasang { color: #d4b68a; }
     .bhavaarth-text { color: #f0e0d0; }
     .verse { background: #2d2d2d; color: #f0e0d0; border-left: 4px solid var(--saffron); padding: 1rem; border-radius: 8px; }
+        /* 🌙 Make comments box look like Brave forced dark mode */
+    .comment-box,
+    .comment-textarea,
+    .comment-card,
+    .comments-section,
+    .comment-login-prompt {
+        background-color: #2a2a2a !important;
+        color: #e0e0e0 !important;
+        border-color: #444 !important;
+    }
+    
+    .comment-textarea {
+        background-color: #1e1e1e !important;
+        color: #ffffff !important;
+        border: 1px solid #555 !important;
+    }
+    
+    .comment-textarea:focus {
+        border-color: #ff8c42 !important;
+        outline: none !important;
+    }
+    
+    .btn-post-comment {
+        background-color: #ff8c42 !important;
+        color: white !important;
+        border: none !important;
+        padding: 8px 16px !important;
+        border-radius: 20px !important;
+    }
+    
+    .btn-post-comment:hover {
+        background-color: #ffaa33 !important;
+    }
+    
+    .comment-user-name {
+        color: #ffaa33 !important;
+        font-weight: bold !important;
+    }
+    
+    .comment-date {
+        color: #999 !important;
+        font-size: 0.85rem !important;
+    }
+    
+    .btn-like {
+        background-color: #333 !important;
+        color: #ccc !important;
+        border: 1px solid #555 !important;
+    }
+    
+    .btn-like:hover,
+    .btn-like.liked {
+        background-color: #444 !important;
+        color: #ff8c42 !important;
+        border-color: #ff8c42 !important;
 }
         body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color: var(--text); transition: all 0.3s ease; }
 
