@@ -18,7 +18,6 @@
     --nav-bg: #8b4513;
 }
 
-/* Dark theme class - applied when toggle is clicked */
 body.dark-theme {
     --saffron: #ff8c42; --saffron-light: #ffaa33;
     --brown: #d4a574; --cream: #3d2a1a; --gold: #e6b422; --text: #f0e0d0;
@@ -29,98 +28,58 @@ body.dark-theme {
     --header-bg: linear-gradient(135deg, #b34a1a 0%, #8a3800 100%);
     --nav-bg: #5a3a2a;
 
-    /* Fix for comments in dark mode */
+    /* Fix comments */
     .comment-card {
-        background: #2d2d2d !important;
-        border: 1px solid #4a3a2a !important;
+        background: #2d2d2d;
+        border: 1px solid #4a3a2a;
     }
-    
     .comment-text {
-        color: #f0e0d0 !important;
+        color: #f0e0d0;
     }
-    
     .comment-user-name {
-        color: var(--saffron) !important;
+        color: var(--saffron);
     }
-    
     .comment-date {
-        color: #aaa !important;
+        color: #aaa;
     }
-    
-    .comment-avatar-sm {
-        background: linear-gradient(135deg, var(--gold), var(--saffron)) !important;
-    }
-    
     .btn-like {
-        background: #3d3d3d !important;
-        border-color: #5a4a3a !important;
-        color: #ccc !important;
+        background: #3d3d3d;
+        border-color: #5a4a3a;
+        color: #ccc;
     }
-    
     .btn-like:hover, .btn-like.liked {
-        background: #4a3a2a !important;
-        border-color: var(--saffron) !important;
-        color: var(--saffron) !important;
-    }
-    
-    .btn-delete {
-        background: #3d3d3d !important;
-        border-color: #5a4a3a !important;
-        color: #e53e3e !important;
+        background: #4a3a2a;
+        border-color: var(--saffron);
+        color: var(--saffron);
     }
 
     /* Fix logout dropdown */
     .user-dropdown {
-        background: #2d2d2d !important;
-        border: 1px solid #4a3a2a !important;
+        background: #2d2d2d;
+        border: 1px solid #4a3a2a;
     }
-    
     .user-dropdown a {
-        color: #f0e0d0 !important;
-        border-bottom: 1px solid #4a3a2a !important;
+        color: #f0e0d0;
+        border-bottom: 1px solid #4a3a2a;
     }
-    
-    .user-dropdown a:hover {
-        background: #3d3d3d !important;
-    }
-    
     .logout-link {
-        color: #ff6b6b !important;
+        color: #ff6b6b;
     }
 
     /* Fix Sundarkand text */
     .sk-chand {
-        background: linear-gradient(135deg, #2d2d2d, #3d3d3d) !important;
-        color: #f0e0d0 !important;
+        background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
+        color: #f0e0d0;
     }
-    
-    .sk-chand strong {
-        color: var(--saffron) !important;
-    }
-    
     .bhavaarth-box {
-        background: linear-gradient(135deg, #2d2d2d, #3d3d3d) !important;
-        border-left: 4px solid #38a169 !important;
+        background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
+        border-left: 4px solid #38a169;
     }
-    
-    .bhavaarth-title {
-        color: #98c379 !important;
-    }
-    
-    .bhavaarth-prasang {
-        color: #d4b68a !important;
-    }
-    
-    .bhavaarth-text {
-        color: #e0e0e0 !important;
-    }
-    
     .verse {
-        background: #2d2d2d !important;
-        color: #f0e0d0 !important;
-        border-left: 4px solid var(--saffron) !important;
+        background: #2d2d2d;
+        color: #f0e0d0;
+        border-left: 4px solid var(--saffron);
     }
-}
 }
         body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color: var(--text); transition: all 0.3s ease; }
 
