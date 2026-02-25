@@ -2432,6 +2432,23 @@ async function sendResetEmail() {
         showError(errorMsg);
     }
 }
+    // ======================================
+// LOGOUT FUNCTION (ADD THIS)
+// ======================================
+async function logout() {
+    try {
+        await auth.signOut();
+        // Close dropdown
+        const dropdown = document.getElementById('userDropdown');
+        if (dropdown) dropdown.classList.remove('open');
+        // Update header UI
+        updateHeaderUI();
+        console.log('Logged out successfully');
+    } catch(err) {
+        console.error('Logout error:', err);
+        alert('Failed to logout. Please try again.');
+    }
+}
 
 function friendlyError(code) {
     const map = {
