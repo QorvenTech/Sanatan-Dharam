@@ -29,44 +29,91 @@ body.dark-theme {
     --header-bg: linear-gradient(135deg, #b34a1a 0%, #8a3800 100%);
     --nav-bg: #5a3a2a;
 
-    /* ✅ THESE MUST BE INSIDE - right here */
-    .comment-card {
-        background: #2d2d2d !important;
-        border: 1px solid #4a3a2a !important;
-    }
-    
-    .comment-text {
-        color: #f0e0d0 !important;
-    }
-    
-    .comment-user-name {
-        color: var(--saffron) !important;
-    }
-    
-    .comment-date {
-        color: #aaa !important;
-    }
-    
-    .comment-avatar-sm {
-        background: linear-gradient(135deg, var(--gold), var(--saffron)) !important;
-    }
-    
-    .btn-like {
-        background: #3d3d3d !important;
-        border-color: #5a4a3a !important;
-        color: #ccc !important;
-    }
-    
-    .btn-like:hover, .btn-like.liked {
-        background: #4a3a2a !important;
-        border-color: var(--saffron) !important;
-        color: var(--saffron) !important;
-    }
-    
-    .btn-delete {
-        background: #3d3d3d !important;
-        border-color: #5a4a3a !important;
-        color: #e53e3e !important;
+    /* 🆕 IMPROVED COMMENTS SECTION */
+.comment-textarea {
+    background: #3d3d3d !important;
+    color: #f0e0d0 !important;
+    border: 2px solid #5a4a3a !important;
+}
+
+.comment-textarea:focus {
+    border-color: var(--saffron) !important;
+    box-shadow: 0 0 0 2px rgba(255,140,66,0.2) !important;
+}
+
+.comment-card {
+    background: #363636 !important;
+    border: 1px solid #5a4a3a !important;
+    border-radius: 12px !important;
+}
+
+.comment-card:hover {
+    background: #404040 !important;
+    border-color: var(--saffron) !important;
+}
+
+.comment-text {
+    color: #f0e0d0 !important;
+    line-height: 1.6 !important;
+}
+
+.comment-user-name {
+    color: var(--saffron) !important;
+    font-weight: 600 !important;
+}
+
+.comment-date {
+    color: #b0a090 !important;
+}
+
+.btn-like {
+    background: #3d3d3d !important;
+    border: 1px solid #5a4a3a !important;
+    color: #d0c0b0 !important;
+}
+
+.btn-like:hover, .btn-like.liked {
+    background: #4a3a2a !important;
+    border-color: var(--saffron) !important;
+    color: var(--saffron) !important;
+}
+
+.btn-delete {
+    background: #3d3d3d !important;
+    border: 1px solid #5a4a3a !important;
+    color: #ff8a8a !important;
+}
+
+.btn-delete:hover {
+    background: #4a2a2a !important;
+    border-color: #ff6b6b !important;
+    color: #ff6b6b !important;
+}
+
+.btn-post-comment {
+    background: linear-gradient(135deg, var(--saffron), var(--saffron-light)) !important;
+    color: white !important;
+    border: none !important;
+}
+
+.btn-post-comment:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(255,140,66,0.3) !important;
+}
+
+.comment-login-prompt {
+    background: #2d2d2d !important;
+    border: 2px dashed #5a4a3a !important;
+}
+
+.comment-login-prompt p {
+    color: #f0e0d0 !important;
+}
+
+.comment-avatar-sm {
+    background: linear-gradient(135deg, var(--gold), var(--saffron)) !important;
+    color: white !important;
+}
     }
         /* 🆕 FIX LOGOUT DROPDOWN */
     .user-dropdown {
