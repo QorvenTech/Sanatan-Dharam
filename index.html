@@ -28,6 +28,54 @@ body.dark-theme {
     --border-light: #4a3a2a;
     --header-bg: linear-gradient(135deg, #b34a1a 0%, #8a3800 100%);
     --nav-bg: #5a3a2a;
+
+    /* ✅ THESE MUST BE INSIDE - right here */
+    .comment-card {
+        background: #2d2d2d !important;
+        border: 1px solid #4a3a2a !important;
+    }
+    
+    .comment-text {
+        color: #f0e0d0 !important;
+    }
+    
+    .comment-user-name {
+        color: var(--saffron) !important;
+    }
+    
+    .comment-date {
+        color: #aaa !important;
+    }
+    
+    .comment-avatar-sm {
+        background: linear-gradient(135deg, var(--gold), var(--saffron)) !important;
+    }
+    
+    .btn-like {
+        background: #3d3d3d !important;
+        border-color: #5a4a3a !important;
+        color: #ccc !important;
+    }
+    
+    .btn-like:hover, .btn-like.liked {
+        background: #4a3a2a !important;
+        border-color: var(--saffron) !important;
+        color: var(--saffron) !important;
+    }
+    
+    .btn-delete {
+        background: #3d3d3d !important;
+        border-color: #5a4a3a !important;
+        color: #e53e3e !important;
+    }
+}
+
+body { 
+    font-family: 'Crimson Pro', Georgia, serif; 
+    background: var(--bg); 
+    color: var(--text); 
+    transition: all 0.3s ease; 
+}
 }
         body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color: var(--text); transition: all 0.3s ease; }
 
