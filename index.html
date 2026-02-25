@@ -18,6 +18,7 @@
     --nav-bg: #8b4513;
 }
 
+/* Dark theme class - applied when toggle is clicked */
 body.dark-theme {
     --saffron: #ff8c42; --saffron-light: #ffaa33;
     --brown: #d4a574; --cream: #3d2a1a; --gold: #e6b422; --text: #f0e0d0;
@@ -29,94 +30,31 @@ body.dark-theme {
     --nav-bg: #5a3a2a;
 
     /* Fix comments */
-    .comment-card {
-        background: #2d2d2d;
-        border: 1px solid #4a3a2a;
-    }
-    .comment-text {
-        color: #f0e0d0;
-    }
-    .comment-user-name {
-        color: var(--saffron);
-    }
-    .comment-date {
-        color: #aaa;
-    }
-    .btn-like {
-        background: #3d3d3d;
-        border-color: #5a4a3a;
-        color: #ccc;
-    }
-    .btn-like:hover, .btn-like.liked {
-        background: #4a3a2a;
-        border-color: var(--saffron);
-        color: var(--saffron);
-    }
+    .comments-section { background: var(--card-bg); }
+    .comment-card { background: #2d2d2d; border: 1px solid #4a3a2a; }
+    .comment-text { color: #f0e0d0; }
+    .comment-user-name { color: var(--saffron); }
+    .comment-date { color: #aaa; }
+    .comment-avatar-sm { background: linear-gradient(135deg, var(--gold), var(--saffron)); }
 
-    /* Fix logout dropdown */
-    .user-dropdown {
-        background: #2d2d2d;
-        border: 1px solid #4a3a2a;
-    }
-    .user-dropdown a {
-        color: #f0e0d0;
-        border-bottom: 1px solid #4a3a2a;
-    }
-    .logout-link {
-        color: #ff6b6b;
-    }
+    /* Fix buttons */
+    .btn-like { background: #3d3d3d; border-color: #5a4a3a; color: #ccc; }
+    .btn-like:hover { background: #4a3a2a; border-color: var(--saffron); color: var(--saffron); }
+    .btn-delete { background: #3d3d3d; border-color: #5a4a3a; color: #e53e3e; }
 
-    /* Fix Sundarkand text */
-    .sk-chand {
-        background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
-        color: #f0e0d0;
-    }
-    .bhavaarth-box {
-        background: linear-gradient(135deg, #2d2d2d, #3d3d3d);
-        border-left: 4px solid #38a169;
-    }
-    .verse {
-        background: #2d2d2d;
-        color: #f0e0d0;
-        border-left: 4px solid var(--saffron);
-    }
-    body.dark-theme {
-    /* ... your existing variables ... */
+    /* Fix logout */
+    .user-dropdown { background: #2d2d2d; border: 1px solid #4a3a2a; }
+    .user-dropdown a { color: #f0e0d0; border-bottom: 1px solid #4a3a2a; }
+    .logout-link { color: #ff6b6b; }
 
-    body.dark-theme {
-    --saffron: #ff8c42;
-    /* ... all your existing variables and styles ... */
-    
-    /* Your existing .sk-chand styles (if any) */
-    /* Your existing .bhavaarth-box styles (if any) */
-    
-    /* ✅ JUST ADD THESE NEW LINES HERE */
-    .sk-chand {
-        background: #2d2d2d !important;
-        color: #f0e0d0 !important;
-        border: 1px solid #4a3a2a !important;
-    }
-    
-    .bhavaarth-box {
-        background: #2d2d2d !important;
-        border-left: 4px solid #38a169 !important;
-    }
-    
-    .bhavaarth-text {
-        color: #f0e0d0 !important;
-    }
-    
-    .verse {
-        background: #2d2d2d !important;
-        color: #f0e0d0 !important;
-        border-left: 4px solid var(--saffron) !important;
-    }
-    /* ✅ END OF NEW LINES */
-}
-
-body {
-    /* normal styles */
-}
+    /* Fix Sundarkand - IMPORTANT PART */
+    .sk-chand { background: #2d2d2d; color: #f0e0d0; border: 1px solid #4a3a2a; padding: 1rem; border-radius: 8px; }
+    .sk-chand strong { color: var(--saffron); }
+    .bhavaarth-box { background: #2d2d2d; border-left: 4px solid #38a169; padding: 1rem; border-radius: 8px; }
+    .bhavaarth-title { color: #98c379; }
+    .bhavaarth-prasang { color: #d4b68a; }
+    .bhavaarth-text { color: #f0e0d0; }
+    .verse { background: #2d2d2d; color: #f0e0d0; border-left: 4px solid var(--saffron); padding: 1rem; border-radius: 8px; }
 }
         body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color: var(--text); transition: all 0.3s ease; }
 
