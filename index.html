@@ -228,6 +228,32 @@ body.dark-theme {
             .cards-grid { grid-template-columns: 1fr; }
             .text-content { padding: 1.2rem; }
         }
+
+        /* Favorite button styles */
+        .favorite-btn {
+            background: var(--cream);
+            border: 2px solid var(--saffron);
+            color: var(--saffron);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .favorite-btn:hover {
+            background: var(--saffron);
+            color: white;
+        }
+        .favorite-btn.favorited {
+            background: var(--saffron);
+            color: white;
+            border-color: var(--saffron);
+        }
     </style>
 </head>
 <body>
@@ -352,6 +378,7 @@ body.dark-theme {
         <li><a href="#" onclick="showSection('festivals')" data-en="Festivals"    data-hi="त्यौहार">Festivals</a></li>
         <li><a href="#" onclick="showSection('rituals')"   data-en="Rituals"      data-hi="रीति-रिवाज">Rituals</a></li>
         <li><a href="#" onclick="showSection('panchang')"     data-en="Panchang"       data-hi="पंचांग">Panchang</a></li>
+        <li><a href="#" onclick="showFavorites()">🌟 My Favorites</a></li>
         <li><a href="#" onclick="showSection('paathmandir')" data-en="📖 Paath Mandir" data-hi="📖 पाठ मंदिर">📖 Paath Mandir</a></li>
     </ul>
 </nav>
@@ -2157,6 +2184,14 @@ body.dark-theme {
     </div>
 
     <div id="text-display" style="display:none;"></div>
+
+    <!-- FAVORITES SECTION -->
+    <div id="favorites-section" class="section">
+        <div id="favorites-content" class="text-content">
+            <h2>🌟 My Favorites</h2>
+            <div id="favorites-list">Loading your favorites...</div>
+        </div>
+    </div>
 </div>
 
 <footer>
@@ -2706,6 +2741,12 @@ function showSection(id) {
     const display = document.getElementById('text-display');
     if (display) display.style.display = 'none';
     
+    // Also hide favorites section if it's not the one being shown
+    const favSection = document.getElementById('favorites-section');
+    if (favSection && id !== 'favorites-section') {
+        favSection.classList.remove('active');
+    }
+    
     currentSection = id;
     renderComments(id);
 }
@@ -2767,7 +2808,10 @@ function getTextContent(id) {
 
             <!-- Aavahan content (hidden initially) -->
             <div id="ramayan-aavahan" style="display: none;">
-                <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
+                    <button class="favorite-btn" data-content-id="ramayan-aavahan" data-content-title="श्री रामायण आवाहन" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                </div>
                 <h3 style="color: var(--saffron); margin-top: 1rem;">॥ श्री रामायण आवाहन ॥</h3>
                 <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
                     जो सुमिरत सिद्ध होय गण नायक करिवर बदन।<br>
@@ -2800,7 +2844,10 @@ function getTextContent(id) {
 
             <!-- Visarjan content (hidden initially) -->
             <div id="ramayan-visarjan" style="display: none;">
-                <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
+                    <button class="favorite-btn" data-content-id="ramayan-visarjan" data-content-title="श्री रामायण विसर्जन" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                </div>
                 <h3 style="color: var(--saffron); margin-top: 1rem;">॥ श्री रामायण विसर्जन ॥</h3>
                 <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
                     जय जय राजा राम की, जय लक्ष्मण बलवान।<br>
@@ -2849,7 +2896,10 @@ function getTextContent(id) {
             </div>
 
             <div id="ramayan-aavahan" style="display: none;">
-                <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
+                    <button class="favorite-btn" data-content-id="ramayan-aavahan" data-content-title="श्री रामायण आवाहन" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                </div>
                 <h3 style="color: var(--saffron); margin-top: 1rem;">॥ श्री रामायण आवाहन ॥</h3>
                 <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
                     जो सुमिरत सिद्ध होय गण नायक करिवर बदन।<br>
@@ -2881,7 +2931,10 @@ function getTextContent(id) {
             </div>
 
             <div id="ramayan-visarjan" style="display: none;">
-                <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
+                    <button class="favorite-btn" data-content-id="ramayan-visarjan" data-content-title="श्री रामायण विसर्जन" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                </div>
                 <h3 style="color: var(--saffron); margin-top: 1rem;">॥ श्री रामायण विसर्जन ॥</h3>
                 <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
                     जय जय राजा राम की, जय लक्ष्मण बलवान।<br>
@@ -2923,6 +2976,154 @@ function getTextContent(id) {
 }
 
 // ======================================
+// FAVORITE FUNCTIONS
+// ======================================
+
+// Toggle favorite status
+async function toggleFavorite(btn) {
+    if (!currentUser) {
+        openModal(); // prompt login
+        return;
+    }
+
+    const contentId = btn.dataset.contentId;
+    const title = btn.dataset.contentTitle;
+    const section = btn.dataset.section;
+    const isFav = btn.classList.contains('favorited');
+
+    try {
+        const favRef = db.collection('users').doc(currentUser.uid)
+                        .collection('favorites').doc(contentId);
+
+        if (isFav) {
+            await favRef.delete();
+            btn.classList.remove('favorited');
+            btn.innerHTML = '❤️ Favorite';
+        } else {
+            await favRef.set({
+                id: contentId,
+                title: title,
+                section: section,
+                addedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            btn.classList.add('favorited');
+            btn.innerHTML = '💖 Favorited';
+        }
+    } catch (error) {
+        console.error('Error toggling favorite:', error);
+        alert('Could not update favorite. Please try again.');
+    }
+}
+
+// Load favorite status for a content ID
+async function loadFavoriteStatus(contentId, btn) {
+    if (!currentUser) return;
+    try {
+        const favDoc = await db.collection('users').doc(currentUser.uid)
+                              .collection('favorites').doc(contentId).get();
+        if (favDoc.exists) {
+            btn.classList.add('favorited');
+            btn.innerHTML = '💖 Favorited';
+        } else {
+            btn.classList.remove('favorited');
+            btn.innerHTML = '❤️ Favorite';
+        }
+    } catch (error) {
+        console.error('Error loading favorite status:', error);
+    }
+}
+
+// Show favorites page
+async function showFavorites() {
+    if (!currentUser) {
+        openModal();
+        return;
+    }
+
+    // Hide all other sections
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    const display = document.getElementById('text-display');
+    if (display) display.style.display = 'none';
+
+    const favSection = document.getElementById('favorites-section');
+    favSection.classList.add('active');
+    const favList = document.getElementById('favorites-list');
+    favList.innerHTML = 'Loading your favorites...';
+
+    try {
+        const snapshot = await db.collection('users').doc(currentUser.uid)
+                                .collection('favorites')
+                                .orderBy('addedAt', 'desc')
+                                .get();
+
+        if (snapshot.empty) {
+            favList.innerHTML = `
+                <div class="no-comments">
+                    <div class="no-comments-icon">🌟</div>
+                    <p>You haven't added any favorites yet. Click the heart ❤️ on any sacred text to save it here.</p>
+                </div>`;
+            return;
+        }
+
+        let html = `<div class="cards-grid">`;
+        snapshot.forEach(doc => {
+            const fav = doc.data();
+            html += `
+                <div class="card" onclick="jumpToContent('${fav.id}')">
+                    <div class="icon">📖</div>
+                    <h3>${fav.title}</h3>
+                    <p>Click to read</p>
+                </div>`;
+        });
+        html += `</div>`;
+        favList.innerHTML = html;
+    } catch (error) {
+        console.error('Error loading favorites:', error);
+        favList.innerHTML = '<p>Error loading favorites. Please try again.</p>';
+    }
+}
+
+// Jump to a content page from favorites
+function jumpToContent(contentId) {
+    if (contentId.startsWith('ramayan-')) {
+        // First show the paathmandir section (or texts, whichever contains Ramayan)
+        showSection('paathmandir'); // or 'texts' depending on structure
+        // Then after a short delay, show the sub-section
+        setTimeout(() => {
+            if (contentId === 'ramayan-aavahan') {
+                showRamayanSub('aavahan');
+            } else if (contentId === 'ramayan-visarjan') {
+                showRamayanSub('visarjan');
+            }
+        }, 100);
+    } else if (contentId === 'bhagavad-gita') {
+        showText('bhagavad-gita');
+    }
+    // Add more mappings for other content as you add them
+}
+
+// ======================================
+// RAMAYAN SUB-SECTIONS (ENHANCED)
+// ======================================
+function showRamayanSub(section) {
+    document.getElementById('ramayan-index').style.display = 'none';
+    const contentDiv = document.getElementById('ramayan-' + section);
+    contentDiv.style.display = 'block';
+
+    // Load favorite status for the button inside this content
+    const favBtn = contentDiv.querySelector('.favorite-btn');
+    if (favBtn) {
+        loadFavoriteStatus(favBtn.dataset.contentId, favBtn);
+    }
+}
+
+function showRamayanIndex() {
+    document.getElementById('ramayan-index').style.display = 'block';
+    document.getElementById('ramayan-aavahan').style.display = 'none';
+    document.getElementById('ramayan-visarjan').style.display = 'none';
+}
+
+// ======================================
 // FIX COMMENTS INITIALIZATION
 // ======================================
 // Make sure comments render when page loads
@@ -2940,16 +3141,7 @@ showSection = function(id) {
         renderComments(id);
     }, 100);
 };
-    // Functions for Ramayan sub-sections
-function showRamayanSub(section) {
-    document.getElementById('ramayan-index').style.display = 'none';
-    document.getElementById('ramayan-' + section).style.display = 'block';
-}
-function showRamayanIndex() {
-    document.getElementById('ramayan-index').style.display = 'block';
-    document.getElementById('ramayan-aavahan').style.display = 'none';
-    document.getElementById('ramayan-visarjan').style.display = 'none';
-}
+
 </script>
 
 </body>
