@@ -3074,8 +3074,16 @@ async function showFavorites() {
         let html = `<div class="cards-grid">`;
         snapshot.forEach(doc => {
             const fav = doc.data();
+            
+            // Handle both old and new favorite formats
+            // Old format: only 'title' field existed
+            // New format: 'titleHi' and 'titleEn'
+            const titleHi = fav.titleHi || fav.title || 'Unknown';
+            const titleEn = fav.titleEn || fav.title || 'Unknown';
+            
             // Choose title based on current language
-            const displayTitle = (currentLang === 'en' && fav.titleEn) ? fav.titleEn : fav.titleHi;
+            const displayTitle = (currentLang === 'en' && titleEn) ? titleEn : titleHi;
+            
             html += `
                 <div class="card" onclick="jumpToContent('${fav.id}')">
                     <div class="icon">📖</div>
