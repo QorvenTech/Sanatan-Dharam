@@ -534,6 +534,10 @@ body.dark-theme {
         <!-- SUNDARKAND FULL TEXT (hidden by default) -->
         <div id="sundarkand-text" style="display:none;margin-top:2rem;">
             <button class="back-btn" onclick="document.getElementById('sundarkand-text').style.display='none';document.getElementById('paathGrid').style.display='grid';">← वापस जाएं</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <button class="back-btn" onclick="document.getElementById('sundarkand-text').style.display='none';document.getElementById('paathGrid').style.display='grid';">← वापस जाएं</button>
+    <button class="favorite-btn" data-content-id="sundarkand" data-content-title="सुंदरकाण्ड" data-section="paathmandir" onclick="toggleFavorite(this)">❤️ Favorite</button>
+</div>
             <div class="text-content" style="max-height:none;font-size:1.08rem;line-height:2;">
                 <h2 style="text-align:center;font-family:'Tiro Devanagari Sanskrit',serif;">🐒 सुंदरकाण्ड 🐒</h2>
                 <p style="text-align:center;color:#888;margin-bottom:0.5rem;">श्रीरामचरितमानस — पंचम सोपान</p>
@@ -3085,21 +3089,32 @@ async function showFavorites() {
 
 // Jump to a content page from favorites
 function jumpToContent(contentId) {
-    if (contentId.startsWith('ramayan-')) {
-        // First show the paathmandir section (or texts, whichever contains Ramayan)
-        showSection('paathmandir'); // or 'texts' depending on structure
-        // Then after a short delay, show the sub-section
-        setTimeout(() => {
-            if (contentId === 'ramayan-aavahan') {
-                showRamayanSub('aavahan');
-            } else if (contentId === 'ramayan-visarjan') {
-                showRamayanSub('visarjan');
-            }
-        }, 100);
-    } else if (contentId === 'bhagavad-gita') {
+    // Ramayan sub-sections
+    if (contentId === 'ramayan-aavahan') {
+        showSection('paathmandir'); // or 'texts' – whichever contains Ramayan
+        setTimeout(() => showRamayanSub('aavahan'), 100);
+    } else if (contentId === 'ramayan-visarjan') {
+        showSection('paathmandir');
+        setTimeout(() => showRamayanSub('visarjan'), 100);
+    }
+    // Bhagavad Gita
+    else if (contentId === 'bhagavad-gita') {
         showText('bhagavad-gita');
     }
-    // Add more mappings for other content as you add them
+    // Sundarkand
+    else if (contentId === 'sundarkand') {
+        showSection('paathmandir');
+        // Open Sundarkand (similar to showPaath)
+        setTimeout(() => {
+            document.getElementById('paathGrid').style.display = 'none';
+            document.getElementById('sundarkand-text').style.display = 'block';
+        }, 100);
+    }
+    // Add more mappings here as you add new content
+    // Example: else if (contentId === 'hanuman-chalisa') { ... }
+    else {
+        console.log('Unknown content ID:', contentId);
+    }
 }
 
 // ======================================
