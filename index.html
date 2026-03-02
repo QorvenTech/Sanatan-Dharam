@@ -324,31 +324,19 @@ body.dark-theme {
 </div>
 
 <!-- ══════════════════════════════════════
-     HEADER
+     HEADER (FIXED)
 ══════════════════════════════════════ -->
 <header>
     <div class="header-top-bar">
-    <div style="display: flex; gap: 10px;">
-        <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">हिंदी में पढ़ें</button>
-        <button class="lang-btn" onclick="toggleTheme()" id="themeToggle">🌙 Dark Mode</button>
-    </div>
-    <div></div>
-    <div>
-        <div id="headerLoginBtn">
-            <button class="btn-login-header" onclick="openModal()">👤 Login / Register</button>
+        <div style="display: flex; gap: 10px;">
+            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">हिंदी में पढ़ें</button>
+            <button class="lang-btn" onclick="toggleTheme()" id="themeToggle">🌙 Dark Mode</button>
         </div>
-        <div id="headerUserPill" style="display:none;">
-            <div class="user-pill" onclick="toggleDropdown()">
-                <div class="user-avatar" id="headerAvatar">U</div>
-                <span class="user-name" id="headerUserName">User</span>
-                <span style="color:white;font-size:0.7rem;margin-left:2px;">▾</span>
-                <div class="user-dropdown" id="userDropdown">
-                    <a class="logout-link" onclick="logout()">🚪 Logout</a>
-                </div>
+        <div></div>
+        <div>
+            <div id="headerLoginBtn">
+                <button class="btn-login-header" onclick="openModal()">👤 Login / Register</button>
             </div>
-        </div>
-    </div>
-</div>
             <div id="headerUserPill" style="display:none;">
                 <div class="user-pill" onclick="toggleDropdown()">
                     <div class="user-avatar" id="headerAvatar">U</div>
@@ -531,13 +519,12 @@ body.dark-theme {
             </div>
         </div>
 
-        <!-- SUNDARKAND FULL TEXT (hidden by default) -->
+        <!-- SUNDARKAND FULL TEXT (hidden by default) - FIXED (removed duplicate back button) -->
         <div id="sundarkand-text" style="display:none;margin-top:2rem;">
-            <button class="back-btn" onclick="document.getElementById('sundarkand-text').style.display='none';document.getElementById('paathGrid').style.display='grid';">← वापस जाएं</button>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-    <button class="back-btn" onclick="document.getElementById('sundarkand-text').style.display='none';document.getElementById('paathGrid').style.display='grid';">← वापस जाएं</button>
-    <button class="favorite-btn" data-content-id="sundarkand" data-content-title="सुंदरकाण्ड" data-content-title-en="Sundarkand" data-section="paathmandir" onclick="toggleFavorite(this)">❤️ Favorite</button>
-</div>
+                <button class="back-btn" onclick="document.getElementById('sundarkand-text').style.display='none';document.getElementById('paathGrid').style.display='grid';">← वापस जाएं</button>
+                <button class="favorite-btn" data-content-id="sundarkand" data-content-title="सुंदरकाण्ड" data-content-title-en="Sundarkand" data-section="paathmandir" onclick="toggleFavorite(this)">❤️ Favorite</button>
+            </div>
             <div class="text-content" style="max-height:none;font-size:1.08rem;line-height:2;">
                 <h2 style="text-align:center;font-family:'Tiro Devanagari Sanskrit',serif;">🐒 सुंदरकाण्ड 🐒</h2>
                 <p style="text-align:center;color:#888;margin-bottom:0.5rem;">श्रीरामचरितमानस — पंचम सोपान</p>
@@ -1949,7 +1936,7 @@ body.dark-theme {
                 <div class="verse"><strong>( दोहा ५९ )</strong><br>
                 सुनत बिनीत बचन अति कह कृपाल मुसुकाइ।<br>
                 जेहि बिधि उतरै कपि कटकु तात सो कहहु उपाइ।।</div>
-                <div class="bhavaarth-box"><div class="bhavaarth-title">📖 भावार्थ — दोहा 59</div><div class="bhavaarth-prasang"><strong>प्रसंग:</strong> विभीषण ने पुनः प्रभु के चरणों की महिमा का गान किया।</div><div class="bhavaarth-text">विभीषण ने कहा कि हे नाथ! आपकी कृपा से अब लंका पर विजय निश्चित है। प्रभु ने विभीषण को गले लगाया और उन्हें विश्वास दिलाया कि वे नीति और धर्म के साथ रावण का अंत करेंगे।</div></div>
+                <div class="bhavaarth-box"><div class="bhavaarth-title">📖 भावार्थ — दोहा 59</div><div class="bhavaarth-prasang"><strong>प्रसंग:</strong> विभीषण ने पुनः प्रभु के चरणों की महिमा का गान किया।</div><div class="bhavaarth-text">विभीषण ने कहा कि हे नाथ! आपकी कृपा से अब लंका पर विजय निश्चित है। प्रभु ने विभीषण को गले लगाया और उन्हें विश्वास दिलाया कि वे नीति और धर्म के साथ रावण का अंत करेंगे။</div></div>
                 <h3 style="text-align:center;color:var(--saffron);margin:1.5rem 0;">।। चौपाई ।।</h3>
                 <p>नाथ निल नल कपि दौ भाई।<br>
                 लरिकाई रिषि आसिष पाई।।<br>
@@ -2902,7 +2889,7 @@ function getTextContent(id) {
             <div id="ramayan-aavahan" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
-                    <button class="favorite-btn" data-content-id="ramayan-aavahan" data-content-title="श्री रामायण आवाहन" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                    <button class="favorite-btn" data-content-id="ramayan-aavahan" data-content-title="श्री रामायण आवाहन" data-content-title-en="Shri Ramayan Aavahan" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
                 </div>
                 <h3 style="color: var(--saffron); margin-top: 1rem;">॥ श्री रामायण आवाहन ॥</h3>
                 <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
@@ -2937,7 +2924,7 @@ function getTextContent(id) {
             <div id="ramayan-visarjan" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
-                    <button class="favorite-btn" data-content-id="ramayan-visarjan" data-content-title="श्री रामायण विसर्जन" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                    <button class="favorite-btn" data-content-id="ramayan-visarjan" data-content-title="श्री रामायण विसर्जन" data-content-title-en="Shri Ramayan Visarjan" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
                 </div>
                 <h3 style="color: var(--saffron); margin-top: 1rem;">॥ श्री रामायण विसर्जन ॥</h3>
                 <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
