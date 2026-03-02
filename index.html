@@ -3090,12 +3090,14 @@ async function showFavorites() {
 // Jump to a content page from favorites
 function jumpToContent(contentId) {
     // Ramayan sub-sections
-    if (contentId === 'ramayan-aavahan') {
-        showSection('paathmandir'); // or 'texts' – whichever contains Ramayan
-        setTimeout(() => showRamayanSub('aavahan'), 100);
-    } else if (contentId === 'ramayan-visarjan') {
-        showSection('paathmandir');
-        setTimeout(() => showRamayanSub('visarjan'), 100);
+    if (contentId === 'ramayan-aavahan' || contentId === 'ramayan-visarjan') {
+        // First, show the Ramayan page via showText
+        showText('ramayan');
+        // Then after a short delay, show the correct subsection
+        setTimeout(() => {
+            const sub = contentId === 'ramayan-aavahan' ? 'aavahan' : 'visarjan';
+            showRamayanSub(sub);
+        }, 200); // Slightly longer delay to ensure DOM is ready
     }
     // Bhagavad Gita
     else if (contentId === 'bhagavad-gita') {
@@ -3104,14 +3106,12 @@ function jumpToContent(contentId) {
     // Sundarkand
     else if (contentId === 'sundarkand') {
         showSection('paathmandir');
-        // Open Sundarkand (similar to showPaath)
         setTimeout(() => {
             document.getElementById('paathGrid').style.display = 'none';
             document.getElementById('sundarkand-text').style.display = 'block';
         }, 100);
     }
     // Add more mappings here as you add new content
-    // Example: else if (contentId === 'hanuman-chalisa') { ... }
     else {
         console.log('Unknown content ID:', contentId);
     }
