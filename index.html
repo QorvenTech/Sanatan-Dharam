@@ -2787,94 +2787,94 @@ function getTextContent(id) {
         en: `<div class="text-content"><h2>Bhagavad Gita – The Song of God</h2><p>The Bhagavad Gita is a 700-verse scripture forming part of the Mahabharata – a sacred text. It is one of the most important texts in Hinduism and is considered to be one of the world's major religious scriptures.</p></div>`,
         hi: `<div class="text-content"><h2>भगवद् गीता – भगवान का गीत</h2><p>भगवद् गीता 700 श्लोकों का हिंदू धर्मग्रंथ है। यह कुरुक्षेत्र के युद्धक्षेत्र में भगवान कृष्ण और अर्जुन के बीच पवित्र संवाद है।</p></div>`
     },
-    'ramayan': {
+       'ramayan': {
         en: `<div class="text-content">
-            <h2>📖 रामायण</h2>
-            <p style="color: var(--brown); font-style: italic;">भगवान श्रीराम की पवित्र कथा – सूची</p>
+            <h2>📖 RAMAYAN</h2>
+            <p style="color: var(--brown); font-style: italic;">The Sacred Story of Lord Shri Ram – Index</p>
             
-            <!-- Index with clickable links -->
+            <!-- Index with clickable links (English) -->
             <div id="ramayan-index">
                 <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
                     <div onclick="showRamayanSub('aavahan')" style="background: var(--cream); padding: 1.2rem; border-radius: 12px; cursor: pointer; border-left: 4px solid var(--saffron); transition: 0.2s;">
-                        <h3 style="color: var(--saffron); margin: 0;">॥ श्री रामायण आवाहन ॥</h3>
-                        <p style="margin: 0.5rem 0 0 0; color: var(--text);">पाठ प्रारम्भ करने हेतु मंगलाचरण एवं आवाहन।</p>
+                        <h3 style="color: var(--saffron); margin: 0;">|| Shri Ramayan Aavahan ||</h3>
+                        <p style="margin: 0.5rem 0 0 0; color: var(--text);">Invocation and Mangalacharan to begin the recitation.</p>
                     </div>
                     <div onclick="showRamayanSub('visarjan')" style="background: var(--cream); padding: 1.2rem; border-radius: 12px; cursor: pointer; border-left: 4px solid var(--saffron); transition: 0.2s;">
-                        <h3 style="color: var(--saffron); margin: 0;">॥ श्री रामायण विसर्जन ॥</h3>
-                        <p style="margin: 0.5rem 0 0 0; color: var(--text);">पाठ समाप्ति एवं क्षमा प्रार्थना।</p>
+                        <h3 style="color: var(--saffron); margin: 0;">|| Shri Ramayan Visarjan ||</h3>
+                        <p style="margin: 0.5rem 0 0 0; color: var(--text);">Recitation conclusion and prayer for forgiveness.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Aavahan content (hidden initially) -->
+            <!-- Aavahan content (English) -->
             <div id="ramayan-aavahan" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
+                    <button class="back-btn" onclick="showRamayanIndex()">← Back to Index</button>
                     <button class="favorite-btn" data-content-id="ramayan-aavahan" data-content-title="श्री रामायण आवाहन" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
                 </div>
-                <h3 style="color: var(--saffron); margin-top: 1rem;">॥ श्री रामायण आवाहन ॥</h3>
+                <h3 style="color: var(--saffron); margin-top: 1rem;">|| Shri Ramayan Aavahan ||</h3>
                 <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
-                    जो सुमिरत सिद्ध होय गण नायक करिवर बदन।<br>
-                    करहुँ अनुग्रह सोई बुद्धि राशि शुभ गुण सदन।।<br>
-                    मूक होई वाचाल पंगु चढ़ाई गिरिवर गहन।<br>
-                    जासु कृपासु दयाल द्रवहु सकल कलिमल दहन।।<br>
-                    नील सरोरुह श्याम तरुन अरुन वारिज नयन।<br>
-                    करहु सो मम उर धाम सदा क्षीरसागर सयन।।<br>
-                    कुंद इंदु सम देह उमा रमन करुणा अयन।<br>
-                    जाहि दिन पर नेह करहुँ कृपा मर्दन मयन।।<br>
-                    बंदहु गुरुपद कंज कृपा सिंधु नर रूप हरि।<br>
-                    महा मोह तम पुंज जासु वचन रविकर निकर।।<br>
-                    बंदहु मुनिपद कंज रामायन जेहि निर मयऊ।<br>
-                    सखर सुकोमल मंजु दोष रहित दूषन सहित।।<br>
-                    बंदहु चारहु वेद भव वारिध वो हित सरिस।<br>
-                    जिनहि न सपनेहु खेद बरनत रघुपति विमल यश।।<br>
-                    बंदहु विधि पद रेनु भवसागर जिन कीन्ह यह।<br>
-                    संत सुधा शशि छेनू प्रगटे खल विष बारुनी।।<br>
-                    बंदहु अवध भुआल सत्य प्रेम जेहि राम पद।<br>
-                    बिछुरत दीनदयाल प्रिय तनु तृन ईव पर हरेऊ।।<br>
-                    बंदहु पवन कुमार खल वन पावक ज्ञान घन।<br>
-                    जासु ह्र्दय आगार बसहि राम सर चाप धर।।<br>
-                    राम कथा के रसिक तुम, भक्ति राशि मति धीर।<br>
-                    आय सो आसन लीजिये, तेज पुंज कपि वीर।।<br>
-                    रामायण तुलसीकृत कहऊ कथा अनुसार।<br>
-                    प्रेम सहित आसन गहऊ आवहु पवन कुमार।।<br>
-                    <strong>।। सियावर रामचंद्र जी की जय ।।</strong>
+                    Jo sumirat siddhi hoye, gana nayak karivar badan |<br>
+                    Karahu anugrah soi, buddhi rashi shubh gun sadan ||<br><br>
+                    Mook hoi vachal, pangu chadhayi girivar gahan |<br>
+                    Jasu kripasu dayal, dravahu sakal kalimal dahan ||<br><br>
+                    Neel saroruha shyam, tarun arun vaarij nayan |<br>
+                    Karahu so mam ur dham, sada ksheersagar sayan ||<br><br>
+                    Kunda indu sam deh, uma raman karuna ayan |<br>
+                    Jahi deen par neh, karahu kripa mardan mayan ||<br><br>
+                    Bandahu gurupada kanja, kripa sindhu nar roop hari |<br>
+                    Maha moh tam punj, jasu vachan ravikar nikar ||<br><br>
+                    Bandahu munipada kanja, ramayan jehi nir mayau |<br>
+                    Sakhar sukomal manju, dosh rahit dooshan sahit ||<br><br>
+                    Bandahu charahu veda, bhav vaarid vohit saris |<br>
+                    Jinahi na sapanehu khed, baranat raghupati vimal yash ||<br><br>
+                    Bandahu vidhi pad renu, bhavsagar jin keenh yeh |<br>
+                    Sant sudha shashi chhenu, pragate khal vish baaruni ||<br><br>
+                    Bandahu avadh bhual, satya prem jehi ram pad |<br>
+                    Bichhurat deendayal, priya tanu trin iv par hareau ||<br><br>
+                    Bandahu pavan kumar, khal van paavak gyan ghan |<br>
+                    Jasu hridaya aagaar, basahi ram sar chaap dhar ||<br><br>
+                    Ram katha ke rasik tum, bhakti rashi mati dheer |<br>
+                    Aaya so aasan lijiye, tej punj kapi veer ||<br><br>
+                    Ramayan tulsikrit, kahau katha anusaar |<br>
+                    Prem sahit aasan gahau, aavahu pavan kumar ||<br><br>
+                    <strong>|| Siyavar Ramchandra Ji Ki Jai ||</strong>
                 </div>
             </div>
 
-            <!-- Visarjan content (hidden initially) -->
+            <!-- Visarjan content (English) -->
             <div id="ramayan-visarjan" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
+                    <button class="back-btn" onclick="showRamayanIndex()">← Back to Index</button>
                     <button class="favorite-btn" data-content-id="ramayan-visarjan" data-content-title="श्री रामायण विसर्जन" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
                 </div>
-                <h3 style="color: var(--saffron); margin-top: 1rem;">॥ श्री रामायण विसर्जन ॥</h3>
+                <h3 style="color: var(--saffron); margin-top: 1rem;">|| Shri Ramayan Visarjan ||</h3>
                 <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
-                    जय जय राजा राम की, जय लक्ष्मण बलवान।<br>
-                    जय कपीस सुग्रीव की, जय अंगद हनुमान।।<br>
-                    जय जय कागभुशुण्डि की, जय गिरि उमा महेश।<br>
-                    जय ऋषि भारद्वाज की, जय तुलसी अवधेश।।<br>
-                    प्रभु सन कहियो दंडवत, तुमहि कहौ कर जोर।<br>
-                    बार-बार रघुनाथ कहि सुरति करावहु मोर।।<br>
-                    कामहि नारि पियार जिमि, लोभिहि प्रिय जिमि दाम।<br>
-                    तिमि रघुनाथ निरंतर, प्रिय लागहु मोहि राम।।<br>
-                    बार-बार वर मागहु हर्ष देहु श्री रंग।<br>
-                    पद सरोज अन पयनी भगति सदा सतसंग।।<br>
-                    प्रणत पाल रघुवंश मणि करुणा सिंधु खरारि।<br>
-                    गये शरण प्रभु राखिहैं सब अपराध बिसार।।<br>
-                    कथा विसर्जन होत हैं सुनो वीर हनुमान।<br>
-                    जो जन जहाँ से आये हैं ते तः करो पयान।।<br>
-                    श्रोता सब आश्रम गए शम्भु गए कैलाश।<br>
-                    रामायण मम हिर्दय में सदा करो तुम वास।।<br>
-                    रामायण जसु पावन गावहि सुनहि जे लोग।<br>
-                    राम भगति दृढ पावहि विन विराग जप जोग।।<br>
-                    रामायण बैकुण्ठ गई सुर गए निज निज धाम।<br>
-                    रामचंद्र के पद कमल बंदि गये हनुमान।।<br>
-                    <strong>।। सियावर रामचंद्र की जय ।।</strong><br>
-                    <strong>।। उमा पति महादेव जी की जय ।।</strong><br>
-                    <strong>।। पवनसुत हनुमानजी की जय ।।</strong><br>
-                    <strong>।। गोस्वामी तुलसीदास जी की जय ।।</strong><br>
-                    <strong>।। बोलो भाई सब संतो की जय ।।</strong>
+                    Jai jai raja ram ki, jai lakshman balvan |<br>
+                    Jai kapees sugreev ki, jai angad hanuman ||<br><br>
+                    Jai jai kagabhushundi ki, jai giri uma mahesh |<br>
+                    Jai rishi bharadwaj ki, jai tulsi avadhesh ||<br><br>
+                    Prabhu san kahiyo dandavat, tumahi kahau kar jor |<br>
+                    Baar-baar raghunath kahi, surati karavahu mor ||<br><br>
+                    Kaamahi naari piyar jimi, lobhihi priya jimi daam |<br>
+                    Timi raghunath nirantar, priya laagahu mohi ram ||<br><br>
+                    Baar-baar var magahu harsh dehu shri rang |<br>
+                    Pad saroj an payani bhagati sada satsang ||<br><br>
+                    Pranat paal raghuvansh mani karuna sindhu kharari |<br>
+                    Gaye sharan prabhu rakhihain sab aparadh bisar ||<br><br>
+                    Katha visarjan hot hain suno veer hanuman |<br>
+                    Jo jan jahan se aaye hain te tah karo payan ||<br><br>
+                    Shrota sab aashram gaye shambhu gaye kailash |<br>
+                    Ramayan mam hirday mein sada karo tum vaas ||<br><br>
+                    Ramayan jasu paavan gaavahi sunahi je log |<br>
+                    Ram bhagati dridh paavahi vin virag jap jog ||<br><br>
+                    Ramayan baikunth gayi sur gaye nij nij dham |<br>
+                    Ramchandra ke pad kamal bandi gaye hanuman ||<br><br>
+                    <strong>|| Siyavar Ramchandra Ki Jai ||</strong><br>
+                    <strong>|| Uma Pati Mahadev Ji Ki Jai ||</strong><br>
+                    <strong>|| Pavansut Hanumanji Ki Jai ||</strong><br>
+                    <strong>|| Goswami Tulsidas Ji Ki Jai ||</strong><br>
+                    <strong>|| Bolo Bhai Sab Santo Ki Jai ||</strong>
                 </div>
             </div>
         </div>`,
@@ -2965,8 +2965,8 @@ function getTextContent(id) {
                 </div>
             </div>
         </div>`
-    }
-};
+       }
+    },
     
     const def = lang === 'en'
         ? `<div class="text-content"><h2>Content Coming Soon</h2><p>This section is being updated with detailed information. 🙏</p></div>`
