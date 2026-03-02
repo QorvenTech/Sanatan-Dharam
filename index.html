@@ -536,7 +536,7 @@ body.dark-theme {
             <button class="back-btn" onclick="document.getElementById('sundarkand-text').style.display='none';document.getElementById('paathGrid').style.display='grid';">← वापस जाएं</button>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
     <button class="back-btn" onclick="document.getElementById('sundarkand-text').style.display='none';document.getElementById('paathGrid').style.display='grid';">← वापस जाएं</button>
-    <button class="favorite-btn" data-content-id="sundarkand" data-content-title="सुंदरकाण्ड" data-section="paathmandir" onclick="toggleFavorite(this)">❤️ Favorite</button>
+    <button class="favorite-btn" data-content-id="sundarkand" data-content-title="सुंदरकाण्ड" data-content-title-en="Sundarkand" data-section="paathmandir" onclick="toggleFavorite(this)">❤️ Favorite</button>
 </div>
             <div class="text-content" style="max-height:none;font-size:1.08rem;line-height:2;">
                 <h2 style="text-align:center;font-family:'Tiro Devanagari Sanskrit',serif;">🐒 सुंदरकाण्ड 🐒</h2>
@@ -2814,7 +2814,7 @@ function getTextContent(id) {
             <div id="ramayan-aavahan" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <button class="back-btn" onclick="showRamayanIndex()">← Back to Index</button>
-                    <button class="favorite-btn" data-content-id="ramayan-aavahan" data-content-title="श्री रामायण आवाहन" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                    <button class="favorite-btn" data-content-id="ramayan-aavahan" data-content-title="श्री रामायण आवाहन" data-content-title-en="Shri Ramayan Aavahan" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
                 </div>
                 <h3 style="color: var(--saffron); margin-top: 1rem;">|| Shri Ramayan Aavahan ||</h3>
                 <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
@@ -2850,7 +2850,7 @@ function getTextContent(id) {
             <div id="ramayan-visarjan" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <button class="back-btn" onclick="showRamayanIndex()">← Back to Index</button>
-                    <button class="favorite-btn" data-content-id="ramayan-visarjan" data-content-title="श्री रामायण विसर्जन" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                    <button class="favorite-btn" data-content-id="ramayan-visarjan" data-content-title="श्री रामायण विसर्जन" data-content-title-en="Shri Ramayan Visarjan" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
                 </div>
                 <h3 style="color: var(--saffron); margin-top: 1rem;">|| Shri Ramayan Visarjan ||</h3>
                 <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
@@ -2991,7 +2991,8 @@ async function toggleFavorite(btn) {
     }
 
     const contentId = btn.dataset.contentId;
-    const title = btn.dataset.contentTitle;
+    const titleHi = btn.dataset.contentTitle; // Hindi title
+    const titleEn = btn.dataset.contentTitleEn || titleHi; // English title (fallback to Hindi if not provided)
     const section = btn.dataset.section;
     const isFav = btn.classList.contains('favorited');
 
@@ -3006,7 +3007,8 @@ async function toggleFavorite(btn) {
         } else {
             await favRef.set({
                 id: contentId,
-                title: title,
+                titleHi: titleHi,
+                titleEn: titleEn,
                 section: section,
                 addedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
@@ -3072,10 +3074,12 @@ async function showFavorites() {
         let html = `<div class="cards-grid">`;
         snapshot.forEach(doc => {
             const fav = doc.data();
+            // Choose title based on current language
+            const displayTitle = (currentLang === 'en' && fav.titleEn) ? fav.titleEn : fav.titleHi;
             html += `
                 <div class="card" onclick="jumpToContent('${fav.id}')">
                     <div class="icon">📖</div>
-                    <h3>${fav.title}</h3>
+                    <h3>${displayTitle}</h3>
                     <p>Click to read</p>
                 </div>`;
         });
