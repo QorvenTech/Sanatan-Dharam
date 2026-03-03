@@ -2256,13 +2256,33 @@ window.addEventListener('DOMContentLoaded', () => {
 // ======================================
 // LANGUAGE
 // ======================================
+// ======================================
+// LANGUAGE TOGGLE (FIXED WITH FAVORITES REFRESH)
+// ======================================
 function toggleLanguage() {
     currentLang = currentLang === 'en' ? 'hi' : 'en';
     const btn = document.getElementById('langBtn');
     if (btn) btn.textContent = currentLang === 'en' ? 'हिंदी में पढ़ें' : 'Read in English';
+    
+    // Update all elements with data-en and data-hi
     document.querySelectorAll('[data-en][data-hi]').forEach(el => {
         el.textContent = el.getAttribute('data-' + currentLang);
     });
+    
+    // Also update any open text content
+    const activeDisplay = document.getElementById('text-display');
+    if (activeDisplay && activeDisplay.style.display === 'block') {
+        // If a text content is open, refresh it
+        if (window.currentTextId) {
+            showText(window.currentTextId);
+        }
+    }
+    
+    // Refresh favorites section if it's active
+    const favSection = document.getElementById('favorites-section');
+    if (favSection && favSection.classList.contains('active')) {
+        showFavorites(); // This will reload the favorites with the new language
+    }
 }
 
 // ======================================
