@@ -258,6 +258,14 @@ body.dark-theme {
             color: white;
             border-color: var(--saffron);
         }
+        /* Clean font for mantra English descriptions */
+.mantra-description {
+    font-style: normal;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    margin-top: 1.5rem;
+}
     </style>
 </head>
 <body>
@@ -3269,13 +3277,11 @@ async function showFavorites() {
 function jumpToContent(contentId) {
     // Ramayan sub-sections
     if (contentId === 'ramayan-aavahan' || contentId === 'ramayan-visarjan') {
-        // First, show the Ramayan page via showText
         showText('ramayan');
-        // Then after a short delay, show the correct subsection
         setTimeout(() => {
             const sub = contentId === 'ramayan-aavahan' ? 'aavahan' : 'visarjan';
             showRamayanSub(sub);
-        }, 200); // Slightly longer delay to ensure DOM is ready
+        }, 200);
     }
     // Bhagavad Gita
     else if (contentId === 'bhagavad-gita') {
@@ -3288,6 +3294,15 @@ function jumpToContent(contentId) {
             document.getElementById('paathGrid').style.display = 'none';
             document.getElementById('sundarkand-text').style.display = 'block';
         }, 100);
+    }
+    // Mantras
+    else if (contentId === 'gayatri-mantra' ||
+             contentId === 'maha-mrityunjaya' ||
+             contentId === 'om-mantra' ||
+             contentId === 'ganesh-mantra' ||
+             contentId === 'hanuman-chalisa' ||
+             contentId === 'lakshmi-mantra') {
+        showText(contentId);
     }
     // Add more mappings here as you add new content
     else {
