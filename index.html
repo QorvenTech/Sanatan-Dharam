@@ -77,6 +77,18 @@ body.dark-theme {
     }
 }
         body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color: var(--text); transition: all 0.3s ease; }
+        /* Language‑specific fonts for Hanuman Chalisa verses */
+body.lang-en .chalisa-verse {
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    color: #333;
+    line-height: 1.75;
+    font-size: 1rem;
+    font-style: normal;
+}
+
+body.lang-hi .chalisa-verse {
+    font-family: 'Tiro Devanagari Sanskrit', 'Crimson Pro', serif;
+}
 
         /* HEADER */
         header { background: var(--header-bg); color: white; padding: 1.2rem 1.5rem 1.8rem; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
@@ -2001,219 +2013,217 @@ body.dark-theme {
         </div>
 
         <!-- HANUMAN CHALISA FULL TEXT (hidden by default) -->
-        <div id="hanuman-chalisa-text" style="display:none; margin-top:2rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <button class="back-btn" onclick="document.getElementById('hanuman-chalisa-text').style.display='none'; document.getElementById('paathGrid').style.display='grid';">← वापस जाएं</button>
-                <button class="favorite-btn" data-content-id="hanuman-chalisa" data-content-title="हनुमान चालीसा" data-content-title-en="Hanuman Chalisa" data-section="paathmandir" onclick="toggleFavorite(this)">❤️ Favorite</button>
-            </div>
-            <div class="text-content" style="max-height:none; font-size:1.08rem; line-height:2;">
-                <h2 style="text-align:center; font-family:'Tiro Devanagari Sanskrit', serif;">🙏 हनुमान चालीसा 🙏</h2>
-                <p style="text-align:center; color:#888; margin-bottom:0.5rem;">श्री हनुमान चालीसा — ४० चौपाइयाँ</p>
-                <p style="text-align:center; color:var(--brown); font-weight:600; margin-bottom:2rem;">गोस्वामी तुलसीदास कृत — पाठ अर्थ सहित</p>
-
-                <!-- Introduction (English) -->
-                <div class="sk-intro-box" data-en="Greetings friends! In today’s edition, we are presenting to you Shri Hanuman Chalisa."
-                     data-hi="नमस्कार साथियों! आज के इस अंक में हम आपको श्री हनुमान चालीसा प्रस्तुत कर रहे हैं।">
-                    नमस्कार साथियों! आज के इस अंक में हम आपको श्री हनुमान चालीसा प्रस्तुत कर रहे हैं।
-                </div>
-
-                <!-- DOHA 1 (प्रारंभिक दोहा) -->
-                <h3 style="text-align:center; color:var(--saffron); margin:1.5rem 0;">।। दोहा ।।</h3>
-                <div class="verse">
-                    <span data-en="Shri Guru Charan Saroj Raj, Nij Manu Mukur Sudhari |"
-                          data-hi="श्री गुरु चरन सरोज रज, निज मनु मुकुर सुधारि |">श्री गुरु चरन सरोज रज, निज मनु मुकुर सुधारि ।</span><br>
-                    <span data-en="Barnau Raghuvar Bimal Jasu, Jo Dayak Phal Chari ||"
-                          data-hi="बरनऊ रघुबर बिमल जसु, जो दायक फल चारि ||">बरनऊ रघुबर बिमल जसु, जो दायक फल चारि ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Budhiheen Tanu Janike, Sumiro Pavan Kumar |"
-                          data-hi="बुद्धिहीन तनु जानिके, सुमिरो पवन कुमार |">बुद्धिहीन तनु जानिके, सुमिरो पवन कुमार ।</span><br>
-                    <span data-en="Bal Budhi Vidya Dehu Mohi, Harahu Kalesh Vikar ||"
-                          data-hi="बल बुद्धि विद्या देहु मोहि, हरहु कलेश विकार ||">बल बुद्धि विद्या देहु मोहि, हरहु कलेश विकार ॥</span>
-                </div>
-
-                <!-- CHAUPAIS (start) -->
-                <h3 style="text-align:center; color:var(--saffron); margin:1.5rem 0;">।। चौपाई ।।</h3>
-
-                <div class="verse">
-                    <span data-en="Jai Hanuman Gyan Gun Sagar | Jai Kapis Tihun Lok Ujagar ||"
-                          data-hi="जय हनुमान ज्ञान गुण सागर | जय कपीस तिहुं लोक उजागर ||">जय हनुमान ज्ञान गुण सागर । जय कपीस तिहुं लोक उजागर ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Ram Doot Atulit Bal Dhama | Anjani Putra Pavansut Nama ||"
-                          data-hi="राम दूत अतुलित बल धामा | अंजनी पुत्र पवनसुत नामा ||">राम दूत अतुलित बल धामा । अंजनी पुत्र पवनसुत नामा ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Mahaveer Vikram Bajrangi | Kumati Nivar Sumati Ke Sangi ||"
-                          data-hi="महावीर विक्रम बजरंगी | कुमति निवार सुमति के संगी ||">महावीर विक्रम बजरंगी । कुमति निवार सुमति के संगी ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Kanchan Baran Viraj Subesa | Kanan Kundal Kunchit Kesa ||"
-                          data-hi="कंचन वरण विराज सबेसा | कानन कुंडल कुंचित केसा ||">कंचन वरण विराज सबेसा । कानन कुंडल कुंचित केसा ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Hath Bajra Au Dhvaja Viraje | Kandhe Moonj Janeu Saje ||"
-                          data-hi="हाथ बज्र औ ध्वजा विराजे | कांधे मूंज जनेऊ साजे ||">हाथ बज्र औ ध्वजा विराजे । कांधे मूंज जनेऊ साजे ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Shankar Suvan Kesari Nandan | Tej Pratap Maha Jag Bandan ||"
-                          data-hi="शंकर सुवन केसरी नंदन | तेज प्रताप महा जग बंदन ||">शंकर सुवन केसरी नंदन । तेज प्रताप महा जग बंदन ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Vidyavan Guni Ati Chatur | Ram Kaj Karibe Ko Aatur ||"
-                          data-hi="विद्यावान गुनी अति चातुर | राम काज करिवे को आतुर ||">विद्यावान गुनी अति चातुर । राम काज करिवे को आतुर ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Prabhu Charit Sunibe Ko Rasiya | Ram Lakhan Sita Man Basiya ||"
-                          data-hi="प्रभु चरित सुनबे को रसिया | राम लखन सीता मन बसिया ||">प्रभु चरित सुनबे को रसिया । राम लखन सीता मन बसिया ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Sukshma Roop Dhari Siyahi Dikhava | Bikat Roop Dhari Lanka Jarava ||"
-                          data-hi="सूक्ष्म रूप धरि सियहि दिखावा | बिकट रूप धरि लंक जरावा ||">सूक्ष्म रूप धरि सियहि दिखावा । बिकट रूप धरि लंक जरावा ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Bheem Roop Dhari Asur Sanhare | Ramchandra Ke Kaj Sanvare ||"
-                          data-hi="भीम रूप धरि असुर संहारे | रामचंद्र के काज संवारे ||">भीम रूप धरि असुर संहारे । रामचंद्र के काज संवारे ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Laye Sajivan Lakhan Jiyaye | Shri Raghuveer Harashi Ur Laye ||"
-                          data-hi="लाय सजीवन लखन जियाए | श्री रघुवीर हरषि उर लाए ||">लाय सजीवन लखन जियाए । श्री रघुवीर हरषि उर लाए ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Raghupati Kinhi Bahut Badai | Tum Mam Priya Bharat Sam Bhai ||"
-                          data-hi="रघुपति किंही बहुत बड़ाई | तुम मम प्रिय भरत सम भाई ||">रघुपति किंही बहुत बड़ाई । तुम मम प्रिय भरत सम भाई ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Sahas Badan Tumharo Yash Gawai | As Kahi Shripati Kanth Lagawai ||"
-                          data-hi="सहस बदन तुम्हारो यश गावै | अस कहि श्रीपति कंठ लगावै ||">सहस बदन तुम्हारो यश गावै । अस कहि श्रीपति कंठ लगावै ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Sanakadik Brahmadik Muneesha | Narad Sharad Sahit Aheesha ||"
-                          data-hi="सनकादिक ब्रह्मादि मुनीषा | नारद शारद सहित अहीसा ||">सनकादिक ब्रह्मादि मुनीषा । नारद शारद सहित अहीसा ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Jam Kuber Digpal Jahan Te | Kavi Kobid Kahi Sake Kahan Te ||"
-                          data-hi="जम कुबेर दिगपाल जहां ते | कवि कोबिद कहि सके कहां ते ||">जम कुबेर दिगपाल जहां ते । कवि कोबिद कहि सके कहां ते ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Tum Upkar Sugreevahi Kinha | Ram Milae Rajpad Dinha ||"
-                          data-hi="तुम उपकार सुग्रीवहि कीन्हां | राम मिलाए राजपद दीन्हा ||">तुम उपकार सुग्रीवहि कीन्हां । राम मिलाए राजपद दीन्हा ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Tumharo Mantra Vibhishan Mana | Lankeshvar Bhaye Sab Jag Jana ||"
-                          data-hi="तुम्हरो मंत्र विभीषण माना | लंकेश्वर भए सब जग जाना ||">तुम्हरो मंत्र विभीषण माना । लंकेश्वर भए सब जग जाना ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Jug Sahastra Jojan Par Bhanu | Lilyo Tahi Madhur Phal Janu ||"
-                          data-hi="जुग सहस्त्र जोजन पर भानू | लील्यो ताहि मधुर फल जानू ||">जुग सहस्त्र जोजन पर भानू । लील्यो ताहि मधुर फल जानू ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Prabhu Mudrika Meli Mukh Mahi | Jaladhi Langhi Gaye Achraj Nahi ||"
-                          data-hi="प्रभु मुद्रिका मेलि मुख माही | जलधि लांघी गए अचरज नाही ||">प्रभु मुद्रिका मेलि मुख माही । जलधि लांघी गए अचरज नाही ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Durgam Kaj Jagat Ke Jete | Sugam Anugrah Tumhre Tete ||"
-                          data-hi="दुर्गम काज जगत के जेते | सुगम अनुग्रह तुम्हरे तेते ||">दुर्गम काज जगत के जेते । सुगम अनुग्रह तुम्हरे तेते ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Ram Duare Tum Rakhvare | Hot Na Agya Bin Paisare ||"
-                          data-hi="राम दुआरे तुम रखवारे | होत न आज्ञा बिनु पैसारे ||">राम दुआरे तुम रखवारे । होत न आज्ञा बिनु पैसारे ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Sab Sukh Lahai Tumhari Sarna | Tum Rakshak Kahu Ko Darna ||"
-                          data-hi="सब सुख लहै तुम्हारी सरना | तुम रक्षक काहू को डरना ||">सब सुख लहै तुम्हारी सरना । तुम रक्षक काहू को डरना ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Aapan Tej Samharo Aapai | Teeno Lok Hank Te Kanpai ||"
-                          data-hi="आपन तेज सम्हारो आपै | तीनों लोक हांक ते कांपे ||">आपन तेज सम्हारो आपै । तीनों लोक हांक ते कांपे ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Bhoot Pishach Nikat Nahi Aawai | Mahaveer Jab Naam Sunawai ||"
-                          data-hi="भूत पिशाच निकट नहीं आवै | महावीर जब नाम सुनावै ||">भूत पिशाच निकट नहीं आवै । महावीर जब नाम सुनावै ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Nase Rog Hare Sab Peera | Japat Nirantar Hanumat Beera ||"
-                          data-hi="नासे रोग हरे सब पीरा | जपत निरंतर हनुमत बीरा ||">नासे रोग हरे सब पीरा । जपत निरंतर हनुमत बीरा ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Sankat Se Hanuman Chudave | Man Kram Vachan Dhyan Jo Lave ||"
-                          data-hi="संकट से हनुमान छुडावे | मन क्रम वचन ध्यान जो लावे ||">संकट से हनुमान छुडावे । मन क्रम वचन ध्यान जो लावे ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Sab Par Ram Tapasvi Raja | Tinke Kaj Sakal Tum Saja ||"
-                          data-hi="सब पर राम तपस्वी राजा | तिनके काज सकल तुम साजा ||">सब पर राम तपस्वी राजा । तिनके काज सकल तुम साजा ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Aur Manorath Jo Koi Lave | Soi Amit Jeevan Phal Pave ||"
-                          data-hi="और मनोरथ जो कोई लावे | सोई अमित जीवन फल पावे ||">और मनोरथ जो कोई लावे । सोई अमित जीवन फल पावे ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Charon Yug Partap Tumhara | Hai Prasiddh Jagat Ujiyara ||"
-                          data-hi="चारों युग परताप तुम्हारा | है प्रसिद्ध जगत उजियारा ||">चारों युग परताप तुम्हारा । है प्रसिद्ध जगत उजियारा ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Sadhu Sant Ke Tum Rakhvare | Asur Nikandan Ram Dulare ||"
-                          data-hi="साधु संत के तुम रखवारे | असुर निकंदन राम दुलारे ||">साधु संत के तुम रखवारे । असुर निकंदन राम दुलारे ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Asht Siddhi Nav Nidhi Ke Data | As Bar Deen Janki Mata ||"
-                          data-hi="अष्ट सिद्धि नवनिधि के दाता | अस बर दीन जानकी माता ||">अष्ट सिद्धि नवनिधि के दाता । अस बर दीन जानकी माता ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Ram Rasayan Tumhare Pasa | Sada Raho Raghupati Ke Dasa ||"
-                          data-hi="राम रसायन तुम्हारे पासा | सदा रहो रघुपति के दासा ||">राम रसायन तुम्हारे पासा । सदा रहो रघुपति के दासा ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Tumhare Bhajan Ram Ko Pawai | Janam Janam Ke Dukh Bisrawai ||"
-                          data-hi="तुम्हारे भजन राम को पावै | जनम जनम के दुख बिसरावै ||">तुम्हारे भजन राम को पावै । जनम जनम के दुख बिसरावै ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Ant Kal Raghubar Pur Jai | Jahan Janam Hari Bhakt Kahai ||"
-                          data-hi="अंत काल रघुबर पुर जाई | जहां जन्म हरि भक्त कहाई ||">अंत काल रघुबर पुर जाई । जहां जन्म हरि भक्त कहाई ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Aur Devta Chitt Na Dharai | Hanumat Sei Sarva Sukh Karai ||"
-                          data-hi="और देवता चित्त ना धराई | हनुमत सेई सर्व सुख करई ||">और देवता चित्त ना धराई । हनुमत सेई सर्व सुख करई ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Sankat Kate Mite Sab Peera | Jo Sumire Hanumat Balbeera ||"
-                          data-hi="संकट कटे मिटे सब पीरा | जो सुमिरे हनुमत बलबीरा ||">संकट कटे मिटे सब पीरा । जो सुमिरे हनुमत बलबीरा ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Jai Jai Jai Hanuman Gosai | Kripa Karahu Gurudev Ki Nai ||"
-                          data-hi="जय जय जय हनुमान गोसाई | कृपा करो गुरुदेव की नाई ||">जय जय जय हनुमान गोसाई । कृपा करो गुरुदेव की नाई ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Yeh Sat Bar Path Kar Koi | Chhutahi Bandi Maha Sukh Hoi ||"
-                          data-hi="यह सत बार पाठ कर कोई | छूटहि बंदी महा सुख होई ||">यह सत बार पाठ कर कोई । छूटहि बंदी महा सुख होई ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Jo Yeh Padhe Hanuman Chalisa | Hoy Siddhi Sakhi Gaurisa ||"
-                          data-hi="जो यह पढ़े हनुमान चालीसा | होय सिद्धि साखी गौरीसा ||">जो यह पढ़े हनुमान चालीसा । होय सिद्धि साखी गौरीसा ॥</span>
-                </div>
-                <div class="verse">
-                    <span data-en="Tulsidas Sada Hari Chera | Keejai Nath Hriday Mah Dera ||"
-                          data-hi="तुलसीदास सदा हरि चेरा | कीजै नाथ हृदय महं डेरा ||">तुलसीदास सदा हरि चेरा । कीजै नाथ हृदय महं डेरा ॥</span>
-                </div>
-
-                <!-- Closing Doha -->
-                <h3 style="text-align:center; color:var(--saffron); margin:1.5rem 0;">।। दोहा ।।</h3>
-                <div class="verse">
-                    <span data-en="Pavan Tanay Sankat Haran, Mangal Murti Roop |"
-                          data-hi="पवन तनय संकट हरण, मंगल मूर्ति रुप |">पवन तनय संकट हरण, मंगल मूर्ति रुप ।</span><br>
-                    <span data-en="Ram Lakhan Sita Sahit, Hriday Basahu Sur Bhoop ||"
-                          data-hi="राम लखन सीता सहित, हृदय बसहु सुरभूप ||">राम लखन सीता सहित, हृदय बसहु सुरभूप ॥</span>
-                </div>
-
-                <div style="text-align:center; background:linear-gradient(135deg,var(--cream),#ffe4cc); border-left:none; border-radius:12px; padding:2rem; margin-top:2rem;">
-                    <span style="color:var(--saffron); font-size:1.2rem; font-weight:700;">।। हनुमान चालीसा सम्पूर्ण ।।</span><br>
-                    <span style="color:var(--brown);">।। जय हनुमान ।।</span>
-                </div>
-            </div>
-        </div>
-        <div id="paathmandir-comments-main" class="comments-section" style="margin-top:2rem;"></div>
+       <div id="hanuman-chalisa-text" style="display:none; margin-top:2rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <button class="back-btn" onclick="document.getElementById('hanuman-chalisa-text').style.display='none'; document.getElementById('paathGrid').style.display='grid';">← वापस जाएं</button>
+        <button class="favorite-btn" data-content-id="hanuman-chalisa" data-content-title="हनुमान चालीसा" data-content-title-en="Hanuman Chalisa" data-section="paathmandir" onclick="toggleFavorite(this)">❤️ Favorite</button>
     </div>
+    <div class="text-content" style="max-height:none; font-size:1.08rem; line-height:2;">
+        <h2 style="text-align:center; font-family:'Tiro Devanagari Sanskrit', serif;">🙏 हनुमान चालीसा 🙏</h2>
+        <p style="text-align:center; color:#888; margin-bottom:0.5rem;">श्री हनुमान चालीसा — ४० चौपाइयाँ</p>
+        <p style="text-align:center; color:var(--brown); font-weight:600; margin-bottom:2rem;">गोस्वामी तुलसीदास कृत — पाठ अर्थ सहित</p>
 
+        <!-- Introduction (English) -->
+        <div class="sk-intro-box" data-en="Greetings friends! In today’s edition, we are presenting to you Shri Hanuman Chalisa."
+             data-hi="नमस्कार साथियों! आज के इस अंक में हम आपको श्री हनुमान चालीसा प्रस्तुत कर रहे हैं।">
+            नमस्कार साथियों! आज के इस अंक में हम आपको श्री हनुमान चालीसा प्रस्तुत कर रहे हैं।
+        </div>
+
+        <!-- DOHA 1 (प्रारंभिक दोहा) -->
+        <h3 style="text-align:center; color:var(--saffron); margin:1.5rem 0;">।। दोहा ।।</h3>
+        <div class="verse chalisa-verse">
+            <span data-en="Shri Guru Charan Saroj Raj, Nij Manu Mukur Sudhari |"
+                  data-hi="श्री गुरु चरन सरोज रज, निज मनु मुकुर सुधारि |">श्री गुरु चरन सरोज रज, निज मनु मुकुर सुधारि ।</span><br>
+            <span data-en="Barnau Raghuvar Bimal Jasu, Jo Dayak Phal Chari ||"
+                  data-hi="बरनऊ रघुबर बिमल जसु, जो दायक फल चारि ||">बरनऊ रघुबर बिमल जसु, जो दायक फल चारि ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Budhiheen Tanu Janike, Sumiro Pavan Kumar |"
+                  data-hi="बुद्धिहीन तनु जानिके, सुमिरो पवन कुमार |">बुद्धिहीन तनु जानिके, सुमिरो पवन कुमार ।</span><br>
+            <span data-en="Bal Budhi Vidya Dehu Mohi, Harahu Kalesh Vikar ||"
+                  data-hi="बल बुद्धि विद्या देहु मोहि, हरहु कलेश विकार ||">बल बुद्धि विद्या देहु मोहि, हरहु कलेश विकार ॥</span>
+        </div>
+
+        <!-- CHAUPAIS (start) -->
+        <h3 style="text-align:center; color:var(--saffron); margin:1.5rem 0;">।। चौपाई ।।</h3>
+
+        <div class="verse chalisa-verse">
+            <span data-en="Jai Hanuman Gyan Gun Sagar | Jai Kapis Tihun Lok Ujagar ||"
+                  data-hi="जय हनुमान ज्ञान गुण सागर | जय कपीस तिहुं लोक उजागर ||">जय हनुमान ज्ञान गुण सागर । जय कपीस तिहुं लोक उजागर ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Ram Doot Atulit Bal Dhama | Anjani Putra Pavansut Nama ||"
+                  data-hi="राम दूत अतुलित बल धामा | अंजनी पुत्र पवनसुत नामा ||">राम दूत अतुलित बल धामा । अंजनी पुत्र पवनसुत नामा ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Mahaveer Vikram Bajrangi | Kumati Nivar Sumati Ke Sangi ||"
+                  data-hi="महावीर विक्रम बजरंगी | कुमति निवार सुमति के संगी ||">महावीर विक्रम बजरंगी । कुमति निवार सुमति के संगी ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Kanchan Baran Viraj Subesa | Kanan Kundal Kunchit Kesa ||"
+                  data-hi="कंचन वरण विराज सबेसा | कानन कुंडल कुंचित केसा ||">कंचन वरण विराज सबेसा । कानन कुंडल कुंचित केसा ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Hath Bajra Au Dhvaja Viraje | Kandhe Moonj Janeu Saje ||"
+                  data-hi="हाथ बज्र औ ध्वजा विराजे | कांधे मूंज जनेऊ साजे ||">हाथ बज्र औ ध्वजा विराजे । कांधे मूंज जनेऊ साजे ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Shankar Suvan Kesari Nandan | Tej Pratap Maha Jag Bandan ||"
+                  data-hi="शंकर सुवन केसरी नंदन | तेज प्रताप महा जग बंदन ||">शंकर सुवन केसरी नंदन । तेज प्रताप महा जग बंदन ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Vidyavan Guni Ati Chatur | Ram Kaj Karibe Ko Aatur ||"
+                  data-hi="विद्यावान गुनी अति चातुर | राम काज करिवे को आतुर ||">विद्यावान गुनी अति चातुर । राम काज करिवे को आतुर ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Prabhu Charit Sunibe Ko Rasiya | Ram Lakhan Sita Man Basiya ||"
+                  data-hi="प्रभु चरित सुनबे को रसिया | राम लखन सीता मन बसिया ||">प्रभु चरित सुनबे को रसिया । राम लखन सीता मन बसिया ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Sukshma Roop Dhari Siyahi Dikhava | Bikat Roop Dhari Lanka Jarava ||"
+                  data-hi="सूक्ष्म रूप धरि सियहि दिखावा | बिकट रूप धरि लंक जरावा ||">सूक्ष्म रूप धरि सियहि दिखावा । बिकट रूप धरि लंक जरावा ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Bheem Roop Dhari Asur Sanhare | Ramchandra Ke Kaj Sanvare ||"
+                  data-hi="भीम रूप धरि असुर संहारे | रामचंद्र के काज संवारे ||">भीम रूप धरि असुर संहारे । रामचंद्र के काज संवारे ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Laye Sajivan Lakhan Jiyaye | Shri Raghuveer Harashi Ur Laye ||"
+                  data-hi="लाय सजीवन लखन जियाए | श्री रघुवीर हरषि उर लाए ||">लाय सजीवन लखन जियाए । श्री रघुवीर हरषि उर लाए ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Raghupati Kinhi Bahut Badai | Tum Mam Priya Bharat Sam Bhai ||"
+                  data-hi="रघुपति किंही बहुत बड़ाई | तुम मम प्रिय भरत सम भाई ||">रघुपति किंही बहुत बड़ाई । तुम मम प्रिय भरत सम भाई ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Sahas Badan Tumharo Yash Gawai | As Kahi Shripati Kanth Lagawai ||"
+                  data-hi="सहस बदन तुम्हारो यश गावै | अस कहि श्रीपति कंठ लगावै ||">सहस बदन तुम्हारो यश गावै । अस कहि श्रीपति कंठ लगावै ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Sanakadik Brahmadik Muneesha | Narad Sharad Sahit Aheesha ||"
+                  data-hi="सनकादिक ब्रह्मादि मुनीषा | नारद शारद सहित अहीसा ||">सनकादिक ब्रह्मादि मुनीषा । नारद शारद सहित अहीसा ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Jam Kuber Digpal Jahan Te | Kavi Kobid Kahi Sake Kahan Te ||"
+                  data-hi="जम कुबेर दिगपाल जहां ते | कवि कोबिद कहि सके कहां ते ||">जम कुबेर दिगपाल जहां ते । कवि कोबिद कहि सके कहां ते ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Tum Upkar Sugreevahi Kinha | Ram Milae Rajpad Dinha ||"
+                  data-hi="तुम उपकार सुग्रीवहि कीन्हां | राम मिलाए राजपद दीन्हा ||">तुम उपकार सुग्रीवहि कीन्हां । राम मिलाए राजपद दीन्हा ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Tumharo Mantra Vibhishan Mana | Lankeshvar Bhaye Sab Jag Jana ||"
+                  data-hi="तुम्हरो मंत्र विभीषण माना | लंकेश्वर भए सब जग जाना ||">तुम्हरो मंत्र विभीषण माना । लंकेश्वर भए सब जग जाना ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Jug Sahastra Jojan Par Bhanu | Lilyo Tahi Madhur Phal Janu ||"
+                  data-hi="जुग सहस्त्र जोजन पर भानू | लील्यो ताहि मधुर फल जानू ||">जुग सहस्त्र जोजन पर भानू । लील्यो ताहि मधुर फल जानू ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Prabhu Mudrika Meli Mukh Mahi | Jaladhi Langhi Gaye Achraj Nahi ||"
+                  data-hi="प्रभु मुद्रिका मेलि मुख माही | जलधि लांघी गए अचरज नाही ||">प्रभु मुद्रिका मेलि मुख माही । जलधि लांघी गए अचरज नाही ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Durgam Kaj Jagat Ke Jete | Sugam Anugrah Tumhre Tete ||"
+                  data-hi="दुर्गम काज जगत के जेते | सुगम अनुग्रह तुम्हरे तेते ||">दुर्गम काज जगत के जेते । सुगम अनुग्रह तुम्हरे तेते ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Ram Duare Tum Rakhvare | Hot Na Agya Bin Paisare ||"
+                  data-hi="राम दुआरे तुम रखवारे | होत न आज्ञा बिनु पैसारे ||">राम दुआरे तुम रखवारे । होत न आज्ञा बिनु पैसारे ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Sab Sukh Lahai Tumhari Sarna | Tum Rakshak Kahu Ko Darna ||"
+                  data-hi="सब सुख लहै तुम्हारी सरना | तुम रक्षक काहू को डरना ||">सब सुख लहै तुम्हारी सरना । तुम रक्षक काहू को डरना ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Aapan Tej Samharo Aapai | Teeno Lok Hank Te Kanpai ||"
+                  data-hi="आपन तेज सम्हारो आपै | तीनों लोक हांक ते कांपे ||">आपन तेज सम्हारो आपै । तीनों लोक हांक ते कांपे ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Bhoot Pishach Nikat Nahi Aawai | Mahaveer Jab Naam Sunawai ||"
+                  data-hi="भूत पिशाच निकट नहीं आवै | महावीर जब नाम सुनावै ||">भूत पिशाच निकट नहीं आवै । महावीर जब नाम सुनावै ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Nase Rog Hare Sab Peera | Japat Nirantar Hanumat Beera ||"
+                  data-hi="नासे रोग हरे सब पीरा | जपत निरंतर हनुमत बीरा ||">नासे रोग हरे सब पीरा । जपत निरंतर हनुमत बीरा ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Sankat Se Hanuman Chudave | Man Kram Vachan Dhyan Jo Lave ||"
+                  data-hi="संकट से हनुमान छुडावे | मन क्रम वचन ध्यान जो लावे ||">संकट से हनुमान छुडावे । मन क्रम वचन ध्यान जो लावे ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Sab Par Ram Tapasvi Raja | Tinke Kaj Sakal Tum Saja ||"
+                  data-hi="सब पर राम तपस्वी राजा | तिनके काज सकल तुम साजा ||">सब पर राम तपस्वी राजा । तिनके काज सकल तुम साजा ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Aur Manorath Jo Koi Lave | Soi Amit Jeevan Phal Pave ||"
+                  data-hi="और मनोरथ जो कोई लावे | सोई अमित जीवन फल पावे ||">और मनोरथ जो कोई लावे । सोई अमित जीवन फल पावे ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Charon Yug Partap Tumhara | Hai Prasiddh Jagat Ujiyara ||"
+                  data-hi="चारों युग परताप तुम्हारा | है प्रसिद्ध जगत उजियारा ||">चारों युग परताप तुम्हारा । है प्रसिद्ध जगत उजियारा ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Sadhu Sant Ke Tum Rakhvare | Asur Nikandan Ram Dulare ||"
+                  data-hi="साधु संत के तुम रखवारे | असुर निकंदन राम दुलारे ||">साधु संत के तुम रखवारे । असुर निकंदन राम दुलारे ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Asht Siddhi Nav Nidhi Ke Data | As Bar Deen Janki Mata ||"
+                  data-hi="अष्ट सिद्धि नवनिधि के दाता | अस बर दीन जानकी माता ||">अष्ट सिद्धि नवनिधि के दाता । अस बर दीन जानकी माता ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Ram Rasayan Tumhare Pasa | Sada Raho Raghupati Ke Dasa ||"
+                  data-hi="राम रसायन तुम्हारे पासा | सदा रहो रघुपति के दासा ||">राम रसायन तुम्हारे पासा । सदा रहो रघुपति के दासा ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Tumhare Bhajan Ram Ko Pawai | Janam Janam Ke Dukh Bisrawai ||"
+                  data-hi="तुम्हारे भजन राम को पावै | जनम जनम के दुख बिसरावै ||">तुम्हारे भजन राम को पावै । जनम जनम के दुख बिसरावै ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Ant Kal Raghubar Pur Jai | Jahan Janam Hari Bhakt Kahai ||"
+                  data-hi="अंत काल रघुबर पुर जाई | जहां जन्म हरि भक्त कहाई ||">अंत काल रघुबर पुर जाई । जहां जन्म हरि भक्त कहाई ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Aur Devta Chitt Na Dharai | Hanumat Sei Sarva Sukh Karai ||"
+                  data-hi="और देवता चित्त ना धराई | हनुमत सेई सर्व सुख करई ||">और देवता चित्त ना धराई । हनुमत सेई सर्व सुख करई ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Sankat Kate Mite Sab Peera | Jo Sumire Hanumat Balbeera ||"
+                  data-hi="संकट कटे मिटे सब पीरा | जो सुमिरे हनुमत बलबीरा ||">संकट कटे मिटे सब पीरा । जो सुमिरे हनुमत बलबीरा ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Jai Jai Jai Hanuman Gosai | Kripa Karahu Gurudev Ki Nai ||"
+                  data-hi="जय जय जय हनुमान गोसाई | कृपा करो गुरुदेव की नाई ||">जय जय जय हनुमान गोसाई । कृपा करो गुरुदेव की नाई ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Yeh Sat Bar Path Kar Koi | Chhutahi Bandi Maha Sukh Hoi ||"
+                  data-hi="यह सत बार पाठ कर कोई | छूटहि बंदी महा सुख होई ||">यह सत बार पाठ कर कोई । छूटहि बंदी महा सुख होई ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Jo Yeh Padhe Hanuman Chalisa | Hoy Siddhi Sakhi Gaurisa ||"
+                  data-hi="जो यह पढ़े हनुमान चालीसा | होय सिद्धि साखी गौरीसा ||">जो यह पढ़े हनुमान चालीसा । होय सिद्धि साखी गौरीसा ॥</span>
+        </div>
+        <div class="verse chalisa-verse">
+            <span data-en="Tulsidas Sada Hari Chera | Keejai Nath Hriday Mah Dera ||"
+                  data-hi="तुलसीदास सदा हरि चेरा | कीजै नाथ हृदय महं डेरा ||">तुलसीदास सदा हरि चेरा । कीजै नाथ हृदय महं डेरा ॥</span>
+        </div>
+
+        <!-- Closing Doha -->
+        <h3 style="text-align:center; color:var(--saffron); margin:1.5rem 0;">।। दोहा ।।</h3>
+        <div class="verse chalisa-verse">
+            <span data-en="Pavan Tanay Sankat Haran, Mangal Murti Roop |"
+                  data-hi="पवन तनय संकट हरण, मंगल मूर्ति रुप |">पवन तनय संकट हरण, मंगल मूर्ति रुप ।</span><br>
+            <span data-en="Ram Lakhan Sita Sahit, Hriday Basahu Sur Bhoop ||"
+                  data-hi="राम लखन सीता सहित, हृदय बसहु सुरभूप ||">राम लखन सीता सहित, हृदय बसहु सुरभूप ॥</span>
+        </div>
+
+        <div style="text-align:center; background:linear-gradient(135deg,var(--cream),#ffe4cc); border-left:none; border-radius:12px; padding:2rem; margin-top:2rem;">
+            <span style="color:var(--saffron); font-size:1.2rem; font-weight:700;">।। हनुमान चालीसा सम्पूर्ण ।।</span><br>
+            <span style="color:var(--brown);">।। जय हनुमान ।।</span>
+        </div>
+    </div>
+</div>
+<div id="paathmandir-comments-main" class="comments-section" style="margin-top:2rem;"></div>
     <!-- PAATH MANDIR -->
     <div id="paath" class="section">
         <div style="text-align:center;margin-bottom:2rem;">
@@ -2482,6 +2492,8 @@ window.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('dark-theme');
         toggleBtn.innerHTML = '☀️ Light Mode';
     }
+    // Set initial language class
+    document.body.classList.add('lang-' + currentLang);
 });
 
 // ======================================
