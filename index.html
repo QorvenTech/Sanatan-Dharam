@@ -3831,12 +3831,15 @@ window.addEventListener('load', () => {
     }, 500);
 });
 
-// Also ensure comments render when section changes
+// Also ensure comments render when section changes and refresh Panchang
 const originalShowSection = showSection;
 showSection = function(id) {
     originalShowSection(id);
     setTimeout(() => {
         renderComments(id);
+        if (id === 'panchang') {
+            displayTodaysPanchang();
+        }
     }, 100);
 };
 
@@ -3924,19 +3927,6 @@ applyLanguage = function(lang) {
         });
     }
 };
-    // Initialize
-window.addEventListener('load', displayTodaysPanchang);
-
-// Call when Panchang section opens
-const originalShowSection = window.showSection;
-if (originalShowSection) {
-    window.showSection = function(id) {
-        originalShowSection(id);
-        if (id === 'panchang') {
-            setTimeout(displayTodaysPanchang, 200);
-        }
-    };
-}
 </script>
 
 </body>
