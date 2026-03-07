@@ -490,8 +490,22 @@ body.dark-theme {
 
         <!-- TODAY'S PANCHANG CARD (auto‑updated) -->
         <div id="todays-panchang-container" class="panchang-today-card" style="background: var(--card-bg); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left: 6px solid var(--saffron);">
-            <h3 style="color: var(--saffron); margin-bottom: 1.2rem; font-size: 1.6rem;" data-en="📅 Today's Panchang" data-hi="📅 आज का पंचांग">📅 Today's Panchang</h3>
-            <div id="panchang-loading" style="text-align: center; padding: 1rem;">🙏 Calculating Panchang...</div>
+
+            <!-- Header row with title + date picker -->
+            <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1.4rem;">
+                <h3 style="color: var(--saffron); font-size: 1.6rem;" data-en="📅 Today's Panchang" data-hi="📅 आज का पंचांग">📅 Today's Panchang</h3>
+                <div style="display:flex; gap:0.6rem; align-items:center; flex-wrap:wrap;">
+                    <input type="date" id="panchang-date-picker"
+                        style="padding:0.45rem 0.9rem; border:2px solid var(--saffron); border-radius:20px; background:var(--card-bg); color:var(--text); font-family:inherit; font-size:0.9rem; cursor:pointer; outline:none;"
+                        onchange="loadPanchangForDate(this.value)" />
+                    <button onclick="loadPanchangForDate('today')"
+                        style="padding:0.45rem 1rem; background:var(--saffron); color:white; border:none; border-radius:20px; cursor:pointer; font-family:inherit; font-size:0.9rem; font-weight:600;">
+                        Today
+                    </button>
+                </div>
+            </div>
+
+            <div id="panchang-loading" style="text-align: center; padding: 2rem; font-size:1.1rem;">🙏 Calculating Panchang…</div>
             <div id="panchang-content" style="display: none;"></div>
         </div>
 
@@ -2665,13 +2679,6 @@ body.dark-theme {
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-    <!-- SunCalc for sunrise/sunset -->
-<script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.js"></script>
-
-<!-- Hindu Calendar for tithi, nakshatra etc. (ES module) -->
-<script type="module">
-    import { HinduCalendar } from 'https://cdn.jsdelivr.net/npm/hindu-calendar@2.0.1/+esm';
-    window.HinduCalendar = HinduCalendar;
 </script>
 
 <script>
@@ -3846,89 +3853,321 @@ showSection = function(id) {
     }, 100);
 };
 
-// ======================================
-// ======================================
-// TODAY'S PANCHANG (API‑based)
-// ======================================
-async function displayTodaysPanchang() {
-    const container = document.getElementById('panchang-content');
-    const loading = document.getElementById('panchang-loading');
-    if (!container || !loading) return;
+// =====================================================
+//  🕉️  PANCHANG ENGINE — fully self-contained, no API key
+//  Sunrise/Sunset: NOAA algorithm (pure JS)
+//  Panchang: Meeus Astronomical Algorithms + Lahiri ayanamsha
+// =====================================================
 
-    try {
-        // Check if libraries are loaded
-        if (typeof SunCalc === 'undefined') throw new Error('SunCalc not loaded');
-        if (typeof window.HinduCalendar === 'undefined') {
-            loading.innerHTML = '⏳ Loading Hindu Calendar...';
-            setTimeout(displayTodaysPanchang, 500);
-            return;
+/* ── helpers ── */
+function _norm360(x){ return ((x%360)+360)%360; }
+function _rad(d){ return d*Math.PI/180; }
+function _deg(r){ return r*180/Math.PI; }
+
+/* ── Julian Day Number ── */
+function _jd(Y,M,D,utcH){
+    if(utcH===undefined) utcH=12;
+    if(M<=2){Y-=1;M+=12;}
+    var A=Math.floor(Y/100), B=2-A+Math.floor(A/4);
+    return Math.floor(365.25*(Y+4716))+Math.floor(30.6001*(M+1))+D+utcH/24+B-1524.5;
+}
+
+/* ── Lahiri ayanamsha ── */
+function _ayan(jd){ return 23.8526+(jd-2451545.0)*(50.29/3600)/365.25; }
+
+/* ── Sun longitude (tropical, low-precision) ── */
+function _sunLon(jd){
+    var n=jd-2451545.0;
+    var L=_norm360(280.460+0.9856474*n);
+    var g=_rad(_norm360(357.528+0.9856003*n));
+    return _norm360(L+1.915*Math.sin(g)+0.020*Math.sin(2*g));
+}
+
+/* ── Moon longitude (tropical, ±0.3°) ── */
+function _moonLon(jd){
+    var n=jd-2451545.0;
+    var L=_norm360(218.316+13.176396*n);
+    var Md=_rad(_norm360(134.963+13.064993*n));
+    var F=_rad(_norm360(93.272+13.229350*n));
+    var D=_rad(_norm360(297.850+12.190749*n));
+    return _norm360(L
+        +6.289*Math.sin(Md)
+        -1.274*Math.sin(2*D-Md)
+        +0.658*Math.sin(2*D)
+        -0.214*Math.sin(2*Md)
+        -0.110*Math.sin(D));
+}
+
+/* ── NOAA sunrise/sunset (returns minutes since midnight LOCAL time) ── */
+function _sunriseSunset(Y,M,D,lat,lng,tzOffsetHours){
+    // Julian day
+    var jd=_jd(Y,M,D,12);
+    var t=(jd-2451545.0)/36525.0;
+    // Geometric mean longitude & anomaly of sun
+    var L0=_norm360(280.46646+36000.76983*t);
+    var M0=_rad(_norm360(357.52911+35999.05029*t-0.0001537*t*t));
+    // Equation of center
+    var C=(1.914602-0.004817*t-0.000014*t*t)*Math.sin(M0)
+         +(0.019993-0.000101*t)*Math.sin(2*M0)
+         +0.000289*Math.sin(3*M0);
+    var sunLon=L0+C;
+    // Apparent longitude
+    var omega=_rad(125.04-1934.136*t);
+    var lam=_rad(sunLon-0.00569-0.00478*Math.sin(omega));
+    // Mean obliquity corrected
+    var eps=_rad(23.439291111-0.013004167*t+(0.00059/3600)*t*t-(0.00059/3600)*t*t
+               +0.00256*Math.cos(omega));
+    // Sun declination
+    var dec=Math.asin(Math.sin(eps)*Math.sin(lam));
+    // Equation of time (minutes)
+    var e0=_rad(23.4393-0.0130*t);
+    var y=Math.tan(e0/2)*Math.tan(e0/2);
+    var rl=_rad(L0), rm=_rad(_norm360(357.52911+35999.05029*t));
+    var eot=4*_deg(y*Math.sin(2*rl)-2*0.016708634*Math.sin(rm)+4*y*0.016708634*Math.sin(rm)*Math.cos(2*rl)-0.5*y*y*Math.sin(4*rl)-1.25*0.016708634*0.016708634*Math.sin(2*rm));
+    // Hour angle at horizon (solar zenith = 90.833°)
+    var cosHA=(Math.cos(_rad(90.833))-Math.sin(_rad(lat))*Math.sin(dec))
+             /(Math.cos(_rad(lat))*Math.cos(dec));
+    if(cosHA< -1) return {sunrise:0, sunset:1440}; // circumpolar day
+    if(cosHA>  1) return {sunrise:720,sunset:720};  // circumpolar night
+    var HA=_deg(Math.acos(cosHA)); // degrees
+    // Solar noon in minutes (local)
+    var noon=720-4*lng-eot+tzOffsetHours*60;
+    return {
+        sunrise: noon - 4*HA,
+        sunset:  noon + 4*HA
+    };
+}
+
+/* ── format minutes → "H:MM AM/PM" ── */
+function _fmtM(m){
+    m=((m%1440)+1440)%1440;
+    var h=Math.floor(m/60), mn=Math.round(m%60);
+    if(mn===60){h++;mn=0;}
+    var ap=h>=12?'PM':'AM';
+    var hh=h%12||12;
+    return hh+':'+(mn<10?'0':'')+mn+' '+ap;
+}
+
+/* ── core panchang ── */
+function _calcPanchang(Y,M,D){
+    var jd=_jd(Y,M,D,6.5); // ~noon IST
+    var ayan=_ayan(jd);
+    var sunT=_sunLon(jd), moonT=_moonLon(jd);
+    var sunS=_norm360(sunT-ayan), moonS=_norm360(moonT-ayan);
+
+    // 1. Tithi
+    var tDeg=_norm360(moonS-sunS);
+    var tNum=Math.floor(tDeg/12)+1; // 1-30
+    var tNames=['Pratipada','Dwitiya','Tritiya','Chaturthi','Panchami',
+                'Shashthi','Saptami','Ashtami','Navami','Dashami',
+                'Ekadashi','Dwadashi','Trayodashi','Chaturdashi','Purnima'];
+    var tithi = tNum===30?'Amavasya': tNum===15?'Purnima': tNames[(tNum<=15?tNum-1:tNum-16)];
+    var paksha = tDeg<180?'Shukla Paksha':'Krishna Paksha';
+    var pakshaS = tDeg<180?'Shukla':'Krishna';
+
+    // 2. Nakshatra
+    var nNames=['Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra',
+                'Punarvasu','Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni',
+                'Hasta','Chitra','Swati','Vishakha','Anuradha','Jyeshtha','Mula',
+                'Purva Ashadha','Uttara Ashadha','Shravana','Dhanishta','Shatabhisha',
+                'Purva Bhadrapada','Uttara Bhadrapada','Revati'];
+    var nakshatra=nNames[Math.floor(moonS/(360/27))%27];
+
+    // 3. Yoga
+    var yNames=['Vishkambha','Priti','Ayushman','Saubhagya','Shobhana','Atiganda',
+                'Sukarma','Dhriti','Shula','Ganda','Vriddhi','Dhruva','Vyaghata',
+                'Harshana','Vajra','Siddhi','Vyatipata','Variyan','Parigha','Shiva',
+                'Siddha','Sadhya','Shubha','Shukla','Brahma','Mahendra','Vaidhriti'];
+    var yoga=yNames[Math.floor(_norm360(sunS+moonS)/(360/27))%27];
+
+    // 4. Karana
+    var kFixed=['Kimstughna','Chatushpada','Naga','Sakuni'];
+    var kMovable=['Bava','Balava','Kaulava','Taitila','Garaja','Vanija','Vishti'];
+    var kNum=Math.floor(tDeg/6)+1;
+    var karana = kNum===1? kFixed[0] : kNum>=57? kFixed[kNum-57] : kMovable[(kNum-2)%7];
+
+    // 5. Vara
+    var vNames=['Ravivara (Sun)','Somavara (Mon)','Mangalavara (Tue)','Budhavara (Wed)',
+                'Guruvara (Thu)','Shukravara (Fri)','Shanivara (Sat)'];
+    var weekday=new Date(Y,M-1,D).getDay();
+    var vara=vNames[weekday];
+
+    // Masa & Samvat
+    var masaNames=['Mesha (Chaitra)','Vrishabha (Vaishakha)','Mithuna (Jyeshtha)',
+                   'Karka (Ashadha)','Simha (Shravana)','Kanya (Bhadrapada)',
+                   'Tula (Ashwin)','Vrishchika (Kartik)','Dhanu (Margashirsha)',
+                   'Makara (Pausha)','Kumbha (Magha)','Meena (Phalguna)'];
+    var masa=masaNames[Math.floor(sunS/30)%12];
+    var samvat=M<=3? Y+56 : Y+57;
+
+    return {tithi,pakshaS,paksha,tNum,nakshatra,yoga,karana,vara,masa,samvat,weekday};
+}
+
+/* ── muhurat timings ── */
+var _rahuSeg=[8,2,7,5,6,4,3]; // Sun=0
+function _muhurats(sr,ss,weekday){
+    var len=ss-sr, seg=len/8;
+    var rS=sr+(_rahuSeg[weekday]-1)*seg, rE=rS+seg;
+    var gI=[7,6,5,4,3,2,1][weekday];
+    var gS=sr+(gI-1)*seg, gE=gS+seg;
+    var yI=[5,4,3,2,1,8,7][weekday];
+    var yS=sr+(yI-1)*seg, yE=yS+seg;
+    var noon=(sr+ss)/2;
+    return {
+        rahu:   _fmtM(rS)+' – '+_fmtM(rE),
+        gulika: _fmtM(gS)+' – '+_fmtM(gE),
+        yama:   _fmtM(yS)+' – '+_fmtM(yE),
+        brahma: _fmtM(sr-96)+' – '+_fmtM(sr-48),
+        abhijit:_fmtM(noon-24)+' – '+_fmtM(noon+24),
+        noon:   _fmtM(noon)
+    };
+}
+
+/* ── render HTML ── */
+function _renderPanchang(p, srMin, ssMin, srFmt, ssFmt, city, dateLabel){
+    function box(em,lbl,val,bg,border){
+        bg=bg||'var(--cream)'; border=border||'var(--saffron)';
+        return '<div style="background:'+bg+';border-radius:12px;padding:1rem 1.2rem;border-left:4px solid '+border+';display:flex;flex-direction:column;gap:0.25rem;">'
+          +'<span style="font-size:0.78rem;font-weight:700;color:var(--brown);text-transform:uppercase;letter-spacing:0.04em;">'+em+' '+lbl+'</span>'
+          +'<span style="font-size:1.05rem;font-weight:600;color:var(--text);">'+val+'</span>'
+          +'</div>';
+    }
+    function rbox(em,lbl,val,note){
+        return '<div style="background:var(--cream);border-radius:12px;padding:0.9rem 1.1rem;border-left:4px solid #c94a00;display:flex;flex-direction:column;gap:0.2rem;">'
+          +'<span style="font-size:0.78rem;font-weight:700;color:#c94a00;text-transform:uppercase;">'+em+' '+lbl+'</span>'
+          +'<span style="font-size:1rem;font-weight:600;color:var(--text);">'+val+'</span>'
+          +(note?'<span style="font-size:0.77rem;color:#888;">'+note+'</span>':'')
+          +'</div>';
+    }
+    var mu=_muhurats(srMin,ssMin,p.weekday);
+    return '<div style="background:linear-gradient(135deg,var(--saffron),#c94a00);color:white;border-radius:12px;padding:1rem 1.4rem;margin-bottom:1.4rem;display:flex;flex-wrap:wrap;gap:0.8rem;align-items:center;justify-content:space-between;">'
+      +'<div><div style="font-size:1.2rem;font-weight:700;">'+dateLabel+'</div>'
+      +'<div style="font-size:0.88rem;opacity:0.9;">Vikram Samvat '+p.samvat+' | '+p.masa+'</div></div>'
+      +'<div style="text-align:right;"><div style="font-size:0.95rem;font-weight:600;">📍 '+city+'</div>'
+      +'<div style="font-size:0.78rem;opacity:0.85;">Lahiri Ayanamsha</div></div>'
+      +'</div>'
+
+      // Sun timings
+      +'<div style="font-size:0.85rem;font-weight:700;color:var(--brown);letter-spacing:0.06em;margin-bottom:0.6rem;">☀️ SUN TIMINGS</div>'
+      +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.7rem;margin-bottom:1.3rem;">'
+      +box('🌅','Sunrise',srFmt)
+      +box('🌇','Sunset',ssFmt)
+      +box('🌞','Solar Noon',mu.noon)
+      +box('🌄','Brahma Muhurat',mu.brahma)
+      +'</div>'
+
+      // Five limbs
+      +'<div style="font-size:0.85rem;font-weight:700;color:var(--brown);letter-spacing:0.06em;margin-bottom:0.6rem;">🕉️ PANCHA ANGA — FIVE LIMBS</div>'
+      +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.7rem;margin-bottom:1.3rem;">'
+      +box('🌙','Tithi',p.pakshaS+' '+p.tithi+' ('+p.tNum+')')
+      +box('📅','Vara',p.vara)
+      +box('⭐','Nakshatra',p.nakshatra)
+      +box('🧘','Yoga',p.yoga)
+      +box('📿','Karana',p.karana)
+      +box('🌓','Paksha',p.paksha)
+      +'</div>'
+
+      // Inauspicious
+      +'<div style="font-size:0.85rem;font-weight:700;color:var(--brown);letter-spacing:0.06em;margin-bottom:0.6rem;">⚠️ INAUSPICIOUS PERIODS</div>'
+      +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.7rem;margin-bottom:1.3rem;">'
+      +rbox('🔴','Rahu Kaal',mu.rahu,'Avoid new beginnings')
+      +rbox('🟤','Gulika Kaal',mu.gulika,'Malefic period')
+      +rbox('🟡','Yamaghanta',mu.yama,'Avoid travel')
+      +'</div>'
+
+      // Auspicious
+      +'<div style="font-size:0.85rem;font-weight:700;color:var(--brown);letter-spacing:0.06em;margin-bottom:0.6rem;">✅ AUSPICIOUS MUHURATS</div>'
+      +'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.7rem;margin-bottom:0.8rem;">'
+      +'<div style="background:linear-gradient(135deg,#f0fff4,#dcfce7);border-radius:12px;padding:1rem 1.2rem;border-left:4px solid #38a169;">'
+      +'<div style="font-size:0.78rem;font-weight:700;color:#276749;text-transform:uppercase;">🌅 Brahma Muhurat</div>'
+      +'<div style="font-size:1rem;font-weight:600;color:#1a4731;">'+mu.brahma+'</div>'
+      +'<div style="font-size:0.77rem;color:#555;">Best for prayer & meditation</div></div>'
+      +'<div style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border-radius:12px;padding:1rem 1.2rem;border-left:4px solid #d97706;">'
+      +'<div style="font-size:0.78rem;font-weight:700;color:#92400e;text-transform:uppercase;">⚡ Abhijit Muhurat</div>'
+      +'<div style="font-size:1rem;font-weight:600;color:#78350f;">'+mu.abhijit+'</div>'
+      +'<div style="font-size:0.77rem;color:#555;">Most auspicious of the day</div></div>'
+      +'</div>'
+      +'<div style="text-align:center;font-size:0.78rem;color:#aaa;margin-top:0.6rem;padding-top:0.6rem;border-top:1px solid var(--border-light);">'
+      +'🙏 Calculated using Vedic astronomical formulas — Lahiri/Chitrapaksha ayanamsha</div>';
+}
+
+/* ── location storage ── */
+var _pLat=28.6139, _pLng=77.2090, _pCity='New Delhi', _pTZ=5.5;
+
+/* ── main loader ── */
+function loadPanchangForDate(dateVal){
+    var container=document.getElementById('panchang-content');
+    var loading=document.getElementById('panchang-loading');
+    if(!container||!loading) return;
+    loading.innerHTML='🙏 Calculating Panchang…';
+    loading.style.display='block';
+    container.style.display='none';
+
+    var date;
+    try{
+        if(!dateVal||dateVal==='today'){
+            date=new Date();
+            var picker=document.getElementById('panchang-date-picker');
+            if(picker) picker.value=date.toISOString().split('T')[0];
+        } else {
+            var parts=dateVal.split('-');
+            date=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
         }
-
-        const lat = 28.6139; // Delhi – change as needed
-        const lng = 77.2090;
-        const today = new Date();
-
-        // Sunrise & Sunset
-        const times = SunCalc.getTimes(today, lat, lng);
-        const sunrise = times.sunrise;
-        const sunset = times.sunset;
-
-        // Hindu Calendar data
-        const HinduCalendar = window.HinduCalendar;
-        const cal = new HinduCalendar(today, { latitude: lat, longitude: lng });
-        const tithi = cal.tithi().name;
-        const nakshatra = cal.nakshatra().name;
-        const yoga = cal.yoga().name;
-        const karana = cal.karana().name;
-        const paksha = cal.paksha().name;
-        const rahu = cal.rahuKalam(); // returns { start, end } as Date objects
-
-        const formatTime = (date) => {
-            if (!date) return '--:--';
-            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-        };
-
-        const rahuString = rahu?.start && rahu?.end
-            ? `${formatTime(rahu.start)} – ${formatTime(rahu.end)}`
-            : '--:––';
-
-        const contentHTML = `
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌅 Sunrise" data-hi="🌅 सूर्योदय">🌅 Sunrise</span><br> <span class="panchang-value">${formatTime(sunrise)}</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌇 Sunset" data-hi="🌇 सूर्यास्त">🌇 Sunset</span><br> <span class="panchang-value">${formatTime(sunset)}</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌙 Tithi" data-hi="🌙 तिथि">🌙 Tithi</span><br> <span class="panchang-value">${tithi || '--'}</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="⭐ Nakshatra" data-hi="⭐ नक्षत्र">⭐ Nakshatra</span><br> <span class="panchang-value">${nakshatra || '--'}</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="🧘 Yoga" data-hi="🧘 योग">🧘 Yoga</span><br> <span class="panchang-value">${yoga || '--'}</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="📿 Karana" data-hi="📿 करण">📿 Karana</span><br> <span class="panchang-value">${karana || '--'}</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌓 Paksha" data-hi="🌓 पक्ष">🌓 Paksha</span><br> <span class="panchang-value">${paksha || '--'}</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="⏰ Rahu Kaal" data-hi="⏰ राहु काल">⏰ Rahu Kaal</span><br> <span class="panchang-value">${rahuString}</span></div>
-            </div>
-            <p style="margin-top: 1rem; font-size: 0.9rem; color: #888; text-align: center;" data-en="⏱️ Complete Panchang based on accurate calculations" data-hi="⏱️ संपूर्ण पंचांग सटीक गणना पर आधारित">⏱️ Complete Panchang</p>
-        `;
-
-        container.innerHTML = contentHTML;
-        loading.style.display = 'none';
-        container.style.display = 'block';
-        if (window.applyLanguage) applyLanguage(currentLang);
-    } catch (error) {
-        console.error('Panchang error:', error);
-        loading.innerHTML = '❌ Unable to calculate Panchang. ' + error.message;
+        var Y=date.getFullYear(), M=date.getMonth()+1, D=date.getDate();
+        var p=_calcPanchang(Y,M,D);
+        var ss=_sunriseSunset(Y,M,D,_pLat,_pLng,_pTZ);
+        var srFmt=_fmtM(ss.sunrise), ssFmt=_fmtM(ss.sunset);
+        var dateLabel=date.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+        container.innerHTML=_renderPanchang(p,ss.sunrise,ss.sunset,srFmt,ssFmt,_pCity,dateLabel);
+        loading.style.display='none';
+        container.style.display='block';
+    } catch(e){
+        console.error('Panchang error:',e);
+        loading.innerHTML='❌ Could not calculate Panchang. Error: '+(e&&e.message?e.message:'unknown')+'. Please refresh.';
     }
 }
-// Call it when page loads
+
+/* ── init with optional geolocation ── */
+function displayTodaysPanchang(){
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(
+            function(pos){
+                _pLat=pos.coords.latitude;
+                _pLng=pos.coords.longitude;
+                // Get timezone offset in hours from browser
+                _pTZ=-(new Date().getTimezoneOffset())/60;
+                // Try to get city name via nominatim
+                fetch('https://nominatim.openstreetmap.org/reverse?lat='+_pLat+'&lon='+_pLng+'&format=json')
+                    .then(function(r){return r.json();})
+                    .then(function(d){
+                        _pCity=(d.address&&(d.address.city||d.address.town||d.address.village||d.address.state))||'Your Location';
+                    })
+                    .catch(function(){_pCity='Your Location';})
+                    .finally(function(){loadPanchangForDate('today');});
+            },
+            function(){ loadPanchangForDate('today'); },
+            {timeout:4000}
+        );
+    } else {
+        loadPanchangForDate('today');
+    }
+}
+
 window.addEventListener('load', displayTodaysPanchang);
 
-// Patch the language toggle to also update the Panchang card
-const originalApplyLanguage = applyLanguage;
-applyLanguage = function(lang) {
-    originalApplyLanguage(lang);
-    const panchangContainer = document.getElementById('panchang-content');
-    if (panchangContainer && panchangContainer.style.display !== 'none') {
-        document.querySelectorAll('#panchang-content [data-en][data-hi]').forEach(el => {
-            el.textContent = el.getAttribute('data-' + lang);
-        });
-    }
-};
+// Safe language patch
+(function(){
+    var _orig = typeof applyLanguage === 'function' ? applyLanguage : function(){};
+    applyLanguage = function(lang){
+        _orig(lang);
+        var pc=document.getElementById('panchang-content');
+        if(pc && pc.style.display!=='none'){
+            pc.querySelectorAll('[data-en][data-hi]').forEach(function(el){
+                el.textContent=el.getAttribute('data-'+lang);
+            });
+        }
+    };
+})();
 </script>
 
 </body>
