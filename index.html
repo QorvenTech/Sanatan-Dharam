@@ -487,6 +487,14 @@ body.dark-theme {
     <!-- PANCHANG -->
     <div id="panchang" class="section">
         <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Hindu Panchang (Calendar)" data-hi="हिंदू पंचांग (कैलेंडर)">Hindu Panchang (Calendar)</h2>
+
+        <!-- TODAY'S PANCHANG CARD (auto‑updated) -->
+        <div id="todays-panchang-container" class="panchang-today-card" style="background: var(--card-bg); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left: 6px solid var(--saffron);">
+            <h3 style="color: var(--saffron); margin-bottom: 1.2rem; font-size: 1.6rem;" data-en="📅 Today's Panchang" data-hi="📅 आज का पंचांग">📅 Today's Panchang</h3>
+            <div id="panchang-loading" style="text-align: center; padding: 1rem;">🙏 Calculating Panchang...</div>
+            <div id="panchang-content" style="display: none;"></div>
+        </div>
+
         <div class="text-content">
             <h3 data-en="What is Panchang?" data-hi="पंचांग क्या है?">What is Panchang?</h3>
             <p data-en="Panchang, meaning 'five limbs,' is the Hindu calendar providing astronomical and astrological information for determining auspicious timings (muhurat) for religious ceremonies and important activities." data-hi="पंचांग, जिसका अर्थ है 'पांच अंग,' हिंदू कैलेंडर है जो धार्मिक समारोहों और महत्वपूर्ण गतिविधियों के लिए शुभ समय (मुहूर्त) निर्धारित करने हेतु खगोलीय और ज्योतिषीय जानकारी प्रदान करता है।">Panchang, meaning 'five limbs,' is the Hindu calendar providing astronomical and astrological information for determining auspicious timings (muhurat) for religious ceremonies and important activities.</p>
@@ -2658,6 +2666,11 @@ body.dark-theme {
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
+<!-- 🌟 Panchangam library (ES module) -->
+<script type="import">
+    window.Panchangam = await import('https://esm.sh/@fusionstrings/panchangam');
+</script>
+
 <script>
 // ======================================
 // FIREBASE (YOUR EXISTING CONFIG)
@@ -3827,6 +3840,80 @@ showSection = function(id) {
     }, 100);
 };
 
+// ======================================
+// TODAY'S PANCHANG (auto‑updates daily)
+// ======================================
+async function displayTodaysPanchang() {
+    const container = document.getElementById('panchang-content');
+    const loading = document.getElementById('panchang-loading');
+    if (!container || !loading) return;
+
+    try {
+        const { calculate_daily_panchang, Location } = window.Panchangam;
+
+        // Set location – change these to your city (default: Delhi)
+        const latitude = 28.6139;   // Delhi
+        const longitude = 77.2090;
+        const altitude = 225;
+
+        const location = new Location(latitude, longitude, altitude);
+        const today = new Date();
+
+        const result = calculate_daily_panchang(
+            today.getFullYear(),
+            today.getMonth() + 1,
+            today.getDate(),
+            location,
+            1 // Lahiri Ayanamsa
+        );
+
+        const formatTime = (date) => {
+            if (!date) return '--:--';
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+        };
+
+        const contentHTML = `
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌅 Sunrise" data-hi="🌅 सूर्योदय">🌅 Sunrise</span><br> <span class="panchang-value">${formatTime(result.sunrise)}</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌇 Sunset" data-hi="🌇 सूर्यास्त">🌇 Sunset</span><br> <span class="panchang-value">${formatTime(result.sunset)}</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌙 Tithi" data-hi="🌙 तिथि">🌙 Tithi</span><br> <span class="panchang-value">${result.tithi_name || '--'}</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="⭐ Nakshatra" data-hi="⭐ नक्षत्र">⭐ Nakshatra</span><br> <span class="panchang-value">${result.nakshatra_name || '--'}</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="🧘 Yoga" data-hi="🧘 योग">🧘 Yoga</span><br> <span class="panchang-value">${result.yoga_name || '--'}</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="📿 Karana" data-hi="📿 करण">📿 Karana</span><br> <span class="panchang-value">${result.karana_name || '--'}</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌓 Paksha" data-hi="🌓 पक्ष">🌓 Paksha</span><br> <span class="panchang-value">${result.paksha || '--'}</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="⏰ Rahu Kaal" data-hi="⏰ राहु काल">⏰ Rahu Kaal</span><br> <span class="panchang-value">${result.muhurats?.rahu_kalam ? formatTime(result.muhurats.rahu_kalam.start) + ' – ' + formatTime(result.muhurats.rahu_kalam.end) : '--'}</span></div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #888; text-align: center;" data-en="⏱️ Updates daily at sunrise" data-hi="⏱️ प्रतिदिन सूर्योदय पर अद्यतन">⏱️ Updates daily at sunrise</p>
+        `;
+
+        container.innerHTML = contentHTML;
+        loading.style.display = 'none';
+        container.style.display = 'block';
+
+        // Apply current language to the new elements
+        if (window.applyLanguage) {
+            applyLanguage(currentLang);
+        }
+    } catch (error) {
+        console.error('Panchang calculation failed:', error);
+        loading.innerHTML = '🙏 Unable to load Panchang. Please try again later.';
+    }
+}
+
+// Call it when page loads
+window.addEventListener('load', displayTodaysPanchang);
+
+// Patch the language toggle to also update the Panchang card
+const originalApplyLanguage = applyLanguage;
+applyLanguage = function(lang) {
+    originalApplyLanguage(lang);
+    const panchangContainer = document.getElementById('panchang-content');
+    if (panchangContainer && panchangContainer.style.display !== 'none') {
+        document.querySelectorAll('#panchang-content [data-en][data-hi]').forEach(el => {
+            el.textContent = el.getAttribute('data-' + lang);
+        });
+    }
+};
 </script>
 
 </body>
