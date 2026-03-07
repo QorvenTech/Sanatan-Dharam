@@ -386,6 +386,7 @@ body.dark-theme {
         <li><a href="#" onclick="showSection('panchang')"     data-en="Panchang"       data-hi="पंचांग">Panchang</a></li>
         <li><a href="#" onclick="showFavorites()">🌟 My Favorites</a></li>
         <li><a href="#" onclick="showSection('paathmandir')" data-en="📖 Paath Mandir" data-hi="📖 पाठ मंदिर">📖 Paath Mandir</a></li>
+        <li><a href="#" onclick="showSection('aarti')" data-en="Aarti" data-hi="आरती">Aarti</a></li>
     </ul>
 </nav>
 
@@ -429,7 +430,6 @@ body.dark-theme {
             <div class="card" onclick="showText('om-mantra')"><div class="icon">🕉️</div><h3 data-en="Om - Pranava" data-hi="ॐ - प्रणव">Om - Pranava</h3><p data-en="Primordial sound of cosmic consciousness. Foundation of all mantras and meditation." data-hi="ब्रह्मांडीय चेतना की आदि ध्वनि। सभी मंत्रों और ध्यान की नींव।">Primordial sound of cosmic consciousness. Foundation of all mantras and meditation.</p></div>
             <div class="card" onclick="showText('ganesh-mantra')"><div class="icon">🐘</div><h3 data-en="Ganesh Mantras" data-hi="गणेश मंत्र">Ganesh Mantras</h3><p data-en="Mantras for removing obstacles and success in new beginnings. Om Gan Ganapataye Namaha." data-hi="विघ्न हटाने और नई शुरुआत में सफलता के लिए मंत्र। ॐ गं गणपतये नमः।">Mantras for removing obstacles and success in new beginnings. Om Gan Ganapataye Namaha.</p></div>
             <div class="card" onclick="showText('hanuman-chalisa')"><div class="icon">💪</div><h3 data-en="Hanuman Chalisa" data-hi="हनुमान चालीसा">Hanuman Chalisa</h3><p data-en="40-verse hymn by Tulsidas for strength, courage, and protection from negativity." data-hi="तुलसीदास द्वारा रचित 40 छंदों की स्तुति। शक्ति, साहस और नकारात्मकता से सुरक्षा के लिए।">40-verse hymn by Tulsidas for strength, courage, and protection from negativity.</p></div>
-            <div class="card" onclick="showText('lakshmi-mantra')"><div class="icon">💫</div><h3 data-en="Lakshmi Mantras" data-hi="लक्ष्मी मंत्र">Lakshmi Mantras</h3><p data-en="Sacred mantras for prosperity, wealth, abundance, and spiritual well-being." data-hi="समृद्धि, धन, प्रचुरता और आध्यात्मिक कल्याण के लिए पवित्र मंत्र।">Sacred mantras for prosperity, wealth, abundance, and spiritual well-being.</p></div>
         </div>
         <div id="mantras-comments" class="comments-section" style="margin-top:2rem;"></div>
     </div>
@@ -458,7 +458,7 @@ body.dark-theme {
         <div class="cards-grid">
             <div class="card" onclick="showText('diwali')"><div class="icon">🪔</div><h3 data-en="Diwali" data-hi="दिवाली">Diwali</h3><p data-en="Festival of lights celebrating victory of light over darkness and Rama's return." data-hi="अंधकार पर प्रकाश की विजय और राम की वापसी का उत्सव।">Festival of lights celebrating victory of light over darkness and Rama's return.</p></div>
             <div class="card" onclick="showText('holi')"><div class="icon">🎨</div><h3 data-en="Holi" data-hi="होली">Holi</h3><p data-en="Festival of colors celebrating spring and good over evil through Prahlad's story." data-hi="प्रह्लाद की कहानी के माध्यम से वसंत और बुराई पर अच्छाई का उत्सव।">Festival of colors celebrating spring and good over evil through Prahlad's story.</p></div>
-            <div class="card" onclick="showText('navratri')"><div class="icon">💃</div><h3 data-en="Navratri" data-hi="नवरात्रि">Navratri</h3><p data-en="Nine nights worshipping nine forms of Goddess Durga with fasting and dance." data-hi="उपवास और नृत्य के साथ देवी दुर्गा के नौ रूपों की पूजा करने वाली नौ रातें।">Nine nights worshipping nine forms of Goddess Durga with fasting and dance.</p></div>
+            <div class="card" onclick="showText('navratri')"><div class="icon">🔱</div><h3 data-en="Navratri" data-hi="नवरात्रि">Navratri</h3><p data-en="Nine nights worshipping nine forms of Goddess Durga with fasting and dance." data-hi="उपवास और नृत्य के साथ देवी दुर्गा के नौ रूपों की पूजा करने वाली नौ रातें।">Nine nights worshipping nine forms of Goddess Durga with fasting and dance.</p></div>
             <div class="card" onclick="showText('janmashtami')"><div class="icon">🦚</div><h3 data-en="Janmashtami" data-hi="जन्माष्टमी">Janmashtami</h3><p data-en="Krishna's midnight birth celebration with fasting, prayers, and Dahi Handi." data-hi="उपवास, प्रार्थना और दही हांडी के साथ कृष्ण के आधी रात के जन्म का उत्सव।">Krishna's midnight birth celebration with fasting, prayers, and Dahi Handi.</p></div>
             <div class="card" onclick="showText('maha-shivratri')"><div class="icon">🌙</div><h3 data-en="Maha Shivratri" data-hi="महा शिवरात्रि">Maha Shivratri</h3><p data-en="Great night of Shiva with fasting, night vigil, and Shiva linga worship." data-hi="उपवास, रात्रि जागरण और शिव लिंग पूजा के साथ शिव की महान रात्रि।">Great night of Shiva with fasting, night vigil, and Shiva linga worship.</p></div>
             <div class="card" onclick="showText('ram-navami')"><div class="icon">🏹</div><h3 data-en="Ram Navami" data-hi="राम नवमी">Ram Navami</h3><p data-en="Rama's birthday with Ramayana readings, devotional singing, and fasting." data-hi="रामायण पाठ, भक्ति गायन और उपवास के साथ राम का जन्मदिन।">Rama's birthday with Ramayana readings, devotional singing, and fasting.</p></div>
@@ -2621,6 +2621,20 @@ body.dark-theme {
     </div>
 
     <div id="text-display" style="display:none;"></div>
+    <!-- AARTI SECTION -->
+<div id="aarti" class="section">
+    <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Aarti – Devotional Hymns" data-hi="आरती – भक्ति गीत">Aarti – Devotional Hymns</h2>
+    <div class="cards-grid" id="aartiGrid">
+        <!-- Placeholder card for future Aartis -->
+        <div class="card" style="border-top-color:#ccc;opacity:0.7;cursor:default;">
+            <div class="icon">🪔</div>
+            <h3 style="color:#aaa;" data-en="Coming Soon" data-hi="जल्द आ रहा है">Coming Soon</h3>
+            <p style="color:#bbb;" data-en="Aartis of various deities will be added here." data-hi="विभिन्न देवताओं की आरतियाँ यहाँ जोड़ी जाएंगी।">Aartis of various deities will be added here.</p>
+        </div>
+        <!-- More cards will be added later -->
+    </div>
+    <div id="aarti-comments" class="comments-section" style="margin-top:2rem;"></div>
+</div>
 
     <!-- FAVORITES SECTION -->
     <div id="favorites-section" class="section">
@@ -3592,33 +3606,6 @@ function getTextContent(id) {
             <p style="margin-top: 0.5rem; color: var(--saffron);">सम्पूर्ण चालीसा जल्द आ रही है...</p>
         </div>`
     },
-    'lakshmi-mantra': {
-        en: `<div class="text-content">
-            <h2>💫 Lakshmi Mantra</h2>
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-                <button class="favorite-btn" data-content-id="lakshmi-mantra" data-content-title="लक्ष्मी मंत्र" data-content-title-en="Lakshmi Mantra" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
-            </div>
-            <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
-                Om Shreem Hreem Shreem Kamale Kamalaalaye<br>
-                Praseed Praseed Om Shreem Hreem Shreem<br>
-                Mahalakshmayee Namaha
-            </div>
-            <p style="margin-top: 1.5rem; font-style: italic;">A mantra for attracting prosperity, wealth, abundance, and spiritual well-being from Goddess Lakshmi.</p>
-        </div>`,
-        hi: `<div class="text-content">
-            <h2>💫 लक्ष्मी मंत्र</h2>
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-                <button class="favorite-btn" data-content-id="lakshmi-mantra" data-content-title="लक्ष्मी मंत्र" data-content-title-en="Lakshmi Mantra" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
-            </div>
-            <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
-                ॐ श्रीं ह्रीं श्रीं कमले कमलालये<br>
-                प्रसीद प्रसीद ॐ श्रीं ह्रीं श्रीं<br>
-                महालक्ष्म्यै नमः ॥
-            </div>
-            <p style="margin-top: 1.5rem; font-style: italic;">देवी लक्ष्मी से समृद्धि, धन, प्रचुरता और आध्यात्मिक कल्याण प्राप्त करने के लिए प्रार्थना।</p>
-        </div>`
-    }
-};
     const def = lang === 'en'
         ? `<div class="text-content"><h2>Content Coming Soon</h2><p>This section is being updated with detailed information. 🙏</p></div>`
         : `<div class="text-content"><h2>सामग्री जल्द आ रही है</h2><p>इस अनुभाग को विस्तृत जानकारी के साथ अपडेट किया जा रहा है। 🙏</p></div>`;
