@@ -2665,8 +2665,11 @@ body.dark-theme {
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-    <!-- SunCalc for sunrise/sunset (no API, always works) -->
-<script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.js"></script>
+    <!-- Panchangam library (works in browsers) -->
+<script type="module">
+    import { calculate_daily_panchang, Location } from 'https://esm.run/@fusionstrings/panchangam';
+    window.Panchangam = { calculate_daily_panchang, Location };
+</script>
 
 <script>
 // ======================================
@@ -3838,56 +3841,72 @@ showSection = function(id) {
 };
 
 // ======================================
-// TODAY'S PANCHANG (Sunrise/Sunset only)
+// TODAY'S PANCHANG (Complete)
 // ======================================
-function displayTodaysPanchang() {
+async function displayTodaysPanchang() {
     const container = document.getElementById('panchang-content');
     const loading = document.getElementById('panchang-loading');
-    if (!container || !loading) {
-        alert('Panchang containers missing!');
-        return;
-    }
-
-    // Check if SunCalc loaded
-    if (typeof SunCalc === 'undefined') {
-        loading.innerHTML = '❌ SunCalc library not loaded. Check internet.';
-        return;
-    }
+    if (!container || !loading) return;
 
     try {
-        // Delhi coordinates (change if needed)
-        const lat = 28.6139;
-        const lng = 77.2090;
+        // Wait for library to load
+        if (!window.Panchangam) {
+            loading.innerHTML = '⏳ Loading Panchang library...';
+            setTimeout(displayTodaysPanchang, 500);
+            return;
+        }
 
+        const { calculate_daily_panchang, Location } = window.Panchangam;
+        
+        // Delhi coordinates
+        const latitude = 28.6139;
+        const longitude = 77.2090;
+        const altitude = 225;
+        const location = new Location(latitude, longitude, altitude);
+        
         const today = new Date();
-        const times = SunCalc.getTimes(today, lat, lng);
-        const sunrise = times.sunrise;
-        const sunset = times.sunset;
+        const result = calculate_daily_panchang(
+            today.getFullYear(),
+            today.getMonth() + 1,
+            today.getDate(),
+            location,
+            1 // Lahiri Ayanamsa
+        );
 
         const formatTime = (date) => {
             if (!date) return '--:--';
-            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+            return new Date(date).toLocaleTimeString([], { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                hour12: true 
+            });
         };
+
+        const formatRahu = result.muhurats?.rahu_kalam 
+            ? `${formatTime(result.muhurats.rahu_kalam.start)} – ${formatTime(result.muhurats.rahu_kalam.end)}`
+            : '--:––';
 
         const contentHTML = `
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌅 Sunrise" data-hi="🌅 सूर्योदय">🌅 Sunrise</span><br> <span class="panchang-value">${formatTime(sunrise)}</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌇 Sunset" data-hi="🌇 सूर्यास्त">🌇 Sunset</span><br> <span class="panchang-value">${formatTime(sunset)}</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌙 Tithi" data-hi="🌙 तिथि">🌙 Tithi</span><br> <span class="panchang-value">(coming soon)</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="⭐ Nakshatra" data-hi="⭐ नक्षत्र">⭐ Nakshatra</span><br> <span class="panchang-value">(coming soon)</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="🧘 Yoga" data-hi="🧘 योग">🧘 Yoga</span><br> <span class="panchang-value">(coming soon)</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="📿 Karana" data-hi="📿 करण">📿 Karana</span><br> <span class="panchang-value">(coming soon)</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌓 Paksha" data-hi="🌓 पक्ष">🌓 Paksha</span><br> <span class="panchang-value">(coming soon)</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="⏰ Rahu Kaal" data-hi="⏰ राहु काल">⏰ Rahu Kaal</span><br> <span class="panchang-value">(coming soon)</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌅 Sunrise" data-hi="🌅 सूर्योदय">🌅 Sunrise</span><br> <span class="panchang-value">${formatTime(result.sunrise)}</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌇 Sunset" data-hi="🌇 सूर्यास्त">🌇 Sunset</span><br> <span class="panchang-value">${formatTime(result.sunset)}</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌙 Tithi" data-hi="🌙 तिथि">🌙 Tithi</span><br> <span class="panchang-value">${result.tithi_name || '--'}</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="⭐ Nakshatra" data-hi="⭐ नक्षत्र">⭐ Nakshatra</span><br> <span class="panchang-value">${result.nakshatra_name || '--'}</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="🧘 Yoga" data-hi="🧘 योग">🧘 Yoga</span><br> <span class="panchang-value">${result.yoga_name || '--'}</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="📿 Karana" data-hi="📿 करण">📿 Karana</span><br> <span class="panchang-value">${result.karana_name || '--'}</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌓 Paksha" data-hi="🌓 पक्ष">🌓 Paksha</span><br> <span class="panchang-value">${result.paksha || '--'}</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="⏰ Rahu Kaal" data-hi="⏰ राहु काल">⏰ Rahu Kaal</span><br> <span class="panchang-value">${formatRahu}</span></div>
             </div>
-            <p style="margin-top: 1rem; font-size: 0.9rem; color: #888; text-align: center;" data-en="⏱️ Sunrise/sunset calculated" data-hi="⏱️ सूर्योदय/सूर्यास्त गणना">⏱️ Sunrise/sunset calculated</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #888; text-align: center;" data-en="⏱️ Daily Panchang based on Swiss Ephemeris" data-hi="⏱️ दैनिक पंचांग स्विस एफेमेरिस पर आधारित">⏱️ Daily Panchang based on Swiss Ephemeris</p>
         `;
 
         container.innerHTML = contentHTML;
         loading.style.display = 'none';
         container.style.display = 'block';
         if (window.applyLanguage) applyLanguage(currentLang);
+
     } catch (error) {
+        console.error('Panchang error:', error);
         loading.innerHTML = '❌ Error: ' + error.message;
     }
 }
@@ -3905,6 +3924,19 @@ applyLanguage = function(lang) {
         });
     }
 };
+    // Initialize
+window.addEventListener('load', displayTodaysPanchang);
+
+// Call when Panchang section opens
+const originalShowSection = window.showSection;
+if (originalShowSection) {
+    window.showSection = function(id) {
+        originalShowSection(id);
+        if (id === 'panchang') {
+            setTimeout(displayTodaysPanchang, 200);
+        }
+    };
+}
 </script>
 
 </body>
