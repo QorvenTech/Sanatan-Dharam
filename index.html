@@ -3292,324 +3292,326 @@ function closePaath() {
 // ======================================
 function getTextContent(id) {
     const lang = currentLang || 'en';
-   const contents = {
-    'bhagavad-gita': {
-        en: `<div class="text-content"><h2>Bhagavad Gita – The Song of God</h2><p>The Bhagavad Gita is a 700-verse scripture forming part of the Mahabharata – a sacred text. It is one of the most important texts in Hinduism and is considered to be one of the world's major religious scriptures.</p></div>`,
-        hi: `<div class="text-content"><h2>भगवद् गीता – भगवान का गीत</h2><p>भगवद् गीता 700 श्लोकों का हिंदू धर्मग्रंथ है। यह कुरुक्षेत्र के युद्धक्षेत्र में भगवान कृष्ण और अर्जुन के बीच पवित्र संवाद है।</p></div>`
-    },
-    'ramayan': {
-        en: `<div class="text-content">
-            <h2>📖 RAMAYAN</h2>
-            <p style="color: var(--brown); font-style: italic;">The Sacred Story of Lord Shri Ram – Index</p>
-            
-            <!-- Index with clickable links (English) -->
-            <div id="ramayan-index">
-                <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
-                    <div onclick="showRamayanSub('aavahan')" style="background: var(--cream); padding: 1.2rem; border-radius: 12px; cursor: pointer; border-left: 4px solid var(--saffron); transition: 0.2s;">
-                        <h3 style="color: var(--saffron); margin: 0;">|| Shri Ramayan Aavahan ||</h3>
-                        <p style="margin: 0.5rem 0 0 0; color: var(--text);">Invocation and Mangalacharan to begin the recitation.</p>
-                    </div>
-                    <div onclick="showRamayanSub('visarjan')" style="background: var(--cream); padding: 1.2rem; border-radius: 12px; cursor: pointer; border-left: 4px solid var(--saffron); transition: 0.2s;">
-                        <h3 style="color: var(--saffron); margin: 0;">|| Shri Ramayan Visarjan ||</h3>
-                        <p style="margin: 0.5rem 0 0 0; color: var(--text);">Recitation conclusion and prayer for forgiveness.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Aavahan content (English) -->
-            <div id="ramayan-aavahan" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button class="back-btn" onclick="showRamayanIndex()">← Back to Index</button>
-                    <button class="favorite-btn" data-content-id="ramayan-aavahan" data-content-title="श्री रामायण आवाहन" data-content-title-en="Shri Ramayan Aavahan" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
-                </div>
-                <h3 style="color: var(--saffron); margin-top: 1rem;">|| Shri Ramayan Aavahan ||</h3>
-                <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
-                    Jo sumirat siddhi hoye, gana nayak karivar badan |<br>
-                    Karahu anugrah soi, buddhi rashi shubh gun sadan ||<br><br>
-                    Mook hoi vachal, pangu chadhayi girivar gahan |<br>
-                    Jasu kripasu dayal, dravahu sakal kalimal dahan ||<br><br>
-                    Neel saroruha shyam, tarun arun vaarij nayan |<br>
-                    Karahu so mam ur dham, sada ksheersagar sayan ||<br><br>
-                    Kunda indu sam deh, uma raman karuna ayan |<br>
-                    Jahi deen par neh, karahu kripa mardan mayan ||<br><br>
-                    Bandahu gurupada kanja, kripa sindhu nar roop hari |<br>
-                    Maha moh tam punj, jasu vachan ravikar nikar ||<br><br>
-                    Bandahu munipada kanja, ramayan jehi nir mayau |<br>
-                    Sakhar sukomal manju, dosh rahit dooshan sahit ||<br><br>
-                    Bandahu charahu veda, bhav vaarid vohit saris |<br>
-                    Jinahi na sapanehu khed, baranat raghupati vimal yash ||<br><br>
-                    Bandahu vidhi pad renu, bhavsagar jin keenh yeh |<br>
-                    Sant sudha shashi chhenu, pragate khal vish baaruni ||<br><br>
-                    Bandahu avadh bhual, satya prem jehi ram pad |<br>
-                    Bichhurat deendayal, priya tanu trin iv par hareau ||<br><br>
-                    Bandahu pavan kumar, khal van paavak gyan ghan |<br>
-                    Jasu hridaya aagaar, basahi ram sar chaap dhar ||<br><br>
-                    Ram katha ke rasik tum, bhakti rashi mati dheer |<br>
-                    Aaya so aasan lijiye, tej punj kapi veer ||<br><br>
-                    Ramayan tulsikrit, kahau katha anusaar |<br>
-                    Prem sahit aasan gahau, aavahu pavan kumar ||<br><br>
-                    <strong>|| Siyavar Ramchandra Ji Ki Jai ||</strong>
-                </div>
-            </div>
-
-            <!-- Visarjan content (English) -->
-            <div id="ramayan-visarjan" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button class="back-btn" onclick="showRamayanIndex()">← Back to Index</button>
-                    <button class="favorite-btn" data-content-id="ramayan-visarjan" data-content-title="श्री रामायण विसर्जन" data-content-title-en="Shri Ramayan Visarjan" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
-                </div>
-                <h3 style="color: var(--saffron); margin-top: 1rem;">|| Shri Ramayan Visarjan ||</h3>
-                <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
-                    Jai jai raja ram ki, jai lakshman balvan |<br>
-                    Jai kapees sugreev ki, jai angad hanuman ||<br><br>
-                    Jai jai kagabhushundi ki, jai giri uma mahesh |<br>
-                    Jai rishi bharadwaj ki, jai tulsi avadhesh ||<br><br>
-                    Prabhu san kahiyo dandavat, tumahi kahau kar jor |<br>
-                    Baar-baar raghunath kahi, surati karavahu mor ||<br><br>
-                    Kaamahi naari piyar jimi, lobhihi priya jimi daam |<br>
-                    Timi raghunath nirantar, priya laagahu mohi ram ||<br><br>
-                    Baar-baar var magahu harsh dehu shri rang |<br>
-                    Pad saroj an payani bhagati sada satsang ||<br><br>
-                    Pranat paal raghuvansh mani karuna sindhu kharari |<br>
-                    Gaye sharan prabhu rakhihain sab aparadh bisar ||<br><br>
-                    Katha visarjan hot hain suno veer hanuman |<br>
-                    Jo jan jahan se aaye hain te tah karo payan ||<br><br>
-                    Shrota sab aashram gaye shambhu gaye kailash |<br>
-                    Ramayan mam hirday mein sada karo tum vaas ||<br><br>
-                    Ramayan jasu paavan gaavahi sunahi je log |<br>
-                    Ram bhagati dridh paavahi vin virag jap jog ||<br><br>
-                    Ramayan baikunth gayi sur gaye nij nij dham |<br>
-                    Ramchandra ke pad kamal bandi gaye hanuman ||<br><br>
-                    <strong>|| Siyavar Ramchandra Ki Jai ||</strong><br>
-                    <strong>|| Uma Pati Mahadev Ji Ki Jai ||</strong><br>
-                    <strong>|| Pavansut Hanumanji Ki Jai ||</strong><br>
-                    <strong>|| Goswami Tulsidas Ji Ki Jai ||</strong><br>
-                    <strong>|| Bolo Bhai Sab Santo Ki Jai ||</strong>
-                </div>
-            </div>
-        </div>`,
-        hi: `<div class="text-content">
-            <h2>📖 रामायण</h2>
-            <p style="color: var(--brown); font-style: italic;">भगवान श्रीराम की पवित्र कथा – सूची</p>
-            
-            <div id="ramayan-index">
-                <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
-                    <div onclick="showRamayanSub('aavahan')" style="background: var(--cream); padding: 1.2rem; border-radius: 12px; cursor: pointer; border-left: 4px solid var(--saffron); transition: 0.2s;">
-                        <h3 style="color: var(--saffron); margin: 0;">॥ श्री रामायण आवाहन ॥</h3>
-                        <p style="margin: 0.5rem 0 0 0; color: var(--text);">पाठ प्रारम्भ करने हेतु मंगलाचरण एवं आवाहन।</p>
-                    </div>
-                    <div onclick="showRamayanSub('visarjan')" style="background: var(--cream); padding: 1.2rem; border-radius: 12px; cursor: pointer; border-left: 4px solid var(--saffron); transition: 0.2s;">
-                        <h3 style="color: var(--saffron); margin: 0;">॥ श्री रामायण विसर्जन ॥</h3>
-                        <p style="margin: 0.5rem 0 0 0; color: var(--text);">पाठ समाप्ति एवं क्षमा प्रार्थना।</p>
+    const contents = {
+        'bhagavad-gita': {
+            en: `<div class="text-content"><h2>Bhagavad Gita – The Song of God</h2><p>The Bhagavad Gita is a 700-verse scripture forming part of the Mahabharata – a sacred text. It is one of the most important texts in Hinduism and is considered to be one of the world's major religious scriptures.</p></div>`,
+            hi: `<div class="text-content"><h2>भगवद् गीता – भगवान का गीत</h2><p>भगवद् गीता 700 श्लोकों का हिंदू धर्मग्रंथ है। यह कुरुक्षेत्र के युद्धक्षेत्र में भगवान कृष्ण और अर्जुन के बीच पवित्र संवाद है।</p></div>`
+        },
+        'ramayan': {
+            en: `<div class="text-content">
+                <h2>📖 RAMAYAN</h2>
+                <p style="color: var(--brown); font-style: italic;">The Sacred Story of Lord Shri Ram – Index</p>
+                
+                <!-- Index with clickable links (English) -->
+                <div id="ramayan-index">
+                    <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
+                        <div onclick="showRamayanSub('aavahan')" style="background: var(--cream); padding: 1.2rem; border-radius: 12px; cursor: pointer; border-left: 4px solid var(--saffron); transition: 0.2s;">
+                            <h3 style="color: var(--saffron); margin: 0;">|| Shri Ramayan Aavahan ||</h3>
+                            <p style="margin: 0.5rem 0 0 0; color: var(--text);">Invocation and Mangalacharan to begin the recitation.</p>
+                        </div>
+                        <div onclick="showRamayanSub('visarjan')" style="background: var(--cream); padding: 1.2rem; border-radius: 12px; cursor: pointer; border-left: 4px solid var(--saffron); transition: 0.2s;">
+                            <h3 style="color: var(--saffron); margin: 0;">|| Shri Ramayan Visarjan ||</h3>
+                            <p style="margin: 0.5rem 0 0 0; color: var(--text);">Recitation conclusion and prayer for forgiveness.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="ramayan-aavahan" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
-                    <button class="favorite-btn" data-content-id="ramayan-aavahan" data-content-title="श्री रामायण आवाहन" data-content-title-en="Shri Ramayan Aavahan" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                <!-- Aavahan content (English) -->
+                <div id="ramayan-aavahan" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <button class="back-btn" onclick="showRamayanIndex()">← Back to Index</button>
+                        <button class="favorite-btn" data-content-id="ramayan-aavahan" data-content-title="श्री रामायण आवाहन" data-content-title-en="Shri Ramayan Aavahan" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                    </div>
+                    <h3 style="color: var(--saffron); margin-top: 1rem;">|| Shri Ramayan Aavahan ||</h3>
+                    <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
+                        Jo sumirat siddhi hoye, gana nayak karivar badan |<br>
+                        Karahu anugrah soi, buddhi rashi shubh gun sadan ||<br><br>
+                        Mook hoi vachal, pangu chadhayi girivar gahan |<br>
+                        Jasu kripasu dayal, dravahu sakal kalimal dahan ||<br><br>
+                        Neel saroruha shyam, tarun arun vaarij nayan |<br>
+                        Karahu so mam ur dham, sada ksheersagar sayan ||<br><br>
+                        Kunda indu sam deh, uma raman karuna ayan |<br>
+                        Jahi deen par neh, karahu kripa mardan mayan ||<br><br>
+                        Bandahu gurupada kanja, kripa sindhu nar roop hari |<br>
+                        Maha moh tam punj, jasu vachan ravikar nikar ||<br><br>
+                        Bandahu munipada kanja, ramayan jehi nir mayau |<br>
+                        Sakhar sukomal manju, dosh rahit dooshan sahit ||<br><br>
+                        Bandahu charahu veda, bhav vaarid vohit saris |<br>
+                        Jinahi na sapanehu khed, baranat raghupati vimal yash ||<br><br>
+                        Bandahu vidhi pad renu, bhavsagar jin keenh yeh |<br>
+                        Sant sudha shashi chhenu, pragate khal vish baaruni ||<br><br>
+                        Bandahu avadh bhual, satya prem jehi ram pad |<br>
+                        Bichhurat deendayal, priya tanu trin iv par hareau ||<br><br>
+                        Bandahu pavan kumar, khal van paavak gyan ghan |<br>
+                        Jasu hridaya aagaar, basahi ram sar chaap dhar ||<br><br>
+                        Ram katha ke rasik tum, bhakti rashi mati dheer |<br>
+                        Aaya so aasan lijiye, tej punj kapi veer ||<br><br>
+                        Ramayan tulsikrit, kahau katha anusaar |<br>
+                        Prem sahit aasan gahau, aavahu pavan kumar ||<br><br>
+                        <strong>|| Siyavar Ramchandra Ji Ki Jai ||</strong>
+                    </div>
                 </div>
-                <h3 style="color: var(--saffron); margin-top: 1rem;">॥ श्री रामायण आवाहन ॥</h3>
-                <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
-                    जो सुमिरत सिद्ध होय गण नायक करिवर बदन।<br>
-                    करहुँ अनुग्रह सोई बुद्धि राशि शुभ गुण सदन।।<br>
-                    मूक होई वाचाल पंगु चढ़ाई गिरिवर गहन।<br>
-                    जासु कृपासु दयाल द्रवहु सकल कलिमल दहन।।<br>
-                    नील सरोरुह श्याम तरुन अरुन वारिज नयन।<br>
-                    करहु सो मम उर धाम सदा क्षीरसागर सयन।।<br>
-                    कुंद इंदु सम देह उमा रमन करुणा अयन।<br>
-                    जाहि दिन पर नेह करहुँ कृपा मर्दन मयन।।<br>
-                    बंदहु गुरुपद कंज कृपा सिंधु नर रूप हरि।<br>
-                    महा मोह तम पुंज जासु वचन रविकर निकर।।<br>
-                    बंदहु मुनिपद कंज रामायन जेहि निर मयऊ।<br>
-                    सखर सुकोमल मंजु दोष रहित दूषन सहित।।<br>
-                    बंदहु चारहु वेद भव वारिध वो हित सरिस।<br>
-                    जिनहि न सपनेहु खेद बरनत रघुपति विमल यश।।<br>
-                    बंदहु विधि पद रेनु भवसागर जिन कीन्ह यह।<br>
-                    संत सुधा शशि छेनू प्रगटे खल विष बारुनी।।<br>
-                    बंदहु अवध भुआल सत्य प्रेम जेहि राम पद।<br>
-                    बिछुरत दीनदयाल प्रिय तनु तृन ईव पर हरेऊ।।<br>
-                    बंदहु पवन कुमार खल वन पावक ज्ञान घन।<br>
-                    जासु ह्र्दय आगार बसहि राम सर चाप धर।।<br>
-                    राम कथा के रसिक तुम, भक्ति राशि मति धीर।<br>
-                    आय सो आसन लीजिये, तेज पुंज कपि वीर।।<br>
-                    रामायण तुलसीकृत कहऊ कथा अनुसार।<br>
-                    प्रेम सहित आसन गहऊ आवहु पवन कुमार।।<br>
-                    <strong>।। सियावर रामचंद्र जी की जय ।।</strong>
-                </div>
-            </div>
 
-            <div id="ramayan-visarjan" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
-                    <button class="favorite-btn" data-content-id="ramayan-visarjan" data-content-title="श्री रामायण विसर्जन" data-content-title-en="Shri Ramayan Visarjan" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                <!-- Visarjan content (English) -->
+                <div id="ramayan-visarjan" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <button class="back-btn" onclick="showRamayanIndex()">← Back to Index</button>
+                        <button class="favorite-btn" data-content-id="ramayan-visarjan" data-content-title="श्री रामायण विसर्जन" data-content-title-en="Shri Ramayan Visarjan" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                    </div>
+                    <h3 style="color: var(--saffron); margin-top: 1rem;">|| Shri Ramayan Visarjan ||</h3>
+                    <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
+                        Jai jai raja ram ki, jai lakshman balvan |<br>
+                        Jai kapees sugreev ki, jai angad hanuman ||<br><br>
+                        Jai jai kagabhushundi ki, jai giri uma mahesh |<br>
+                        Jai rishi bharadwaj ki, jai tulsi avadhesh ||<br><br>
+                        Prabhu san kahiyo dandavat, tumahi kahau kar jor |<br>
+                        Baar-baar raghunath kahi, surati karavahu mor ||<br><br>
+                        Kaamahi naari piyar jimi, lobhihi priya jimi daam |<br>
+                        Timi raghunath nirantar, priya laagahu mohi ram ||<br><br>
+                        Baar-baar var magahu harsh dehu shri rang |<br>
+                        Pad saroj an payani bhagati sada satsang ||<br><br>
+                        Pranat paal raghuvansh mani karuna sindhu kharari |<br>
+                        Gaye sharan prabhu rakhihain sab aparadh bisar ||<br><br>
+                        Katha visarjan hot hain suno veer hanuman |<br>
+                        Jo jan jahan se aaye hain te tah karo payan ||<br><br>
+                        Shrota sab aashram gaye shambhu gaye kailash |<br>
+                        Ramayan mam hirday mein sada karo tum vaas ||<br><br>
+                        Ramayan jasu paavan gaavahi sunahi je log |<br>
+                        Ram bhagati dridh paavahi vin virag jap jog ||<br><br>
+                        Ramayan baikunth gayi sur gaye nij nij dham |<br>
+                        Ramchandra ke pad kamal bandi gaye hanuman ||<br><br>
+                        <strong>|| Siyavar Ramchandra Ki Jai ||</strong><br>
+                        <strong>|| Uma Pati Mahadev Ji Ki Jai ||</strong><br>
+                        <strong>|| Pavansut Hanumanji Ki Jai ||</strong><br>
+                        <strong>|| Goswami Tulsidas Ji Ki Jai ||</strong><br>
+                        <strong>|| Bolo Bhai Sab Santo Ki Jai ||</strong>
+                    </div>
                 </div>
-                <h3 style="color: var(--saffron); margin-top: 1rem;">॥ श्री रामायण विसर्जन ॥</h3>
-                <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
-                    जय जय राजा राम की, जय लक्ष्मण बलवान।<br>
-                    जय कपीस सुग्रीव की, जय अंगद हनुमान।।<br>
-                    जय जय कागभुशुण्डि की, जय गिरि उमा महेश।<br>
-                    जय ऋषि भारद्वाज की, जय तुलसी अवधेश।।<br>
-                    प्रभु सन कहियो दंडवत, तुमहि कहौ कर जोर।<br>
-                    बार-बार रघुनाथ कहि सुरति करावहु मोर।।<br>
-                    कामहि नारि पियार जिमि, लोभिहि प्रिय जिमि दाम।<br>
-                    तिमि रघुनाथ निरंतर, प्रिय लागहु मोहि राम।।<br>
-                    बार-बार वर मागहु हर्ष देहु श्री रंग।<br>
-                    पद सरोज अन पयनी भगति सदा सतसंग।।<br>
-                    प्रणत पाल रघुवंश मणि करुणा सिंधु खरारि।<br>
-                    गये शरण प्रभु राखिहैं सब अपराध बिसार।।<br>
-                    कथा विसर्जन होत हैं सुनो वीर हनुमान।<br>
-                    जो जन जहाँ से आये हैं ते तः करो पयान।।<br>
-                    श्रोता सब आश्रम गए शम्भु गए कैलाश।<br>
-                    रामायण मम हिर्दय में सदा करो तुम वास।।<br>
-                    रामायण जसु पावन गावहि सुनहि जे लोग।<br>
-                    राम भगति दृढ पावहि विन विराग जप जोग।।<br>
-                    रामायण बैकुण्ठ गई सुर गए निज निज धाम।<br>
-                    रामचंद्र के पद कमल बंदि गये हनुमान।।<br>
-                    <strong>।। सियावर रामचंद्र की जय ।।</strong><br>
-                    <strong>।। उमा पति महादेव जी की जय ।।</strong><br>
-                    <strong>।। पवनसुत हनुमानजी की जय ।।</strong><br>
-                    <strong>।। गोस्वामी तुलसीदास जी की जय ।।</strong><br>
-                    <strong>।। बोलो भाई सब संतो की जय ।।</strong>
+            </div>`,
+            hi: `<div class="text-content">
+                <h2>📖 रामायण</h2>
+                <p style="color: var(--brown); font-style: italic;">भगवान श्रीराम की पवित्र कथा – सूची</p>
+                
+                <div id="ramayan-index">
+                    <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
+                        <div onclick="showRamayanSub('aavahan')" style="background: var(--cream); padding: 1.2rem; border-radius: 12px; cursor: pointer; border-left: 4px solid var(--saffron); transition: 0.2s;">
+                            <h3 style="color: var(--saffron); margin: 0;">॥ श्री रामायण आवाहन ॥</h3>
+                            <p style="margin: 0.5rem 0 0 0; color: var(--text);">पाठ प्रारम्भ करने हेतु मंगलाचरण एवं आवाहन।</p>
+                        </div>
+                        <div onclick="showRamayanSub('visarjan')" style="background: var(--cream); padding: 1.2rem; border-radius: 12px; cursor: pointer; border-left: 4px solid var(--saffron); transition: 0.2s;">
+                            <h3 style="color: var(--saffron); margin: 0;">॥ श्री रामायण विसर्जन ॥</h3>
+                            <p style="margin: 0.5rem 0 0 0; color: var(--text);">पाठ समाप्ति एवं क्षमा प्रार्थना।</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>`
-    },
-    'gayatri-mantra': {
-        en: `<div class="text-content">
-            <h2>🙏 Gayatri Mantra</h2>
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-                <button class="favorite-btn" data-content-id="gayatri-mantra" data-content-title="गायत्री मंत्र" data-content-title-en="Gayatri Mantra" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
-            </div>
-            <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
-                Om Bhur Bhuvah Svah<br>
-                Tat Savitur Varenyam<br>
-                Bhargo Devasya Dhimahi<br>
-                Dhiyo Yo Nah Prachodayat
-            </div>
-            <p style="margin-top: 1.5rem; font-style: italic;">A universal prayer for enlightenment and wisdom, asking the divine light to sharpen our intellect.</p>
-        </div>`,
-        hi: `<div class="text-content">
-            <h2>🙏 गायत्री मंत्र</h2>
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-                <button class="favorite-btn" data-content-id="gayatri-mantra" data-content-title="गायत्री मंत्र" data-content-title-en="Gayatri Mantra" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
-            </div>
-            <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
-                ॐ भूर्भुवः स्वः<br>
-                तत्सवितुर्वरेण्यं<br>
-                भर्गो देवस्य धीमहि<br>
-                धियो यो नः प्रचोदयात् ॥
-            </div>
-            <p style="margin-top: 1.5rem; font-style: italic;">ज्ञान और बुद्धि की प्राप्ति के लिए एक सार्वभौमिक प्रार्थना, जिसमें हम दिव्य प्रकाश से अपनी बुद्धि को प्रेरित करने की प्रार्थना करते हैं।</p>
-        </div>`
-    },
-    'maha-mrityunjaya': {
-        en: `<div class="text-content">
-            <h2>🔱 Maha Mrityunjaya Mantra</h2>
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-                <button class="favorite-btn" data-content-id="maha-mrityunjaya" data-content-title="महा मृत्युंजय मंत्र" data-content-title-en="Maha Mrityunjaya Mantra" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
-            </div>
-            <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
-                Om Tryambakam Yajamahe<br>
-                Sugandhim Pushti-Vardhanam<br>
-                Urvarukamiva Bandhanan<br>
-                Mrityor Mukshiya Maamritat
-            </div>
-            <p style="margin-top: 1.5rem; font-style: italic;">A powerful mantra dedicated to Lord Shiva for healing, protection from diseases, and liberation from the cycle of birth and death.</p>
-        </div>`,
-        hi: `<div class="text-content">
-            <h2>🔱 महा मृत्युंजय मंत्र</h2>
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-                <button class="favorite-btn" data-content-id="maha-mrityunjaya" data-content-title="महा मृत्युंजय मंत्र" data-content-title-en="Maha Mrityunjaya Mantra" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
-            </div>
-            <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
-                ॐ त्र्यम्बकं यजामहे<br>
-                सुगन्धिं पुष्टिवर्धनम् ।<br>
-                उर्वारुकमिव बन्धनान्<br>
-                मृत्योर्मुक्षीय माऽमृतात् ॥
-            </div>
-            <p style="margin-top: 1.5rem; font-style: italic;">भगवान शिव को समर्पित यह मंत्र स्वास्थ्य, रोगों से रक्षा और जन्म-मृत्यु के चक्र से मुक्ति (मोक्ष) के लिए अत्यंत प्रभावशाली है।</p>
-        </div>`
-    },
-    'om-mantra': {
-        en: `<div class="text-content">
-            <h2>🕉️ Om - Pranava</h2>
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-                <button class="favorite-btn" data-content-id="om-mantra" data-content-title="ॐ - प्रणव" data-content-title-en="Om - Pranava" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
-            </div>
-            <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem; text-align: center;">
-                ॐ (A-U-M)
-            </div>
-            <p style="margin-top: 1.5rem; font-style: italic;">The primordial sound of the universe. It represents the ultimate reality and the source of all existence.</p>
-        </div>`,
-        hi: `<div class="text-content">
-            <h2>🕉️ ॐ - प्रणव</h2>
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-                <button class="favorite-btn" data-content-id="om-mantra" data-content-title="ॐ - प्रणव" data-content-title-en="Om - Pranava" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
-            </div>
-            <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem; text-align: center;">
-                ॐ (अ-उ-म)
-            </div>
-            <p style="margin-top: 1.5rem; font-style: italic;">ब्रह्मांड की आदि ध्वनि। यह परम सत्य और समस्त अस्तित्व के स्रोत का प्रतीक है।</p>
-        </div>`
-    },
-    'ganesh-mantra': {
-        en: `<div class="text-content">
-            <h2>🐘 Ganesh Mantra</h2>
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-                <button class="favorite-btn" data-content-id="ganesh-mantra" data-content-title="गणेश मंत्र" data-content-title-en="Ganesh Mantra" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
-            </div>
-            <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
-                Om Gam Ganapataye Namaha
-            </div>
-            <p style="margin-top: 1.5rem; font-style: italic;">A mantra to invoke Lord Ganesha to remove obstacles and ensure success in any new beginning.</p>
-        </div>`,
-        hi: `<div class="text-content">
-            <h2>🐘 गणेश मंत्र</h2>
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-                <button class="favorite-btn" data-content-id="ganesh-mantra" data-content-title="गणेश मंत्र" data-content-title-en="Ganesh Mantra" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
-            </div>
-            <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
-                ॐ गं गणपतये नमः ॥
-            </div>
-            <p style="margin-top: 1.5rem; font-style: italic;">किसी भी नए कार्य की शुरुआत में बाधाओं को दूर करने और सफलता सुनिश्चित करने के लिए भगवान गणेश का आह्वान।</p>
-        </div>`
-    },
-    'hanuman-chalisa': {
-        en: `<div class="text-content">
-            <h2>💪 Hanuman Chalisa (Opening Verse)</h2>
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-                <button class="favorite-btn" data-content-id="hanuman-chalisa" data-content-title="हनुमान चालीसा" data-content-title-en="Hanuman Chalisa" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
-            </div>
-            <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
-                Shri Guru Charan Saroj Raj<br>
-                Nij Manu Mukuru Sudhari<br>
-                Barnau Raghuvar Bimal Jasu<br>
-                Jo Dayaku Phal Chari
-            </div>
-            <p style="margin-top: 1.5rem; font-style: italic;">A 40-verse hymn praising the strength, devotion, and courage of Lord Hanuman. It provides protection and peace.</p>
-            <p style="margin-top: 0.5rem; color: var(--saffron);">Full Chalisa coming soon...</p>
-        </div>`,
-        hi: `<div class="text-content">
-            <h2>💪 हनुमान चालीसा (प्रारंभिक दोहा)</h2>
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-                <button class="favorite-btn" data-content-id="hanuman-chalisa" data-content-title="हनुमान चालीसा" data-content-title-en="Hanuman Chalisa" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
-            </div>
-            <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
-                श्रीगुरु चरन सरोज रज<br>
-                निज मनु मुकुरु सुधारि ।<br>
-                बरनऊं रघुबर बिमल जसु<br>
-                जो दायकु फल चारि ॥
-            </div>
-            <p style="margin-top: 1.5rem; font-style: italic;">भगवान हनुमान की शक्ति, भक्ति और साहस की स्तुति करने वाली ४० चौपाइयां। यह सुरक्षा और मानसिक शांति प्रदान करती है।</p>
-            <p style="margin-top: 0.5rem; color: var(--saffron);">सम्पूर्ण चालीसा जल्द आ रही है...</p>
-        </div>`
-    },
+
+                <div id="ramayan-aavahan" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
+                        <button class="favorite-btn" data-content-id="ramayan-aavahan" data-content-title="श्री रामायण आवाहन" data-content-title-en="Shri Ramayan Aavahan" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                    </div>
+                    <h3 style="color: var(--saffron); margin-top: 1rem;">॥ श्री रामायण आवाहन ॥</h3>
+                    <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
+                        जो सुमिरत सिद्ध होय गण नायक करिवर बदन।<br>
+                        करहुँ अनुग्रह सोई बुद्धि राशि शुभ गुण सदन।।<br>
+                        मूक होई वाचाल पंगु चढ़ाई गिरिवर गहन।<br>
+                        जासु कृपासु दयाल द्रवहु सकल कलिमल दहन।।<br>
+                        नील सरोरुह श्याम तरुन अरुन वारिज नयन।<br>
+                        करहु सो मम उर धाम सदा क्षीरसागर सयन।।<br>
+                        कुंद इंदु सम देह उमा रमन करुणा अयन।<br>
+                        जाहि दिन पर नेह करहुँ कृपा मर्दन मयन।।<br>
+                        बंदहु गुरुपद कंज कृपा सिंधु नर रूप हरि।<br>
+                        महा मोह तम पुंज जासु वचन रविकर निकर।।<br>
+                        बंदहु मुनिपद कंज रामायन जेहि निर मयऊ।<br>
+                        सखर सुकोमल मंजु दोष रहित दूषन सहित।।<br>
+                        बंदहु चारहु वेद भव वारिध वो हित सरिस।<br>
+                        जिनहि न सपनेहु खेद बरनत रघुपति विमल यश।।<br>
+                        बंदहु विधि पद रेनु भवसागर जिन कीन्ह यह।<br>
+                        संत सुधा शशि छेनू प्रगटे खल विष बारुनी।।<br>
+                        बंदहु अवध भुआल सत्य प्रेम जेहि राम पद।<br>
+                        बिछुरत दीनदयाल प्रिय तनु तृन ईव पर हरेऊ।।<br>
+                        बंदहु पवन कुमार खल वन पावक ज्ञान घन।<br>
+                        जासु ह्र्दय आगार बसहि राम सर चाप धर।।<br>
+                        राम कथा के रसिक तुम, भक्ति राशि मति धीर।<br>
+                        आय सो आसन लीजिये, तेज पुंज कपि वीर।।<br>
+                        रामायण तुलसीकृत कहऊ कथा अनुसार।<br>
+                        प्रेम सहित आसन गहऊ आवहु पवन कुमार।।<br>
+                        <strong>।। सियावर रामचंद्र जी की जय ।।</strong>
+                    </div>
+                </div>
+
+                <div id="ramayan-visarjan" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <button class="back-btn" onclick="showRamayanIndex()">← वापस सूची में</button>
+                        <button class="favorite-btn" data-content-id="ramayan-visarjan" data-content-title="श्री रामायण विसर्जन" data-content-title-en="Shri Ramayan Visarjan" data-section="ramayan" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                    </div>
+                    <h3 style="color: var(--saffron); margin-top: 1rem;">॥ श्री रामायण विसर्जन ॥</h3>
+                    <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2;">
+                        जय जय राजा राम की, जय लक्ष्मण बलवान।<br>
+                        जय कपीस सुग्रीव की, जय अंगद हनुमान।।<br>
+                        जय जय कागभुशुण्डि की, जय गिरि उमा महेश।<br>
+                        जय ऋषि भारद्वाज की, जय तुलसी अवधेश।।<br>
+                        प्रभु सन कहियो दंडवत, तुमहि कहौ कर जोर।<br>
+                        बार-बार रघुनाथ कहि सुरति करावहु मोर।।<br>
+                        कामहि नारि पियार जिमि, लोभिहि प्रिय जिमि दाम।<br>
+                        तिमि रघुनाथ निरंतर, प्रिय लागहु मोहि राम।।<br>
+                        बार-बार वर मागहु हर्ष देहु श्री रंग।<br>
+                        पद सरोज अन पयनी भगति सदा सतसंग।।<br>
+                        प्रणत पाल रघुवंश मणि करुणा सिंधु खरारि।<br>
+                        गये शरण प्रभु राखिहैं सब अपराध बिसार।।<br>
+                        कथा विसर्जन होत हैं सुनो वीर हनुमान।<br>
+                        जो जन जहाँ से आये हैं ते तः करो पयान।।<br>
+                        श्रोता सब आश्रम गए शम्भु गए कैलाश।<br>
+                        रामायण मम हिर्दय में सदा करो तुम वास।।<br>
+                        रामायण जसु पावन गावहि सुनहि जे लोग।<br>
+                        राम भगति दृढ पावहि विन विराग जप जोग।।<br>
+                        रामायण बैकुण्ठ गई सुर गए निज निज धाम।<br>
+                        रामचंद्र के पद कमल बंदि गये हनुमान।।<br>
+                        <strong>।। सियावर रामचंद्र की जय ।।</strong><br>
+                        <strong>।। उमा पति महादेव जी की जय ।।</strong><br>
+                        <strong>।। पवनसुत हनुमानजी की जय ।।</strong><br>
+                        <strong>।। गोस्वामी तुलसीदास जी की जय ।।</strong><br>
+                        <strong>।। बोलो भाई सब संतो की जय ।।</strong>
+                    </div>
+                </div>
+            </div>`
+        },
+        'gayatri-mantra': {
+            en: `<div class="text-content">
+                <h2>🙏 Gayatri Mantra</h2>
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+                    <button class="favorite-btn" data-content-id="gayatri-mantra" data-content-title="गायत्री मंत्र" data-content-title-en="Gayatri Mantra" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                </div>
+                <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
+                    Om Bhur Bhuvah Svah<br>
+                    Tat Savitur Varenyam<br>
+                    Bhargo Devasya Dhimahi<br>
+                    Dhiyo Yo Nah Prachodayat
+                </div>
+                <p style="margin-top: 1.5rem; font-style: italic;">A universal prayer for enlightenment and wisdom, asking the divine light to sharpen our intellect.</p>
+            </div>`,
+            hi: `<div class="text-content">
+                <h2>🙏 गायत्री मंत्र</h2>
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+                    <button class="favorite-btn" data-content-id="gayatri-mantra" data-content-title="गायत्री मंत्र" data-content-title-en="Gayatri Mantra" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                </div>
+                <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
+                    ॐ भूर्भुवः स्वः<br>
+                    तत्सवितुर्वरेण्यं<br>
+                    भर्गो देवस्य धीमहि<br>
+                    धियो यो नः प्रचोदयात् ॥
+                </div>
+                <p style="margin-top: 1.5rem; font-style: italic;">ज्ञान और बुद्धि की प्राप्ति के लिए एक सार्वभौमिक प्रार्थना, जिसमें हम दिव्य प्रकाश से अपनी बुद्धि को प्रेरित करने की प्रार्थना करते हैं।</p>
+            </div>`
+        },
+        'maha-mrityunjaya': {
+            en: `<div class="text-content">
+                <h2>🔱 Maha Mrityunjaya Mantra</h2>
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+                    <button class="favorite-btn" data-content-id="maha-mrityunjaya" data-content-title="महा मृत्युंजय मंत्र" data-content-title-en="Maha Mrityunjaya Mantra" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                </div>
+                <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
+                    Om Tryambakam Yajamahe<br>
+                    Sugandhim Pushti-Vardhanam<br>
+                    Urvarukamiva Bandhanan<br>
+                    Mrityor Mukshiya Maamritat
+                </div>
+                <p style="margin-top: 1.5rem; font-style: italic;">A powerful mantra dedicated to Lord Shiva for healing, protection from diseases, and liberation from the cycle of birth and death.</p>
+            </div>`,
+            hi: `<div class="text-content">
+                <h2>🔱 महा मृत्युंजय मंत्र</h2>
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+                    <button class="favorite-btn" data-content-id="maha-mrityunjaya" data-content-title="महा मृत्युंजय मंत्र" data-content-title-en="Maha Mrityunjaya Mantra" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                </div>
+                <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
+                    ॐ त्र्यम्बकं यजामहे<br>
+                    सुगन्धिं पुष्टिवर्धनम् ।<br>
+                    उर्वारुकमिव बन्धनान्<br>
+                    मृत्योर्मुक्षीय माऽमृतात् ॥
+                </div>
+                <p style="margin-top: 1.5rem; font-style: italic;">भगवान शिव को समर्पित यह मंत्र स्वास्थ्य, रोगों से रक्षा और जन्म-मृत्यु के चक्र से मुक्ति (मोक्ष) के लिए अत्यंत प्रभावशाली है।</p>
+            </div>`
+        },
+        'om-mantra': {
+            en: `<div class="text-content">
+                <h2>🕉️ Om - Pranava</h2>
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+                    <button class="favorite-btn" data-content-id="om-mantra" data-content-title="ॐ - प्रणव" data-content-title-en="Om - Pranava" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                </div>
+                <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem; text-align: center;">
+                    ॐ (A-U-M)
+                </div>
+                <p style="margin-top: 1.5rem; font-style: italic;">The primordial sound of the universe. It represents the ultimate reality and the source of all existence.</p>
+            </div>`,
+            hi: `<div class="text-content">
+                <h2>🕉️ ॐ - प्रणव</h2>
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+                    <button class="favorite-btn" data-content-id="om-mantra" data-content-title="ॐ - प्रणव" data-content-title-en="Om - Pranava" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                </div>
+                <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem; text-align: center;">
+                    ॐ (अ-उ-म)
+                </div>
+                <p style="margin-top: 1.5rem; font-style: italic;">ब्रह्मांड की आदि ध्वनि। यह परम सत्य और समस्त अस्तित्व के स्रोत का प्रतीक है।</p>
+            </div>`
+        },
+        'ganesh-mantra': {
+            en: `<div class="text-content">
+                <h2>🐘 Ganesh Mantra</h2>
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+                    <button class="favorite-btn" data-content-id="ganesh-mantra" data-content-title="गणेश मंत्र" data-content-title-en="Ganesh Mantra" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                </div>
+                <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
+                    Om Gam Ganapataye Namaha
+                </div>
+                <p style="margin-top: 1.5rem; font-style: italic;">A mantra to invoke Lord Ganesha to remove obstacles and ensure success in any new beginning.</p>
+            </div>`,
+            hi: `<div class="text-content">
+                <h2>🐘 गणेश मंत्र</h2>
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+                    <button class="favorite-btn" data-content-id="ganesh-mantra" data-content-title="गणेश मंत्र" data-content-title-en="Ganesh Mantra" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                </div>
+                <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
+                    ॐ गं गणपतये नमः ॥
+                </div>
+                <p style="margin-top: 1.5rem; font-style: italic;">किसी भी नए कार्य की शुरुआत में बाधाओं को दूर करने और सफलता सुनिश्चित करने के लिए भगवान गणेश का आह्वान।</p>
+            </div>`
+        },
+        'hanuman-chalisa': {
+            en: `<div class="text-content">
+                <h2>💪 Hanuman Chalisa (Opening Verse)</h2>
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+                    <button class="favorite-btn" data-content-id="hanuman-chalisa" data-content-title="हनुमान चालीसा" data-content-title-en="Hanuman Chalisa" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                </div>
+                <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
+                    Shri Guru Charan Saroj Raj<br>
+                    Nij Manu Mukuru Sudhari<br>
+                    Barnau Raghuvar Bimal Jasu<br>
+                    Jo Dayaku Phal Chari
+                </div>
+                <p style="margin-top: 1.5rem; font-style: italic;">A 40-verse hymn praising the strength, devotion, and courage of Lord Hanuman. It provides protection and peace.</p>
+                <p style="margin-top: 0.5rem; color: var(--saffron);">Full Chalisa coming soon...</p>
+            </div>`,
+            hi: `<div class="text-content">
+                <h2>💪 हनुमान चालीसा (प्रारंभिक दोहा)</h2>
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+                    <button class="favorite-btn" data-content-id="hanuman-chalisa" data-content-title="हनुमान चालीसा" data-content-title-en="Hanuman Chalisa" data-section="mantras" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                </div>
+                <div class="verse" style="font-family: 'Tiro Devanagari Sanskrit', serif; line-height: 2; font-size: 1.2rem;">
+                    श्रीगुरु चरन सरोज रज<br>
+                    निज मनु मुकुरु सुधारि ।<br>
+                    बरनऊं रघुबर बिमल जसु<br>
+                    जो दायकु फल चारि ॥
+                </div>
+                <p style="margin-top: 1.5rem; font-style: italic;">भगवान हनुमान की शक्ति, भक्ति और साहस की स्तुति करने वाली ४० चौपाइयां। यह सुरक्षा और मानसिक शांति प्रदान करती है।</p>
+                <p style="margin-top: 0.5rem; color: var(--saffron);">सम्पूर्ण चालीसा जल्द आ रही है...</p>
+            </div>`
+        }
+    };
+
     const def = lang === 'en'
         ? `<div class="text-content"><h2>Content Coming Soon</h2><p>This section is being updated with detailed information. 🙏</p></div>`
         : `<div class="text-content"><h2>सामग्री जल्द आ रही है</h2><p>इस अनुभाग को विस्तृत जानकारी के साथ अपडेट किया जा रहा है। 🙏</p></div>`;
-    
+
     return (contents[id] && contents[id][lang]) || def;
 }
 
