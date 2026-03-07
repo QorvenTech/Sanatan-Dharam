@@ -2667,8 +2667,6 @@ body.dark-theme {
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
     <!-- SunCalc for sunrise/sunset (no API, always works) -->
 <script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.js"></script>
-    <!-- Hindu Calendar for tithi, nakshatra etc. -->
-<script src="https://cdn.jsdelivr.net/npm/hindu-calendar@1.0.1/dist/hindu-calendar.min.js"></script>
 
 <script>
 // ======================================
@@ -3840,68 +3838,57 @@ showSection = function(id) {
 };
 
 // ======================================
-// TODAY'S PANCHANG (complete version)
+// TODAY'S PANCHANG (Sunrise/Sunset only)
 // ======================================
 function displayTodaysPanchang() {
     const container = document.getElementById('panchang-content');
     const loading = document.getElementById('panchang-loading');
-    if (!container || !loading) return;
+    if (!container || !loading) {
+        alert('Panchang containers missing!');
+        return;
+    }
+
+    // Check if SunCalc loaded
+    if (typeof SunCalc === 'undefined') {
+        loading.innerHTML = '❌ SunCalc library not loaded. Check internet.';
+        return;
+    }
 
     try {
-        // Set your city coordinates (Delhi default)
+        // Delhi coordinates (change if needed)
         const lat = 28.6139;
         const lng = 77.2090;
 
         const today = new Date();
-
-        // Get sunrise/sunset using SunCalc
         const times = SunCalc.getTimes(today, lat, lng);
         const sunrise = times.sunrise;
         const sunset = times.sunset;
 
-        // Calculate Hindu calendar data
-        const hc = new HinduCalendar(today);
-        const tithi = hc.tithi().name;
-        const nakshatra = hc.nakshatra().name;
-        const yoga = hc.yoga().name;
-        const karana = hc.karana().name;
-        const paksha = hc.paksha().name;
-        
-        // Simple Rahu Kaal calculation (8 parts of the day, Rahu is 4th part)
-        const dayLength = (sunset - sunrise) / (1000 * 60 * 60); // in hours
-        const rahuStart = new Date(sunrise.getTime() + (dayLength * 60 * 60 * 1000 * 3 / 8));
-        const rahuEnd = new Date(rahuStart.getTime() + (dayLength * 60 * 60 * 1000 * 1 / 8));
-        
         const formatTime = (date) => {
             if (!date) return '--:--';
             return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
         };
 
-        const formatRahu = rahuStart && rahuEnd ? 
-            `${formatTime(rahuStart)} – ${formatTime(rahuEnd)}` : '--:––';
-
         const contentHTML = `
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                 <div><span style="font-weight: 600; color: var(--brown);" data-en="🌅 Sunrise" data-hi="🌅 सूर्योदय">🌅 Sunrise</span><br> <span class="panchang-value">${formatTime(sunrise)}</span></div>
                 <div><span style="font-weight: 600; color: var(--brown);" data-en="🌇 Sunset" data-hi="🌇 सूर्यास्त">🌇 Sunset</span><br> <span class="panchang-value">${formatTime(sunset)}</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌙 Tithi" data-hi="🌙 तिथि">🌙 Tithi</span><br> <span class="panchang-value">${tithi || '--'}</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="⭐ Nakshatra" data-hi="⭐ नक्षत्र">⭐ Nakshatra</span><br> <span class="panchang-value">${nakshatra || '--'}</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="🧘 Yoga" data-hi="🧘 योग">🧘 Yoga</span><br> <span class="panchang-value">${yoga || '--'}</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="📿 Karana" data-hi="📿 करण">📿 Karana</span><br> <span class="panchang-value">${karana || '--'}</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌓 Paksha" data-hi="🌓 पक्ष">🌓 Paksha</span><br> <span class="panchang-value">${paksha || '--'}</span></div>
-                <div><span style="font-weight: 600; color: var(--brown);" data-en="⏰ Rahu Kaal" data-hi="⏰ राहु काल">⏰ Rahu Kaal</span><br> <span class="panchang-value">${formatRahu}</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌙 Tithi" data-hi="🌙 तिथि">🌙 Tithi</span><br> <span class="panchang-value">(coming soon)</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="⭐ Nakshatra" data-hi="⭐ नक्षत्र">⭐ Nakshatra</span><br> <span class="panchang-value">(coming soon)</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="🧘 Yoga" data-hi="🧘 योग">🧘 Yoga</span><br> <span class="panchang-value">(coming soon)</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="📿 Karana" data-hi="📿 करण">📿 Karana</span><br> <span class="panchang-value">(coming soon)</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="🌓 Paksha" data-hi="🌓 पक्ष">🌓 Paksha</span><br> <span class="panchang-value">(coming soon)</span></div>
+                <div><span style="font-weight: 600; color: var(--brown);" data-en="⏰ Rahu Kaal" data-hi="⏰ राहु काल">⏰ Rahu Kaal</span><br> <span class="panchang-value">(coming soon)</span></div>
             </div>
-            <p style="margin-top: 1rem; font-size: 0.9rem; color: #888; text-align: center;" data-en="⏱️ Daily Panchang based on accurate calculations" data-hi="⏱️ दैनिक पंचांग सटीक गणना पर आधारित">⏱️ Daily Panchang based on accurate calculations</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #888; text-align: center;" data-en="⏱️ Sunrise/sunset calculated" data-hi="⏱️ सूर्योदय/सूर्यास्त गणना">⏱️ Sunrise/sunset calculated</p>
         `;
 
         container.innerHTML = contentHTML;
         loading.style.display = 'none';
         container.style.display = 'block';
-
         if (window.applyLanguage) applyLanguage(currentLang);
     } catch (error) {
-        console.error('Panchang calculation error:', error);
-        loading.innerHTML = '🙏 Unable to calculate. Please try again later.';
+        loading.innerHTML = '❌ Error: ' + error.message;
     }
 }
 // Call it when page loads
