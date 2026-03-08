@@ -6,6 +6,7 @@
     <title>Sanatan Dharm - Sacred Texts & Religious Resources</title>
     <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        /* ========== YOUR EXISTING CSS (unchanged) ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
     --saffron: #ff6b35; --saffron-light: #ff8c42;
@@ -2036,7 +2037,7 @@ body.dark-theme {
                 ।।जय सियाराम।।</div>
                 <div class="bhavaarth-box"><div class="bhavaarth-title">📖 भावार्थ — दोहा 60</div><div class="bhavaarth-prasang"><strong>प्रसंग:</strong> गोस्वामी तुलसीदास जी सुंदरकांड का समापन करते हैं।</div><div class="bhavaarth-text">तुलसीदास जी कहते हैं कि जो मनुष्य श्री रघुनाथ जी के इस सुंदर चरित्र (सुंदरकांड) को प्रेमपूर्वक पढ़ते या सुनते हैं, वे बिना किसी प्रयास के भवसागर (संसार के दुखों) से तर जाते हैं। श्री राम की भक्ति ही सबसे बड़ा सुख और परम गति है।</div></div>
                 <div class="verse" style="text-align:center;background:linear-gradient(135deg,var(--cream),#ffe4cc);border-left:none;border-radius:12px;padding:2rem;margin-top:2rem;">
-                    <span style="color:var(--saffron);font-size:1.2rem;font-weight:700;">।। सुंदरकांड सम्पूर्ण ।।</span><br>
+                    <span style="color:var(--saffron);font-size:1.2rem;font-weight:700;">।। सुंदरकाण्ड सम्पूर्ण ।।</span><br>
                     <span style="color:var(--brown);">।। जय सियाराम ।।</span>
                 </div>
             </div>
@@ -2644,19 +2645,188 @@ body.dark-theme {
 
     <div id="text-display" style="display:none;"></div>
     <!-- AARTI SECTION -->
-<div id="aarti" class="section">
-    <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Aarti – Devotional Hymns" data-hi="आरती – भक्ति गीत">Aarti – Devotional Hymns</h2>
-    <div class="cards-grid" id="aartiGrid">
-        <!-- Placeholder card for future Aartis -->
-        <div class="card" style="border-top-color:#ccc;opacity:0.7;cursor:default;">
-            <div class="icon">🪔</div>
-            <h3 style="color:#aaa;" data-en="Coming Soon" data-hi="जल्द आ रहा है">Coming Soon</h3>
-            <p style="color:#bbb;" data-en="Aartis of various deities will be added here." data-hi="विभिन्न देवताओं की आरतियाँ यहाँ जोड़ी जाएंगी।">Aartis of various deities will be added here.</p>
+    <div id="aarti" class="section">
+        <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Aarti – Devotional Hymns" data-hi="आरती – भक्ति गीत">Aarti – Devotional Hymns</h2>
+        <div class="cards-grid" id="aartiGrid">
+            <!-- Ganesh Aarti card -->
+            <div class="card" onclick="showAarti('ganesh')">
+                <div class="icon">🐘</div>
+                <h3 data-en="Shri Ganesh Aarti" data-hi="श्री गणेश आरती">Shri Ganesh Aarti</h3>
+                <p data-en="Sacred hymn in praise of Lord Ganesha, the remover of obstacles."
+                   data-hi="विघ्नहर्ता भगवान गणेश की पवित्र आरती।">
+                    Sacred hymn in praise of Lord Ganesha, the remover of obstacles.
+                </p>
+                <div style="margin-top:1rem; padding:0.5rem 1rem; background:var(--cream); border-radius:20px; font-size:0.85rem; color:var(--brown); display:inline-block;">📖 Full Aarti Available</div>
+            </div>
+            <!-- Durga Aarti card -->
+            <div class="card" onclick="showAarti('durga')">
+                <div class="icon">🦁</div>
+                <h3 data-en="Maa Durga Aarti" data-hi="माँ दुर्गा आरती">Maa Durga Aarti</h3>
+                <p data-en="Powerful hymn to Goddess Durga, the protector and destroyer of evil."
+                   data-hi="शक्ति की देवी माँ दुर्गा की शक्तिशाली आरती।">
+                    Powerful hymn to Goddess Durga, the protector and destroyer of evil.
+                </p>
+                <div style="margin-top:1rem; padding:0.5rem 1rem; background:var(--cream); border-radius:20px; font-size:0.85rem; color:var(--brown); display:inline-block;">📖 Full Aarti Available</div>
+            </div>
+            <!-- Saraswati Aarti card -->
+            <div class="card" onclick="showAarti('saraswati')">
+                <div class="icon">🎵</div>
+                <h3 data-en="Saraswati Mata Aarti" data-hi="सरस्वती माता आरती">Saraswati Mata Aarti</h3>
+                <p data-en="Devotional song for Goddess Saraswati, bestower of knowledge and wisdom."
+                   data-hi="ज्ञान और बुद्धि की देवी सरस्वती माता की आरती।">
+                    Devotional song for Goddess Saraswati, bestower of knowledge and wisdom.
+                </p>
+                <div style="margin-top:1rem; padding:0.5rem 1rem; background:var(--cream); border-radius:20px; font-size:0.85rem; color:var(--brown); display:inline-block;">📖 Full Aarti Available</div>
+            </div>
+            <!-- Krishna Aarti card -->
+            <div class="card" onclick="showAarti('krishna')">
+                <div class="icon">🦚</div>
+                <h3 data-en="Aarti Kunj Bihari Ki" data-hi="आरती कुंज बिहारी की">Aarti Kunj Bihari Ki</h3>
+                <p data-en="Beloved aarti of Lord Krishna, filled with love and devotion."
+                   data-hi="भगवान कृष्ण की प्रिय आरती, प्रेम और भक्ति से परिपूर्ण।">
+                    Beloved aarti of Lord Krishna, filled with love and devotion.
+                </p>
+                <div style="margin-top:1rem; padding:0.5rem 1rem; background:var(--cream); border-radius:20px; font-size:0.85rem; color:var(--brown); display:inline-block;">📖 Full Aarti Available</div>
+            </div>
+            <!-- Lakshmi Aarti card -->
+            <div class="card" onclick="showAarti('lakshmi')">
+                <div class="icon">💫</div>
+                <h3 data-en="Shri Lakshmi Aarti" data-hi="श्री लक्ष्मी आरती">Shri Lakshmi Aarti</h3>
+                <p data-en="Hymn to Goddess Lakshmi, the goddess of wealth and prosperity."
+                   data-hi="धन और समृद्धि की देवी लक्ष्मी की आरती।">
+                    Hymn to Goddess Lakshmi, the goddess of wealth and prosperity.
+                </p>
+                <div style="margin-top:1rem; padding:0.5rem 1rem; background:var(--cream); border-radius:20px; font-size:0.85rem; color:var(--brown); display:inline-block;">📖 Full Aarti Available</div>
+            </div>
+            <!-- Kuber Aarti card -->
+            <div class="card" onclick="showAarti('kuber')">
+                <div class="icon">💰</div>
+                <h3 data-en="Shri Kuber Aarti" data-hi="श्री कुबेर आरती">Shri Kuber Aarti</h3>
+                <p data-en="Aarti for Lord Kuber, the treasurer of the gods and bestower of wealth."
+                   data-hi="देवताओं के कोषाध्यक्ष और धन के दाता भगवान कुबेर की आरती।">
+                    Aarti for Lord Kuber, the treasurer of the gods and bestower of wealth.
+                </p>
+                <div style="margin-top:1rem; padding:0.5rem 1rem; background:var(--cream); border-radius:20px; font-size:0.85rem; color:var(--brown); display:inline-block;">📖 Full Aarti Available</div>
+            </div>
         </div>
-        <!-- More cards will be added later -->
+
+        <!-- ========== HIDDEN AARTI TEXTS ========== -->
+        <!-- Ganesh Aarti -->
+        <div id="aarti-ganesh-text" style="display:none; margin-top:2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <button class="back-btn" onclick="backToAartiGrid()"
+                        data-en="← Back to Aartis" data-hi="← आरतियों में वापस">← Back to Aartis</button>
+                <button class="favorite-btn" data-content-id="aarti-ganesh"
+                        data-content-title="श्री गणेश आरती" data-content-title-en="Shri Ganesh Aarti"
+                        data-section="aarti" onclick="toggleFavorite(this)">❤️ Favorite</button>
+            </div>
+            <div class="text-content" style="max-height:none; font-size:1.08rem; line-height:2;">
+                <h2 style="text-align:center; font-family:'Tiro Devanagari Sanskrit', serif;"
+                    data-en="🐘 Shri Ganesh Aarti 🐘" data-hi="🐘 श्री गणेश आरती 🐘"></h2>
+                <div class="verse" data-en="Jai Ganesh Jai Ganesh Jai Ganesh Deva |&#10;Maata Jaaki Parvati Pita Mahadeva ||&#10;&#10;Ekadanta Dayavanta Chaar-Bhuja-Dhaari |&#10;Maathe Par Tilak Sohe, Moose Ki Savaari ||&#10;&#10;Paan Chadhe Phool Chadhe Aur Chadhe Meva |&#10;Ladduan Ka Bhog Lage Sant Kare Seva ||&#10;&#10;Jai Ganesh Jai Ganesh Jai Ganesh Deva |&#10;Maata Jaaki Parvati Pita Mahadeva ||&#10;&#10;Andhe Ko Aankh Det Kodhin Ko Kaaya |&#10;Baanjhan Ko Putra Det Nirdhan Ko Maaya ||&#10;&#10;Soora-Shyam Sharan Aaye Safal Keeje Seva |&#10;Maata Jaaki Parvati Pita Mahadeva ||&#10;&#10;Jai Ganesh Jai Ganesh Jai Ganesh Deva |"
+                     data-hi="जय गणेश जय गणेश जय गणेश देवा ।&#10;माता जाकी पार्वती पिता महादेवा ॥&#10;&#10;एकदन्त दयावन्त चारभुजाधारी ।&#10;माथे पर तिलक सोहे, मूसे की सवारी ॥&#10;&#10;पान चढ़े फूल चढ़े और चढ़े मेवा ।&#10;लड्डुअन का भोग लगे सन्त करे सेवा ॥&#10;&#10;जय गणेश जय गणेश जय गणेश देवा ।&#10;माता जाकी पार्वती पिता महादेवा ॥&#10;&#10;अँधे को आँख देत कोढ़िन को काया ।&#10;बाँझन को पुत्र देत निर्धन को माया ॥&#10;&#10;सूर श्याम शरण आए सफल कीजे सेवा ।&#10;माता जाकी पार्वती पिता महादेवा ॥&#10;&#10;जय गणेश जय गणेश जय गणेश देवा ।">
+                    <!-- fallback Hindi -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Durga Aarti -->
+        <div id="aarti-durga-text" style="display:none; margin-top:2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <button class="back-btn" onclick="backToAartiGrid()"
+                        data-en="← Back to Aartis" data-hi="← आरतियों में वापस">← Back to Aartis</button>
+                <button class="favorite-btn" data-content-id="aarti-durga"
+                        data-content-title="माँ दुर्गा आरती" data-content-title-en="Maa Durga Aarti"
+                        data-section="aarti" onclick="toggleFavorite(this)">❤️ Favorite</button>
+            </div>
+            <div class="text-content" style="max-height:none; font-size:1.08rem; line-height:2;">
+                <h2 style="text-align:center; font-family:'Tiro Devanagari Sanskrit', serif;"
+                    data-en="🦁 Maa Durga Aarti 🦁" data-hi="🦁 माँ दुर्गा आरती 🦁"></h2>
+                <div class="verse" data-en="Ambe Tu Hai Jagambe Kaali Jai Durge Khappar Vaali |&#10;Tere Hi Gun Gaavein Bhaarati |&#10;O Maiya Hum Sab Utaarein Teri Aarti ||&#10;&#10;Tere Bhakt Jano Pe Maata Bheer Padi Hai Bhaari |&#10;Daanav Dal Par Toot Pado Maa Karke Singh Savaari ||&#10;&#10;Sau-Sau Sihon Se Bhi Balshaali, Asht Bhujaaon Vaali |&#10;Dukhiyon Ke Dukhde Nivaarati |&#10;O Maiya Hum Sab Utaarein Teri Aarti ||&#10;&#10;Maa-Bete Ka Hai Is Jag Me Bada Hi Nirmal Naata |&#10;Poot Kapoot Sune Hai Par Na Maata Suni Kumaata ||&#10;&#10;Sab Pe Karuna Darsaane Vaali Amrit Barsaane Vaali |&#10;Dukhiyon Ke Dukhde Nivaarati |&#10;O Maiya Hum Sab Utaarein Teri Aarti ||&#10;&#10;Nahi Maangte Dhan Aur Daulat Na Chaandi Na Sona |&#10;Hum To Maange Maa Tere Charnon Mein Ek Chhota Sa Kona ||&#10;&#10;Sabki Bigdi Banaane Vaali Laaj Bachaane Vaali |&#10;Satiyon Ke Sat Ko Savaarati |&#10;O Maiya Hum Sab Utaarein Teri Aarti ||"
+                     data-hi="अम्बे तू है जगदम्बे काली जय दुर्गे खप्पर वाली ।&#10;तेरे ही गुण गावें भारती ।&#10;ओ मैया हम सब उतारे तेरी आरती ॥&#10;&#10;तेरे भक्त जनो पे माता भीर पड़ी है भारी ।&#10;दानव दल पर टूट पड़ो माँ करके सिंह सवारी ॥&#10;&#10;सौ-सौ सिहों से भी बलशाली, अष्ट भुजाओं वाली ।&#10;दुखियों के दुखड़े निवारती ।&#10;ओ मैया हम सब उतारे तेरी आरती ॥&#10;&#10;माँ-बेटे का है इस जग मे बड़ा ही निर्मल नाता ।&#10;पूत कपूत सुने है पर ना माता सुनी कुमाता ॥&#10;&#10;सब पे करूणा दरसाने वाली अमृत बरसाने वाली ।&#10;दुखियों के दुखड़े निवारती ।&#10;ओ मैया हम सब उतारे तेरी आरती ॥&#10;&#10;नहीं मांगते धन और दौलत न चांदी न सोना ।&#10;हम तो मांगें माँ तेरे चरणों में एक छोटा सा कोना ॥&#10;&#10;सबकी बिगड़ी बनाने वाली लाज बचाने वाली ।&#10;सतियों के सत को सवांरती ।&#10;ओ मैया हम सब उतारे तेरी आरती ॥">
+                    <!-- fallback Hindi -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Saraswati Aarti -->
+        <div id="aarti-saraswati-text" style="display:none; margin-top:2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <button class="back-btn" onclick="backToAartiGrid()"
+                        data-en="← Back to Aartis" data-hi="← आरतियों में वापस">← Back to Aartis</button>
+                <button class="favorite-btn" data-content-id="aarti-saraswati"
+                        data-content-title="सरस्वती माता आरती" data-content-title-en="Saraswati Mata Aarti"
+                        data-section="aarti" onclick="toggleFavorite(this)">❤️ Favorite</button>
+            </div>
+            <div class="text-content" style="max-height:none; font-size:1.08rem; line-height:2;">
+                <h2 style="text-align:center; font-family:'Tiro Devanagari Sanskrit', serif;"
+                    data-en="🎵 Saraswati Mata Aarti 🎵" data-hi="🎵 सरस्वती माता आरती 🎵"></h2>
+                <div class="verse" data-en="Om Jai Saraswati Mata, Jai Jai Saraswati Mata |&#10;Sadgun Vaibhav-Shaalini, Tribhuvan Vikhyaata ||&#10;Jai Jai Saraswati Mata,&#10;Om Jai Saraswati Mata, Jai Jai Saraswati Mata ||&#10;&#10;Chandra-Vadan Padmaasini Kriti Mangal-Kaari |&#10;Sohe Shubh Hans Savaari, Atul Tej Dhaari ||&#10;Jai Jai Saraswati Mata,&#10;Om Jai Saraswati Mata, Jai Jai Saraswati Mata ||&#10;&#10;Baayein Kar Mein Veena, Daayein Kar Maala |&#10;Sheesh Mukut-Mani Sohe, Gal Motiyan Maala ||&#10;Jai Jai Saraswati Mata,&#10;Om Jai Saraswati Mata, Jai Jai Saraswati Mata ||&#10;&#10;Devi Sharan Jo Aaye, Unka Uddhaar Kiya |&#10;Baithi Manthara Daasi, Raavan Sanhaar Kiya ||&#10;Jai Jai Saraswati Mata,&#10;Om Jai Saraswati Mata, Jai Jai Saraswati Mata ||&#10;&#10;Vidya-Daan Pradaayini Gyaan-Prakaash Bharo |&#10;Moh, Agyaan Ki Nirkha, Jag Se Naash Karo ||&#10;Jai Jai Saraswati Mata,&#10;Om Jai Saraswati Mata, Jai Jai Saraswati Mata ||&#10;&#10;Dhoop, Deep, Phal, Meva, O Maa Sveekaar Karo |&#10;Gyaan-Chakshu De Maata, Jag Nistaar Karo ||&#10;Jai Jai Saraswati Mata,&#10;Om Jai Saraswati Mata, Jai Jai Saraswati Mata ||&#10;&#10;Maa Saraswati Ki Aarti, Jo Koi Jan Gaavei |&#10;Hitkaari Sukhkaari, Gyaan Bhakti Paavei ||&#10;Jai Jai Saraswati Mata,&#10;Om Jai Saraswati Mata, Jai Jai Saraswati Mata ||&#10;&#10;Om Jai Saraswati Mata, Jai Jai Saraswati Mata |&#10;Sadgun Vaibhav-Shaalini, Tribhuvan Vikhyaata ||&#10;Jai Jai Saraswati Mata,&#10;Om Jai Saraswati Mata, Jai Jai Saraswati Mata ||"
+                     data-hi="ॐ जय सरस्वती माता, जय जय सरस्वती माता ।&#10;सदगुण वैभवशालिनि, त्रिभुवन विख्याता ॥&#10;जय जय सरस्वती माता,&#10;ॐ जय सरस्वती माता, जय जय सरस्वती माता ॥&#10;&#10;चंद्रवदन पदमासिनी कृति मंगलकारी ।&#10;सोहे शुभ हंस सवारी, अतुल तेज धारी ॥&#10;जय जय सरस्वती माता,&#10;ॐ जय सरस्वती माता, जय जय सरस्वती माता ॥&#10;&#10;बाएं कर में वीणा, दाएं कर माला ।&#10;शीश मुकुटमणि सोहे, गल मोतियन माला ॥&#10;जय जय सरस्वती माता,&#10;ॐ जय सरस्वती माता, जय जय सरस्वती माता ॥&#10;&#10;देवि शरण जो आए, उनका उद्धार किया ।&#10;बैठी मंथरा दासी, रावण संहार किया ॥&#10;जय जय सरस्वती माता,&#10;ॐ जय सरस्वती माता, जय जय सरस्वती माता ॥&#10;&#10;विद्यादान प्रदायिनि ज्ञान-प्रकाश भरो ।&#10;मोह, अज्ञान की निरखा, जग से नाश करो ॥&#10;जय जय सरस्वती माता,&#10;ॐ जय सरस्वती माता, जय जय सरस्वती माता ॥&#10;&#10;धूप, दीप, फल, मेवा, ओ मां स्वीकार करो ।&#10;ज्ञान-चक्षु दे माता, जग निस्तार करो ॥&#10;जय जय सरस्वती माता,&#10;ॐ जय सरस्वती माता, जय जय सरस्वती माता ॥&#10;&#10;मां सरस्वती की आरती, जो कोई जन गावै ।&#10;हितकारी सुखकारी, ज्ञान भक्ति पावै ॥&#10;जय जय सरस्वती माता,&#10;ॐ जय सरस्वती माता, जय जय सरस्वती माता ॥&#10;&#10;ॐ जय सरस्वती माता, जय जय सरस्वती माता ।&#10;सदगुण वैभवशालिनि, त्रिभुवन विख्याता ॥&#10;जय जय सरस्वती माता,&#10;ॐ जय सरस्वती माता, जय जय सरस्वती माता ॥">
+                    <!-- fallback Hindi -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Krishna Aarti (Aarti Kunj Bihari Ki) -->
+        <div id="aarti-krishna-text" style="display:none; margin-top:2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <button class="back-btn" onclick="backToAartiGrid()"
+                        data-en="← Back to Aartis" data-hi="← आरतियों में वापस">← Back to Aartis</button>
+                <button class="favorite-btn" data-content-id="aarti-krishna"
+                        data-content-title="आरती कुंज बिहारी की" data-content-title-en="Aarti Kunj Bihari Ki"
+                        data-section="aarti" onclick="toggleFavorite(this)">❤️ Favorite</button>
+            </div>
+            <div class="text-content" style="max-height:none; font-size:1.08rem; line-height:2;">
+                <h2 style="text-align:center; font-family:'Tiro Devanagari Sanskrit', serif;"
+                    data-en="🦚 Aarti Kunj Bihari Ki 🦚" data-hi="🦚 आरती कुंज बिहारी की 🦚"></h2>
+                <div class="verse" data-en="Aarti Kunj Bihari Ki, Shri Giridhar Krishna Murari Ki ||&#10;&#10;Gale Mein Baijanti-Maala, Bajaavei Murli Madhur Baala |&#10;Shravan Mein Kundal Jhalkaala, Nand Ke Aanand Nandlaala ||&#10;Gagan Sam Ang Kaanti Kaali, Radhika Chamak Rahi Aali |&#10;Latan Mein Thaadhe Banmaali ||&#10;Bhramar See Alak, Kastoori Tilak, Chandra-See Jhalak |&#10;Lalit Chhavi Syaama Pyaari Ki ||&#10;Aarti Kunj Bihari Ki, Shri Giridhar Krishna Murari Ki ||&#10;&#10;Kanak-may Mor-Mukut Bilsai, Devta Darsan-ko Tarsain |&#10;Gagan Son Suman Raasi Barsai ||&#10;Baje Murchang, Madhur Mirdang, Gwaalin Sang |&#10;Atul Rati Gop Kumaari Ki ||&#10;Aarti Kunj Bihari Ki, Shri Giridhar Krishna Murari Ki ||&#10;&#10;Jaha Te Prakat Bhai Ganga, Sakal-Mal-Haarini Shri Ganga |&#10;Smaran Te Hot Moh-Bhanga ||&#10;Basi Siv Sees, Jata-ke Beech, Harai Agh Keech |&#10;Charan Chhabi Shri Banwaari Ki ||&#10;Aarti Kunj Bihari Ki, Shri Giridhar Krishna Murari Ki ||&#10;&#10;Chamakti Ujjwal Tat Renoo, Baj Rahi Brindaban Benoo |&#10;Chahun Disi Gopi Gwaal Dhenoo ||&#10;Hansat Mridu Mand, Chaandni Chand, Katat Bhav-Phand |&#10;Ter Sunu Deen Dukhaari Ki ||&#10;Aarti Kunj Bihari Ki, Shri Giridhar Krishna Murari Ki ||"
+                     data-hi="आरती कुंज बिहारी की, श्री गिरिधर कृष्ण मुरारी की ॥&#10;&#10;गले में बैजंतीमाला, बजावै मुरली मधुर बाला ।&#10;श्रवण में कुण्डल झलकाला, नंद के आनंद नंदलाला ॥&#10;गगन सम अंग कांति काली, राधिका चमक रही आली ।&#10;लतन में ठाढ़े बनमाली ॥&#10;भ्रमर सी अलक, कस्तूरी तिलक, चंद्र – सी झलक ।&#10;ललित छवि स्यामा प्यारी की ॥&#10;आरती कुंज बिहारी की, श्री गिरिधर कृष्ण मुरारी की ॥&#10;&#10;कनकमय मोर- मुकुट बिलसै, देवता दरसनको तरसैं ।&#10;गगन सों सुमन रासि बरसै ॥&#10;बजे मुरचंग, मधुर मिरदंग, ग्वालिन संग ।&#10;अतुल रति गोप कुमारी की ॥&#10;आरती कुंज बिहारी की, श्री गिरिधर कृष्ण मुरारी की ॥&#10;&#10;जहां ते प्रकट भई गंगा, सकल- मल- हारिणि श्रीगंगा ।&#10;स्मरन ते होत मोह- भंगा ॥&#10;बसी सिव सीस, जटाके बीच, हरै अघ कीच ।&#10;चरन छबि श्री बनवारी की ॥&#10;आरती कुंज बिहारी की, श्री गिरिधर कृष्ण मुरारी की ॥&#10;&#10;चमकती उज्ज्वल तट रेनू, बज रही बृन्दाबन बेनू ।&#10;चहुं दिसि गोपि ग्वाल धेनू ॥&#10;हंसत मृदु मंद, चांदनी चंद, कटत भव-फंद ।&#10;टेर सुनु दीन दुखारी की ॥&#10;आरती कुंज बिहारी की, श्री गिरिधर कृष्ण मुरारी की ॥">
+                    <!-- fallback Hindi -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Lakshmi Aarti -->
+        <div id="aarti-lakshmi-text" style="display:none; margin-top:2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <button class="back-btn" onclick="backToAartiGrid()"
+                        data-en="← Back to Aartis" data-hi="← आरतियों में वापस">← Back to Aartis</button>
+                <button class="favorite-btn" data-content-id="aarti-lakshmi"
+                        data-content-title="श्री लक्ष्मी आरती" data-content-title-en="Shri Lakshmi Aarti"
+                        data-section="aarti" onclick="toggleFavorite(this)">❤️ Favorite</button>
+            </div>
+            <div class="text-content" style="max-height:none; font-size:1.08rem; line-height:2;">
+                <h2 style="text-align:center; font-family:'Tiro Devanagari Sanskrit', serif;"
+                    data-en="💫 Shri Lakshmi Aarti 💫" data-hi="💫 श्री लक्ष्मी आरती 💫"></h2>
+                <div class="verse" data-en="Om Jai Lakshmi Mata, Maiya Jai Lakshmi Mata |&#10;Tumko Nishdin Sevat, Hari Vishnu Dhaata ||&#10;Om Jai Lakshmi Mata ||&#10;&#10;Uma, Rama, Brahmaani, Tum Hi Jag-Maata |&#10;Surya-Chandrama Dhyaavat, Naarad Rishi Gaata ||&#10;Om Jai Lakshmi Mata ||&#10;&#10;Durga Roop Niranjani, Sukh-Sampatti Daata |&#10;Jo Koi Tumko Dhyaavat, Riddhi-Siddhi Dhan Paata ||&#10;Om Jai Lakshmi Mata ||&#10;&#10;Tum Paataal-Nivaasini, Tum Hi Shubh Daata |&#10;Karm-Prabhaav-Prakaashini, Bhavanidhi Ki Traata ||&#10;Om Jai Lakshmi Mata ||&#10;&#10;Jis Ghar Mein Tum Rehtin, Tahan Sab Sadgun Aata |&#10;Sab Sambhav Ho Jaata, Man Nahin Ghabraata ||&#10;Om Jai Lakshmi Mata ||&#10;&#10;Tum Bin Yagya Na Hote, Vastra Na Ho Paata |&#10;Khaan-Paan Ka Vaibhav, Sab Tumse Aata ||&#10;Om Jai Lakshmi Mata ||&#10;&#10;Shubh-Gun-Mandir Sundar, Ksheerodadhi-Jaata |&#10;Ratna Chaturdash Tum Bin, Koi Nahin Paata ||&#10;Om Jai Lakshmi Mata ||&#10;&#10;Maha-Lakshmi-Ji Ki Aarti, Jo Koi Jan Gaata |&#10;Ur Aanand Samaata, Paap Utar Jaata ||&#10;Om Jai Lakshmi Mata ||&#10;&#10;Om Jai Lakshmi Mata, Maiya Jai Lakshmi Mata |&#10;Tumko Nishdin Sevat, Hari Vishnu Dhaata ||&#10;Om Jai Lakshmi Mata ||"
+                     data-hi="ॐ जय लक्ष्मी माता, मैया जय लक्ष्मी माता ।&#10;तुमको निशदिन सेवत, हरि विष्णु धाता ॥&#10;ॐ जय लक्ष्मी माता ॥&#10;&#10;उमा, रमा, ब्रह्माणी, तुम ही जग-माता ।&#10;सूर्य-चंद्रमा ध्यावत, नारद ऋषि गाता ॥&#10;ॐ जय लक्ष्मी माता ॥&#10;&#10;दुर्गा रुप निरंजनी, सुख-सम्पत्ति दाता ।&#10;जो कोई तुमको ध्यावत, ऋद्धि-सिद्धि धन पाता ॥&#10;ॐ जय लक्ष्मी माता ॥&#10;&#10;तुम पाताल-निवासिनि, तुम ही शुभ दाता ।&#10;कर्म-प्रभाव-प्रकाशिनी, भवनिधि की त्राता ॥&#10;ॐ जय लक्ष्मी माता ॥&#10;&#10;जिस घर में तुम रहतीं, तहाँ सब सद्गुण आता ।&#10;सब सम्भव हो जाता, मन नहीं घबराता ॥&#10;ॐ जय लक्ष्मी माता ॥&#10;&#10;तुम बिन यज्ञ न होते, वस्त्र न हो पाता ।&#10;खान-पान का वैभव, सब तुमसे आता ॥&#10;ॐ जय लक्ष्मी माता ॥&#10;&#10;शुभ-गुण-मंदिर सुंदर, क्षीरोदधि-जाता ।&#10;रत्न चतुर्दश तुम बिन, कोई नहीं पाता ॥&#10;ॐ जय लक्ष्मी माता ॥&#10;&#10;महालक्ष्मीजी की आरती, जो कोई जन गाता ।&#10;उर आनन्द समाता, पाप उतर जाता ॥&#10;ॐ जय लक्ष्मी माता ॥&#10;&#10;ॐ जय लक्ष्मी माता, मैया जय लक्ष्मी माता ।&#10;तुमको निशदिन सेवत, हरि विष्णु धाता ॥&#10;ॐ जय लक्ष्मी माता ॥">
+                    <!-- fallback Hindi -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Kuber Aarti -->
+        <div id="aarti-kuber-text" style="display:none; margin-top:2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <button class="back-btn" onclick="backToAartiGrid()"
+                        data-en="← Back to Aartis" data-hi="← आरतियों में वापस">← Back to Aartis</button>
+                <button class="favorite-btn" data-content-id="aarti-kuber"
+                        data-content-title="श्री कुबेर आरती" data-content-title-en="Shri Kuber Aarti"
+                        data-section="aarti" onclick="toggleFavorite(this)">❤️ Favorite</button>
+            </div>
+            <div class="text-content" style="max-height:none; font-size:1.08rem; line-height:2;">
+                <h2 style="text-align:center; font-family:'Tiro Devanagari Sanskrit', serif;"
+                    data-en="💰 Shri Kuber Aarti 💰" data-hi="💰 श्री कुबेर आरती 💰"></h2>
+                <div class="verse" data-en="Om Jai Kubeer Swami, Prabhu Jai Kubeer Swami |&#10;He Samarath Paripooran, He Samarath Paripooran, He Antaryaami ||&#10;Om Jai Kubeer Swami, Prabhu Jai Kubeer Swami ||&#10;&#10;Vishrava Ke Laal Idvida Ke Pyaare, Maa Idvida Ke Pyaare |&#10;Kaveri Ke Naath Ho, Kaveri Ke Naath Ho, Shivji Ke Dulaare ||&#10;Om Jai Kubeer Swami, Prabhu Jai Kubeer Swami ||&#10;&#10;Manigraavi Meenaakshi Devi, Nalkubeer Ke Taat, Prabhu Nalkubeer Ke Taat |&#10;Devlok Mein Jaagrit, Devlok Mein Jaagrit, Aap Hi Ho Saakshaat ||&#10;Om Jai Kubeer Swami, Prabhu Jai Kubeer Swami ||&#10;&#10;Reva Narmada Tat Shobha Atibhaari, Prabhu Shobha Atibhaari |&#10;Karnaali Mein Viraajat, Karnaali Mein Viraajat, Bhole Bhandaari ||&#10;Om Jai Kubeer Swami, Prabhu Jai Kubeer Swami ||&#10;&#10;Vandhya Putra Ratan Aur Nirdhan Dhan Paaye, Sab Nirdhan Dhan Paaye |&#10;Manvaanchhit Phal Dete, Manvaanchhit Phal Dete, Jo Man Se Dhyaaye ||&#10;Om Jai Kubeer Swami, Prabhu Jai Kubeer Swami ||&#10;&#10;Sakal Jagat Mein Tum Hi, Sab Ke Sukhdaata, Prabhu Sab Ke Sukhdaata |&#10;Daas Jayant Kar Vande, Daas Jayant Kar Vande, Jaaye Balihaari ||&#10;Om Jai Kubeer Swami, Prabhu Jai Kubeer Swami ||&#10;&#10;Om Jai Kubeer Swami, Prabhu Jai Kubeer Swami |&#10;He Samarath Paripooran, He Samarath Paripooran, He Antaryaami ||&#10;Om Jai Kubeer Swami, Prabhu Jai Kubeer Swami ||"
+                     data-hi="ॐ जय कुबेर स्वामी, प्रभु जय कुबेर स्वामी ।&#10;हे समरथ परिपूरन, हे समरथ परिपूरन, हे अंतरयामी ॥&#10;ॐ जय कुबेर स्वामी, प्रभु जय कुबेर स्वामी ॥&#10;&#10;विश्रवा के लाल इदविदा के प्यारे, माँ इदविदा के प्यारे ।&#10;कावेरी के नाथ हो, कावेरी के नाथ हो, शिवजी के दुलारे ॥&#10;ॐ जय कुबेर स्वामी, प्रभु जय कुबेर स्वामी ॥&#10;&#10;मणिग्रावी मीनाक्षी देवी, नलकुबेर के तात, प्रभु नलकुबेर के तात ।&#10;देवलोक में जागृत, देवलोक में जागृत, आप ही हो साक्षात ॥&#10;ॐ जय कुबेर स्वामी, प्रभु जय कुबेर स्वामी ॥&#10;&#10;रेवा नर्मदा तट शोभा अतिभारी, प्रभु शोभा अतिभारी ।&#10;करनाली में विराजत, करनाली में विराजत, भोले भंडारी ॥&#10;ॐ जय कुबेर स्वामी, प्रभु जय कुबेर स्वामी ॥&#10;&#10;वंध्या पुत्र रतन और निर्धन धन पाये, सब निर्धन धन पाये ।&#10;मनवांछित फल देते, मनवांछित फल देते, जो मन से ध्याये ॥&#10;ॐ जय कुबेर स्वामी, प्रभु जय कुबेर स्वामी ॥&#10;&#10;सकल जगत में तुम ही, सब के सुखदाता, प्रभु सब के सुखदाता ।&#10;दास जयंत कर वंदे, दास जयंत कर वंदे, जाये बलिहारी ॥&#10;ॐ जय कुबेर स्वामी, प्रभु जय कुबेर स्वामी ॥&#10;&#10;ॐ जय कुबेर स्वामी, प्रभु जय कुबेर स्वामी ।&#10;हे समरथ परिपूरन, हे समरथ परिपूरन, हे अंतरयामी ॥&#10;ॐ जय कुबेर स्वामी, प्रभु जय कुबेर स्वामी ॥">
+                    <!-- fallback Hindi -->
+                </div>
+            </div>
+        </div>
+
+        <div id="aarti-comments" class="comments-section" style="margin-top:2rem;"></div>
     </div>
-    <div id="aarti-comments" class="comments-section" style="margin-top:2rem;"></div>
-</div>
 
     <!-- FAVORITES SECTION -->
     <div id="favorites-section" class="section">
@@ -2679,7 +2849,6 @@ body.dark-theme {
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-</script>
 
 <script>
 // ======================================
@@ -2774,6 +2943,15 @@ function applyLanguage(lang) {
     if (favSection && favSection.classList.contains('active')) {
         showFavorites();
     }
+    // If an aarti is currently visible, update its favorite button text
+    document.querySelectorAll('[id^="aarti-"][id$="-text"]').forEach(div => {
+        if (div.style.display === 'block') {
+            const favBtn = div.querySelector('.favorite-btn');
+            if (favBtn) {
+                favBtn.innerHTML = getFavoriteButtonText(favBtn.classList.contains('favorited'));
+            }
+        }
+    });
     updateAllFavoriteButtons();
 }
 
@@ -3795,13 +3973,20 @@ function jumpToContent(contentId) {
             document.getElementById('bajrang-baan-text').style.display = 'block';
         }, 100);
     }
+    // Aartis
+    else if (contentId.startsWith('aarti-')) {
+        showSection('aarti');
+        const aartiId = contentId.replace('aarti-', '');
+        setTimeout(() => {
+            showAarti(aartiId);
+        }, 100);
+    }
     // Mantras
     else if (contentId === 'gayatri-mantra' ||
              contentId === 'maha-mrityunjaya' ||
              contentId === 'om-mantra' ||
              contentId === 'ganesh-mantra' ||
-             contentId === 'hanuman-chalisa' ||  // already covered, but keep for safety
-             contentId === 'lakshmi-mantra') {
+             contentId === 'hanuman-chalisa') {
         showText(contentId);
     }
     // Add more mappings here as you add new content
@@ -3829,6 +4014,31 @@ function showRamayanIndex() {
     document.getElementById('ramayan-index').style.display = 'block';
     document.getElementById('ramayan-aavahan').style.display = 'none';
     document.getElementById('ramayan-visarjan').style.display = 'none';
+}
+
+// ======================================
+// AARTI FUNCTIONS
+// ======================================
+function showAarti(id) {
+    document.getElementById('aartiGrid').style.display = 'none';
+    // Hide any previously shown aarti divs
+    document.querySelectorAll('[id^="aarti-"][id$="-text"]').forEach(div => {
+        div.style.display = 'none';
+    });
+    // Show the selected aarti
+    const target = document.getElementById('aarti-' + id + '-text');
+    if (target) target.style.display = 'block';
+
+    // Load favourite status for the button inside this aarti
+    const favBtn = target.querySelector('.favorite-btn');
+    if (favBtn) loadFavoriteStatus(favBtn.dataset.contentId, favBtn);
+}
+
+function backToAartiGrid() {
+    document.getElementById('aartiGrid').style.display = 'grid';
+    document.querySelectorAll('[id^="aarti-"][id$="-text"]').forEach(div => {
+        div.style.display = 'none';
+    });
 }
 
 // ======================================
@@ -4353,6 +4563,7 @@ window.addEventListener('load', displayTodaysPanchang);
         }
     };
 })();
+
 </script>
 
 </body>
