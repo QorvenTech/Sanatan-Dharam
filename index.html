@@ -4277,56 +4277,56 @@ function _fmtM(m){
     return (h%12||12)+':'+(mn<10?'0':'')+mn+' '+ap;
 }
 
-/* ── End-time finders (5-min step binary-style search) ── */
-function _tithiIdx(Y,M,D,h){
-    var jd=_jd(Y,M,D,h-5.5); // convert local hour to UTC (IST = UTC+5.5)
+/* ── Index functions — accept JD directly (no timezone hardcoding) ── */
+function _tithiIdx(jd){
     var ay=_ayan(jd);
     return Math.floor(_n(_n(_moonLon(jd)-ay)-_n(_sunLon(jd)-ay))/12);
 }
-function _nakshatraIdx(Y,M,D,h){
-    var jd=_jd(Y,M,D,h-5.5);
+function _nakshatraIdx(jd){
     return Math.floor(_n(_moonLon(jd)-_ayan(jd))/(360/27))%27;
 }
-function _yogaIdx(Y,M,D,h){
-    var jd=_jd(Y,M,D,h-5.5);
+function _yogaIdx(jd){
     var ay=_ayan(jd);
     return Math.floor(_n(_n(_sunLon(jd)-ay)+_n(_moonLon(jd)-ay))/(360/27))%27;
 }
-function _karanaIdx(Y,M,D,h){
-    var jd=_jd(Y,M,D,h-5.5);
+function _karanaIdx(jd){
     var ay=_ayan(jd);
     return Math.floor(_n(_n(_moonLon(jd)-ay)-_n(_sunLon(jd)-ay))/6);
 }
 
-function _findEndTime(Y,M,D,srMin,idxFn){
-    // Convert sunrise minutes to local hour
-    var srH=srMin/60;
-    var baseIdx=idxFn(Y,M,D,srH);
-    for(var mins=srMin;mins<srMin+1500;mins+=5){
-        /* Skip right at midnight boundary (mins%1440 < 5) to avoid
-           calculation artifacts where JD rolls over */
-        if(mins%1440 < 5) continue;
-        var dd=new Date(Y,M-1,D);
-        dd.setMinutes(dd.getMinutes()+mins-srMin);
-        var ny=dd.getFullYear(),nm=dd.getMonth()+1,nd=dd.getDate();
-        var localH=(mins%1440)/60;
-        if(idxFn(ny,nm,nd,localH)!==baseIdx){
-            // Refine with 1-min steps
-            for(var mm=mins-5;mm<=mins;mm++){
-                if(mm%1440 < 3) continue;
-                var dd2=new Date(Y,M-1,D);
-                dd2.setMinutes(dd2.getMinutes()+mm-srMin);
-                var ny2=dd2.getFullYear(),nm2=dd2.getMonth()+1,nd2=dd2.getDate();
-                if(idxFn(ny2,nm2,nd2,(mm%1440)/60)!==baseIdx){
-                    var r=mm%1440;
-                    return (mm>=1440)?_fmtM(r)+' (next day)':_fmtM(r);
-                }
+/* ── End-time finder — works entirely in JD, no midnight boundary bugs ── */
+function _findEndTime(Y,M,D,noonMin,idxFn){
+    /* Convert local noon to UTC JD. _pTZ holds correct offset (e.g. 5.5 for IST). */
+    var startJD = _jd(Y,M,D, 12 - _pTZ);   // local noon → UTC → JD
+    var baseIdx = idxFn(startJD);
+    var endJD   = null;
+
+    /* Coarse scan: 5-min steps, up to 25 hours ahead */
+    for(var step=1; step<=300; step++){
+        var jd = startJD + step*5/1440;
+        if(idxFn(jd) !== baseIdx){
+            /* Refine: 1-min steps over the last 5-min bracket */
+            for(var s=(step-1)*5+1; s<=step*5; s++){
+                var jd2 = startJD + s/1440;
+                if(idxFn(jd2) !== baseIdx){ endJD = jd2; break; }
             }
-            var r2=mins%1440;
-            return (mins>=1440)?_fmtM(r2)+' (next day)':_fmtM(r2);
+            if(endJD === null) endJD = jd;
+            break;
         }
     }
-    return 'Next day';
+
+    if(endJD === null) return 'Next day';
+
+    /* Convert endJD (UTC) back to local clock time */
+    var localJD   = endJD + _pTZ/24;
+    var localMins = Math.round((localJD - Math.floor(localJD)) * 1440);
+    if(localMins >= 1440){ localMins -= 1440; }
+
+    /* Is it next day? Compare with end of today in UTC JD */
+    var todayEndJD = _jd(Y,M,D, 24 - _pTZ);   // local midnight tonight → UTC JD
+    var isNextDay  = endJD >= todayEndJD;
+
+    return _fmtM(localMins) + (isNextDay ? ' (next day)' : '');
 }
 
 /* ── Core Panchang ── */
