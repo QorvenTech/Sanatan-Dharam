@@ -501,8 +501,8 @@ body.dark-theme {
         <!-- TODAY'S PANCHANG CARD (auto‑updated) -->
         <div id="todays-panchang-container" class="panchang-today-card" style="background: var(--card-bg); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left: 6px solid var(--saffron);">
 
-            <!-- Header row with title + date picker -->
-            <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1.4rem;">
+            <!-- Header row with title + city search + date picker -->
+            <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1rem;">
                 <h3 style="color: var(--saffron); font-size: 1.6rem;" data-en="📅 Today's Panchang" data-hi="📅 आज का पंचांग">📅 Today's Panchang</h3>
                 <div style="display:flex; gap:0.6rem; align-items:center; flex-wrap:wrap;">
                     <input type="date" id="panchang-date-picker"
@@ -513,6 +513,21 @@ body.dark-theme {
                         Today
                     </button>
                 </div>
+            </div>
+
+            <!-- City Search Row -->
+            <div style="margin-bottom:1.2rem;">
+                <div style="position:relative; max-width:340px;">
+                    <input type="text" id="panchang-city-input"
+                        placeholder="📍 Search city... (e.g. Vidisha, Mumbai)"
+                        autocomplete="off"
+                        style="width:100%; padding:0.5rem 1rem; border:2px solid var(--saffron); border-radius:20px; background:var(--card-bg); color:var(--text); font-family:inherit; font-size:0.9rem; outline:none;"
+                        oninput="panchangCitySearch(this.value)" />
+                    <div id="panchang-city-dropdown"
+                        style="display:none; position:absolute; top:calc(100% + 4px); left:0; right:0; background:var(--card-bg); border:2px solid var(--saffron); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.18); z-index:1000; max-height:230px; overflow-y:auto;">
+                    </div>
+                </div>
+                <div style="font-size:0.78rem; color:#999; margin-top:0.35rem; padding-left:0.5rem;">Type any city name from India or anywhere in the world</div>
             </div>
 
             <div id="panchang-loading" style="text-align: center; padding: 2rem; font-size:1.1rem;">🙏 Calculating Panchang…</div>
@@ -4536,26 +4551,63 @@ function loadPanchangForDate(dateVal){
     }
 }
 
-/* ── Geolocation init ── */
-function displayTodaysPanchang(){
-    if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(
-            function(pos){
-                _pLat=pos.coords.latitude;
-                _pLng=pos.coords.longitude;
-                _pTZ=-(new Date().getTimezoneOffset())/60;
-                fetch('https://nominatim.openstreetmap.org/reverse?lat='+_pLat+'&lon='+_pLng+'&format=json')
-                    .then(function(r){return r.json();})
-                    .then(function(d){_pCity=(d.address&&(d.address.city||d.address.town||d.address.village||d.address.state))||'Your Location';})
-                    .catch(function(){_pCity='Your Location';})
-                    .finally(function(){loadPanchangForDate('today');});
-            },
-            function(){loadPanchangForDate('today');},
-            {timeout:4000}
-        );
-    }else{
-        loadPanchangForDate('today');
+/* ── City Search Autocomplete ── */
+var _citySearchTimer = null;
+
+function panchangCitySearch(val){
+    clearTimeout(_citySearchTimer);
+    var dd = document.getElementById('panchang-city-dropdown');
+    if(!val || val.length < 2){ dd.style.display='none'; return; }
+    _citySearchTimer = setTimeout(function(){
+        fetch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(val)+'&format=json&limit=8&addressdetails=1')
+            .then(function(r){ return r.json(); })
+            .then(function(results){
+                if(!results || !results.length){ dd.style.display='none'; return; }
+                dd.innerHTML = '';
+                results.forEach(function(r){
+                    var addr = r.address || {};
+                    var shortName = addr.city || addr.town || addr.village || addr.county || r.display_name.split(',')[0];
+                    var region = [addr.state, addr.country].filter(Boolean).join(', ');
+                    var item = document.createElement('div');
+                    item.style.cssText = 'padding:0.6rem 1rem;cursor:pointer;font-size:0.88rem;border-bottom:1px solid var(--border-light);transition:background 0.2s;';
+                    item.innerHTML = '<strong style="color:var(--text);">'+shortName+'</strong>'
+                        +(region ? '<span style="color:#999;font-size:0.8rem;"> — '+region+'</span>' : '');
+                    item.addEventListener('mouseenter', function(){ item.style.background='var(--cream)'; });
+                    item.addEventListener('mouseleave', function(){ item.style.background=''; });
+                    item.addEventListener('click', function(){
+                        _pLat = parseFloat(r.lat);
+                        _pLng = parseFloat(r.lon);
+                        _pCity = shortName + (region ? ', '+region : '');
+                        /* Derive timezone offset from longitude (nearest 0.5h) */
+                        _pTZ = Math.round(_pLng / 15 * 2) / 2;
+                        if(_pTZ < -12) _pTZ = -12;
+                        if(_pTZ > 14)  _pTZ = 14;
+                        document.getElementById('panchang-city-input').value = shortName + (region ? ', '+region : '');
+                        dd.style.display = 'none';
+                        loadPanchangForDate(document.getElementById('panchang-date-picker').value || 'today');
+                    });
+                    dd.appendChild(item);
+                });
+                dd.style.display = 'block';
+            })
+            .catch(function(){ dd.style.display='none'; });
+    }, 320);
+}
+
+/* Close dropdown on outside click */
+document.addEventListener('click', function(e){
+    var dd  = document.getElementById('panchang-city-dropdown');
+    var inp = document.getElementById('panchang-city-input');
+    if(dd && inp && !inp.contains(e.target) && !dd.contains(e.target)){
+        dd.style.display = 'none';
     }
+});
+
+/* ── Init — no GPS needed ── */
+function displayTodaysPanchang(){
+    var inp = document.getElementById('panchang-city-input');
+    if(inp) inp.value = _pCity;   /* pre-fill with default city */
+    loadPanchangForDate('today');
 }
 
 window.addEventListener('load', displayTodaysPanchang);
