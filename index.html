@@ -4303,24 +4303,27 @@ function _findEndTime(Y,M,D,srMin,idxFn){
     var srH=srMin/60;
     var baseIdx=idxFn(Y,M,D,srH);
     for(var mins=srMin;mins<srMin+1500;mins+=5){
-        var totalMins=mins;
+        /* Skip right at midnight boundary (mins%1440 < 5) to avoid
+           calculation artifacts where JD rolls over */
+        if(mins%1440 < 5) continue;
         var dd=new Date(Y,M-1,D);
-        dd.setMinutes(dd.getMinutes()+totalMins-srMin);
+        dd.setMinutes(dd.getMinutes()+mins-srMin);
         var ny=dd.getFullYear(),nm=dd.getMonth()+1,nd=dd.getDate();
         var localH=(mins%1440)/60;
         if(idxFn(ny,nm,nd,localH)!==baseIdx){
             // Refine with 1-min steps
             for(var mm=mins-5;mm<=mins;mm++){
+                if(mm%1440 < 3) continue;
                 var dd2=new Date(Y,M-1,D);
                 dd2.setMinutes(dd2.getMinutes()+mm-srMin);
                 var ny2=dd2.getFullYear(),nm2=dd2.getMonth()+1,nd2=dd2.getDate();
                 if(idxFn(ny2,nm2,nd2,(mm%1440)/60)!==baseIdx){
                     var r=mm%1440;
-                    return (r<=10)?'Next day':_fmtM(r);
+                    return (mm>=1440)?_fmtM(r)+' (next day)':_fmtM(r);
                 }
             }
             var r2=mins%1440;
-            return (r2<=10)?'Next day':_fmtM(r2);
+            return (mins>=1440)?_fmtM(r2)+' (next day)':_fmtM(r2);
         }
     }
     return 'Next day';
