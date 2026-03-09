@@ -4277,7 +4277,7 @@ function _fmtM(m){
     return (h%12||12)+':'+(mn<10?'0':'')+mn+' '+ap;
 }
 
-/* ── Index functions — accept JD directly (no timezone hardcoding) ── */
+/* ── Index functions — accept JD directly ── */
 function _tithiIdx(jd){
     var ay=_ayan(jd);
     return Math.floor(_n(_n(_moonLon(jd)-ay)-_n(_sunLon(jd)-ay))/12);
@@ -4317,13 +4317,15 @@ function _findEndTime(Y,M,D,noonMin,idxFn){
 
     if(endJD === null) return 'Next day';
 
-    /* Convert endJD (UTC) back to local clock time */
+    /* Convert endJD (UTC) back to local clock time.
+       JD epoch is at NOON, so fractional part = hours since noon.
+       Adding 0.5 shifts epoch to midnight before taking the fraction. */
     var localJD   = endJD + _pTZ/24;
-    var localMins = Math.round((localJD - Math.floor(localJD)) * 1440);
-    if(localMins >= 1440){ localMins -= 1440; }
+    var localMins = Math.round(((localJD + 0.5) % 1) * 1440);
+    if(localMins < 0) localMins += 1440;
 
-    /* Is it next day? Compare with end of today in UTC JD */
-    var todayEndJD = _jd(Y,M,D, 24 - _pTZ);   // local midnight tonight → UTC JD
+    /* Is it next day? Compare with local midnight tonight in UTC JD */
+    var todayEndJD = _jd(Y,M,D, 24 - _pTZ);
     var isNextDay  = endJD >= todayEndJD;
 
     return _fmtM(localMins) + (isNextDay ? ' (next day)' : '');
