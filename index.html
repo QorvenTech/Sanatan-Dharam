@@ -501,7 +501,7 @@ body.dark-theme {
         <!-- TODAY'S PANCHANG CARD (auto‑updated) -->
         <div id="todays-panchang-container" class="panchang-today-card" style="background: var(--card-bg); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left: 6px solid var(--saffron);">
 
-            <!-- Header row with title + city search + date picker -->
+            <!-- Header row with title + date picker -->
             <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1rem;">
                 <h3 style="color: var(--saffron); font-size: 1.6rem;" data-en="📅 Today's Panchang" data-hi="📅 आज का पंचांग">📅 Today's Panchang</h3>
                 <div style="display:flex; gap:0.6rem; align-items:center; flex-wrap:wrap;">
@@ -4575,16 +4575,35 @@ function panchangCitySearch(val){
                     item.addEventListener('mouseenter', function(){ item.style.background='var(--cream)'; });
                     item.addEventListener('mouseleave', function(){ item.style.background=''; });
                     item.addEventListener('click', function(){
-                        _pLat = parseFloat(r.lat);
-                        _pLng = parseFloat(r.lon);
-                        _pCity = shortName + (region ? ', '+region : '');
-                        /* Derive timezone offset from longitude (nearest 0.5h) */
-                        _pTZ = Math.round(_pLng / 15 * 2) / 2;
-                        if(_pTZ < -12) _pTZ = -12;
-                        if(_pTZ > 14)  _pTZ = 14;
-                        document.getElementById('panchang-city-input').value = shortName + (region ? ', '+region : '');
+                        var lat = parseFloat(r.lat);
+                        var lng = parseFloat(r.lon);
+                        var cityLabel = shortName + (region ? ', '+region : '');
+                        document.getElementById('panchang-city-input').value = cityLabel;
                         dd.style.display = 'none';
-                        loadPanchangForDate(document.getElementById('panchang-date-picker').value || 'today');
+                        /* Show loading while we fetch accurate timezone */
+                        var loading = document.getElementById('panchang-loading');
+                        var content = document.getElementById('panchang-content');
+                        if(loading){ loading.innerHTML='🕐 Fetching timezone…'; loading.style.display='block'; }
+                        if(content){ content.style.display='none'; }
+                        /* Use Open-Meteo to get exact UTC offset for these coordinates */
+                        fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lng+'&timezone=auto&forecast_days=0')
+                            .then(function(tr){ return tr.json(); })
+                            .then(function(td){
+                                var utcOffsetSec = td.utc_offset_seconds || 0;
+                                _pLat  = lat;
+                                _pLng  = lng;
+                                _pCity = cityLabel;
+                                _pTZ   = utcOffsetSec / 3600;
+                                loadPanchangForDate(document.getElementById('panchang-date-picker').value || 'today');
+                            })
+                            .catch(function(){
+                                /* Fallback: longitude-based estimate if API fails */
+                                _pLat  = lat;
+                                _pLng  = lng;
+                                _pCity = cityLabel;
+                                _pTZ   = Math.round(lng / 15 * 2) / 2;
+                                loadPanchangForDate(document.getElementById('panchang-date-picker').value || 'today');
+                            });
                     });
                     dd.appendChild(item);
                 });
@@ -4603,10 +4622,12 @@ document.addEventListener('click', function(e){
     }
 });
 
-/* ── Init — no GPS needed ── */
+/* ── Init — use device timezone for default city (New Delhi) ── */
 function displayTodaysPanchang(){
     var inp = document.getElementById('panchang-city-input');
-    if(inp) inp.value = _pCity;   /* pre-fill with default city */
+    if(inp) inp.value = _pCity;
+    /* Use the browser's real timezone offset — same as the old GPS version */
+    _pTZ = -(new Date().getTimezoneOffset()) / 60;
     loadPanchangForDate('today');
 }
 
