@@ -4113,7 +4113,7 @@ function _jd(Y,M,D,h){
 /* ── Lahiri Ayanamsha (Chitrapaksha) ── */
 function _ayan(jd){
     var T=(jd-2451545.0)/36525.0;
-    // IAU standard Lahiri ayanamsha — T in Julian centuries, rate in arcsec/year → ×100
+    // IAU standard Lahiri ayanamsha
     return 23.85844 + T*(50.2958*100/3600) + T*T*(0.0002*100/3600);
 }
 
@@ -4315,10 +4315,12 @@ function _findEndTime(Y,M,D,srMin,idxFn){
                 dd2.setMinutes(dd2.getMinutes()+mm-srMin);
                 var ny2=dd2.getFullYear(),nm2=dd2.getMonth()+1,nd2=dd2.getDate();
                 if(idxFn(ny2,nm2,nd2,(mm%1440)/60)!==baseIdx){
-                    return _fmtM(mm%1440);
+                    var r=mm%1440;
+                    return (r<=10)?'Next day':_fmtM(r);
                 }
             }
-            return _fmtM(mins%1440);
+            var r2=mins%1440;
+            return (r2<=10)?'Next day':_fmtM(r2);
         }
     }
     return 'Next day';
@@ -4585,7 +4587,6 @@ function panchangCitySearch(val){
                         var content = document.getElementById('panchang-content');
                         if(loading){ loading.innerHTML='🕐 Fetching timezone…'; loading.style.display='block'; }
                         if(content){ content.style.display='none'; }
-                        /* Use Open-Meteo to get exact UTC offset for coordinates */
                         fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lng+'&timezone=auto&forecast_days=0')
                             .then(function(tr){ return tr.json(); })
                             .then(function(td){
