@@ -4113,8 +4113,8 @@ function _jd(Y,M,D,h){
 /* ── Lahiri Ayanamsha (Chitrapaksha) ── */
 function _ayan(jd){
     var T=(jd-2451545.0)/36525.0;
-    // IAU standard Lahiri ayanamsha
-    return 23.85844 + T*(50.2958/3600) + T*T*(0.0002/3600);
+    // IAU standard Lahiri ayanamsha — T in Julian centuries, rate in arcsec/year → ×100
+    return 23.85844 + T*(50.2958*100/3600) + T*T*(0.0002*100/3600);
 }
 
 /* ── High-precision Sun longitude (Meeus Ch.25, ±0.01°) ── */
@@ -4432,11 +4432,12 @@ function _muhurats(sr,ss,weekday){
 function _renderPanchang(p,srMin,ssMin,srFmt,ssFmt,city,dateLabel){
     var isHi=(typeof currentLang!=='undefined'&&currentLang==='hi');
 
-    // Compute end times
-    var tithiEnd    =_findEndTime(p.Y,p.M,p.D,srMin,_tithiIdx);
-    var nakshatraEnd=_findEndTime(p.Y,p.M,p.D,srMin,_nakshatraIdx);
-    var yogaEnd     =_findEndTime(p.Y,p.M,p.D,srMin,_yogaIdx);
-    var karanaEnd   =_findEndTime(p.Y,p.M,p.D,srMin,_karanaIdx);
+    // Compute end times — use noon (720 min) as reference, same as _calcPanchang uses noon IST
+    var noonMin = 720;
+    var tithiEnd    =_findEndTime(p.Y,p.M,p.D,noonMin,_tithiIdx);
+    var nakshatraEnd=_findEndTime(p.Y,p.M,p.D,noonMin,_nakshatraIdx);
+    var yogaEnd     =_findEndTime(p.Y,p.M,p.D,noonMin,_yogaIdx);
+    var karanaEnd   =_findEndTime(p.Y,p.M,p.D,noonMin,_karanaIdx);
     var endsAt=isHi?'समाप्ति: ':'Ends: ';
 
     function box(em,enLbl,hiLbl,val,endTime){
@@ -4580,24 +4581,21 @@ function panchangCitySearch(val){
                         var cityLabel = shortName + (region ? ', '+region : '');
                         document.getElementById('panchang-city-input').value = cityLabel;
                         dd.style.display = 'none';
-                        /* Show loading while we fetch accurate timezone */
                         var loading = document.getElementById('panchang-loading');
                         var content = document.getElementById('panchang-content');
                         if(loading){ loading.innerHTML='🕐 Fetching timezone…'; loading.style.display='block'; }
                         if(content){ content.style.display='none'; }
-                        /* Use Open-Meteo to get exact UTC offset for these coordinates */
+                        /* Use Open-Meteo to get exact UTC offset for coordinates */
                         fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lng+'&timezone=auto&forecast_days=0')
                             .then(function(tr){ return tr.json(); })
                             .then(function(td){
-                                var utcOffsetSec = td.utc_offset_seconds || 0;
                                 _pLat  = lat;
                                 _pLng  = lng;
                                 _pCity = cityLabel;
-                                _pTZ   = utcOffsetSec / 3600;
+                                _pTZ   = (td.utc_offset_seconds || 0) / 3600;
                                 loadPanchangForDate(document.getElementById('panchang-date-picker').value || 'today');
                             })
                             .catch(function(){
-                                /* Fallback: longitude-based estimate if API fails */
                                 _pLat  = lat;
                                 _pLng  = lng;
                                 _pCity = cityLabel;
@@ -4622,11 +4620,10 @@ document.addEventListener('click', function(e){
     }
 });
 
-/* ── Init — use device timezone for default city (New Delhi) ── */
+/* ── Init — use device timezone for default city ── */
 function displayTodaysPanchang(){
     var inp = document.getElementById('panchang-city-input');
     if(inp) inp.value = _pCity;
-    /* Use the browser's real timezone offset — same as the old GPS version */
     _pTZ = -(new Date().getTimezoneOffset()) / 60;
     loadPanchangForDate('today');
 }
