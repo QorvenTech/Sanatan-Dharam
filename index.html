@@ -4294,10 +4294,10 @@ function _karanaIdx(jd){
     return Math.floor(_n(_n(_moonLon(jd)-ay)-_n(_sunLon(jd)-ay))/6);
 }
 
-/* ── End-time finder — works entirely in JD, no midnight boundary bugs ── */
-function _findEndTime(Y,M,D,noonMin,idxFn){
-    /* Convert local noon to UTC JD using _pTZ (e.g. 5.5 for IST) */
-    var startJD = _jd(Y,M,D, 12 - _pTZ);
+/* ── End-time finder — starts from sunrise JD, no midnight boundary bugs ── */
+function _findEndTime(Y,M,D,srMin,idxFn){
+    /* Convert local sunrise to UTC JD. Works for any timezone. */
+    var startJD = _jd(Y,M,D, srMin/60 - _pTZ);
     var baseIdx = idxFn(startJD);
     var endJD   = null;
 
@@ -4318,7 +4318,7 @@ function _findEndTime(Y,M,D,noonMin,idxFn){
     if(endJD === null) return 'Next day';
 
     /* Convert endJD (UTC) back to local clock time.
-       JD epoch is at noon, so +0.5 shifts epoch to midnight before taking fraction. */
+       JD epoch is at noon, +0.5 shifts epoch to midnight before taking fraction. */
     var localJD   = endJD + _pTZ/24;
     var localMins = Math.round(((localJD + 0.5) % 1) * 1440);
     if(localMins < 0) localMins += 1440;
@@ -4331,8 +4331,12 @@ function _findEndTime(Y,M,D,noonMin,idxFn){
 }
 
 /* ── Core Panchang ── */
-function _calcPanchang(Y,M,D){
-    var jd=_jd(Y,M,D,12-_pTZ); // local noon for any city (IST: 12-5.5=6.5, same as before)
+function _calcPanchang(Y,M,D,srMin){
+    /* Use sunrise as reference — traditional panchang rule.
+       srMin = local sunrise in minutes since midnight.
+       Convert to UTC hours: srMin/60 - _pTZ  (works for any timezone, incl. negative) */
+    var utcH = (srMin !== undefined) ? (srMin/60 - _pTZ) : (6.5);
+    var jd=_jd(Y,M,D,utcH);
     var ayan=_ayan(jd);
     var sunS=_n(_sunLon(jd)-ayan);
     var moonS=_n(_moonLon(jd)-ayan);
@@ -4438,12 +4442,11 @@ function _muhurats(sr,ss,weekday){
 function _renderPanchang(p,srMin,ssMin,srFmt,ssFmt,city,dateLabel){
     var isHi=(typeof currentLang!=='undefined'&&currentLang==='hi');
 
-    // Compute end times — use noon (720 min) as reference, same as _calcPanchang uses local noon
-    var noonMin = 720;
-    var tithiEnd    =_findEndTime(p.Y,p.M,p.D,noonMin,_tithiIdx);
-    var nakshatraEnd=_findEndTime(p.Y,p.M,p.D,noonMin,_nakshatraIdx);
-    var yogaEnd     =_findEndTime(p.Y,p.M,p.D,noonMin,_yogaIdx);
-    var karanaEnd   =_findEndTime(p.Y,p.M,p.D,noonMin,_karanaIdx);
+    // Compute end times — starting from sunrise, matching _calcPanchang's sunrise reference
+    var tithiEnd    =_findEndTime(p.Y,p.M,p.D,srMin,_tithiIdx);
+    var nakshatraEnd=_findEndTime(p.Y,p.M,p.D,srMin,_nakshatraIdx);
+    var yogaEnd     =_findEndTime(p.Y,p.M,p.D,srMin,_yogaIdx);
+    var karanaEnd   =_findEndTime(p.Y,p.M,p.D,srMin,_karanaIdx);
     var endsAt=isHi?'समाप्ति: ':'Ends: ';
 
     function box(em,enLbl,hiLbl,val,endTime){
@@ -4545,8 +4548,8 @@ function loadPanchangForDate(dateVal){
             date=new Date(parseInt(pts[0]),parseInt(pts[1])-1,parseInt(pts[2]));
         }
         var Y=date.getFullYear(),M=date.getMonth()+1,D=date.getDate();
-        var p=_calcPanchang(Y,M,D);
         var ss=_sunriseSunset(Y,M,D,_pLat,_pLng,_pTZ);
+        var p=_calcPanchang(Y,M,D,ss.sunrise);
         var srFmt=_fmtM(ss.sunrise),ssFmt=_fmtM(ss.sunset);
         var dateLabel=date.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
         container.innerHTML=_renderPanchang(p,ss.sunrise,ss.sunset,srFmt,ssFmt,_pCity,dateLabel);
