@@ -536,7 +536,7 @@ body.dark-theme {
                     // Years — current year ±5
                     var curY=new Date().getFullYear();
                     if(!yrEl.options.length){
-                        for(var i=curY-5;i<=curY+5;i++){var o=document.createElement('option');o.value=i;o.text=i;yrEl.appendChild(o);}
+                        for(var i=1900;i<=2100;i++){var o=document.createElement('option');o.value=i;o.text=i;yrEl.appendChild(o);}
                     }
                     dayEl.value=d; monEl.value=m; yrEl.value=y;
                 }
