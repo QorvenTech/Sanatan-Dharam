@@ -514,18 +514,14 @@ body.dark-theme {
                     </button>
                 </div>
             </div>
-
             <!-- City Search Row -->
             <div style="margin-bottom:1.2rem;">
                 <div style="position:relative; max-width:340px;">
-                    <input type="text" id="panchang-city-input"
-                        placeholder="📍 Search city... (e.g. Vidisha, Mumbai)"
-                        autocomplete="off"
+                    <input type="text" id="panchang-city-input" placeholder="📍 Search city... (e.g. Vidisha, Mumbai)" autocomplete="off"
                         style="width:100%; padding:0.5rem 1rem; border:2px solid var(--saffron); border-radius:20px; background:var(--card-bg); color:var(--text); font-family:inherit; font-size:0.9rem; outline:none;"
                         oninput="panchangCitySearch(this.value)" />
                     <div id="panchang-city-dropdown"
-                        style="display:none; position:absolute; top:calc(100% + 4px); left:0; right:0; background:var(--card-bg); border:2px solid var(--saffron); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.18); z-index:1000; max-height:230px; overflow-y:auto;">
-                    </div>
+                        style="display:none; position:absolute; top:calc(100% + 4px); left:0; right:0; background:var(--card-bg); border:2px solid var(--saffron); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.18); z-index:1000; max-height:230px; overflow-y:auto;"></div>
                 </div>
                 <div style="font-size:0.78rem; color:#999; margin-top:0.35rem; padding-left:0.5rem;">Type any city name from India or anywhere in the world</div>
             </div>
@@ -4089,9 +4085,9 @@ showSection = function(id) {
 
 // =====================================================
 //  🕉️  HIGH-PRECISION PANCHANG ENGINE
-//  Core: Swiss Ephemeris WASM (Moshier built-in)
+//  Core: Swiss Ephemeris WASM (prolaxu/swisseph-wasm)
 //  Fallback: Meeus if WASM unavailable
-//  Ayanamsha: Lahiri (IAU standard) via Swiss Eph
+//  Ayanamsha: Lahiri (SE_SIDM_LAHIRI) via Swiss Eph
 //  Sunrise: NOAA algorithm
 //  End times: JD-based binary search from sunrise
 // =====================================================
@@ -4110,37 +4106,39 @@ function _jd(Y,M,D,h){
 }
 
 /* ── Swiss Ephemeris WASM ── loads once, cached by browser forever after ── */
-var _sweEph = null, _sweReady = false, _sweInitPromise = null;
+var _swe = null, _sweReady = false, _sweInitPromise = null;
 
 function _initSwissEph(){
     if(_sweInitPromise) return _sweInitPromise;
-    _sweInitPromise=(async function(){
+    _sweInitPromise = (async function(){
         try{
-            var mod=await import('https://esm.sh/@fusionstrings/swisseph-wasi');
-            _sweEph=await mod.load();
-            if(_sweEph.swe_set_sid_mode) _sweEph.swe_set_sid_mode(1,0,0); // Lahiri=1
-            _sweReady=true;
-            console.log('Swiss Ephemeris ready');
+            var mod = await import('https://cdn.jsdelivr.net/gh/prolaxu/swisseph-wasm@main/src/swisseph.js');
+            var SwissEph = mod.default || mod;
+            _swe = new SwissEph();
+            await _swe.initSwissEph();
+            _swe.set_sid_mode(_swe.SE_SIDM_LAHIRI, 0, 0); // Lahiri ayanamsha
+            _sweReady = true;
+            console.log('✅ Swiss Ephemeris ready — Drik-level accuracy active');
         }catch(e){
-            console.warn('Swiss Ephemeris unavailable, using Meeus fallback:',e.message||e);
-            _sweReady=false; _sweEph=null;
+            console.warn('⚠️ Swiss Ephemeris unavailable, using Meeus fallback:', e.message||e);
+            _sweReady = false; _swe = null;
         }
     })();
     return _sweInitPromise;
 }
 
 /* ── Meeus fallbacks (kept as backup) ── */
-function _ayanMeeus(jd){var T=(jd-2451545.0)/36525.0;return 23.85844+T*(50.2958*100/3600)+T*T*(0.0002*100/3600);}
-
+function _ayanMeeus(jd){
+    var T=(jd-2451545.0)/36525.0;
+    return 23.85844+T*(50.2958*100/3600)+T*T*(0.0002*100/3600);
+}
 function _sunLonMeeus(jd){
     var T=(jd-2451545.0)/36525.0,T2=T*T;
     var L0=_n(280.46646+36000.76983*T+0.0003032*T2);
     var M=_n(357.52911+35999.05029*T-0.0001537*T2),Mr=_r(M);
     var C=(1.914602-0.004817*T-0.000014*T2)*Math.sin(Mr)+(0.019993-0.000101*T)*Math.sin(2*Mr)+0.000289*Math.sin(3*Mr);
-    var omega=_n(125.04-1934.136*T);
-    return _n(L0+C-0.00569-0.00478*Math.sin(_r(omega)));
+    return _n(L0+C-0.00569-0.00478*Math.sin(_r(_n(125.04-1934.136*T))));
 }
-
 function _moonLonMeeus(jd){
     var T=(jd-2451545.0)/36525.0,T2=T*T,T3=T2*T,T4=T3*T;
     var Lp=_n(218.3164477+481267.88123421*T-0.0015786*T2+T3/538841-T4/65194000);
@@ -4179,25 +4177,29 @@ function _moonLonMeeus(jd){
 
 /* ── Primary functions — Swiss Ephemeris when ready, Meeus as fallback ── */
 function _ayan(jd){
-    if(_sweReady&&_sweEph&&_sweEph.swe_get_ayanamsa_ut){
-        try{return _sweEph.swe_get_ayanamsa_ut(jd);}catch(e){}
+    if(_sweReady && _swe){
+        try{
+            var a = _swe.get_ayanamsa_ut(jd);
+            if(typeof a === 'number' && !isNaN(a)) return a;
+        }catch(e){}
     }
     return _ayanMeeus(jd);
 }
 function _sunLon(jd){
-    if(_sweReady&&_sweEph){
+    if(_sweReady && _swe){
         try{
-            var r=_sweEph.swe_calc_ut(jd,0,4); // SE_SUN=0, SEFLG_MOSEPH=4
-            if(r&&r.xx&&r.xx[0]!==undefined) return _n(r.xx[0]);
+            /* SEFLG_SPEED=256, tropical longitude */
+            var r = _swe.calc_ut(jd, _swe.SE_SUN, _swe.SEFLG_SPEED);
+            if(Array.isArray(r) && typeof r[0]==='number' && !isNaN(r[0])) return _n(r[0]);
         }catch(e){}
     }
     return _sunLonMeeus(jd);
 }
 function _moonLon(jd){
-    if(_sweReady&&_sweEph){
+    if(_sweReady && _swe){
         try{
-            var r=_sweEph.swe_calc_ut(jd,1,4); // SE_MOON=1, SEFLG_MOSEPH=4
-            if(r&&r.xx&&r.xx[0]!==undefined) return _n(r.xx[0]);
+            var r = _swe.calc_ut(jd, _swe.SE_MOON, _swe.SEFLG_SPEED);
+            if(Array.isArray(r) && typeof r[0]==='number' && !isNaN(r[0])) return _n(r[0]);
         }catch(e){}
     }
     return _moonLonMeeus(jd);
@@ -4254,16 +4256,12 @@ function _karanaIdx(jd){
 
 /* ── End-time finder — JD-based from sunrise, no midnight bugs ── */
 function _findEndTime(Y,M,D,srMin,idxFn){
-    /* Convert local sunrise → UTC JD */
     var startJD=_jd(Y,M,D,srMin/60-_pTZ);
     var baseIdx=idxFn(startJD);
     var endJD=null;
-
-    /* Coarse: 5-min steps, up to 25 hrs */
     for(var step=1;step<=300;step++){
         var jd=startJD+step*5/1440;
         if(idxFn(jd)!==baseIdx){
-            /* Refine: 1-min steps */
             for(var s=(step-1)*5+1;s<=step*5;s++){
                 var jd2=startJD+s/1440;
                 if(idxFn(jd2)!==baseIdx){endJD=jd2;break;}
@@ -4272,24 +4270,17 @@ function _findEndTime(Y,M,D,srMin,idxFn){
             break;
         }
     }
-
     if(endJD===null)return 'Next day';
-
-    /* Convert endJD (UTC) → local clock. JD epoch=noon, +0.5 shifts to midnight. */
     var localJD=endJD+_pTZ/24;
     var localMins=Math.round(((localJD+0.5)%1)*1440);
     if(localMins<0)localMins+=1440;
-
     var todayEndJD=_jd(Y,M,D,24-_pTZ);
     var isNextDay=endJD>=todayEndJD;
     return _fmtM(localMins)+(isNextDay?' (next day)':'');
 }
 
-/* ── Core Panchang ── */
+/* ── Core Panchang ── uses sunrise as reference (traditional rule) ── */
 function _calcPanchang(Y,M,D,srMin){
-    /* Use sunrise as reference — traditional panchang rule.
-       For Indian cities: srMin≈393 → utcH=6.55 (same as old 6.5, zero change)
-       For any other city: correct local sunrise used automatically */
     var utcH=(srMin!==undefined)?(srMin/60-_pTZ):6.5;
     var jd=_jd(Y,M,D,utcH);
     var ayan=_ayan(jd);
@@ -4489,14 +4480,12 @@ async function loadPanchangForDate(dateVal){
     var container=document.getElementById('panchang-content');
     var loading=document.getElementById('panchang-loading');
     if(!container||!loading)return;
-    /* Show friendly message: first load mentions Swiss Ephemeris, subsequent just shows calculating */
     loading.innerHTML=(!_sweReady&&!_sweInitPromise)
-        ?'🔭 Loading Swiss Ephemeris (first time only — will be instant next visit)…'
+        ?'🔭 Loading Swiss Ephemeris (first time only)…'
         :'🙏 Calculating Panchang…';
     loading.style.display='block';
     container.style.display='none';
     try{
-        /* Wait for Swiss Ephemeris WASM to initialise (instant if already done) */
         await _initSwissEph();
         loading.innerHTML='🙏 Calculating Panchang…';
         var date;
@@ -4524,7 +4513,6 @@ async function loadPanchangForDate(dateVal){
 
 /* ── City Search Autocomplete ── */
 var _citySearchTimer=null;
-
 function panchangCitySearch(val){
     clearTimeout(_citySearchTimer);
     var dd=document.getElementById('panchang-city-dropdown');
@@ -4540,27 +4528,20 @@ function panchangCitySearch(val){
                     var shortName=addr.city||addr.town||addr.village||addr.county||r.display_name.split(',')[0];
                     var region=[addr.state,addr.country].filter(Boolean).join(', ');
                     var item=document.createElement('div');
-                    item.style.cssText='padding:0.6rem 1rem;cursor:pointer;font-size:0.88rem;border-bottom:1px solid var(--border-light);transition:background 0.2s;';
-                    item.innerHTML='<strong style="color:var(--text);">'+shortName+'</strong>'+(region?'<span style="color:#999;font-size:0.8rem;"> — '+region+'</span>':'');
-                    item.addEventListener('mouseenter',function(){item.style.background='var(--cream)';});
-                    item.addEventListener('mouseleave',function(){item.style.background='';});
+                    item.style.cssText='padding:0.6rem 1rem;cursor:pointer;font-size:0.88rem;border-bottom:1px solid var(--border-light);';
+                    item.innerHTML='<strong>'+shortName+'</strong>'+(region?'<span style="color:#999;font-size:0.8rem;"> — '+region+'</span>':'');
                     item.addEventListener('click',function(){
                         var lat=parseFloat(r.lat),lng=parseFloat(r.lon);
                         var cityLabel=shortName+(region?', '+region:'');
                         document.getElementById('panchang-city-input').value=cityLabel;
                         dd.style.display='none';
-                        var loading=document.getElementById('panchang-loading');
-                        var content=document.getElementById('panchang-content');
-                        if(loading){loading.innerHTML='🕐 Fetching timezone…';loading.style.display='block';}
-                        if(content)content.style.display='none';
                         fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lng+'&timezone=auto&forecast_days=0')
                             .then(function(tr){return tr.json();})
                             .then(function(td){
                                 _pLat=lat;_pLng=lng;_pCity=cityLabel;
                                 _pTZ=(td.utc_offset_seconds||0)/3600;
                                 loadPanchangForDate(document.getElementById('panchang-date-picker').value||'today');
-                            })
-                            .catch(function(){
+                            }).catch(function(){
                                 _pLat=lat;_pLng=lng;_pCity=cityLabel;
                                 _pTZ=Math.round(lng/15*2)/2;
                                 loadPanchangForDate(document.getElementById('panchang-date-picker').value||'today');
@@ -4569,18 +4550,16 @@ function panchangCitySearch(val){
                     dd.appendChild(item);
                 });
                 dd.style.display='block';
-            })
-            .catch(function(){dd.style.display='none';});
+            }).catch(function(){dd.style.display='none';});
     },320);
 }
-
 document.addEventListener('click',function(e){
     var dd=document.getElementById('panchang-city-dropdown');
     var inp=document.getElementById('panchang-city-input');
     if(dd&&inp&&!inp.contains(e.target)&&!dd.contains(e.target))dd.style.display='none';
 });
 
-/* ── Init — use device timezone for default city ── */
+/* ── Init ── */
 function displayTodaysPanchang(){
     var inp=document.getElementById('panchang-city-input');
     if(inp)inp.value=_pCity;
@@ -4588,7 +4567,7 @@ function displayTodaysPanchang(){
     loadPanchangForDate('today');
 }
 
-window.addEventListener('load',displayTodaysPanchang);
+window.addEventListener('load', displayTodaysPanchang);
 
 // Language patch — re-renders panchang fully in correct language
 (function(){
