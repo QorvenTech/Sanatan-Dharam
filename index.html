@@ -514,16 +514,17 @@ body.dark-theme {
                     </button>
                 </div>
             </div>
-            <!-- City Search Row -->
+
+            <!-- City search row -->
             <div style="margin-bottom:1.2rem;">
-                <div style="position:relative; max-width:340px;">
-                    <input type="text" id="panchang-city-input" placeholder="📍 Search city... (e.g. Vidisha, Mumbai)" autocomplete="off"
-                        style="width:100%; padding:0.5rem 1rem; border:2px solid var(--saffron); border-radius:20px; background:var(--card-bg); color:var(--text); font-family:inherit; font-size:0.9rem; outline:none;"
+                <div style="position:relative; max-width:360px;">
+                    <input type="text" id="panchang-city-input" placeholder="📍 Search city… (e.g. Chandigarh, Mumbai)" autocomplete="off"
+                        style="width:100%; padding:0.5rem 1rem; border:2px solid var(--saffron); border-radius:20px; background:var(--card-bg); color:var(--text); font-family:inherit; font-size:0.9rem; outline:none; box-sizing:border-box;"
                         oninput="panchangCitySearch(this.value)" />
                     <div id="panchang-city-dropdown"
-                        style="display:none; position:absolute; top:calc(100% + 4px); left:0; right:0; background:var(--card-bg); border:2px solid var(--saffron); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.18); z-index:1000; max-height:230px; overflow-y:auto;"></div>
+                        style="display:none; position:absolute; top:calc(100% + 4px); left:0; right:0; background:var(--card-bg); border:2px solid var(--saffron); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.25); z-index:1000; max-height:230px; overflow-y:auto;"></div>
                 </div>
-                <div style="font-size:0.78rem; color:#999; margin-top:0.35rem; padding-left:0.5rem;">Type any city name from India or anywhere in the world</div>
+                <div style="font-size:0.78rem; color:#999; margin-top:0.3rem; padding-left:0.5rem;">Works for any city worldwide</div>
             </div>
 
             <div id="panchang-loading" style="text-align: center; padding: 2rem; font-size:1.1rem;">🙏 Calculating Panchang…</div>
@@ -4085,9 +4086,9 @@ showSection = function(id) {
 
 // =====================================================
 //  🕉️  HIGH-PRECISION PANCHANG ENGINE
-//  Core: Swiss Ephemeris WASM (prolaxu/swisseph-wasm)
+//  Core: Swiss Ephemeris WASM (self-hosted /swisseph.js)
 //  Fallback: Meeus if WASM unavailable
-//  Ayanamsha: Lahiri (SE_SIDM_LAHIRI) via Swiss Eph
+//  Ayanamsha: Lahiri via Swiss Ephemeris
 //  Sunrise: NOAA algorithm
 //  End times: JD-based binary search from sunrise
 // =====================================================
@@ -4105,18 +4106,19 @@ function _jd(Y,M,D,h){
     return Math.floor(365.25*(Y+4716))+Math.floor(30.6001*(M+1))+D+h/24+B-1524.5;
 }
 
-/* ── Swiss Ephemeris WASM ── loads once, cached by browser forever after ── */
+/* ── Swiss Ephemeris WASM ── self-hosted, no CORS issues ── */
 var _swe = null, _sweReady = false, _sweInitPromise = null;
 
 function _initSwissEph(){
     if(_sweInitPromise) return _sweInitPromise;
     _sweInitPromise = (async function(){
         try{
-            var mod = await import('https://cdn.jsdelivr.net/gh/prolaxu/swisseph-wasm@main/src/swisseph.js');
+            /* Load from same domain — no CORS, no browser security block */
+            var mod = await import('/swisseph.js');
             var SwissEph = mod.default || mod;
             _swe = new SwissEph();
             await _swe.initSwissEph();
-            _swe.set_sid_mode(_swe.SE_SIDM_LAHIRI, 0, 0); // Lahiri ayanamsha
+            _swe.set_sid_mode(_swe.SE_SIDM_LAHIRI, 0, 0);
             _sweReady = true;
             console.log('✅ Swiss Ephemeris ready — Drik-level accuracy active');
         }catch(e){
@@ -4127,7 +4129,7 @@ function _initSwissEph(){
     return _sweInitPromise;
 }
 
-/* ── Meeus fallbacks (kept as backup) ── */
+/* ── Meeus fallbacks ── */
 function _ayanMeeus(jd){
     var T=(jd-2451545.0)/36525.0;
     return 23.85844+T*(50.2958*100/3600)+T*T*(0.0002*100/3600);
@@ -4177,29 +4179,28 @@ function _moonLonMeeus(jd){
 
 /* ── Primary functions — Swiss Ephemeris when ready, Meeus as fallback ── */
 function _ayan(jd){
-    if(_sweReady && _swe){
+    if(_sweReady&&_swe){
         try{
-            var a = _swe.get_ayanamsa_ut(jd);
-            if(typeof a === 'number' && !isNaN(a)) return a;
+            var a=_swe.get_ayanamsa_ut(jd);
+            if(typeof a==='number'&&!isNaN(a))return a;
         }catch(e){}
     }
     return _ayanMeeus(jd);
 }
 function _sunLon(jd){
-    if(_sweReady && _swe){
+    if(_sweReady&&_swe){
         try{
-            /* SEFLG_SPEED=256, tropical longitude */
-            var r = _swe.calc_ut(jd, _swe.SE_SUN, _swe.SEFLG_SPEED);
-            if(Array.isArray(r) && typeof r[0]==='number' && !isNaN(r[0])) return _n(r[0]);
+            var r=_swe.calc_ut(jd,_swe.SE_SUN,_swe.SEFLG_SWIEPH|_swe.SEFLG_SPEED);
+            if(Array.isArray(r)&&typeof r[0]==='number'&&!isNaN(r[0]))return _n(r[0]);
         }catch(e){}
     }
     return _sunLonMeeus(jd);
 }
 function _moonLon(jd){
-    if(_sweReady && _swe){
+    if(_sweReady&&_swe){
         try{
-            var r = _swe.calc_ut(jd, _swe.SE_MOON, _swe.SEFLG_SPEED);
-            if(Array.isArray(r) && typeof r[0]==='number' && !isNaN(r[0])) return _n(r[0]);
+            var r=_swe.calc_ut(jd,_swe.SE_MOON,_swe.SEFLG_SWIEPH|_swe.SEFLG_SPEED);
+            if(Array.isArray(r)&&typeof r[0]==='number'&&!isNaN(r[0]))return _n(r[0]);
         }catch(e){}
     }
     return _moonLonMeeus(jd);
@@ -4238,34 +4239,19 @@ function _fmtM(m){
 }
 
 /* ── Index functions — accept JD directly ── */
-function _tithiIdx(jd){
-    var ay=_ayan(jd);
-    return Math.floor(_n(_n(_moonLon(jd)-ay)-_n(_sunLon(jd)-ay))/12);
-}
-function _nakshatraIdx(jd){
-    return Math.floor(_n(_moonLon(jd)-_ayan(jd))/(360/27))%27;
-}
-function _yogaIdx(jd){
-    var ay=_ayan(jd);
-    return Math.floor(_n(_n(_sunLon(jd)-ay)+_n(_moonLon(jd)-ay))/(360/27))%27;
-}
-function _karanaIdx(jd){
-    var ay=_ayan(jd);
-    return Math.floor(_n(_n(_moonLon(jd)-ay)-_n(_sunLon(jd)-ay))/6);
-}
+function _tithiIdx(jd){var ay=_ayan(jd);return Math.floor(_n(_n(_moonLon(jd)-ay)-_n(_sunLon(jd)-ay))/12);}
+function _nakshatraIdx(jd){return Math.floor(_n(_moonLon(jd)-_ayan(jd))/(360/27))%27;}
+function _yogaIdx(jd){var ay=_ayan(jd);return Math.floor(_n(_n(_sunLon(jd)-ay)+_n(_moonLon(jd)-ay))/(360/27))%27;}
+function _karanaIdx(jd){var ay=_ayan(jd);return Math.floor(_n(_n(_moonLon(jd)-ay)-_n(_sunLon(jd)-ay))/6);}
 
-/* ── End-time finder — JD-based from sunrise, no midnight bugs ── */
+/* ── End-time finder — JD-based from sunrise ── */
 function _findEndTime(Y,M,D,srMin,idxFn){
     var startJD=_jd(Y,M,D,srMin/60-_pTZ);
-    var baseIdx=idxFn(startJD);
-    var endJD=null;
+    var baseIdx=idxFn(startJD),endJD=null;
     for(var step=1;step<=300;step++){
         var jd=startJD+step*5/1440;
         if(idxFn(jd)!==baseIdx){
-            for(var s=(step-1)*5+1;s<=step*5;s++){
-                var jd2=startJD+s/1440;
-                if(idxFn(jd2)!==baseIdx){endJD=jd2;break;}
-            }
+            for(var s=(step-1)*5+1;s<=step*5;s++){var jd2=startJD+s/1440;if(idxFn(jd2)!==baseIdx){endJD=jd2;break;}}
             if(endJD===null)endJD=jd;
             break;
         }
@@ -4274,12 +4260,10 @@ function _findEndTime(Y,M,D,srMin,idxFn){
     var localJD=endJD+_pTZ/24;
     var localMins=Math.round(((localJD+0.5)%1)*1440);
     if(localMins<0)localMins+=1440;
-    var todayEndJD=_jd(Y,M,D,24-_pTZ);
-    var isNextDay=endJD>=todayEndJD;
-    return _fmtM(localMins)+(isNextDay?' (next day)':'');
+    return _fmtM(localMins)+(_jd(Y,M,D,24-_pTZ)<=endJD?' (next day)':'');
 }
 
-/* ── Core Panchang ── uses sunrise as reference (traditional rule) ── */
+/* ── Core Panchang ── */
 function _calcPanchang(Y,M,D,srMin){
     var utcH=(srMin!==undefined)?(srMin/60-_pTZ):6.5;
     var jd=_jd(Y,M,D,utcH);
@@ -4481,7 +4465,7 @@ async function loadPanchangForDate(dateVal){
     var loading=document.getElementById('panchang-loading');
     if(!container||!loading)return;
     loading.innerHTML=(!_sweReady&&!_sweInitPromise)
-        ?'🔭 Loading Swiss Ephemeris (first time only)…'
+        ?'🔭 Loading Swiss Ephemeris (first time only — instant next visit)…'
         :'🙏 Calculating Panchang…';
     loading.style.display='block';
     container.style.display='none';
@@ -4519,38 +4503,40 @@ function panchangCitySearch(val){
     if(!val||val.length<2){dd.style.display='none';return;}
     _citySearchTimer=setTimeout(function(){
         fetch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(val)+'&format=json&limit=8&addressdetails=1')
-            .then(function(r){return r.json();})
-            .then(function(results){
-                if(!results||!results.length){dd.style.display='none';return;}
-                dd.innerHTML='';
-                results.forEach(function(r){
-                    var addr=r.address||{};
-                    var shortName=addr.city||addr.town||addr.village||addr.county||r.display_name.split(',')[0];
-                    var region=[addr.state,addr.country].filter(Boolean).join(', ');
-                    var item=document.createElement('div');
-                    item.style.cssText='padding:0.6rem 1rem;cursor:pointer;font-size:0.88rem;border-bottom:1px solid var(--border-light);';
-                    item.innerHTML='<strong>'+shortName+'</strong>'+(region?'<span style="color:#999;font-size:0.8rem;"> — '+region+'</span>':'');
-                    item.addEventListener('click',function(){
-                        var lat=parseFloat(r.lat),lng=parseFloat(r.lon);
-                        var cityLabel=shortName+(region?', '+region:'');
-                        document.getElementById('panchang-city-input').value=cityLabel;
-                        dd.style.display='none';
-                        fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lng+'&timezone=auto&forecast_days=0')
-                            .then(function(tr){return tr.json();})
-                            .then(function(td){
-                                _pLat=lat;_pLng=lng;_pCity=cityLabel;
-                                _pTZ=(td.utc_offset_seconds||0)/3600;
-                                loadPanchangForDate(document.getElementById('panchang-date-picker').value||'today');
-                            }).catch(function(){
-                                _pLat=lat;_pLng=lng;_pCity=cityLabel;
-                                _pTZ=Math.round(lng/15*2)/2;
-                                loadPanchangForDate(document.getElementById('panchang-date-picker').value||'today');
-                            });
+        .then(function(r){return r.json();})
+        .then(function(results){
+            if(!results||!results.length){dd.style.display='none';return;}
+            dd.innerHTML='';
+            results.forEach(function(r){
+                var addr=r.address||{};
+                var shortName=addr.city||addr.town||addr.village||addr.county||r.display_name.split(',')[0];
+                var region=[addr.state,addr.country].filter(Boolean).join(', ');
+                var item=document.createElement('div');
+                item.style.cssText='padding:0.6rem 1rem;cursor:pointer;font-size:0.88rem;border-bottom:1px solid rgba(255,255,255,0.1);';
+                item.onmouseover=function(){this.style.background='rgba(255,153,0,0.15)';};
+                item.onmouseout=function(){this.style.background='';};
+                item.innerHTML='<strong>'+shortName+'</strong>'+(region?'<span style="color:#999;font-size:0.8rem;"> — '+region+'</span>':'');
+                item.addEventListener('click',function(){
+                    var lat=parseFloat(r.lat),lng=parseFloat(r.lon);
+                    var cityLabel=shortName+(region?', '+region:'');
+                    document.getElementById('panchang-city-input').value=cityLabel;
+                    dd.style.display='none';
+                    fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lng+'&timezone=auto&forecast_days=0')
+                    .then(function(tr){return tr.json();})
+                    .then(function(td){
+                        _pLat=lat;_pLng=lng;_pCity=cityLabel;
+                        _pTZ=(td.utc_offset_seconds||0)/3600;
+                        loadPanchangForDate(document.getElementById('panchang-date-picker').value||'today');
+                    }).catch(function(){
+                        _pLat=lat;_pLng=lng;_pCity=cityLabel;
+                        _pTZ=Math.round(lng/15*2)/2;
+                        loadPanchangForDate(document.getElementById('panchang-date-picker').value||'today');
                     });
-                    dd.appendChild(item);
                 });
-                dd.style.display='block';
-            }).catch(function(){dd.style.display='none';});
+                dd.appendChild(item);
+            });
+            dd.style.display='block';
+        }).catch(function(){dd.style.display='none';});
     },320);
 }
 document.addEventListener('click',function(e){
