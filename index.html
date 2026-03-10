@@ -4193,10 +4193,13 @@ function _findEndTime(Y,M,D,srMin,idxFn){
 function _sunriseSunset(Y,M,D,lat,lng,tzOffsetHours){
     if(typeof Astronomy!=='undefined'){
         try{
-            var startUTC=new Date(Date.UTC(Y,M-1,D,0,0,0));
+            // Start search from local midnight converted to UTC.
+            // e.g. Melbourne UTC+11: local midnight = UTC-11h, so search begins
+            // before their sunrise — not after it (which caused 1-day-ahead error).
+            var localMidnightUTC=new Date(Date.UTC(Y,M-1,D,0,0,0)-tzOffsetHours*3600000);
             var obs=new Astronomy.Observer(lat,lng,0);
-            var sr=Astronomy.SearchRiseSet(Astronomy.Body.Sun,obs,+1,startUTC,1);
-            var ss=Astronomy.SearchRiseSet(Astronomy.Body.Sun,obs,-1,startUTC,1);
+            var sr=Astronomy.SearchRiseSet(Astronomy.Body.Sun,obs,+1,localMidnightUTC,1);
+            var ss=Astronomy.SearchRiseSet(Astronomy.Body.Sun,obs,-1,localMidnightUTC,1);
             if(sr&&ss){
                 var srM=(sr.date.getUTCHours()*60+sr.date.getUTCMinutes()+sr.date.getUTCSeconds()/60)+tzOffsetHours*60;
                 var ssM=(ss.date.getUTCHours()*60+ss.date.getUTCMinutes()+ss.date.getUTCSeconds()/60)+tzOffsetHours*60;
