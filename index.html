@@ -4347,29 +4347,29 @@ function _calcPanchang(Y,M,D,srMin){
 
 /* ── Muhurats ── */
 var _rahuSeg=[8,2,7,5,6,4,3];
-function _muhurats(sr,ss,weekday,prevSS){
+function _muhurats(sr,ss,weekday,prevSS,solNoon){
     var len=ss-sr, seg=len/8;
     var rS=sr+(_rahuSeg[weekday]-1)*seg;
     var gI=[7,6,5,4,3,2,1][weekday];
     var yI=[5,4,3,2,1,7,6][weekday];
-    var noon=(sr+ss)/2;
-    // Drik method: Brahma Muhurta uses dynamic night muhurta length
-    // Night = prev-day sunset → today sunrise (crosses midnight, so +1440)
-    // 15 muhurtas in a night; Brahma = last 2 of the night
+    // Use actual solar transit for noon display and Abhijit (Drik method)
+    // Falls back to arithmetic noon if solar transit unavailable
+    var noon = (solNoon !== undefined) ? solNoon : (sr+ss)/2;
+    var dm = len/15;  // day muhurta
     var nightDur = (sr + 1440) - (prevSS !== undefined ? prevSS : (ss - len));
-    var nm = nightDur / 15;  // one night muhurta in minutes
+    var nm = nightDur / 15;
     return{
         rahu:   _fmtM(rS)+' – '+_fmtM(rS+seg),
         gulika: _fmtM(sr+(gI-1)*seg)+' – '+_fmtM(sr+gI*seg),
         yama:   _fmtM(sr+(yI-1)*seg)+' – '+_fmtM(sr+yI*seg),
         brahma: _fmtM(sr-2*nm)+' – '+_fmtM(sr-nm),
-        abhijit:_fmtM(noon-24)+' – '+_fmtM(noon+24),
+        abhijit:_fmtM(noon-dm/2)+' – '+_fmtM(noon+dm/2),
         noon:   _fmtM(noon)
     };
 }
 
 /* ── Render HTML (bilingual) ── */
-function _renderPanchang(p,srMin,ssMin,srFmt,ssFmt,city,dateLabel,prevSS){
+function _renderPanchang(p,srMin,ssMin,srFmt,ssFmt,city,dateLabel,prevSS,solNoon){
     var isHi=(typeof currentLang!=='undefined'&&currentLang==='hi');
 
     // Compute end times
@@ -4395,7 +4395,7 @@ function _renderPanchang(p,srMin,ssMin,srFmt,ssFmt,city,dateLabel,prevSS){
           +'</div>';
     }
 
-    var mu=_muhurats(srMin,ssMin,p.weekday,prevSS);
+    var mu=_muhurats(srMin,ssMin,p.weekday,prevSS,solNoon);
     var L={
         sunTitle:   isHi?'☀️ सूर्य समय':'☀️ SUN TIMINGS',
         panchaTitle:isHi?'🕉️ पंचांग — पाँच अंग':'🕉️ PANCHA ANGA — FIVE LIMBS',
@@ -4483,10 +4483,24 @@ function loadPanchangForDate(dateVal){
             // Get previous day's sunset for accurate dynamic night-muhurta (Brahma Muhurta)
             var prevD=new Date(date); prevD.setDate(prevD.getDate()-1);
             var prevSS=_sunriseSunset(prevD.getFullYear(),prevD.getMonth()+1,prevD.getDate(),_pLat,_pLng,_pTZ).sunset;
+            // Get exact solar transit (solar noon) for pinpoint Abhijit accuracy
+            var solNoon=(ss.sunrise+ss.sunset)/2; // arithmetic fallback
+            if(typeof Astronomy!=='undefined'){
+                try{
+                    var obs=new Astronomy.Observer(_pLat,_pLng,0);
+                    var startUTC=new Date(Date.UTC(Y,M-1,D,0,0,0)-_pTZ*3600000);
+                    var transit=Astronomy.SearchHourAngle(Astronomy.Body.Sun,obs,0,startUTC,1);
+                    if(transit&&transit.time){
+                        var tUTC=transit.time.date;
+                        var tMin=(tUTC.getUTCHours()*60+tUTC.getUTCMinutes()+tUTC.getUTCSeconds()/60)+_pTZ*60;
+                        solNoon=((tMin%1440)+1440)%1440;
+                    }
+                }catch(e){}
+            }
             var p=_calcPanchang(Y,M,D,ss.sunrise);
             var srFmt=_fmtM(ss.sunrise),ssFmt=_fmtM(ss.sunset);
             var dateLabel=date.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-            container.innerHTML=_renderPanchang(p,ss.sunrise,ss.sunset,srFmt,ssFmt,_pCity,dateLabel,prevSS);
+            container.innerHTML=_renderPanchang(p,ss.sunrise,ss.sunset,srFmt,ssFmt,_pCity,dateLabel,prevSS,solNoon);
             loading.style.display='none';
             container.style.display='block';
             if(typeof Astronomy!=='undefined')
