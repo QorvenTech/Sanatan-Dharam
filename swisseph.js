@@ -37,7 +37,10 @@
  * licenses for Swiss Ephemeris.
  */
 
-import WasmSwissEph from '../wasm/swisseph.js';
+// Modified: load wasm glue from CDN (jsDelivr has CORS enabled)
+const _wasmGlueUrl = 'https://cdn.jsdelivr.net/gh/prolaxu/swisseph-wasm@main/wasm/swisseph.js';
+const _wasmBinUrl  = 'https://cdn.jsdelivr.net/gh/prolaxu/swisseph-wasm@main/wasm/';
+let WasmSwissEph;
 
 class SwissEph {
   // #region Constants
@@ -319,34 +322,20 @@ class SwissEph {
   
   // Initializes the Swiss Ephemeris WebAssembly module
   async initSwissEph() {
-    let moduleConfig = {};
-    
-    // In Node.js environment, we need to help locate the WASM and data files
-    if (typeof process !== 'undefined' && process.versions && process.versions.node) {
-      try {
-        const { fileURLToPath } = await import('url');
-        const { dirname, join } = await import('path');
-        const __filename = fileURLToPath(import.meta.url);
-        const __dirname = dirname(__filename);
-        
-        moduleConfig.locateFile = (path, prefix) => {
-          if (path.endsWith('.data') || path.endsWith('.wasm')) {
-            return join(__dirname, '../wasm', path);
-          }
-          return prefix + path;
-        };
-      } catch (e) {
-        console.warn('Failed to configure path resolution for SwissEph WASM:', e);
-      }
-    } else {
-      // Browser environment
-      moduleConfig.locateFile = (path, prefix) => {
-        if (path.endsWith('.data') || path.endsWith('.wasm')) {
-          return new URL('../wasm/' + path, import.meta.url).href;
-        }
-        return prefix + path;
-      };
+    // Load WASM glue dynamically from CDN (jsDelivr has CORS headers: *)
+    if (!WasmSwissEph) {
+      const mod = await import(_wasmGlueUrl);
+      WasmSwissEph = mod.default || mod;
     }
+    let moduleConfig = {
+      locateFile: (path) => {
+        // Point WASM binary to CDN
+        if (path.endsWith('.wasm') || path.endsWith('.data')) {
+          return _wasmBinUrl + path;
+        }
+        return path;
+      }
+    };
 
     this.SweModule = await WasmSwissEph(moduleConfig);
 
