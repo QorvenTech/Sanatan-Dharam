@@ -503,18 +503,72 @@ body.dark-theme {
         <div id="todays-panchang-container" class="panchang-today-card" style="background: var(--card-bg); border-radius: 16px; padding: 1.8rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left: 6px solid var(--saffron);">
 
             <!-- Header row with title + date picker -->
-            <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1rem;">
-                <h3 style="color: var(--saffron); font-size: 1.6rem;" data-en="📅 Today's Panchang" data-hi="📅 आज का पंचांग">📅 Today's Panchang</h3>
-                <div style="display:flex; gap:0.6rem; align-items:center; flex-wrap:wrap;">
-                    <input type="date" id="panchang-date-picker"
-                        style="padding:0.45rem 0.9rem; border:2px solid var(--saffron); border-radius:20px; background:var(--card-bg); color:var(--text); font-family:inherit; font-size:0.9rem; cursor:pointer; outline:none;"
-                        onchange="loadPanchangForDate(this.value)" />
-                    <button onclick="loadPanchangForDate('today')"
-                        style="padding:0.45rem 1rem; background:var(--saffron); color:white; border:none; border-radius:20px; cursor:pointer; font-family:inherit; font-size:0.9rem; font-weight:600;">
-                        Today
+            <div style="margin-bottom:1rem;">
+                <h3 style="color:var(--saffron);font-size:1.6rem;margin-bottom:0.8rem;" data-en="📅 Today's Panchang" data-hi="📅 आज का पंचांग">📅 Today's Panchang</h3>
+                <!-- Hidden input kept for compatibility with existing JS -->
+                <input type="date" id="panchang-date-picker" style="display:none;" onchange="loadPanchangForDate(this.value)" />
+                <!-- Mobile-friendly 3-part date selector -->
+                <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+                    <select id="pd-day" style="padding:0.45rem 0.5rem;border:2px solid var(--saffron);border-radius:12px;background:var(--card-bg);color:var(--text);font-family:inherit;font-size:0.95rem;font-weight:600;cursor:pointer;outline:none;min-width:64px;" onchange="_pdUpdate()"></select>
+                    <select id="pd-month" style="padding:0.45rem 0.5rem;border:2px solid var(--saffron);border-radius:12px;background:var(--card-bg);color:var(--text);font-family:inherit;font-size:0.95rem;font-weight:600;cursor:pointer;outline:none;min-width:110px;" onchange="_pdUpdate()"></select>
+                    <select id="pd-year" style="padding:0.45rem 0.5rem;border:2px solid var(--saffron);border-radius:12px;background:var(--card-bg);color:var(--text);font-family:inherit;font-size:0.95rem;font-weight:600;cursor:pointer;outline:none;min-width:84px;" onchange="_pdUpdate()"></select>
+                    <button onclick="loadPanchangForDate('today');_pdSyncToToday();"
+                        style="padding:0.45rem 1rem;background:var(--saffron);color:white;border:none;border-radius:12px;cursor:pointer;font-family:inherit;font-size:0.92rem;font-weight:700;">
+                        📅 Today
                     </button>
                 </div>
             </div>
+            <script>
+            (function(){
+                var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+                function _pdPopulate(d,m,y){
+                    var dayEl=document.getElementById('pd-day');
+                    var monEl=document.getElementById('pd-month');
+                    var yrEl=document.getElementById('pd-year');
+                    // Days
+                    if(!dayEl.options.length){
+                        for(var i=1;i<=31;i++){var o=document.createElement('option');o.value=i;o.text=(i<10?'0':'')+i;dayEl.appendChild(o);}
+                    }
+                    // Months
+                    if(!monEl.options.length){
+                        for(var i=0;i<12;i++){var o=document.createElement('option');o.value=i+1;o.text=months[i];monEl.appendChild(o);}
+                    }
+                    // Years — current year ±5
+                    var curY=new Date().getFullYear();
+                    if(!yrEl.options.length){
+                        for(var i=curY-5;i<=curY+5;i++){var o=document.createElement('option');o.value=i;o.text=i;yrEl.appendChild(o);}
+                    }
+                    dayEl.value=d; monEl.value=m; yrEl.value=y;
+                }
+                function _pdSyncToHidden(val){
+                    // also sync the hidden input so existing JS still works
+                    var el=document.getElementById('panchang-date-picker');
+                    if(el)el.value=val;
+                }
+                window._pdSyncToToday=function(){
+                    var t=new Date();
+                    _pdPopulate(t.getDate(),t.getMonth()+1,t.getFullYear());
+                };
+                window._pdUpdate=function(){
+                    var d=parseInt(document.getElementById('pd-day').value);
+                    var m=parseInt(document.getElementById('pd-month').value);
+                    var y=parseInt(document.getElementById('pd-year').value);
+                    var str=y+'-'+(m<10?'0':'')+m+'-'+(d<10?'0':'')+d;
+                    _pdSyncToHidden(str);
+                    loadPanchangForDate(str);
+                };
+                // Init with today
+                var t=new Date();
+                _pdPopulate(t.getDate(),t.getMonth()+1,t.getFullYear());
+                // Override the hidden-input sync so loadPanchangForDate('today') also updates selects
+                var _origLoad=window.loadPanchangForDate;
+                // Patch panchang-date-picker setter to keep selects in sync when JS sets .value
+                // We do this by watching the hidden input after load
+                document.addEventListener('DOMContentLoaded',function(){
+                    var t=new Date(); _pdPopulate(t.getDate(),t.getMonth()+1,t.getFullYear());
+                });
+            })();
+            </script>
 
             <!-- City search row -->
             <div style="margin-bottom:1.2rem;">
@@ -4474,6 +4528,12 @@ function loadPanchangForDate(dateVal){
                 date=new Date();
                 var picker=document.getElementById('panchang-date-picker');
                 if(picker)picker.value=date.toISOString().split('T')[0];
+                // Sync the 3-part selects too
+                if(document.getElementById('pd-day')){
+                    document.getElementById('pd-day').value=date.getDate();
+                    document.getElementById('pd-month').value=date.getMonth()+1;
+                    document.getElementById('pd-year').value=date.getFullYear();
+                }
             }else{
                 var pts=dateVal.split('-');
                 date=new Date(parseInt(pts[0]),parseInt(pts[1])-1,parseInt(pts[2]));
