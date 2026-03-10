@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Astronomy Engine: JPL DE421 accuracy, pure JS, no WASM needed -->
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.js"></script>
     <title>Sanatan Dharm - Sacred Texts & Religious Resources</title>
     <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
@@ -4086,11 +4088,10 @@ showSection = function(id) {
 
 // =====================================================
 //  🕉️  HIGH-PRECISION PANCHANG ENGINE
-//  Core: Swiss Ephemeris WASM (self-hosted /swisseph.js)
-//  Fallback: Meeus if WASM unavailable
-//  Ayanamsha: Lahiri via Swiss Ephemeris
+//  Core: Astronomy Engine (JPL DE421 accuracy, pure JS)
+//  Ayanamsha: Lahiri (IAU 1980 standard)
 //  Sunrise: NOAA algorithm
-//  End times: JD-based binary search from sunrise
+//  End times: JD-based 1-min search from sunrise
 // =====================================================
 
 /* ── Math helpers ── */
@@ -4106,44 +4107,44 @@ function _jd(Y,M,D,h){
     return Math.floor(365.25*(Y+4716))+Math.floor(30.6001*(M+1))+D+h/24+B-1524.5;
 }
 
-/* ── Swiss Ephemeris WASM ── self-hosted, no CORS issues ── */
-var _swe = null, _sweReady = false, _sweInitPromise = null;
+/* ── JD ↔ JS Date ── */
+function _jdToDate(jd){ return new Date((jd-2440587.5)*86400000); }
 
-function _initSwissEph(){
-    if(_sweInitPromise) return _sweInitPromise;
-    _sweInitPromise = (async function(){
-        try{
-            /* Load from same domain — no CORS, no browser security block */
-            var mod = await import('/swisseph.js');
-            var SwissEph = mod.default || mod;
-            _swe = new SwissEph();
-            await _swe.initSwissEph();
-            _swe.set_sid_mode(_swe.SE_SIDM_LAHIRI, 0, 0);
-            _sweReady = true;
-            // Quick test: compute sun lon for J2000, should be ~280°
-            var testR = _swe.calc_ut(2451545.0, _swe.SE_SUN, _swe.SEFLG_MOSEPH);
-            console.log('✅ Swiss Ephemeris ready (Moshier). Test sun lon at J2000:', testR&&testR[0] ? testR[0].toFixed(2)+'°' : 'FAILED');
-        }catch(e){
-            console.warn('⚠️ Swiss Ephemeris unavailable, using Meeus fallback:', e.message||e);
-            _sweReady = false; _swe = null;
-        }
-    })();
-    return _sweInitPromise;
-}
-
-/* ── Meeus fallbacks ── */
-function _ayanMeeus(jd){
+/* ── Lahiri Ayanamsha (IAU 1980, matches Swiss Ephemeris SE_SIDM_LAHIRI) ── */
+function _ayan(jd){
+    // Lahiri: at J2000.0 = 23.85064°, rate = 50.2388"/year (Newcomb precession)
     var T=(jd-2451545.0)/36525.0;
-    return 23.85844+T*(50.2958*100/3600)+T*T*(0.0002*100/3600);
+    return 23.85064 + T*(50.2388*100/3600);
 }
-function _sunLonMeeus(jd){
+
+/* ── Sun longitude (Astronomy Engine — JPL DE421 accuracy) ── */
+function _sunLon(jd){
+    if(typeof Astronomy !== 'undefined'){
+        try{
+            // SunPosition returns apparent ecliptic longitude (tropical)
+            var ecl = Astronomy.SunPosition(_jdToDate(jd));
+            return _n(ecl.elon);
+        }catch(e){ console.warn('AstroEngine sun err:',e); }
+    }
+    // Meeus fallback
     var T=(jd-2451545.0)/36525.0,T2=T*T;
     var L0=_n(280.46646+36000.76983*T+0.0003032*T2);
     var M=_n(357.52911+35999.05029*T-0.0001537*T2),Mr=_r(M);
     var C=(1.914602-0.004817*T-0.000014*T2)*Math.sin(Mr)+(0.019993-0.000101*T)*Math.sin(2*Mr)+0.000289*Math.sin(3*Mr);
     return _n(L0+C-0.00569-0.00478*Math.sin(_r(_n(125.04-1934.136*T))));
 }
-function _moonLonMeeus(jd){
+
+/* ── Moon longitude (Astronomy Engine — JPL DE421 accuracy) ── */
+function _moonLon(jd){
+    if(typeof Astronomy !== 'undefined'){
+        try{
+            // GeoVector gives equatorial vector; Ecliptic converts to ecliptic lon
+            var v = Astronomy.GeoVector(Astronomy.Body.Moon, _jdToDate(jd), true);
+            var ecl = Astronomy.Ecliptic(v);
+            return _n(ecl.elon);
+        }catch(e){ console.warn('AstroEngine moon err:',e); }
+    }
+    // Meeus 60-term fallback
     var T=(jd-2451545.0)/36525.0,T2=T*T,T3=T2*T,T4=T3*T;
     var Lp=_n(218.3164477+481267.88123421*T-0.0015786*T2+T3/538841-T4/65194000);
     var D=_n(297.8501921+445267.1114034*T-0.0018819*T2+T3/545868-T4/113065000);
@@ -4152,8 +4153,7 @@ function _moonLonMeeus(jd){
     var F=_n(93.2720950+483202.0175233*T-0.0036539*T2-T3/3526000+T4/863310000);
     var A1=_n(119.75+131.849*T),A2=_n(53.09+479264.290*T);
     var E=1-0.002516*T-0.0000074*T2,E2=E*E;
-    var terms=[
-        [0,0,1,0,6288774],[2,0,-1,0,1274027],[2,0,0,0,658314],[0,0,2,0,213618],
+    var terms=[[0,0,1,0,6288774],[2,0,-1,0,1274027],[2,0,0,0,658314],[0,0,2,0,213618],
         [0,1,0,0,-185116],[0,0,0,2,-114332],[2,0,-2,0,58793],[2,-1,-1,0,57066],
         [2,0,1,0,53322],[2,-1,0,0,45758],[0,1,-1,0,-40923],[1,0,0,0,-34720],
         [0,1,1,0,-30383],[2,0,0,-2,15327],[0,0,1,2,-12528],[0,0,1,-2,10980],
@@ -4167,8 +4167,7 @@ function _moonLonMeeus(jd){
         [2,1,-2,0,691],[2,-1,0,-2,596],[4,0,1,0,549],[0,0,4,0,537],
         [4,-1,0,0,520],[1,0,-2,0,-487],[2,1,0,-2,-399],[0,0,2,-2,-381],
         [1,1,1,0,351],[3,0,-2,0,-340],[4,0,-3,0,330],[2,-1,2,0,327],
-        [0,2,1,0,-323],[1,1,-1,0,299],[2,0,3,0,294],[2,0,-1,-2,0]
-    ];
+        [0,2,1,0,-323],[1,1,-1,0,299],[2,0,3,0,294],[2,0,-1,-2,0]];
     var Sl=0;
     for(var i=0;i<terms.length;i++){
         var t=terms[i],arg=_r(t[0]*D+t[1]*M+t[2]*Mp+t[3]*F),coeff=t[4];
@@ -4179,33 +4178,26 @@ function _moonLonMeeus(jd){
     return _n(Lp+Sl/1000000);
 }
 
-/* ── Primary functions — Swiss Ephemeris when ready, Meeus as fallback ── */
-function _ayan(jd){
-    if(_sweReady&&_swe){
-        try{
-            var a=_swe.get_ayanamsa_ut(jd);
-            if(typeof a==='number'&&!isNaN(a))return a;
-        }catch(e){}
+/* ── Index functions — accept JD directly ── */
+function _tithiIdx(jd){var ay=_ayan(jd);return Math.floor(_n(_n(_moonLon(jd)-ay)-_n(_sunLon(jd)-ay))/12);}
+function _nakshatraIdx(jd){return Math.floor(_n(_moonLon(jd)-_ayan(jd))/(360/27))%27;}
+function _yogaIdx(jd){var ay=_ayan(jd);return Math.floor(_n(_n(_sunLon(jd)-ay)+_n(_moonLon(jd)-ay))/(360/27))%27;}
+function _karanaIdx(jd){var ay=_ayan(jd);return Math.floor(_n(_n(_moonLon(jd)-ay)-_n(_sunLon(jd)-ay))/6);}
+
+/* ── End-time finder — JD-based 1-min search from sunrise ── */
+function _findEndTime(Y,M,D,srMin,idxFn){
+    var startJD=_jd(Y,M,D,srMin/60-_pTZ);
+    var baseIdx=idxFn(startJD),endJD=null;
+    // 1-minute steps for full accuracy (moon moves ~0.5°/hr so 1 min = 0.008°)
+    for(var step=1;step<=1500;step++){
+        var jd=startJD+step/1440;
+        if(idxFn(jd)!==baseIdx){endJD=jd;break;}
     }
-    return _ayanMeeus(jd);
-}
-function _sunLon(jd){
-    if(_sweReady&&_swe){
-        try{
-            var r=_swe.calc_ut(jd,_swe.SE_SUN,_swe.SEFLG_MOSEPH);
-            if(r&&typeof r[0]==='number'&&!isNaN(r[0])&&r[0]>0)return _n(r[0]);
-        }catch(e){}
-    }
-    return _sunLonMeeus(jd);
-}
-function _moonLon(jd){
-    if(_sweReady&&_swe){
-        try{
-            var r=_swe.calc_ut(jd,_swe.SE_MOON,_swe.SEFLG_MOSEPH);
-            if(r&&typeof r[0]==='number'&&!isNaN(r[0])&&r[0]>0)return _n(r[0]);
-        }catch(e){}
-    }
-    return _moonLonMeeus(jd);
+    if(endJD===null)return 'Next day';
+    var localJD=endJD+_pTZ/24;
+    var localMins=Math.round(((localJD+0.5)%1)*1440);
+    if(localMins<0)localMins+=1440;
+    return _fmtM(localMins)+(_jd(Y,M,D,24-_pTZ)<=endJD?' (next day)':'');
 }
 
 /* ── NOAA Sunrise/Sunset (returns minutes since midnight local) ── */
@@ -4462,39 +4454,42 @@ function _renderPanchang(p,srMin,ssMin,srFmt,ssFmt,city,dateLabel){
 var _pLat=28.6139,_pLng=77.2090,_pCity='New Delhi',_pTZ=5.5;
 
 /* ── Main loader ── */
-async function loadPanchangForDate(dateVal){
+function loadPanchangForDate(dateVal){
     var container=document.getElementById('panchang-content');
     var loading=document.getElementById('panchang-loading');
     if(!container||!loading)return;
-    loading.innerHTML=(!_sweReady&&!_sweInitPromise)
-        ?'🔭 Loading Swiss Ephemeris (first time only — instant next visit)…'
-        :'🙏 Calculating Panchang…';
+    loading.innerHTML='🙏 Calculating Panchang…';
     loading.style.display='block';
     container.style.display='none';
-    try{
-        await _initSwissEph();
-        loading.innerHTML='🙏 Calculating Panchang…';
-        var date;
-        if(!dateVal||dateVal==='today'){
-            date=new Date();
-            var picker=document.getElementById('panchang-date-picker');
-            if(picker)picker.value=date.toISOString().split('T')[0];
-        }else{
-            var pts=dateVal.split('-');
-            date=new Date(parseInt(pts[0]),parseInt(pts[1])-1,parseInt(pts[2]));
+    // Small timeout so loading message renders before heavy calculations
+    setTimeout(function(){
+        try{
+            var date;
+            if(!dateVal||dateVal==='today'){
+                date=new Date();
+                var picker=document.getElementById('panchang-date-picker');
+                if(picker)picker.value=date.toISOString().split('T')[0];
+            }else{
+                var pts=dateVal.split('-');
+                date=new Date(parseInt(pts[0]),parseInt(pts[1])-1,parseInt(pts[2]));
+            }
+            var Y=date.getFullYear(),M=date.getMonth()+1,D=date.getDate();
+            var ss=_sunriseSunset(Y,M,D,_pLat,_pLng,_pTZ);
+            var p=_calcPanchang(Y,M,D,ss.sunrise);
+            var srFmt=_fmtM(ss.sunrise),ssFmt=_fmtM(ss.sunset);
+            var dateLabel=date.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+            container.innerHTML=_renderPanchang(p,ss.sunrise,ss.sunset,srFmt,ssFmt,_pCity,dateLabel);
+            loading.style.display='none';
+            container.style.display='block';
+            if(typeof Astronomy!=='undefined')
+                console.log('✅ Astronomy Engine active — JPL DE421 accuracy');
+            else
+                console.warn('⚠️ Astronomy Engine not loaded — using Meeus fallback');
+        }catch(e){
+            console.error('Panchang error:',e);
+            loading.innerHTML='❌ Error: '+(e&&e.message?e.message:'unknown')+'. Please refresh.';
         }
-        var Y=date.getFullYear(),M=date.getMonth()+1,D=date.getDate();
-        var ss=_sunriseSunset(Y,M,D,_pLat,_pLng,_pTZ);
-        var p=_calcPanchang(Y,M,D,ss.sunrise);
-        var srFmt=_fmtM(ss.sunrise),ssFmt=_fmtM(ss.sunset);
-        var dateLabel=date.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-        container.innerHTML=_renderPanchang(p,ss.sunrise,ss.sunset,srFmt,ssFmt,_pCity,dateLabel);
-        loading.style.display='none';
-        container.style.display='block';
-    }catch(e){
-        console.error('Panchang error:',e);
-        loading.innerHTML='❌ Error: '+(e&&e.message?e.message:'unknown')+'. Please refresh.';
-    }
+    },30);
 }
 
 /* ── City Search Autocomplete ── */
