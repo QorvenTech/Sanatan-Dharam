@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Self-hosted astronomy engine: pure JS, JPL accuracy, no WASM -->
-    <script src="/astronomy.js"></script>
+    <!-- astronomy-engine: JPL DE421 accuracy, pure JS, no WASM, no file uploads -->
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
     <title>Sanatan Dharm - Sacred Texts & Religious Resources</title>
     <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
@@ -4087,47 +4087,36 @@ showSection = function(id) {
 };
 
 // =====================================================
-//  🕉️  HIGH-PRECISION PANCHANG ENGINE
-//  Core: astronomy-engine (self-hosted /astronomy.js)
-//         → JPL DE421 accuracy, pure JS, zero deps
-//  Fallback: Meeus 60-term if file not uploaded yet
-//  Ayanamsha: Lahiri (IAU standard, matches Drik)
-//  Sunrise: NOAA algorithm (unchanged)
-//  End times: JD-based 1-min search from sunrise
+//  🕉️  PANCHANG ENGINE
+//  Primary: astronomy-engine CDN (JPL DE421, pure JS)
+//  Fallback: Meeus 60-term if CDN unavailable
+//  Ayanamsha: Lahiri IAU (SE_SIDM_LAHIRI, matches Drik)
 // =====================================================
 
-/* ── Math helpers ── */
 function _r(d){return d*Math.PI/180;}
 function _d(r){return r*180/Math.PI;}
 function _n(x){return((x%360)+360)%360;}
 
-/* ── Julian Day ── */
 function _jd(Y,M,D,h){
     if(h===undefined)h=12;
     if(M<=2){Y--;M+=12;}
     var A=Math.floor(Y/100),B=2-A+Math.floor(A/4);
     return Math.floor(365.25*(Y+4716))+Math.floor(30.6001*(M+1))+D+h/24+B-1524.5;
 }
-
-/* ── JD to JS Date (needed by astronomy-engine) ── */
 function _jdToDate(jd){return new Date((jd-2440587.5)*86400000);}
 
-/* ── Lahiri Ayanamsha (IAU 1980, matches Drik exactly) ── */
 function _ayan(jd){
     var T=(jd-2451545.0)/36525.0;
-    // SE_SIDM_LAHIRI: t0=2433282.5, ayan_t0=23.85064, rate=50.2388"/yr
     return 23.85064+T*(50.2388*100/3600);
 }
 
-/* ── Sun tropical longitude ── */
 function _sunLon(jd){
     if(typeof Astronomy!=='undefined'){
         try{
-            var r=Astronomy.SunPosition(_jdToDate(jd));
-            if(r&&typeof r.elon==='number')return _n(r.elon);
+            var s=Astronomy.SunPosition(_jdToDate(jd));
+            if(s&&typeof s.elon==='number')return _n(s.elon);
         }catch(e){}
     }
-    // Meeus Ch.25 fallback
     var T=(jd-2451545.0)/36525.0,T2=T*T;
     var L0=_n(280.46646+36000.76983*T+0.0003032*T2);
     var M=_n(357.52911+35999.05029*T-0.0001537*T2),Mr=_r(M);
@@ -4135,7 +4124,6 @@ function _sunLon(jd){
     return _n(L0+C-0.00569-0.00478*Math.sin(_r(_n(125.04-1934.136*T))));
 }
 
-/* ── Moon tropical longitude ── */
 function _moonLon(jd){
     if(typeof Astronomy!=='undefined'){
         try{
@@ -4144,7 +4132,6 @@ function _moonLon(jd){
             if(e&&typeof e.elon==='number')return _n(e.elon);
         }catch(e){}
     }
-    // Meeus Ch.47 (60-term) fallback
     var T=(jd-2451545.0)/36525.0,T2=T*T,T3=T2*T,T4=T3*T;
     var Lp=_n(218.3164477+481267.88123421*T-0.0015786*T2+T3/538841-T4/65194000);
     var D=_n(297.8501921+445267.1114034*T-0.0018819*T2+T3/545868-T4/113065000);
@@ -4178,13 +4165,11 @@ function _moonLon(jd){
     return _n(Lp+Sl/1000000);
 }
 
-/* ── Index functions — take JD directly ── */
 function _tithiIdx(jd){var ay=_ayan(jd);return Math.floor(_n(_n(_moonLon(jd)-ay)-_n(_sunLon(jd)-ay))/12);}
 function _nakshatraIdx(jd){return Math.floor(_n(_moonLon(jd)-_ayan(jd))/(360/27))%27;}
 function _yogaIdx(jd){var ay=_ayan(jd);return Math.floor(_n(_n(_sunLon(jd)-ay)+_n(_moonLon(jd)-ay))/(360/27))%27;}
 function _karanaIdx(jd){var ay=_ayan(jd);return Math.floor(_n(_n(_moonLon(jd)-ay)-_n(_sunLon(jd)-ay))/6);}
 
-/* ── End-time finder — JD 1-min steps from sunrise ── */
 function _findEndTime(Y,M,D,srMin,idxFn){
     var startJD=_jd(Y,M,D,srMin/60-_pTZ);
     var baseIdx=idxFn(startJD),endJD=null;
@@ -4483,14 +4468,13 @@ function loadPanchangForDate(dateVal){
             if(typeof Astronomy!=='undefined')
                 console.log('✅ Astronomy Engine (JPL DE421) active — Drik-level accuracy');
             else
-                console.warn('⚠️ astronomy.js not uploaded yet — using Meeus fallback');
+                console.warn('⚠️ Astronomy Engine CDN not loaded — using Meeus fallback (±3 min)');
         }catch(e){
             console.error('Panchang error:',e);
             loading.innerHTML='❌ Error: '+(e&&e.message?e.message:'unknown')+'. Please refresh.';
         }
     },30);
 }
-
 /* ── City Search Autocomplete ── */
 var _citySearchTimer=null;
 function panchangCitySearch(val){
