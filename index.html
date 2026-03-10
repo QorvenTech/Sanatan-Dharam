@@ -4120,7 +4120,9 @@ function _initSwissEph(){
             await _swe.initSwissEph();
             _swe.set_sid_mode(_swe.SE_SIDM_LAHIRI, 0, 0);
             _sweReady = true;
-            console.log('✅ Swiss Ephemeris ready — Drik-level accuracy active');
+            // Quick test: compute sun lon for J2000, should be ~280°
+            var testR = _swe.calc_ut(2451545.0, _swe.SE_SUN, _swe.SEFLG_MOSEPH);
+            console.log('✅ Swiss Ephemeris ready (Moshier). Test sun lon at J2000:', testR&&testR[0] ? testR[0].toFixed(2)+'°' : 'FAILED');
         }catch(e){
             console.warn('⚠️ Swiss Ephemeris unavailable, using Meeus fallback:', e.message||e);
             _sweReady = false; _swe = null;
@@ -4190,8 +4192,8 @@ function _ayan(jd){
 function _sunLon(jd){
     if(_sweReady&&_swe){
         try{
-            var r=_swe.calc_ut(jd,_swe.SE_SUN,_swe.SEFLG_SWIEPH|_swe.SEFLG_SPEED);
-            if(Array.isArray(r)&&typeof r[0]==='number'&&!isNaN(r[0]))return _n(r[0]);
+            var r=_swe.calc_ut(jd,_swe.SE_SUN,_swe.SEFLG_MOSEPH);
+            if(r&&typeof r[0]==='number'&&!isNaN(r[0])&&r[0]>0)return _n(r[0]);
         }catch(e){}
     }
     return _sunLonMeeus(jd);
@@ -4199,8 +4201,8 @@ function _sunLon(jd){
 function _moonLon(jd){
     if(_sweReady&&_swe){
         try{
-            var r=_swe.calc_ut(jd,_swe.SE_MOON,_swe.SEFLG_SWIEPH|_swe.SEFLG_SPEED);
-            if(Array.isArray(r)&&typeof r[0]==='number'&&!isNaN(r[0]))return _n(r[0]);
+            var r=_swe.calc_ut(jd,_swe.SE_MOON,_swe.SEFLG_MOSEPH);
+            if(r&&typeof r[0]==='number'&&!isNaN(r[0])&&r[0]>0)return _n(r[0]);
         }catch(e){}
     }
     return _moonLonMeeus(jd);
