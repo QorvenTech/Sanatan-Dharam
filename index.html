@@ -4347,24 +4347,29 @@ function _calcPanchang(Y,M,D,srMin){
 
 /* ── Muhurats ── */
 var _rahuSeg=[8,2,7,5,6,4,3];
-function _muhurats(sr,ss,weekday){
+function _muhurats(sr,ss,weekday,prevSS){
     var len=ss-sr, seg=len/8;
     var rS=sr+(_rahuSeg[weekday]-1)*seg;
     var gI=[7,6,5,4,3,2,1][weekday];
     var yI=[5,4,3,2,1,8,7][weekday];
     var noon=(sr+ss)/2;
+    // Drik method: Brahma Muhurta uses dynamic night muhurta length
+    // Night = prev-day sunset → today sunrise (crosses midnight, so +1440)
+    // 15 muhurtas in a night; Brahma = last 2 of the night
+    var nightDur = (sr + 1440) - (prevSS !== undefined ? prevSS : (ss - len));
+    var nm = nightDur / 15;  // one night muhurta in minutes
     return{
         rahu:   _fmtM(rS)+' – '+_fmtM(rS+seg),
         gulika: _fmtM(sr+(gI-1)*seg)+' – '+_fmtM(sr+gI*seg),
         yama:   _fmtM(sr+(yI-1)*seg)+' – '+_fmtM(sr+yI*seg),
-        brahma: _fmtM(sr-96)+' – '+_fmtM(sr-48),
+        brahma: _fmtM(sr-2*nm)+' – '+_fmtM(sr-nm),
         abhijit:_fmtM(noon-24)+' – '+_fmtM(noon+24),
         noon:   _fmtM(noon)
     };
 }
 
 /* ── Render HTML (bilingual) ── */
-function _renderPanchang(p,srMin,ssMin,srFmt,ssFmt,city,dateLabel){
+function _renderPanchang(p,srMin,ssMin,srFmt,ssFmt,city,dateLabel,prevSS){
     var isHi=(typeof currentLang!=='undefined'&&currentLang==='hi');
 
     // Compute end times
@@ -4390,7 +4395,7 @@ function _renderPanchang(p,srMin,ssMin,srFmt,ssFmt,city,dateLabel){
           +'</div>';
     }
 
-    var mu=_muhurats(srMin,ssMin,p.weekday);
+    var mu=_muhurats(srMin,ssMin,p.weekday,prevSS);
     var L={
         sunTitle:   isHi?'☀️ सूर्य समय':'☀️ SUN TIMINGS',
         panchaTitle:isHi?'🕉️ पंचांग — पाँच अंग':'🕉️ PANCHA ANGA — FIVE LIMBS',
@@ -4475,10 +4480,13 @@ function loadPanchangForDate(dateVal){
             }
             var Y=date.getFullYear(),M=date.getMonth()+1,D=date.getDate();
             var ss=_sunriseSunset(Y,M,D,_pLat,_pLng,_pTZ);
+            // Get previous day's sunset for accurate dynamic night-muhurta (Brahma Muhurta)
+            var prevD=new Date(date); prevD.setDate(prevD.getDate()-1);
+            var prevSS=_sunriseSunset(prevD.getFullYear(),prevD.getMonth()+1,prevD.getDate(),_pLat,_pLng,_pTZ).sunset;
             var p=_calcPanchang(Y,M,D,ss.sunrise);
             var srFmt=_fmtM(ss.sunrise),ssFmt=_fmtM(ss.sunset);
             var dateLabel=date.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-            container.innerHTML=_renderPanchang(p,ss.sunrise,ss.sunset,srFmt,ssFmt,_pCity,dateLabel);
+            container.innerHTML=_renderPanchang(p,ss.sunrise,ss.sunset,srFmt,ssFmt,_pCity,dateLabel,prevSS);
             loading.style.display='none';
             container.style.display='block';
             if(typeof Astronomy!=='undefined')
