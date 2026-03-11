@@ -3110,10 +3110,21 @@ function dsCard(item){
     var adminHtml = '';
     if(dsIsAuth()){
         var pid = item.id.replace(/'/g, '');
+        var safeEditTitle = (item.title||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        var safeEditUrl   = (item.url||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
         adminHtml = '<div style="display:flex;gap:0.5rem;margin-top:0.8rem;flex-wrap:wrap;">'
             + '<button onclick="dsPinToggle(this)" data-id="' + pid + '" data-val="' + (item.pinned?'1':'0') + '" style="padding:0.28rem 0.7rem;border-radius:8px;border:1px solid var(--saffron);background:transparent;color:var(--saffron);font-size:0.77rem;cursor:pointer;">' + (item.pinned ? '📌 Unpin' : '📌 Pin') + '</button>'
             + '<button onclick="dsLiveToggle(this)" data-id="' + pid + '" data-val="' + (item.isLive?'1':'0') + '" style="padding:0.28rem 0.7rem;border-radius:8px;border:1px solid #e53e3e;background:transparent;color:#e53e3e;font-size:0.77rem;cursor:pointer;">' + (item.isLive ? '🔴 Mark Ended' : '🔴 Mark Live') + '</button>'
+            + '<button onclick="dsEditOpen(this)" data-id="' + pid + '" data-title="' + safeEditTitle + '" data-url="' + safeEditUrl + '" style="padding:0.28rem 0.7rem;border-radius:8px;border:1px solid #4a9eff;background:transparent;color:#4a9eff;font-size:0.77rem;cursor:pointer;">✏️ Edit</button>'
             + '<button onclick="dsDel(this)" data-id="' + pid + '" style="padding:0.28rem 0.7rem;border-radius:8px;border:1px solid #888;background:transparent;color:#888;font-size:0.77rem;cursor:pointer;">🗑️ Delete</button>'
+            + '</div>'
+            + '<div id="ds-edit-' + pid + '" style="display:none;margin-top:0.8rem;background:var(--card-bg);border:1px solid #4a9eff;border-radius:10px;padding:0.8rem;">'
+            + '<input id="ds-edit-title-' + pid + '" type="text" placeholder="Title" value="' + safeEditTitle + '" style="width:100%;padding:0.45rem 0.8rem;border:1px solid #4a9eff;border-radius:8px;background:var(--card-bg);color:var(--text);font-family:inherit;font-size:0.88rem;margin-bottom:0.5rem;box-sizing:border-box;outline:none;"/>'
+            + '<input id="ds-edit-url-' + pid + '" type="url" placeholder="URL" value="' + safeEditUrl + '" style="width:100%;padding:0.45rem 0.8rem;border:1px solid #4a9eff;border-radius:8px;background:var(--card-bg);color:var(--text);font-family:inherit;font-size:0.88rem;margin-bottom:0.6rem;box-sizing:border-box;outline:none;"/>'
+            + '<div style="display:flex;gap:0.5rem;">'
+            + '<button onclick="dsEditSave(this)" data-id="' + pid + '" style="padding:0.35rem 1rem;background:#4a9eff;color:white;border:none;border-radius:8px;font-size:0.85rem;font-weight:700;cursor:pointer;">💾 Save</button>'
+            + '<button onclick="dsEditClose(this)" data-id="' + pid + '" style="padding:0.35rem 0.8rem;border:1px solid #888;background:transparent;color:#888;border-radius:8px;font-size:0.85rem;cursor:pointer;">Cancel</button>'
+            + '</div>'
             + '</div>';
     }
 
@@ -3172,6 +3183,37 @@ async function dsDel(btn){
     if(!dsIsAuth()) return;
     if(!confirm('Delete this link?')) return;
     await db.collection('divine_sangrah').doc(btn.getAttribute('data-id')).delete();
+}
+
+function dsEditOpen(btn){
+    var id = btn.getAttribute('data-id');
+    var box = document.getElementById('ds-edit-' + id);
+    if(box) box.style.display = box.style.display === 'none' ? 'block' : 'none';
+}
+
+function dsEditClose(btn){
+    var id = btn.getAttribute('data-id');
+    var box = document.getElementById('ds-edit-' + id);
+    if(box) box.style.display = 'none';
+}
+
+async function dsEditSave(btn){
+    if(!dsIsAuth()) return;
+    var id    = btn.getAttribute('data-id');
+    var title = document.getElementById('ds-edit-title-' + id).value.trim();
+    var url   = document.getElementById('ds-edit-url-'   + id).value.trim();
+    if(!title || !url){ alert('Title and URL cannot be empty.'); return; }
+    btn.textContent = 'Saving...';
+    try{
+        await db.collection('divine_sangrah').doc(id).update({ title: title, url: url });
+        btn.textContent = '✅ Saved!';
+        setTimeout(function(){ btn.textContent = '💾 Save'; }, 2000);
+        var box = document.getElementById('ds-edit-' + id);
+        if(box) box.style.display = 'none';
+    }catch(e){
+        btn.textContent = '💾 Save';
+        alert('Error saving: ' + e.message);
+    }
 }
 
 async function dsPinToggle(btn){
