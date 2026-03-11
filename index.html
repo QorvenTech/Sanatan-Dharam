@@ -2910,12 +2910,12 @@ body.dark-theme {
         <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:0.3rem;" data-en="🕉️ Divine Sangrah" data-hi="🕉️ दिव्य संग्रह">🕉️ Divine Sangrah</h2>
         <p style="text-align:center;color:#aaa;font-size:0.95rem;margin-bottom:1.5rem;" data-en="Curated sacred resources — videos, streams &amp; links" data-hi="चयनित पवित्र संसाधन — वीडियो, लाइव स्ट्रीम और लिंक">Curated sacred resources — videos, streams &amp; links</p>
         <div id="ds-tabs" style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-bottom:1.5rem;">
-            <button onclick="dsFilter('all')" id="ds-tab-all" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:var(--saffron);color:white;font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;">All</button>
-            <button onclick="dsFilter('pravachan')" id="ds-tab-pravachan" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;">📿 Pravachan</button>
-            <button onclick="dsFilter('bhajan')" id="ds-tab-bhajan" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;">🎵 Bhajan</button>
-            <button onclick="dsFilter('katha')" id="ds-tab-katha" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;">📖 Katha</button>
-            <button onclick="dsFilter('puja')" id="ds-tab-puja" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;">🪔 Puja Vidhi</button>
-            <button onclick="dsFilter('aarti-cat')" id="ds-tab-aarti-cat" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;">🔥 Aarti</button>
+            <button onclick="dsFilter('all')" id="ds-tab-all" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:var(--saffron);color:white;font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;" data-en="All" data-hi="सभी">All</button>
+            <button onclick="dsFilter('pravachan')" id="ds-tab-pravachan" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;" data-en="📿 Pravachan" data-hi="📿 प्रवचन">📿 Pravachan</button>
+            <button onclick="dsFilter('bhajan')" id="ds-tab-bhajan" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;" data-en="🎵 Bhajan" data-hi="🎵 भजन">🎵 Bhajan</button>
+            <button onclick="dsFilter('katha')" id="ds-tab-katha" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;" data-en="📖 Katha" data-hi="📖 कथा">📖 Katha</button>
+            <button onclick="dsFilter('puja')" id="ds-tab-puja" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;" data-en="🪔 Puja Vidhi" data-hi="🪔 पूजा विधि">🪔 Puja Vidhi</button>
+            <button onclick="dsFilter('aarti-cat')" id="ds-tab-aarti-cat" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;" data-en="🔥 Aarti" data-hi="🔥 आरती">🔥 Aarti</button>
         </div>
         <div id="ds-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;margin-bottom:2rem;"></div>
         <div id="ds-empty" style="display:none;text-align:center;color:#888;padding:2rem;" data-en="No links in this category yet." data-hi="इस श्रेणी में अभी कोई लिंक नहीं है।">No links in this category yet.</div>
@@ -3067,16 +3067,11 @@ function dsLoad(){
     grid.innerHTML = '<div style="text-align:center;color:#888;padding:2rem;">Loading...</div>';
 
     _dsUnsub = db.collection('divine_sangrah')
+        .orderBy('pinned','desc')
+        .orderBy('addedAt','desc')
         .onSnapshot(function(snap){
             var all = [];
             snap.forEach(function(d){ var x = d.data(); x.id = d.id; all.push(x); });
-            // Sort client-side: pinned first, then newest first — no composite index needed
-            all.sort(function(a,b){
-                if(!!b.pinned !== !!a.pinned) return !!b.pinned ? 1 : -1;
-                var ta = a.addedAt ? a.addedAt.seconds||0 : 0;
-                var tb = b.addedAt ? b.addedAt.seconds||0 : 0;
-                return tb - ta;
-            });
             var list = (_dsCat === 'all') ? all : all.filter(function(x){ return x.category === _dsCat; });
 
             if(list.length === 0){
