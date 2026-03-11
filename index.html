@@ -3067,11 +3067,16 @@ function dsLoad(){
     grid.innerHTML = '<div style="text-align:center;color:#888;padding:2rem;">Loading...</div>';
 
     _dsUnsub = db.collection('divine_sangrah')
-        .orderBy('pinned','desc')
-        .orderBy('addedAt','desc')
         .onSnapshot(function(snap){
             var all = [];
             snap.forEach(function(d){ var x = d.data(); x.id = d.id; all.push(x); });
+            // Sort client-side: pinned first, then newest first — no composite index needed
+            all.sort(function(a,b){
+                if(!!b.pinned !== !!a.pinned) return !!b.pinned ? 1 : -1;
+                var ta = a.addedAt ? a.addedAt.seconds||0 : 0;
+                var tb = b.addedAt ? b.addedAt.seconds||0 : 0;
+                return tb - ta;
+            });
             var list = (_dsCat === 'all') ? all : all.filter(function(x){ return x.category === _dsCat; });
 
             if(list.length === 0){
