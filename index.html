@@ -580,7 +580,7 @@ body.dark-theme {
                     <div id="panchang-city-dropdown"
                         style="display:none; position:absolute; top:calc(100% + 4px); left:0; right:0; background:var(--card-bg); border:2px solid var(--saffron); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.25); z-index:1000; max-height:230px; overflow-y:auto;"></div>
                 </div>
-                <div style="font-size:0.78rem; color:#999; margin-top:0.3rem; padding-left:0.5rem;" data-en="✏️ Type above to change your city — works worldwide" data-hi="✏️ ऊपर टाइप करें अपना शहर बदलने के लिए — दुनियाभर के शहर उपलब्ध">✏️ Type above to change your city — works worldwide</div>
+                <div style="font-size:0.78rem; color:#999; margin-top:0.3rem; padding-left:0.5rem;">Works for any city worldwide</div>
             </div>
 
             <div id="panchang-loading" style="text-align: center; padding: 2rem; font-size:1.1rem;">🙏 Calculating Panchang…</div>
@@ -2908,48 +2908,41 @@ body.dark-theme {
     <!-- DIVINE SANGRAH SECTION -->
     <div id="divine-sangrah" class="section">
         <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:0.3rem;" data-en="🕉️ Divine Sangrah" data-hi="🕉️ दिव्य संग्रह">🕉️ Divine Sangrah</h2>
-        <p style="text-align:center;color:#aaa;font-size:0.95rem;margin-bottom:1.5rem;" data-en="Curated sacred resources — videos, streams & links" data-hi="चयनित पवित्र संसाधन — वीडियो, लाइव स्ट्रीम और लिंक">Curated sacred resources — videos, streams &amp; links</p>
-
-        <!-- Category Filter Tabs -->
+        <p style="text-align:center;color:#aaa;font-size:0.95rem;margin-bottom:1.5rem;" data-en="Curated sacred resources — videos, streams &amp; links" data-hi="चयनित पवित्र संसाधन — वीडियो, लाइव स्ट्रीम और लिंक">Curated sacred resources — videos, streams &amp; links</p>
         <div id="ds-tabs" style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-bottom:1.5rem;">
-            <button onclick="dsFilter('all')" id="ds-tab-all" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:var(--saffron);color:white;font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;" data-en="All" data-hi="सभी">All</button>
-            <button onclick="dsFilter('pravachan')" id="ds-tab-pravachan" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;" data-en="📿 Pravachan" data-hi="📿 प्रवचन">📿 Pravachan</button>
-            <button onclick="dsFilter('bhajan')" id="ds-tab-bhajan" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;" data-en="🎵 Bhajan" data-hi="🎵 भजन">🎵 Bhajan</button>
-            <button onclick="dsFilter('katha')" id="ds-tab-katha" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;" data-en="📖 Katha" data-hi="📖 कथा">📖 Katha</button>
-            <button onclick="dsFilter('puja')" id="ds-tab-puja" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;" data-en="🪔 Puja Vidhi" data-hi="🪔 पूजा विधि">🪔 Puja Vidhi</button>
-            <button onclick="dsFilter('aarti')" id="ds-tab-aarti" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;" data-en="🔥 Aarti" data-hi="🔥 आरती">🔥 Aarti</button>
+            <button onclick="dsFilter('all')" id="ds-tab-all" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:var(--saffron);color:white;font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;">All</button>
+            <button onclick="dsFilter('pravachan')" id="ds-tab-pravachan" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;">📿 Pravachan</button>
+            <button onclick="dsFilter('bhajan')" id="ds-tab-bhajan" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;">🎵 Bhajan</button>
+            <button onclick="dsFilter('katha')" id="ds-tab-katha" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;">📖 Katha</button>
+            <button onclick="dsFilter('puja')" id="ds-tab-puja" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;">🪔 Puja Vidhi</button>
+            <button onclick="dsFilter('aarti-cat')" id="ds-tab-aarti-cat" style="padding:0.4rem 1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-family:inherit;font-size:0.88rem;font-weight:600;cursor:pointer;">🔥 Aarti</button>
         </div>
-
-        <!-- Links Grid -->
         <div id="ds-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;margin-bottom:2rem;"></div>
-        <div id="ds-empty" style="display:none;text-align:center;color:#888;padding:2rem;font-size:1rem;" data-en="No links in this category yet." data-hi="इस श्रेणी में अभी कोई लिंक नहीं है।">No links in this category yet.</div>
-
-        <!-- Add Link Panel — visible to authorized users only -->
+        <div id="ds-empty" style="display:none;text-align:center;color:#888;padding:2rem;" data-en="No links in this category yet." data-hi="इस श्रेणी में अभी कोई लिंक नहीं है।">No links in this category yet.</div>
         <div id="ds-add-panel" style="display:none;background:var(--card-bg);border:2px solid var(--saffron);border-radius:16px;padding:1.5rem;margin-bottom:2rem;max-width:560px;margin-left:auto;margin-right:auto;">
             <h3 style="color:var(--saffron);margin-bottom:1rem;font-size:1.1rem;" data-en="➕ Add New Link" data-hi="➕ नया लिंक जोड़ें">➕ Add New Link</h3>
-            <input id="ds-input-url" type="url" placeholder="🔗 Paste URL here (YouTube, any website...)" style="width:100%;padding:0.6rem 1rem;border:2px solid var(--saffron);border-radius:10px;background:var(--card-bg);color:var(--text);font-family:inherit;font-size:0.9rem;margin-bottom:0.7rem;box-sizing:border-box;outline:none;" />
-            <input id="ds-input-title" type="text" placeholder="✏️ Title (e.g. Shrimad Bhagwat Katha - Day 1)" style="width:100%;padding:0.6rem 1rem;border:2px solid var(--saffron);border-radius:10px;background:var(--card-bg);color:var(--text);font-family:inherit;font-size:0.9rem;margin-bottom:0.7rem;box-sizing:border-box;outline:none;" />
-            <select id="ds-input-cat" style="width:100%;padding:0.6rem 1rem;border:2px solid var(--saffron);border-radius:10px;background:var(--card-bg);color:var(--text);font-family:inherit;font-size:0.9rem;margin-bottom:0.7rem;outline:none;">
+            <input id="ds-url" type="url" placeholder="🔗 Paste URL here (YouTube, any website...)" style="width:100%;padding:0.6rem 1rem;border:2px solid var(--saffron);border-radius:10px;background:var(--card-bg);color:var(--text);font-family:inherit;font-size:0.9rem;margin-bottom:0.7rem;box-sizing:border-box;outline:none;" />
+            <input id="ds-title" type="text" placeholder="✏️ Title (e.g. Shrimad Bhagwat Katha - Day 1)" style="width:100%;padding:0.6rem 1rem;border:2px solid var(--saffron);border-radius:10px;background:var(--card-bg);color:var(--text);font-family:inherit;font-size:0.9rem;margin-bottom:0.7rem;box-sizing:border-box;outline:none;" />
+            <select id="ds-cat" style="width:100%;padding:0.6rem 1rem;border:2px solid var(--saffron);border-radius:10px;background:var(--card-bg);color:var(--text);font-family:inherit;font-size:0.9rem;margin-bottom:0.7rem;outline:none;">
                 <option value="pravachan">📿 Pravachan</option>
                 <option value="bhajan">🎵 Bhajan</option>
                 <option value="katha">📖 Katha</option>
                 <option value="puja">🪔 Puja Vidhi</option>
-                <option value="aarti">🔥 Aarti</option>
+                <option value="aarti-cat">🔥 Aarti</option>
             </select>
-            <div style="display:flex;gap:1rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap;">
-                <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;color:var(--text);font-size:0.9rem;">
-                    <input type="checkbox" id="ds-input-live" style="width:16px;height:16px;accent-color:red;" />
-                    <span style="color:#e53e3e;font-weight:700;">🔴 Mark as LIVE stream</span>
+            <div style="display:flex;gap:1.5rem;margin-bottom:1rem;flex-wrap:wrap;">
+                <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;font-size:0.9rem;">
+                    <input type="checkbox" id="ds-live" style="width:16px;height:16px;accent-color:red;" />
+                    <span style="color:#e53e3e;font-weight:700;">🔴 Mark as LIVE</span>
                 </label>
-                <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;color:var(--text);font-size:0.9rem;">
-                    <input type="checkbox" id="ds-input-pin" style="width:16px;height:16px;accent-color:var(--saffron);" />
+                <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;font-size:0.9rem;">
+                    <input type="checkbox" id="ds-pin" style="width:16px;height:16px;accent-color:var(--saffron);" />
                     <span style="color:var(--saffron);font-weight:700;">📌 Pin to top</span>
                 </label>
             </div>
-            <button onclick="dsAddLink()" style="width:100%;padding:0.65rem;background:var(--saffron);color:white;border:none;border-radius:10px;font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;">✅ Add Link</button>
-            <div id="ds-add-msg" style="margin-top:0.5rem;font-size:0.88rem;text-align:center;"></div>
+            <button onclick="dsAdd()" style="width:100%;padding:0.65rem;background:var(--saffron);color:white;border:none;border-radius:10px;font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;">✅ Add Link</button>
+            <div id="ds-msg" style="margin-top:0.5rem;font-size:0.88rem;text-align:center;"></div>
         </div>
-
         <div id="divine-sangrah-comments" class="comments-section" style="margin-top:2rem;"></div>
     </div>
 
@@ -3048,117 +3041,158 @@ window.addEventListener('DOMContentLoaded', () => {
 // LANGUAGE
 // ======================================
 // ======================================
-// LANGUAGE TOGGLE (FIXED WITH FAVORITES REFRESH)
-// =====================================
-   // ======================================
+
 // ══════════════════════════════════════
 //  DIVINE SANGRAH
 // ══════════════════════════════════════
-var DS_AUTHORIZED = [
-    'harshuashokafan@gmail.com',
-    'brajysh@gmail.com'
-];
-var _dsCurrentFilter = 'all';
-var _dsUnsubscribe = null;
+var DS_AUTH = ['harshuashokafan@gmail.com','brajysh@gmail.com'];
+var _dsCat = 'all';
+var _dsUnsub = null;
 
-function dsIsAuthorized(){
-    return currentUser && DS_AUTHORIZED.includes(currentUser.email.toLowerCase());
+function dsIsAuth(){
+    return currentUser && DS_AUTH.indexOf(currentUser.email.toLowerCase()) >= 0;
 }
+
 function dsInit(){
-    var panel=document.getElementById('ds-add-panel');
-    if(panel) panel.style.display=dsIsAuthorized()?'block':'none';
-    dsLoadLinks();
+    var p = document.getElementById('ds-add-panel');
+    if(p) p.style.display = dsIsAuth() ? 'block' : 'none';
+    dsLoad();
 }
-function dsLoadLinks(){
-    if(_dsUnsubscribe)_dsUnsubscribe();
-    var grid=document.getElementById('ds-grid');
-    var empty=document.getElementById('ds-empty');
-    if(!grid)return;
-    grid.innerHTML='<div style="text-align:center;color:#888;padding:2rem;">🙏 Loading...</div>';
-    db.collection('divine_sangrah').orderBy('pinned','desc').orderBy('addedAt','desc')
-    .onSnapshot(function(snap){
-        var docs=[];
-        snap.forEach(function(d){docs.push(Object.assign({id:d.id},d.data()));});
-        var filtered=_dsCurrentFilter==='all'?docs:docs.filter(function(d){return d.category===_dsCurrentFilter;});
-        if(filtered.length===0){
-            grid.innerHTML='';
-            if(empty){empty.style.display='block';}
-            return;
-        }
-        if(empty)empty.style.display='none';
-        grid.innerHTML=filtered.map(function(item){
-            var isYT=item.url&&(item.url.includes('youtube.com')||item.url.includes('youtu.be'));
-            var catEmoji={pravachan:'📿',bhajan:'🎵',katha:'📖',puja:'🪔',aarti:'🔥'}[item.category]||'🔗';
-            var catName={pravachan:'Pravachan',bhajan:'Bhajan',katha:'Katha',puja:'Puja Vidhi',aarti:'Aarti'}[item.category]||'Link';
-            var liveBadge=item.isLive?'<span style="display:inline-flex;align-items:center;gap:4px;background:#e53e3e;color:white;font-size:0.72rem;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:0.6rem;"><span style="width:7px;height:7px;background:white;border-radius:50%;display:inline-block;animation:ds-pulse 1.2s infinite;"></span>LIVE</span><br>':'';
-            var pinBadge=item.pinned?'<span style="font-size:0.75rem;color:var(--saffron);font-weight:700;margin-left:5px;">📌</span>':'';
-            var adminBtns=dsIsAuthorized()?'<div style="display:flex;gap:0.5rem;margin-top:0.8rem;flex-wrap:wrap;">'
-                +'<button onclick="dsTogglePin(''+item.id+'','+!!item.pinned+')" style="padding:0.28rem 0.7rem;border-radius:8px;border:1px solid var(--saffron);background:transparent;color:var(--saffron);font-size:0.77rem;cursor:pointer;">'+(item.pinned?'📌 Unpin':'📌 Pin')+'</button>'
-                +'<button onclick="dsToggleLive(''+item.id+'','+!!item.isLive+')" style="padding:0.28rem 0.7rem;border-radius:8px;border:1px solid #e53e3e;background:transparent;color:#e53e3e;font-size:0.77rem;cursor:pointer;">'+(item.isLive?'🔴 Mark Ended':'🔴 Mark Live')+'</button>'
-                +'<button onclick="dsDelete(''+item.id+'')" style="padding:0.28rem 0.7rem;border-radius:8px;border:1px solid #888;background:transparent;color:#888;font-size:0.77rem;cursor:pointer;">🗑️ Delete</button>'
-                +'</div>':'';
-            return '<div style="background:var(--card-bg);border-radius:14px;padding:1.2rem;border-left:4px solid '+(item.pinned?'var(--saffron)':'#6b4f2a')+';">'
-                +liveBadge
-                +'<div style="font-size:0.78rem;color:var(--saffron);font-weight:700;text-transform:uppercase;margin-bottom:0.4rem;">'+catEmoji+' '+catName+pinBadge+'</div>'
-                +'<div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.8rem;line-height:1.4;">'+_dsEsc(item.title)+'</div>'
-                +'<div style="display:flex;gap:0.6rem;flex-wrap:wrap;">'
-                +'<a href="'+_dsEsc(item.url)+'" target="_blank" rel="noopener" style="padding:0.4rem 1.1rem;background:var(--saffron);color:white;border-radius:20px;text-decoration:none;font-size:0.88rem;font-weight:600;">'+(isYT?'▶ Watch':'🔗 Open')+'</a>'
-                +'<button onclick="dsCopy(this,''+_dsEsc(item.url)+'')" style="padding:0.4rem 1.1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-size:0.88rem;font-weight:600;cursor:pointer;">📋 Copy Link</button>'
-                +'</div>'+adminBtns+'</div>';
-        }).join('');
-    },function(){ grid.innerHTML='<div style="color:#e53e3e;padding:1rem;">Error loading links.</div>';});
-}
-function dsFilter(cat){
-    _dsCurrentFilter=cat;
-    ['all','pravachan','bhajan','katha','puja','aarti'].forEach(function(t){
-        var b=document.getElementById('ds-tab-'+t);
-        if(!b)return;
-        b.style.background=(t===cat)?'var(--saffron)':'transparent';
-        b.style.color=(t===cat)?'white':'var(--saffron)';
-    });
-    dsLoadLinks();
-}
-async function dsAddLink(){
-    if(!dsIsAuthorized())return;
-    var url=document.getElementById('ds-input-url').value.trim();
-    var title=document.getElementById('ds-input-title').value.trim();
-    var cat=document.getElementById('ds-input-cat').value;
-    var live=document.getElementById('ds-input-live').checked;
-    var pin=document.getElementById('ds-input-pin').checked;
-    var msg=document.getElementById('ds-add-msg');
-    if(!url||!title){msg.style.color='#e53e3e';msg.textContent='Please fill URL and title.';return;}
-    try{
-        await db.collection('divine_sangrah').add({url:url,title:title,category:cat,isLive:live,pinned:pin,addedBy:currentUser.email,addedAt:firebase.firestore.FieldValue.serverTimestamp()});
-        document.getElementById('ds-input-url').value='';
-        document.getElementById('ds-input-title').value='';
-        document.getElementById('ds-input-live').checked=false;
-        document.getElementById('ds-input-pin').checked=false;
-        msg.style.color='#38a169';msg.textContent='✅ Link added!';
-        setTimeout(function(){msg.textContent='';},3000);
-    }catch(e){msg.style.color='#e53e3e';msg.textContent='Error: '+e.message;}
-}
-async function dsDelete(id){
-    if(!dsIsAuthorized())return;
-    if(!confirm('Delete this link?'))return;
-    await db.collection('divine_sangrah').doc(id).delete();
-}
-async function dsTogglePin(id,cur){
-    if(!dsIsAuthorized())return;
-    await db.collection('divine_sangrah').doc(id).update({pinned:!cur});
-}
-async function dsToggleLive(id,cur){
-    if(!dsIsAuthorized())return;
-    await db.collection('divine_sangrah').doc(id).update({isLive:!cur});
-}
-function dsCopy(btn,url){
-    navigator.clipboard.writeText(url).then(function(){
-        btn.textContent='✅ Copied!';
-        setTimeout(function(){btn.textContent='📋 Copy Link';},2000);
-    });
-}
-function _dsEsc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-(function(){var st=document.createElement('style');st.textContent='@keyframes ds-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(1.4)}}';document.head.appendChild(st);})();
 
+function dsLoad(){
+    if(_dsUnsub) _dsUnsub();
+    var grid = document.getElementById('ds-grid');
+    var empty = document.getElementById('ds-empty');
+    if(!grid) return;
+    grid.innerHTML = '<div style="text-align:center;color:#888;padding:2rem;">Loading...</div>';
+
+    _dsUnsub = db.collection('divine_sangrah')
+        .orderBy('pinned','desc')
+        .orderBy('addedAt','desc')
+        .onSnapshot(function(snap){
+            var all = [];
+            snap.forEach(function(d){ var x = d.data(); x.id = d.id; all.push(x); });
+            var list = (_dsCat === 'all') ? all : all.filter(function(x){ return x.category === _dsCat; });
+
+            if(list.length === 0){
+                grid.innerHTML = '';
+                if(empty) empty.style.display = 'block';
+                return;
+            }
+            if(empty) empty.style.display = 'none';
+
+            var html = '';
+            for(var i=0; i<list.length; i++){
+                html += dsCard(list[i]);
+            }
+            grid.innerHTML = html;
+        }, function(){
+            grid.innerHTML = '<div style="color:#e53e3e;padding:1rem;">Error loading links.</div>';
+        });
+}
+
+function dsCard(item){
+    var isYT = item.url && (item.url.indexOf('youtube.com') >= 0 || item.url.indexOf('youtu.be') >= 0);
+    var cats = {pravachan:'📿 Pravachan', bhajan:'🎵 Bhajan', katha:'📖 Katha', puja:'🪔 Puja Vidhi', 'aarti-cat':'🔥 Aarti'};
+    var catLabel = cats[item.category] || '🔗 Link';
+    var border = item.pinned ? 'var(--saffron)' : '#6b4f2a';
+
+    var live = item.isLive
+        ? '<div style="display:inline-flex;align-items:center;gap:5px;background:#e53e3e;color:white;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:0.6rem;">'
+          + '<span style="width:7px;height:7px;background:white;border-radius:50%;display:inline-block;"></span>LIVE</div><br>'
+        : '';
+    var pin = item.pinned ? ' <span style="color:var(--saffron);font-size:0.75rem;">📌</span>' : '';
+
+    var adminHtml = '';
+    if(dsIsAuth()){
+        var pid = item.id.replace(/'/g, '');
+        adminHtml = '<div style="display:flex;gap:0.5rem;margin-top:0.8rem;flex-wrap:wrap;">'
+            + '<button onclick="dsPinToggle(this)" data-id="' + pid + '" data-val="' + (item.pinned?'1':'0') + '" style="padding:0.28rem 0.7rem;border-radius:8px;border:1px solid var(--saffron);background:transparent;color:var(--saffron);font-size:0.77rem;cursor:pointer;">' + (item.pinned ? '📌 Unpin' : '📌 Pin') + '</button>'
+            + '<button onclick="dsLiveToggle(this)" data-id="' + pid + '" data-val="' + (item.isLive?'1':'0') + '" style="padding:0.28rem 0.7rem;border-radius:8px;border:1px solid #e53e3e;background:transparent;color:#e53e3e;font-size:0.77rem;cursor:pointer;">' + (item.isLive ? '🔴 Mark Ended' : '🔴 Mark Live') + '</button>'
+            + '<button onclick="dsDel(this)" data-id="' + pid + '" style="padding:0.28rem 0.7rem;border-radius:8px;border:1px solid #888;background:transparent;color:#888;font-size:0.77rem;cursor:pointer;">🗑️ Delete</button>'
+            + '</div>';
+    }
+
+    var safeUrl = item.url ? item.url.replace(/"/g,'&quot;') : '#';
+    var safeTitle = item.title ? item.title.replace(/</g,'&lt;').replace(/>/g,'&gt;') : '';
+
+    return '<div style="background:var(--card-bg);border-radius:14px;padding:1.2rem;border-left:4px solid ' + border + ';">'
+        + live
+        + '<div style="font-size:0.78rem;color:var(--saffron);font-weight:700;text-transform:uppercase;margin-bottom:0.4rem;">' + catLabel + pin + '</div>'
+        + '<div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.8rem;line-height:1.4;">' + safeTitle + '</div>'
+        + '<div style="display:flex;gap:0.6rem;flex-wrap:wrap;">'
+        + '<a href="' + safeUrl + '" target="_blank" rel="noopener" style="padding:0.4rem 1.1rem;background:var(--saffron);color:white;border-radius:20px;text-decoration:none;font-size:0.88rem;font-weight:600;">' + (isYT ? '▶ Watch' : '🔗 Open') + '</a>'
+        + '<button onclick="dsCopy(this)" data-url="' + safeUrl + '" style="padding:0.4rem 1.1rem;border-radius:20px;border:2px solid var(--saffron);background:transparent;color:var(--saffron);font-size:0.88rem;font-weight:600;cursor:pointer;">📋 Copy Link</button>'
+        + '</div>'
+        + adminHtml
+        + '</div>';
+}
+
+function dsFilter(cat){
+    _dsCat = cat;
+    var tabs = ['all','pravachan','bhajan','katha','puja','aarti-cat'];
+    for(var i=0; i<tabs.length; i++){
+        var b = document.getElementById('ds-tab-' + tabs[i]);
+        if(!b) continue;
+        b.style.background = (tabs[i]===cat) ? 'var(--saffron)' : 'transparent';
+        b.style.color      = (tabs[i]===cat) ? 'white' : 'var(--saffron)';
+    }
+    dsLoad();
+}
+
+async function dsAdd(){
+    if(!dsIsAuth()) return;
+    var url   = document.getElementById('ds-url').value.trim();
+    var title = document.getElementById('ds-title').value.trim();
+    var cat   = document.getElementById('ds-cat').value;
+    var live  = document.getElementById('ds-live').checked;
+    var pin   = document.getElementById('ds-pin').checked;
+    var msg   = document.getElementById('ds-msg');
+    if(!url || !title){ msg.style.color='#e53e3e'; msg.textContent='Please fill URL and title.'; return; }
+    try{
+        await db.collection('divine_sangrah').add({
+            url:url, title:title, category:cat, isLive:live, pinned:pin,
+            addedBy:currentUser.email,
+            addedAt:firebase.firestore.FieldValue.serverTimestamp()
+        });
+        document.getElementById('ds-url').value='';
+        document.getElementById('ds-title').value='';
+        document.getElementById('ds-live').checked=false;
+        document.getElementById('ds-pin').checked=false;
+        msg.style.color='#38a169'; msg.textContent='Link added!';
+        setTimeout(function(){ msg.textContent=''; }, 3000);
+    }catch(e){ msg.style.color='#e53e3e'; msg.textContent='Error: '+e.message; }
+}
+
+async function dsDel(btn){
+    if(!dsIsAuth()) return;
+    if(!confirm('Delete this link?')) return;
+    await db.collection('divine_sangrah').doc(btn.getAttribute('data-id')).delete();
+}
+
+async function dsPinToggle(btn){
+    if(!dsIsAuth()) return;
+    var cur = btn.getAttribute('data-val') === '1';
+    await db.collection('divine_sangrah').doc(btn.getAttribute('data-id')).update({pinned:!cur});
+}
+
+async function dsLiveToggle(btn){
+    if(!dsIsAuth()) return;
+    var cur = btn.getAttribute('data-val') === '1';
+    await db.collection('divine_sangrah').doc(btn.getAttribute('data-id')).update({isLive:!cur});
+}
+
+function dsCopy(btn){
+    var url = btn.getAttribute('data-url');
+    navigator.clipboard.writeText(url).then(function(){
+        btn.textContent = 'Copied!';
+        setTimeout(function(){ btn.textContent = 'Copy Link'; }, 2000);
+    });
+}
+
+// LANGUAGE TOGGLE (FIXED WITH FAVORITES REFRESH)
+// =====================================
+   // ======================================
 // LANGUAGE TOGGLE (IMPROVED)
 // ======================================
 function applyLanguage(lang) {
