@@ -3849,8 +3849,54 @@ function getTextContent(id) {
     const lang = currentLang || 'en';
     const contents = {
         'bhagavad-gita': {
-            en: `<div class="text-content"><h2>Bhagavad Gita – The Song of God</h2><p>The Bhagavad Gita is a 700-verse scripture forming part of the Mahabharata – a sacred text. It is one of the most important texts in Hinduism and is considered to be one of the world's major religious scriptures.</p></div>`,
-            hi: `<div class="text-content"><h2>भगवद् गीता – भगवान का गीत</h2><p>भगवद् गीता 700 श्लोकों का हिंदू धर्मग्रंथ है। यह कुरुक्षेत्र के युद्धक्षेत्र में भगवान कृष्ण और अर्जुन के बीच पवित्र संवाद है।</p></div>`
+            en: `<div class="text-content"><h2>Bhagavad Gita – The Song of God</h2><p>The Bhagavad Gita is a 700-verse scripture forming part of the Mahabharata – a sacred text. It is one of the most important texts in Hinduism and is considered to be one of the world's major religious scriptures.</p>
+                <div style="margin-top: 2rem;">
+                    <h3 style="color: var(--brown); margin-bottom: 1.2rem;">📚 Sacred Texts</h3>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- BHAGWAT STUTI PDF CARD -->
+                        <div style="background: var(--cream); padding: 1.2rem; border-radius: 12px; border-left: 4px solid var(--saffron);">
+                            <h3 style="color: var(--saffron); margin: 0 0 0.4rem 0;">📜 Bhagwat Stuti — Shrimad Bhagavad Gita</h3>
+                            <p style="margin: 0 0 1rem 0; color: var(--text); font-size: 0.95rem;">Sacred hymns and prayers in praise of the Bhagwat — devotional stutis from the Shrimad Bhagavad Gita tradition.</p>
+                            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                                <a href="pdfs/BhagwatStuti.pdf" target="_blank"
+                                   style="display:inline-flex; align-items:center; gap:0.4rem; background: linear-gradient(135deg, var(--saffron), var(--saffron-light)); color:white; padding:0.55rem 1.2rem; border-radius:25px; text-decoration:none; font-weight:700; font-size:0.9rem; transition:0.3s;"
+                                   onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+                                    👁️ Open PDF
+                                </a>
+                                <a href="pdfs/BhagwatStuti.pdf" download
+                                   style="display:inline-flex; align-items:center; gap:0.4rem; background: white; color:var(--saffron); border:2px solid var(--saffron); padding:0.55rem 1.2rem; border-radius:25px; text-decoration:none; font-weight:700; font-size:0.9rem; transition:0.3s;"
+                                   onmouseover="this.style.background='var(--saffron)';this.style.color='white'" onmouseout="this.style.background='white';this.style.color='var(--saffron)'">
+                                    ⬇️ Download PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`,
+            hi: `<div class="text-content"><h2>भगवद् गीता – भगवान का गीत</h2><p>भगवद् गीता 700 श्लोकों का हिंदू धर्मग्रंथ है। यह कुरुक्षेत्र के युद्धक्षेत्र में भगवान कृष्ण और अर्जुन के बीच पवित्र संवाद है।</p>
+                <div style="margin-top: 2rem;">
+                    <h3 style="color: var(--brown); margin-bottom: 1.2rem;">📚 पवित्र ग्रंथ</h3>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- BHAGWAT STUTI PDF CARD (Hindi) -->
+                        <div style="background: var(--cream); padding: 1.2rem; border-radius: 12px; border-left: 4px solid var(--saffron);">
+                            <h3 style="color: var(--saffron); margin: 0 0 0.4rem 0;">📜 भागवत स्तुति — श्रीमद् भगवद् गीता</h3>
+                            <p style="margin: 0 0 1rem 0; color: var(--text); font-size: 0.95rem;">भागवत की स्तुति में पवित्र स्तोत्र एवं प्रार्थनाएं — श्रीमद् भगवद् गीता परंपरा की भक्तिमय स्तुतियाँ।</p>
+                            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                                <a href="pdfs/BhagwatStuti.pdf" target="_blank"
+                                   style="display:inline-flex; align-items:center; gap:0.4rem; background: linear-gradient(135deg, var(--saffron), var(--saffron-light)); color:white; padding:0.55rem 1.2rem; border-radius:25px; text-decoration:none; font-weight:700; font-size:0.9rem; transition:0.3s;"
+                                   onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+                                    👁️ PDF खोलें
+                                </a>
+                                <a href="pdfs/BhagwatStuti.pdf" download
+                                   style="display:inline-flex; align-items:center; gap:0.4rem; background: white; color:var(--saffron); border:2px solid var(--saffron); padding:0.55rem 1.2rem; border-radius:25px; text-decoration:none; font-weight:700; font-size:0.9rem; transition:0.3s;"
+                                   onmouseover="this.style.background='var(--saffron)';this.style.color='white'" onmouseout="this.style.background='white';this.style.color='var(--saffron)'">
+                                    ⬇️ PDF डाउनलोड करें
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
         },
         'ramayan': {
             en: `<div class="text-content">
@@ -3948,6 +3994,24 @@ function getTextContent(id) {
                                     👁️ Open PDF
                                 </a>
                                 <a href="pdfs/5_SundarKand.pdf" download
+                                   style="display:inline-flex; align-items:center; gap:0.4rem; background: white; color:var(--saffron); border:2px solid var(--saffron); padding:0.55rem 1.2rem; border-radius:25px; text-decoration:none; font-weight:700; font-size:0.9rem; transition:0.3s;"
+                                   onmouseover="this.style.background='var(--saffron)';this.style.color='white'" onmouseout="this.style.background='white';this.style.color='var(--saffron)'">
+                                    ⬇️ Download PDF
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- LANKA KAND PDF CARD -->
+                        <div style="background: var(--cream); padding: 1.2rem; border-radius: 12px; border-left: 4px solid var(--saffron);">
+                            <h3 style="color: var(--saffron); margin: 0 0 0.4rem 0;">📜 Lanka Kand — Ramayan (Kand 6)</h3>
+                            <p style="margin: 0 0 1rem 0; color: var(--text); font-size: 0.95rem;">The sixth chapter of Ramayan — the great battle in Lanka, Ravana's defeat, and Sita's rescue by Lord Rama.</p>
+                            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                                <a href="pdfs/6_LankaKand.pdf" target="_blank"
+                                   style="display:inline-flex; align-items:center; gap:0.4rem; background: linear-gradient(135deg, var(--saffron), var(--saffron-light)); color:white; padding:0.55rem 1.2rem; border-radius:25px; text-decoration:none; font-weight:700; font-size:0.9rem; transition:0.3s;"
+                                   onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+                                    👁️ Open PDF
+                                </a>
+                                <a href="pdfs/6_LankaKand.pdf" download
                                    style="display:inline-flex; align-items:center; gap:0.4rem; background: white; color:var(--saffron); border:2px solid var(--saffron); padding:0.55rem 1.2rem; border-radius:25px; text-decoration:none; font-weight:700; font-size:0.9rem; transition:0.3s;"
                                    onmouseover="this.style.background='var(--saffron)';this.style.color='white'" onmouseout="this.style.background='white';this.style.color='var(--saffron)'">
                                     ⬇️ Download PDF
@@ -4128,6 +4192,24 @@ function getTextContent(id) {
                                     👁️ PDF खोलें
                                 </a>
                                 <a href="pdfs/5_SundarKand.pdf" download
+                                   style="display:inline-flex; align-items:center; gap:0.4rem; background: white; color:var(--saffron); border:2px solid var(--saffron); padding:0.55rem 1.2rem; border-radius:25px; text-decoration:none; font-weight:700; font-size:0.9rem; transition:0.3s;"
+                                   onmouseover="this.style.background='var(--saffron)';this.style.color='white'" onmouseout="this.style.background='white';this.style.color='var(--saffron)'">
+                                    ⬇️ PDF डाउनलोड करें
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- LANKA KAND PDF CARD (Hindi) -->
+                        <div style="background: var(--cream); padding: 1.2rem; border-radius: 12px; border-left: 4px solid var(--saffron);">
+                            <h3 style="color: var(--saffron); margin: 0 0 0.4rem 0;">📜 लंका कांड — रामायण (कांड ६)</h3>
+                            <p style="margin: 0 0 1rem 0; color: var(--text); font-size: 0.95rem;">रामायण का षष्ठ कांड — लंका का महायुद्ध, रावण वध एवं भगवान राम द्वारा सीता माता का उद्धार।</p>
+                            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                                <a href="pdfs/6_LankaKand.pdf" target="_blank"
+                                   style="display:inline-flex; align-items:center; gap:0.4rem; background: linear-gradient(135deg, var(--saffron), var(--saffron-light)); color:white; padding:0.55rem 1.2rem; border-radius:25px; text-decoration:none; font-weight:700; font-size:0.9rem; transition:0.3s;"
+                                   onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+                                    👁️ PDF खोलें
+                                </a>
+                                <a href="pdfs/6_LankaKand.pdf" download
                                    style="display:inline-flex; align-items:center; gap:0.4rem; background: white; color:var(--saffron); border:2px solid var(--saffron); padding:0.55rem 1.2rem; border-radius:25px; text-decoration:none; font-weight:700; font-size:0.9rem; transition:0.3s;"
                                    onmouseover="this.style.background='var(--saffron)';this.style.color='white'" onmouseout="this.style.background='white';this.style.color='var(--saffron)'">
                                     ⬇️ PDF डाउनलोड करें
