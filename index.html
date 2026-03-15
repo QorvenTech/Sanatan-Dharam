@@ -3671,8 +3671,11 @@ function showText(id) {
     if (display) {
         display.innerHTML = `<button class="back-btn" onclick="goBack()">← Back</button>` + getTextContent(id);
         display.style.display = 'block';
-        // Populate all data-en / data-hi verse divs after injection
-        applyLanguage(currentLang || 'en');
+        // Populate verse divs ONLY inside text-display (avoids circular call with applyLanguage)
+        const lang = currentLang || 'en';
+        display.querySelectorAll('[data-en][data-hi]').forEach(el => {
+            el.textContent = el.getAttribute('data-' + lang);
+        });
     }
     if (active) active.style.display = 'none';
 }
