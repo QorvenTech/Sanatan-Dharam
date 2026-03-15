@@ -3671,6 +3671,8 @@ function showText(id) {
     if (display) {
         display.innerHTML = `<button class="back-btn" onclick="goBack()">← Back</button>` + getTextContent(id);
         display.style.display = 'block';
+        // Populate all data-en / data-hi verse divs after injection
+        applyLanguage(currentLang || 'en');
     }
     if (active) active.style.display = 'none';
 }
