@@ -463,7 +463,14 @@ body.dark-theme {
         <div class="cards-grid">
             <div class="card" onclick="showText('brahma')"><div class="icon">🌟</div><h3 data-en="Brahma" data-hi="ब्रह्मा">Brahma</h3><p data-en="Creator of the universe in the Trimurti. Associated with creation, knowledge, and Vedas." data-hi="त्रिमूर्ति में ब्रह्मांड के निर्माता। सृजन, ज्ञान और वेदों से जुड़े हैं।">Creator of the universe in the Trimurti. Associated with creation, knowledge, and Vedas.</p></div>
             <div class="card" onclick="showText('vishnu')"><div class="icon">🪷</div><h3 data-en="Vishnu" data-hi="विष्णु">Vishnu</h3><p data-en="Preserver with ten avatars including Rama and Krishna. Maintains cosmic dharma." data-hi="राम और कृष्ण सहित दस अवतारों वाले पालनकर्ता। ब्रह्मांडीय धर्म की रक्षा करते हैं।">Preserver with ten avatars including Rama and Krishna. Maintains cosmic dharma.</p></div>
-            <div class="card" onclick="showText('shiva')"><div class="icon">🔱</div><h3 data-en="Shiva" data-hi="शिव">Shiva</h3><p data-en="The transformer, supreme yogi, lord of cosmic dance (Nataraja), and meditation." data-hi="संहारकर्ता, परम योगी, ब्रह्मांडीय नृत्य (नटराज) और ध्यान के स्वामी।">The transformer, supreme yogi, lord of cosmic dance (Nataraja), and meditation.</p></div>
+            <div class="card" onclick="showText('shiva')">  <!-- Change from showText('shiva') to this -->
+    <div class="icon">🔱</div>
+    <h3 data-en="Shiva" data-hi="शिव">Shiva</h3>
+    <p data-en="The transformer, supreme yogi, lord of cosmic dance (Nataraja), and meditation."
+       data-hi="संहारकर्ता, परम योगी, ब्रह्मांडीय नृत्य (नटराज) और ध्यान के स्वामी।">
+        The transformer, supreme yogi, lord of cosmic dance (Nataraja), and meditation.
+    </p>
+</div>
             <div class="card" onclick="showText('krishna')"><div class="icon">🦚</div><h3 data-en="Krishna" data-hi="कृष्ण">Krishna</h3><p data-en="Eighth Vishnu avatar, Gita teacher, embodiment of divine love and wisdom." data-hi="विष्णु के आठवें अवतार, गीता के शिक्षक, दिव्य प्रेम और ज्ञान के अवतार।">Eighth Vishnu avatar, Gita teacher, embodiment of divine love and wisdom.</p></div>
             <div class="card" onclick="showText('rama')"><div class="icon">🏹</div><h3 data-en="Rama" data-hi="राम">Rama</h3><p data-en="Seventh Vishnu avatar, ideal king (Maryada Purushottam), Ramayana hero." data-hi="विष्णु के सातवें अवतार, आदर्श राजा (मर्यादा पुरुषोत्तम), रामायण के नायक।">Seventh Vishnu avatar, ideal king (Maryada Purushottam), Ramayana hero.</p></div>
             <div class="card" onclick="showText('durga')"><div class="icon">🦁</div><h3 data-en="Durga" data-hi="दुर्गा">Durga</h3><p data-en="Divine mother, warrior goddess with ten arms who destroys evil forces." data-hi="दिव्य माता, दस भुजाओं वाली योद्धा देवी जो बुरी शक्तियों का विनाश करती हैं।">Divine mother, warrior goddess with ten arms who destroys evil forces.</p></div>
@@ -7030,6 +7037,266 @@ function getTextContent(id) {
                 </div>`
         }
     };
+    'shiva': {
+    en: `<div class="text-content">
+        <h2>🔱 Lord Shiva</h2>
+        <p>Shiva is the transformer, supreme yogi, lord of cosmic dance (Nataraja), and meditation. He is one of the Trimurti along with Brahma and Vishnu.</p>
+        <div id="shiva-index">
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
+                <div onclick="showShivaSub('108names')" style="background: var(--cream); padding: 1.2rem; border-radius: 12px; cursor: pointer; border-left: 4px solid var(--saffron);">
+                    <h3 style="color: var(--saffron); margin: 0;">॥ Shri Shiva 108 Names ॥</h3>
+                    <p style="margin: 0.5rem 0 0 0; color: var(--text);">108 sacred names of Lord Shiva with meanings.</p>
+                </div>
+            </div>
+        </div>
+        <div id="shiva-108names" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <button class="back-btn" onclick="showShivaIndex()">← Back to Shiva</button>
+                <button class="favorite-btn" data-content-id="shiva-108names" data-content-title="श्री शिव 108 नाम" data-content-title-en="Shri Shiva 108 Names" data-section="deities" onclick="toggleFavorite(this)">❤️ Favorite</button>
+            </div>
+            <h3 style="color: var(--saffron); margin-top: 1rem;">॥ श्री शिव १०८ नाम ॥</h3>
+            <p style="text-align:center; color: var(--brown); margin-bottom: 2rem; font-style: italic;">108 Names of Lord Shiva with Meanings / भगवान शिव के 108 नाम, अर्थ सहित</p>
+            
+            <div class="verse" data-en="1. Shiva – The Auspicious One." data-hi="1. शिव- कल्याण स्वरूप"></div>
+            <div class="verse" data-en="2. Maheshwara – The Lord of Maya (Illusion)." data-hi="2. महेश्वर- माया के अधीश्वर"></div>
+            <div class="verse" data-en="3. Shambhu – The Abode of Joy/Bliss." data-hi="3. शम्भू- आनंद स्वरूप वाले"></div>
+            <div class="verse" data-en="4. Pinaki – Wielder of the 'Pinaka' bow." data-hi="4. पिनाकी- पिनाक धनुष धारण करने वाले"></div>
+            <div class="verse" data-en="5. Shashishekhara – One who wears the moon in His hair." data-hi="5. शशिशेखर- सिर पर चंद्रमा धारण करने वाले"></div>
+            <div class="verse" data-en="6. Vamadeva – One who is pleasing and beautiful in every aspect." data-hi="6. वामदेव- अत्यंत सुंदर स्वरूप वाले"></div>
+            <div class="verse" data-en="7. Virupaksha – One with oblique/multiple eyes (Three-eyed)." data-hi="7. विरूपाक्ष- विचित्र आंख वाले( शिव के तीन नेत्र हैं)"></div>
+            <div class="verse" data-en="8. Kapardi – One with matted hair (Jata)." data-hi="8. कपर्दी- जटाजूट धारण करने वाले"></div>
+            <div class="verse" data-en="9. Nilalohita – The one who is both Blue and Red." data-hi="9. नीललोहित- नीले और लाल रंग वाले"></div>
+            <div class="verse" data-en="10. Shankar – Bestower of happiness and prosperity." data-hi="10. शंकर- सबका कल्याण करने वाले"></div>
+            <div class="verse" data-en="11. Shulapani – One who holds a trident (Trishul) in His hand." data-hi="11. शूलपाणी- हाथ में त्रिशूल धारण करने वाले"></div>
+            <div class="verse" data-en="12. Khatvangi – One who carries a knobby stick or the leg of a cot." data-hi="12. खटवांगी- खटिया का एक पाया रखने वाले"></div>
+            <div class="verse" data-en="13. Vishnuvallabha – The one who is dear to Lord Vishnu." data-hi="13. विष्णुवल्लभ- भगवान विष्णु के अति प्रिय"></div>
+            <div class="verse" data-en="14. Shipivishta – One who enters the rays of light." data-hi="14. शिपिविष्ट- सितुहा में प्रवेश करने वाले"></div>
+            <div class="verse" data-en="15. Ambikanatha – The Lord of Goddess Ambika (Parvati)." data-hi="15. अंबिकानाथ- देवी भगवती के पति"></div>
+            <div class="verse" data-en="16. Shrikantha – One with a beautiful throat." data-hi="16. श्रीकण्ठ- सुंदर कण्ठ वाले"></div>
+            <div class="verse" data-en="17. Bhaktavatsala – One who is extremely affectionate to His devotees." data-hi="17. भक्तवत्सल- भक्तों को अत्यंत स्नेह करने वाले"></div>
+            <div class="verse" data-en="18. Bhava – The existence; One who manifests as the universe." data-hi="18. भव- संसार के रूप में प्रकट होने वाले"></div>
+            <div class="verse" data-en="19. Sharva – The remover of all miseries." data-hi="19. शर्व- कष्टों को नष्ट करने वाले"></div>
+            <div class="verse" data-en="20. Trilokesha – Lord of the three worlds." data-hi="20. त्रिलोकेश- तीनों लोकों के स्वामी"></div>
+            <div class="verse" data-en="21. Shitikantha – The white-throated one." data-hi="21. शितिकण्ठ- सफेद कण्ठ वाले"></div>
+            <div class="verse" data-en="22. Shivapriya – Beloved of Goddess Parvati." data-hi="22. शिवाप्रिय- पार्वती के प्रिय"></div>
+            <div class="verse" data-en="23. Ugra – One with a fierce/formidable nature." data-hi="23. उग्र- अत्यंत उग्र रूप वाले"></div>
+            <div class="verse" data-en="24. Kapali – One who carries a skull (Kapala)." data-hi="24. कपाली- कपाल धारण करने वाले"></div>
+            <div class="verse" data-en="25. Kamari – The enemy of Kamadeva (Desire)." data-hi="25. कामारी- कामदेव के शत्रु, अंधकार को हरने वाले"></div>
+            <div class="verse" data-en="26. Surasudana – Slayer of the demon Andhaka." data-hi="26. सुरसूदन- अंधक दैत्य को मारने वाले"></div>
+            <div class="verse" data-en="27. Gangadhara – One who holds the river Ganga in His hair." data-hi="27. गंगाधर- गंगा जी को धारण करने वाले"></div>
+            <div class="verse" data-en="28. Lalataksha – One who has an eye on His forehead." data-hi="28. ललाटाक्ष- ललाट में आंख वाले"></div>
+            <div class="verse" data-en="29. Mahakala – The Lord of Time; The great destroyer." data-hi="29. महाकाल- कालों के भी काल"></div>
+            <div class="verse" data-en="30. Kripanidhi – The ocean/treasure of compassion." data-hi="30. कृपानिधि- करूणा की खान"></div>
+            <div class="verse" data-en="31. Bhima – The one with a formidable/gigantic form." data-hi="31. भीम- भयंकर रूप वाले"></div>
+            <div class="verse" data-en="32. Parashuhasta – One who holds an axe in His hand." data-hi="32. परशुहस्त- हाथ में फरसा धारण करने वाले"></div>
+            <div class="verse" data-en="33. Mrigapani – One who holds a deer in His hand." data-hi="33. मृगपाणी- हाथ में हिरण धारण करने वाले"></div>
+            <div class="verse" data-en="34. Jatadhara – One who wears matted hair." data-hi="34. जटाधर- जटा रखने वाले"></div>
+            <div class="verse" data-en="35. Kailashavasi – The resident of Mount Kailash." data-hi="35. कैलाशवासी- कैलाश के निवासी"></div>
+            <div class="verse" data-en="36. Kavachi – One who is protected by armor." data-hi="36. कवची- कवच धारण करने वाले"></div>
+            <div class="verse" data-en="37. Kathora – One with an incredibly strong and firm body." data-hi="37. कठोर- अत्यंत मजबूत देह वाले"></div>
+            <div class="verse" data-en="38. Tripurantaka – The destroyer of the three demon cities (Tripura)." data-hi="38. त्रिपुरांतक- त्रिपुरासुर को मारने वाले"></div>
+            <div class="verse" data-en="39. Vrishanka – One whose flag bears the symbol of a bull." data-hi="39. वृषांक- बैल के चिह्न वाली ध्वजा वाले"></div>
+            <div class="verse" data-en="40. Vrishabharudha – One who rides the bull (Nandi)." data-hi="40. वृषभारूढ़- बैल की सवारी वाले"></div>
+            <div class="verse" data-en="41. Bhasmoddhulita-vigraha – One who smears His body with holy ash." data-hi="41. भस्मोद्धूलितविग्रह- सारे शरीर में भस्म लगाने वाले"></div>
+            <div class="verse" data-en="42. Samapriya – One who loves the chanting of Sama Veda." data-hi="42. सामप्रिय- सामगान से प्रेम करने वाले"></div>
+            <div class="verse" data-en="43. Swaramayi – One who resides in the seven musical notes." data-hi="43. स्वरमयी- सातों स्वरों में निवास करने वाले"></div>
+            <div class="verse" data-en="44. Trayimurti – One who is the embodiment of the three Vedas." data-hi="44. त्रयीमूर्ति- वेदरूपी विग्रह करने वाले"></div>
+            <div class="verse" data-en="45. Anishwara – One who has no lord above Him; The ultimate Lord." data-hi="45. अनीश्वर- जो स्वयं ही सबके स्वामी है"></div>
+            <div class="verse" data-en="46. Sarvajna – The all-knowing/Omniscient." data-hi="46. सर्वज्ञ- सब कुछ जानने वाले"></div>
+            <div class="verse" data-en="47. Paramatma – The Supreme Soul." data-hi="47. परमात्मा- सब आत्माओं में सर्वोच्च"></div>
+            <div class="verse" data-en="48. Somasuryagnilocana – One whose eyes are the Moon, Sun, and Fire." data-hi="48. सोमसूर्याग्निलोचन- चंद्र, सूर्य और अग्निरूपी आंख वाले"></div>
+            <div class="verse" data-en="49. Havi – The sacrificial offering." data-hi="49. हवि- आहूति रूपी द्रव्य वाले"></div>
+            <div class="verse" data-en="50. Yajnamaya – The embodiment of sacrifice." data-hi="50. यज्ञमय- यज्ञस्वरूप वाले"></div>
+            <div class="verse" data-en="51. Soma – One who is with Uma (Goddess Parvati)." data-hi="51. सोम- उमा के सहित रूप वाले"></div>
+            <div class="verse" data-en="52. Panchavaktra – The five-faced one." data-hi="52. पंचवक्त्र- पांच मुख वाले"></div>
+            <div class="verse" data-en="53. Sadashiva – The eternally auspicious and pure." data-hi="53. सदाशिव- नित्य कल्याण रूप वाल"></div>
+            <div class="verse" data-en="54. Vishveshwara – The Lord of the entire universe." data-hi="54. विश्वेश्वर- सारे विश्व के ईश्वर"></div>
+            <div class="verse" data-en="55. Virabhadra – One who is fierce yet calm in essence." data-hi="55. वीरभद्र- वीर होते हुए भी शांत स्वरूप वाले"></div>
+            <div class="verse" data-en="56. Gananatha – The Lord of the Ganas (attendants)." data-hi="56. गणनाथ- गणों के स्वामी"></div>
+            <div class="verse" data-en="57. Prajapati – The protector and lord of all beings." data-hi="57. प्रजापति- प्रजाओं का पालन करने वाले"></div>
+            <div class="verse" data-en="58. Hiranyareta – One with golden brilliance/semen." data-hi="58. हिरण्यरेता- स्वर्ण तेज वाले"></div>
+            <div class="verse" data-en="59. Durdhursha – One who is invincible and cannot be suppressed." data-hi="59. दुर्धुर्ष- किसी से नहीं दबने वाले"></div>
+            <div class="verse" data-en="60. Girisha – The Lord of the mountains." data-hi="60. गिरीश- पर्वतों के स्वामी"></div>
+            <div class="verse" data-en="61. Girishwara – The Lord who sleeps on the peaks of Kailash." data-hi="61. गिरिश्वर- कैलाश पर्वत पर सोने वाले"></div>
+            <div class="verse" data-en="62. Anagha – The sinless one." data-hi="62. अनघ- पापरहित"></div>
+            <div class="verse" data-en="63. Bhujangabhushana – Adorned with snakes as ornaments." data-hi="63. भुजंगभूषण- सांपों के आभूषण वाले"></div>
+            <div class="verse" data-en="64. Bharga – One who burns away all sins." data-hi="64. भर्ग- पापों को भूंज देने वाले"></div>
+            <div class="verse" data-en="65. Giridhanva – One who used Mount Meru as a bow." data-hi="65. गिरिधन्वा- मेरू पर्वत को धनुष बनाने वाले"></div>
+            <div class="verse" data-en="66. Giripriya – One who loves the mountains." data-hi="66. गिरिप्रिय- पर्वत प्रेमी"></div>
+            <div class="verse" data-en="67. Krittivasa – One who wears the skin of an elephant." data-hi="67. कृत्तिवासा- गजचर्म पहनने वाले"></div>
+            <div class="verse" data-en="68. Purarati – Enemy of the demon cities (Puras)." data-hi="68. पुराराति- पुरों का नाश करने वाले"></div>
+            <div class="verse" data-en="69. Bhagavan – The Lord possessed of all six divine opulences." data-hi="69. भगवान्- सर्वसमर्थ ऐश्वर्य संपन्न"></div>
+            <div class="verse" data-en="70. Pramathadhipa – The ruler of the Pramatha-ganas." data-hi="70. प्रमथाधिप- प्रमथगणों के अधिपति"></div>
+            <div class="verse" data-en="71. Mrityunjaya – The conqueror of death." data-hi="71. मृत्युंजय- मृत्यु को जीतने वाले"></div>
+            <div class="verse" data-en="72. Sukshmatanu – One with a subtle/divine body." data-hi="72. सूक्ष्मतनु- सूक्ष्म शरीर वाले"></div>
+            <div class="verse" data-en="73. Jagadvyapi – One who pervades the entire world." data-hi="73. जगद्व्यापी- जगत् में व्याप्त होकर रहने वाले"></div>
+            <div class="verse" data-en="74. Jagadguru – The spiritual master of the entire world." data-hi="74. जगद्गुरू- जगत् के गुरू"></div>
+            <div class="verse" data-en="75. Vyomakesha – One whose hair is like the sky/space." data-hi="75. व्योमकेश- आकाश रूपी बाल वाले"></div>
+            <div class="verse" data-en="76. Mahasenajanaka – The father of Kartikeya (Mahasena)." data-hi="76. महासेनजनक- कार्तिकेय के पिता"></div>
+            <div class="verse" data-en="77. Charuvikrama – One with beautiful and immense valor." data-hi="77. चारुविक्रम- सुन्दर पराक्रम वाले"></div>
+            <div class="verse" data-en="78. Rudra – The formidable/fierce one." data-hi="78. रूद्र- भयानक"></div>
+            <div class="verse" data-en="79. Bhutapati – Lord of the elements or lord of spirits." data-hi="79. भूतपति- भूतप्रेत या पंचभूतों के स्वामी"></div>
+            <div class="verse" data-en="80. Sthanu – The immovable/eternal being." data-hi="80. स्थाणु- स्पंदन रहित कूटस्थ रूप वाले"></div>
+            <div class="verse" data-en="81. Ahirbudhnya – One who possesses the Kundalini energy." data-hi="81. अहिर्बुध्न्य- कुण्डलिनी को धारण करने वाले"></div>
+            <div class="verse" data-en="82. Digambara – Sky-clad; One who uses the four directions as His garment." data-hi="82. दिगम्बर- नग्न, आकाशरूपी वस्त्र वाले"></div>
+            <div class="verse" data-en="83. Ashtamurti – One who has eight forms." data-hi="83. अष्टमूर्ति- आठ रूप वाले"></div>
+            <div class="verse" data-en="84. Anekatma – One who manifests as many souls/forms." data-hi="84. अनेकात्मा- अनेक रूप धारण करने वाले"></div>
+            <div class="verse" data-en="85. Sattvika – The embodiment of purity and goodness." data-hi="85. सात्त्विक- सत्व गुण वाले"></div>
+            <div class="verse" data-en="86. Shuddhavigraha – One with a pure and holy form." data-hi="86. शुद्धविग्रह- शुद्धमूर्ति वाले"></div>
+            <div class="verse" data-en="87. Shashvata – The eternal/never-ending." data-hi="87. शाश्वत- नित्य रहने वाले"></div>
+            <div class="verse" data-en="88. Khandaparashu – One who holds a broken axe." data-hi="88. खण्डपरशु- टूटा हुआ फरसा धारण करने वाले"></div>
+            <div class="verse" data-en="89. Aja – The unborn; without beginning." data-hi="89. अज- जन्म रहित"></div>
+            <div class="verse" data-en="90. Pashavimochana – One who releases souls from bondage." data-hi="90. पाशविमोचन- बंधन से छुड़ाने वाले"></div>
+            <div class="verse" data-en="91. Mrida – The embodiment of happiness." data-hi="91. मृड- सुखस्वरूप वाले"></div>
+            <div class="verse" data-en="92. Pashupati – Lord of all living beings (Pashu)." data-hi="92. पशुपति- पशुओं के स्वामी"></div>
+            <div class="verse" data-en="93. Deva – The self-effulgent one." data-hi="93. देव- स्वयं प्रकाश रूप"></div>
+            <div class="verse" data-en="94. Mahadeva – The greatest of all Gods." data-hi="94. महादेव- देवों के भी देव"></div>
+            <div class="verse" data-en="95. Avyaya – The inexhaustible; One who never diminishes." data-hi="95. अव्यय- खर्च होने पर भी न घटने वाले"></div>
+            <div class="verse" data-en="96. Hari – One who is the same as Vishnu." data-hi="96. हरि- विष्णुस्वरूप"></div>
+            <div class="verse" data-en="97. Pushadantabhit – One who plucked out the teeth of the God Pusha." data-hi="97. पूषदन्तभित्- पूषा के दांत उखाड़ने वाले"></div>
+            <div class="verse" data-en="98. Avyagra – One who is never disturbed or agitated." data-hi="98. अव्यग्र- कभी भी व्यथित न होने वाले"></div>
+            <div class="verse" data-en="99. Dakshadhvarahara – The destroyer of King Daksha’s sacrifice." data-hi="99. दक्षाध्वरहर- दक्ष के यज्ञ को नष्ट करने वाले"></div>
+            <div class="verse" data-en="100. Hara – One who takes away (dissolves) sins and miseries." data-hi="100. हर- पापों व तापों को हरने वाले"></div>
+            <div class="verse" data-en="101. Bhaganetrabhid – One who blinded the God Bhaga." data-hi="101. भगनेत्रभिद्- भग देवता की आंख फोड़ने वाले"></div>
+            <div class="verse" data-en="102. Avyakta – The unmanifested; beyond the reach of senses." data-hi="102. अव्यक्त- इंद्रियों के सामने प्रकट न होने वाले"></div>
+            <div class="verse" data-en="103. Sahasraksha – The thousand-eyed one." data-hi="103. सहस्राक्ष- हजार आंखों वाले"></div>
+            <div class="verse" data-en="104. Sahasrapada – The thousand-footed one." data-hi="104. सहस्रपाद- हजार पैरों वाले"></div>
+            <div class="verse" data-en="105. Apavargaprada – The giver of final liberation (Moksha)." data-hi="105. अपवर्गप्रद- कैवल्य मोक्ष देने वाले"></div>
+            <div class="verse" data-en="106. Ananta – The endless/infinite." data-hi="106. अनंत- देशकालवस्तु रूपी परिछेद से रहित"></div>
+            <div class="verse" data-en="107. Taraka – The savior/deliverer of all." data-hi="107. तारक- सबको तारने वाले"></div>
+            <div class="verse" data-en="108. Parameshwara – The Supreme Lord." data-hi="108. परमेश्वर- सबसे परम ईश्वर"></div>
+        </div>
+    </div>`,
+    hi: `<div class="text-content">
+        <h2>🔱 भगवान शिव</h2>
+        <p>शिव संहारकर्ता, परम योगी, ब्रह्मांडीय नृत्य (नटराज) और ध्यान के स्वामी हैं। वे ब्रह्मा और विष्णु के साथ त्रिमूर्ति में से एक हैं।</p>
+        <div id="shiva-index">
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
+                <div onclick="showShivaSub('108names')" style="background: var(--cream); padding: 1.2rem; border-radius: 12px; cursor: pointer; border-left: 4px solid var(--saffron);">
+                    <h3 style="color: var(--saffron); margin: 0;">॥ श्री शिव 108 नाम ॥</h3>
+                    <p style="margin: 0.5rem 0 0 0; color: var(--text);">भगवान शिव के 108 पवित्र नाम अर्थ सहित।</p>
+                </div>
+            </div>
+        </div>
+        <div id="shiva-108names" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <button class="back-btn" onclick="showShivaIndex()">← वापस शिव में</button>
+                <button class="favorite-btn" data-content-id="shiva-108names" data-content-title="श्री शिव 108 नाम" data-content-title-en="Shri Shiva 108 Names" data-section="deities" onclick="toggleFavorite(this)">❤️ पसंदीदा</button>
+            </div>
+            <h3 style="color: var(--saffron); margin-top: 1rem;">॥ श्री शिव १०८ नाम ॥</h3>
+            <p style="text-align:center; color: var(--brown); margin-bottom: 2rem; font-style: italic;">भगवान शिव के 108 नाम, अर्थ सहित</p>
+            
+            <div class="verse" data-en="1. Shiva – The Auspicious One." data-hi="1. शिव- कल्याण स्वरूप"></div>
+            <div class="verse" data-en="2. Maheshwara – The Lord of Maya (Illusion)." data-hi="2. महेश्वर- माया के अधीश्वर"></div>
+            <div class="verse" data-en="3. Shambhu – The Abode of Joy/Bliss." data-hi="3. शम्भू- आनंद स्वरूप वाले"></div>
+            <div class="verse" data-en="4. Pinaki – Wielder of the 'Pinaka' bow." data-hi="4. पिनाकी- पिनाक धनुष धारण करने वाले"></div>
+            <div class="verse" data-en="5. Shashishekhara – One who wears the moon in His hair." data-hi="5. शशिशेखर- सिर पर चंद्रमा धारण करने वाले"></div>
+            <div class="verse" data-en="6. Vamadeva – One who is pleasing and beautiful in every aspect." data-hi="6. वामदेव- अत्यंत सुंदर स्वरूप वाले"></div>
+            <div class="verse" data-en="7. Virupaksha – One with oblique/multiple eyes (Three-eyed)." data-hi="7. विरूपाक्ष- विचित्र आंख वाले( शिव के तीन नेत्र हैं)"></div>
+            <div class="verse" data-en="8. Kapardi – One with matted hair (Jata)." data-hi="8. कपर्दी- जटाजूट धारण करने वाले"></div>
+            <div class="verse" data-en="9. Nilalohita – The one who is both Blue and Red." data-hi="9. नीललोहित- नीले और लाल रंग वाले"></div>
+            <div class="verse" data-en="10. Shankar – Bestower of happiness and prosperity." data-hi="10. शंकर- सबका कल्याण करने वाले"></div>
+            <div class="verse" data-en="11. Shulapani – One who holds a trident (Trishul) in His hand." data-hi="11. शूलपाणी- हाथ में त्रिशूल धारण करने वाले"></div>
+            <div class="verse" data-en="12. Khatvangi – One who carries a knobby stick or the leg of a cot." data-hi="12. खटवांगी- खटिया का एक पाया रखने वाले"></div>
+            <div class="verse" data-en="13. Vishnuvallabha – The one who is dear to Lord Vishnu." data-hi="13. विष्णुवल्लभ- भगवान विष्णु के अति प्रिय"></div>
+            <div class="verse" data-en="14. Shipivishta – One who enters the rays of light." data-hi="14. शिपिविष्ट- सितुहा में प्रवेश करने वाले"></div>
+            <div class="verse" data-en="15. Ambikanatha – The Lord of Goddess Ambika (Parvati)." data-hi="15. अंबिकानाथ- देवी भगवती के पति"></div>
+            <div class="verse" data-en="16. Shrikantha – One with a beautiful throat." data-hi="16. श्रीकण्ठ- सुंदर कण्ठ वाले"></div>
+            <div class="verse" data-en="17. Bhaktavatsala – One who is extremely affectionate to His devotees." data-hi="17. भक्तवत्सल- भक्तों को अत्यंत स्नेह करने वाले"></div>
+            <div class="verse" data-en="18. Bhava – The existence; One who manifests as the universe." data-hi="18. भव- संसार के रूप में प्रकट होने वाले"></div>
+            <div class="verse" data-en="19. Sharva – The remover of all miseries." data-hi="19. शर्व- कष्टों को नष्ट करने वाले"></div>
+            <div class="verse" data-en="20. Trilokesha – Lord of the three worlds." data-hi="20. त्रिलोकेश- तीनों लोकों के स्वामी"></div>
+            <div class="verse" data-en="21. Shitikantha – The white-throated one." data-hi="21. शितिकण्ठ- सफेद कण्ठ वाले"></div>
+            <div class="verse" data-en="22. Shivapriya – Beloved of Goddess Parvati." data-hi="22. शिवाप्रिय- पार्वती के प्रिय"></div>
+            <div class="verse" data-en="23. Ugra – One with a fierce/formidable nature." data-hi="23. उग्र- अत्यंत उग्र रूप वाले"></div>
+            <div class="verse" data-en="24. Kapali – One who carries a skull (Kapala)." data-hi="24. कपाली- कपाल धारण करने वाले"></div>
+            <div class="verse" data-en="25. Kamari – The enemy of Kamadeva (Desire)." data-hi="25. कामारी- कामदेव के शत्रु, अंधकार को हरने वाले"></div>
+            <div class="verse" data-en="26. Surasudana – Slayer of the demon Andhaka." data-hi="26. सुरसूदन- अंधक दैत्य को मारने वाले"></div>
+            <div class="verse" data-en="27. Gangadhara – One who holds the river Ganga in His hair." data-hi="27. गंगाधर- गंगा जी को धारण करने वाले"></div>
+            <div class="verse" data-en="28. Lalataksha – One who has an eye on His forehead." data-hi="28. ललाटाक्ष- ललाट में आंख वाले"></div>
+            <div class="verse" data-en="29. Mahakala – The Lord of Time; The great destroyer." data-hi="29. महाकाल- कालों के भी काल"></div>
+            <div class="verse" data-en="30. Kripanidhi – The ocean/treasure of compassion." data-hi="30. कृपानिधि- करूणा की खान"></div>
+            <div class="verse" data-en="31. Bhima – The one with a formidable/gigantic form." data-hi="31. भीम- भयंकर रूप वाले"></div>
+            <div class="verse" data-en="32. Parashuhasta – One who holds an axe in His hand." data-hi="32. परशुहस्त- हाथ में फरसा धारण करने वाले"></div>
+            <div class="verse" data-en="33. Mrigapani – One who holds a deer in His hand." data-hi="33. मृगपाणी- हाथ में हिरण धारण करने वाले"></div>
+            <div class="verse" data-en="34. Jatadhara – One who wears matted hair." data-hi="34. जटाधर- जटा रखने वाले"></div>
+            <div class="verse" data-en="35. Kailashavasi – The resident of Mount Kailash." data-hi="35. कैलाशवासी- कैलाश के निवासी"></div>
+            <div class="verse" data-en="36. Kavachi – One who is protected by armor." data-hi="36. कवची- कवच धारण करने वाले"></div>
+            <div class="verse" data-en="37. Kathora – One with an incredibly strong and firm body." data-hi="37. कठोर- अत्यंत मजबूत देह वाले"></div>
+            <div class="verse" data-en="38. Tripurantaka – The destroyer of the three demon cities (Tripura)." data-hi="38. त्रिपुरांतक- त्रिपुरासुर को मारने वाले"></div>
+            <div class="verse" data-en="39. Vrishanka – One whose flag bears the symbol of a bull." data-hi="39. वृषांक- बैल के चिह्न वाली ध्वजा वाले"></div>
+            <div class="verse" data-en="40. Vrishabharudha – One who rides the bull (Nandi)." data-hi="40. वृषभारूढ़- बैल की सवारी वाले"></div>
+            <div class="verse" data-en="41. Bhasmoddhulita-vigraha – One who smears His body with holy ash." data-hi="41. भस्मोद्धूलितविग्रह- सारे शरीर में भस्म लगाने वाले"></div>
+            <div class="verse" data-en="42. Samapriya – One who loves the chanting of Sama Veda." data-hi="42. सामप्रिय- सामगान से प्रेम करने वाले"></div>
+            <div class="verse" data-en="43. Swaramayi – One who resides in the seven musical notes." data-hi="43. स्वरमयी- सातों स्वरों में निवास करने वाले"></div>
+            <div class="verse" data-en="44. Trayimurti – One who is the embodiment of the three Vedas." data-hi="44. त्रयीमूर्ति- वेदरूपी विग्रह करने वाले"></div>
+            <div class="verse" data-en="45. Anishwara – One who has no lord above Him; The ultimate Lord." data-hi="45. अनीश्वर- जो स्वयं ही सबके स्वामी है"></div>
+            <div class="verse" data-en="46. Sarvajna – The all-knowing/Omniscient." data-hi="46. सर्वज्ञ- सब कुछ जानने वाले"></div>
+            <div class="verse" data-en="47. Paramatma – The Supreme Soul." data-hi="47. परमात्मा- सब आत्माओं में सर्वोच्च"></div>
+            <div class="verse" data-en="48. Somasuryagnilocana – One whose eyes are the Moon, Sun, and Fire." data-hi="48. सोमसूर्याग्निलोचन- चंद्र, सूर्य और अग्निरूपी आंख वाले"></div>
+            <div class="verse" data-en="49. Havi – The sacrificial offering." data-hi="49. हवि- आहूति रूपी द्रव्य वाले"></div>
+            <div class="verse" data-en="50. Yajnamaya – The embodiment of sacrifice." data-hi="50. यज्ञमय- यज्ञस्वरूप वाले"></div>
+            <div class="verse" data-en="51. Soma – One who is with Uma (Goddess Parvati)." data-hi="51. सोम- उमा के सहित रूप वाले"></div>
+            <div class="verse" data-en="52. Panchavaktra – The five-faced one." data-hi="52. पंचवक्त्र- पांच मुख वाले"></div>
+            <div class="verse" data-en="53. Sadashiva – The eternally auspicious and pure." data-hi="53. सदाशिव- नित्य कल्याण रूप वाल"></div>
+            <div class="verse" data-en="54. Vishveshwara – The Lord of the entire universe." data-hi="54. विश्वेश्वर- सारे विश्व के ईश्वर"></div>
+            <div class="verse" data-en="55. Virabhadra – One who is fierce yet calm in essence." data-hi="55. वीरभद्र- वीर होते हुए भी शांत स्वरूप वाले"></div>
+            <div class="verse" data-en="56. Gananatha – The Lord of the Ganas (attendants)." data-hi="56. गणनाथ- गणों के स्वामी"></div>
+            <div class="verse" data-en="57. Prajapati – The protector and lord of all beings." data-hi="57. प्रजापति- प्रजाओं का पालन करने वाले"></div>
+            <div class="verse" data-en="58. Hiranyareta – One with golden brilliance/semen." data-hi="58. हिरण्यरेता- स्वर्ण तेज वाले"></div>
+            <div class="verse" data-en="59. Durdhursha – One who is invincible and cannot be suppressed." data-hi="59. दुर्धुर्ष- किसी से नहीं दबने वाले"></div>
+            <div class="verse" data-en="60. Girisha – The Lord of the mountains." data-hi="60. गिरीश- पर्वतों के स्वामी"></div>
+            <div class="verse" data-en="61. Girishwara – The Lord who sleeps on the peaks of Kailash." data-hi="61. गिरिश्वर- कैलाश पर्वत पर सोने वाले"></div>
+            <div class="verse" data-en="62. Anagha – The sinless one." data-hi="62. अनघ- पापरहित"></div>
+            <div class="verse" data-en="63. Bhujangabhushana – Adorned with snakes as ornaments." data-hi="63. भुजंगभूषण- सांपों के आभूषण वाले"></div>
+            <div class="verse" data-en="64. Bharga – One who burns away all sins." data-hi="64. भर्ग- पापों को भूंज देने वाले"></div>
+            <div class="verse" data-en="65. Giridhanva – One who used Mount Meru as a bow." data-hi="65. गिरिधन्वा- मेरू पर्वत को धनुष बनाने वाले"></div>
+            <div class="verse" data-en="66. Giripriya – One who loves the mountains." data-hi="66. गिरिप्रिय- पर्वत प्रेमी"></div>
+            <div class="verse" data-en="67. Krittivasa – One who wears the skin of an elephant." data-hi="67. कृत्तिवासा- गजचर्म पहनने वाले"></div>
+            <div class="verse" data-en="68. Purarati – Enemy of the demon cities (Puras)." data-hi="68. पुराराति- पुरों का नाश करने वाले"></div>
+            <div class="verse" data-en="69. Bhagavan – The Lord possessed of all six divine opulences." data-hi="69. भगवान्- सर्वसमर्थ ऐश्वर्य संपन्न"></div>
+            <div class="verse" data-en="70. Pramathadhipa – The ruler of the Pramatha-ganas." data-hi="70. प्रमथाधिप- प्रमथगणों के अधिपति"></div>
+            <div class="verse" data-en="71. Mrityunjaya – The conqueror of death." data-hi="71. मृत्युंजय- मृत्यु को जीतने वाले"></div>
+            <div class="verse" data-en="72. Sukshmatanu – One with a subtle/divine body." data-hi="72. सूक्ष्मतनु- सूक्ष्म शरीर वाले"></div>
+            <div class="verse" data-en="73. Jagadvyapi – One who pervades the entire world." data-hi="73. जगद्व्यापी- जगत् में व्याप्त होकर रहने वाले"></div>
+            <div class="verse" data-en="74. Jagadguru – The spiritual master of the entire world." data-hi="74. जगद्गुरू- जगत् के गुरू"></div>
+            <div class="verse" data-en="75. Vyomakesha – One whose hair is like the sky/space." data-hi="75. व्योमकेश- आकाश रूपी बाल वाले"></div>
+            <div class="verse" data-en="76. Mahasenajanaka – The father of Kartikeya (Mahasena)." data-hi="76. महासेनजनक- कार्तिकेय के पिता"></div>
+            <div class="verse" data-en="77. Charuvikrama – One with beautiful and immense valor." data-hi="77. चारुविक्रम- सुन्दर पराक्रम वाले"></div>
+            <div class="verse" data-en="78. Rudra – The formidable/fierce one." data-hi="78. रूद्र- भयानक"></div>
+            <div class="verse" data-en="79. Bhutapati – Lord of the elements or lord of spirits." data-hi="79. भूतपति- भूतप्रेत या पंचभूतों के स्वामी"></div>
+            <div class="verse" data-en="80. Sthanu – The immovable/eternal being." data-hi="80. स्थाणु- स्पंदन रहित कूटस्थ रूप वाले"></div>
+            <div class="verse" data-en="81. Ahirbudhnya – One who possesses the Kundalini energy." data-hi="81. अहिर्बुध्न्य- कुण्डलिनी को धारण करने वाले"></div>
+            <div class="verse" data-en="82. Digambara – Sky-clad; One who uses the four directions as His garment." data-hi="82. दिगम्बर- नग्न, आकाशरूपी वस्त्र वाले"></div>
+            <div class="verse" data-en="83. Ashtamurti – One who has eight forms." data-hi="83. अष्टमूर्ति- आठ रूप वाले"></div>
+            <div class="verse" data-en="84. Anekatma – One who manifests as many souls/forms." data-hi="84. अनेकात्मा- अनेक रूप धारण करने वाले"></div>
+            <div class="verse" data-en="85. Sattvika – The embodiment of purity and goodness." data-hi="85. सात्त्विक- सत्व गुण वाले"></div>
+            <div class="verse" data-en="86. Shuddhavigraha – One with a pure and holy form." data-hi="86. शुद्धविग्रह- शुद्धमूर्ति वाले"></div>
+            <div class="verse" data-en="87. Shashvata – The eternal/never-ending." data-hi="87. शाश्वत- नित्य रहने वाले"></div>
+            <div class="verse" data-en="88. Khandaparashu – One who holds a broken axe." data-hi="88. खण्डपरशु- टूटा हुआ फरसा धारण करने वाले"></div>
+            <div class="verse" data-en="89. Aja – The unborn; without beginning." data-hi="89. अज- जन्म रहित"></div>
+            <div class="verse" data-en="90. Pashavimochana – One who releases souls from bondage." data-hi="90. पाशविमोचन- बंधन से छुड़ाने वाले"></div>
+            <div class="verse" data-en="91. Mrida – The embodiment of happiness." data-hi="91. मृड- सुखस्वरूप वाले"></div>
+            <div class="verse" data-en="92. Pashupati – Lord of all living beings (Pashu)." data-hi="92. पशुपति- पशुओं के स्वामी"></div>
+            <div class="verse" data-en="93. Deva – The self-effulgent one." data-hi="93. देव- स्वयं प्रकाश रूप"></div>
+            <div class="verse" data-en="94. Mahadeva – The greatest of all Gods." data-hi="94. महादेव- देवों के भी देव"></div>
+            <div class="verse" data-en="95. Avyaya – The inexhaustible; One who never diminishes." data-hi="95. अव्यय- खर्च होने पर भी न घटने वाले"></div>
+            <div class="verse" data-en="96. Hari – One who is the same as Vishnu." data-hi="96. हरि- विष्णुस्वरूप"></div>
+            <div class="verse" data-en="97. Pushadantabhit – One who plucked out the teeth of the God Pusha." data-hi="97. पूषदन्तभित्- पूषा के दांत उखाड़ने वाले"></div>
+            <div class="verse" data-en="98. Avyagra – One who is never disturbed or agitated." data-hi="98. अव्यग्र- कभी भी व्यथित न होने वाले"></div>
+            <div class="verse" data-en="99. Dakshadhvarahara – The destroyer of King Daksha’s sacrifice." data-hi="99. दक्षाध्वरहर- दक्ष के यज्ञ को नष्ट करने वाले"></div>
+            <div class="verse" data-en="100. Hara – One who takes away (dissolves) sins and miseries." data-hi="100. हर- पापों व तापों को हरने वाले"></div>
+            <div class="verse" data-en="101. Bhaganetrabhid – One who blinded the God Bhaga." data-hi="101. भगनेत्रभिद्- भग देवता की आंख फोड़ने वाले"></div>
+            <div class="verse" data-en="102. Avyakta – The unmanifested; beyond the reach of senses." data-hi="102. अव्यक्त- इंद्रियों के सामने प्रकट न होने वाले"></div>
+            <div class="verse" data-en="103. Sahasraksha – The thousand-eyed one." data-hi="103. सहस्राक्ष- हजार आंखों वाले"></div>
+            <div class="verse" data-en="104. Sahasrapada – The thousand-footed one." data-hi="104. सहस्रपाद- हजार पैरों वाले"></div>
+            <div class="verse" data-en="105. Apavargaprada – The giver of final liberation (Moksha)." data-hi="105. अपवर्गप्रद- कैवल्य मोक्ष देने वाले"></div>
+            <div class="verse" data-en="106. Ananta – The endless/infinite." data-hi="106. अनंत- देशकालवस्तु रूपी परिछेद से रहित"></div>
+            <div class="verse" data-en="107. Taraka – The savior/deliverer of all." data-hi="107. तारक- सबको तारने वाले"></div>
+            <div class="verse" data-en="108. Parameshwara – The Supreme Lord." data-hi="108. परमेश्वर- सबसे परम ईश्वर"></div>
+        </div>
+    </div>`
+}
 
     const def = lang === 'en'
         ? `<div class="text-content"><h2>Content Coming Soon</h2><p>This section is being updated with detailed information. 🙏</p></div>`
@@ -7219,6 +7486,13 @@ function jumpToContent(contentId) {
             showVishnuSub('sahasranama');
         }, 200);
     }
+        // Inside jumpToContent function, after the Vishnu case
+else if (contentId === 'shiva-108names') {
+    showText('shiva');
+    setTimeout(() => {
+        showShivaSub('108names');
+    }, 200);
+}
     // Add more mappings here as you add new content
     else {
         console.log('Unknown content ID:', contentId);
@@ -7261,6 +7535,21 @@ function showVishnuSub(section) {
 function showVishnuIndex() {
     document.getElementById('vishnu-index').style.display = 'block';
     document.getElementById('vishnu-sahasranama').style.display = 'none';
+}
+    // ======================================
+// SHIVA 108 NAMES SUB-SECTION
+// ======================================
+function showShivaSub(section) {
+    document.getElementById('shiva-index').style.display = 'none';
+    const contentDiv = document.getElementById('shiva-' + section);
+    contentDiv.style.display = 'block';
+    const favBtn = contentDiv.querySelector('.favorite-btn');
+    if (favBtn) loadFavoriteStatus(favBtn.dataset.contentId, favBtn);
+}
+
+function showShivaIndex() {
+    document.getElementById('shiva-index').style.display = 'block';
+    document.getElementById('shiva-108names').style.display = 'none';
 }
 
 // ======================================
