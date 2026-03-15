@@ -3401,6 +3401,14 @@ function applyLanguage(lang) {
             }
         }
     });
+    // If shiva 108 names is currently visible, update its favorite button
+    const shivaDiv = document.getElementById('shiva-108names');
+    if (shivaDiv && shivaDiv.style.display === 'block') {
+        const favBtn = shivaDiv.querySelector('.favorite-btn');
+        if (favBtn) {
+            favBtn.innerHTML = getFavoriteButtonText(favBtn.classList.contains('favorited'));
+        }
+    }
     updateAllFavoriteButtons();
 }
 
@@ -7036,7 +7044,7 @@ function getTextContent(id) {
 <div class="verse" data-en="1000. Sarva-praharanaayudhah: He who has all implements for all kinds of assault and fight." data-hi="1000. सर्वप्रहरणायुधः: जिनके पास सभी प्रकार के आक्रमण और युद्ध के सभी अस्त्र-शस्त्र हैं।"></div>
                 </div>`
         }
-    };
+        },
     'shiva': {
     en: `<div class="text-content">
         <h2>🔱 Lord Shiva</h2>
@@ -7296,7 +7304,8 @@ function getTextContent(id) {
             <div class="verse" data-en="108. Parameshwara – The Supreme Lord." data-hi="108. परमेश्वर- सबसे परम ईश्वर"></div>
         </div>
     </div>`
-}
+        }
+    };
 
     const def = lang === 'en'
         ? `<div class="text-content"><h2>Content Coming Soon</h2><p>This section is being updated with detailed information. 🙏</p></div>`
