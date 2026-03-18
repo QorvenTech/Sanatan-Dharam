@@ -3447,8 +3447,8 @@ function dsCard(item){
     var adminHtml = '';
     if(dsIsAuth()){
         var pid = item.id.replace(/'/g, '');
-        var safeEditTitle = (item.title||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-        var safeEditUrl   = (item.url||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        var safeEditTitle = (item.title||'').replace(/\\/g,'\\\').replace(/'/g,"\'");
+        var safeEditUrl   = (item.url||'').replace(/\\/g,'\\\').replace(/'/g,"\'");
         adminHtml = '<div style="display:flex;gap:0.5rem;margin-top:0.8rem;flex-wrap:wrap;">'
             + '<button onclick="dsPinToggle(this)" data-id="' + pid + '" data-val="' + (item.pinned?'1':'0') + '" style="padding:0.28rem 0.7rem;border-radius:8px;border:1px solid var(--saffron);background:transparent;color:var(--saffron);font-size:0.77rem;cursor:pointer;">' + (item.pinned ? '📌 Unpin' : '📌 Pin') + '</button>'
             + '<button onclick="dsLiveToggle(this)" data-id="' + pid + '" data-val="' + (item.isLive?'1':'0') + '" style="padding:0.28rem 0.7rem;border-radius:8px;border:1px solid #e53e3e;background:transparent;color:#e53e3e;font-size:0.77rem;cursor:pointer;">' + (item.isLive ? '🔴 Mark Ended' : '🔴 Mark Live') + '</button>'
@@ -3703,7 +3703,7 @@ function showForgotPassword() {
     if (registerForm) registerForm.style.display = 'none';
     if (forgotForm) forgotForm.style.display = 'block';
     if (modalTitle) modalTitle.textContent = 'Reset Password';
-    if (modalSubtitle) modalSubtitle.textContent = 'We\'ll send a reset link to your email';
+    if (modalSubtitle) modalSubtitle.textContent = 'We'll send a reset link to your email';
     clearMessages();
 }
 
