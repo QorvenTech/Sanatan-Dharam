@@ -473,7 +473,7 @@ body.dark-theme {
 </div>
             <div class="card" onclick="showText('krishna')"><div class="icon">🦚</div><h3 data-en="Krishna" data-hi="कृष्ण">Krishna</h3><p data-en="Eighth Vishnu avatar, Gita teacher, embodiment of divine love and wisdom." data-hi="विष्णु के आठवें अवतार, गीता के शिक्षक, दिव्य प्रेम और ज्ञान के अवतार।">Eighth Vishnu avatar, Gita teacher, embodiment of divine love and wisdom.</p></div>
             <div class="card" onclick="showText('rama')"><div class="icon">🏹</div><h3 data-en="Rama" data-hi="राम">Rama</h3><p data-en="Seventh Vishnu avatar, ideal king (Maryada Purushottam), Ramayana hero." data-hi="विष्णु के सातवें अवतार, आदर्श राजा (मर्यादा पुरुषोत्तम), रामायण के नायक।">Seventh Vishnu avatar, ideal king (Maryada Purushottam), Ramayana hero.</p></div>
-            <div class="card" onclick="showText('durga')"><div class="icon">🦁</div><h3 data-en="Durga" data-hi="दुर्गा">Durga</h3><p data-en="Divine mother, warrior goddess with ten arms who destroys evil forces." data-hi="दिव्य माता, दस भुजाओं वाली योद्धा देवी जो बुरी शक्तियों का विनाश करती हैं।">Divine mother, warrior goddess with ten arms who destroys evil forces.</p></div>
+            <div class="card" onclick="showText('durga')"><div class="icon">🦁</div><h3 data-en="Durga" data-hi="दुर्गा">Durga</h3><p data-en="Divine mother, warrior goddess with ten arms who destroys evil forces." data-hi="दिव्य माता, दस भुजाओं वाली योद्धा देवी जो बुरी शक्तियों का विनाश करती हैं।">Divine mother, warrior goddess with ten arms who destroys evil forces.</p><div style="margin-top:0.5rem; font-size:0.8rem; color:var(--saffron);">📿 108 Names Available</div></div>
             <div class="card" onclick="showText('lakshmi')"><div class="icon">💫</div><h3 data-en="Lakshmi" data-hi="लक्ष्मी">Lakshmi</h3><p data-en="Goddess of wealth, prosperity, fortune. Vishnu's consort and symbol of abundance." data-hi="धन, समृद्धि, भाग्य की देवी। विष्णु की पत्नी और प्रचुरता का प्रतीक।">Goddess of wealth, prosperity, fortune. Vishnu's consort and symbol of abundance.</p></div>
             <div class="card" onclick="showText('saraswati')"><div class="icon">🎵</div><h3 data-en="Saraswati" data-hi="सरस्वती">Saraswati</h3><p data-en="Goddess of knowledge, music, arts, wisdom. Brahma's consort, patron of learning." data-hi="ज्ञान, संगीत, कला, बुद्धि की देवी। ब्रह्मा की पत्नी, शिक्षा की संरक्षक।">Goddess of knowledge, music, arts, wisdom. Brahma's consort, patron of learning.</p></div>
             <div class="card" onclick="showText('ganesha')"><div class="icon">🐘</div><h3 data-en="Ganesha" data-hi="गणेश">Ganesha</h3><p data-en="Elephant-headed remover of obstacles, lord of beginnings and sciences." data-hi="हाथी के सिर वाले विघ्नहर्ता, नई शुरुआत और विज्ञान के स्वामी।">Elephant-headed remover of obstacles, lord of beginnings and sciences.</p></div>
@@ -659,6 +659,19 @@ body.dark-theme {
     <p data-en="Powerful hymn of Hanuman for courage and protection. 40 verses with immense spiritual strength."
        data-hi="हनुमान जी का अत्यन्त शक्तिशाली स्तोत्र। साहस और सुरक्षा के लिए ४० चौपाइयाँ।">
         हनुमान जी का अत्यन्त शक्तिशाली स्तोत्र। साहस और सुरक्षा के लिए ४० चौपाइयाँ।
+    </p>
+    <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <span style="background:var(--cream);color:var(--brown);padding:0.2rem 0.7rem;border-radius:20px;font-size:0.8rem;font-weight:600;" data-en="40 Verses" data-hi="४० चौपाई">४० चौपाई</span>
+        <span style="background:var(--cream);color:var(--brown);padding:0.2rem 0.7rem;border-radius:20px;font-size:0.8rem;font-weight:600;" data-en="Unknown Author" data-hi="अज्ञात रचयिता">अज्ञात रचयिता</span>
+    </div>
+</div>
+            <!-- DURGA CHALISA CARD -->
+<div class="card" onclick="showPaath('durga-chalisa')" style="border-top-color:#ff6b35;">
+    <div class="icon">🦁</div>
+    <h3 style="color:var(--saffron);" data-en="Durga Chalisa" data-hi="दुर्गा चालीसा">दुर्गा चालीसा</h3>
+    <p data-en="40 verses in praise of Goddess Durga. Removes all obstacles and grants strength."
+       data-hi="माँ दुर्गा की स्तुति में 40 चौपाइयाँ। सभी बाधाओं को दूर कर शक्ति प्रदान करती हैं।">
+        माँ दुर्गा की स्तुति में 40 चौपाइयाँ। सभी बाधाओं को दूर कर शक्ति प्रदान करती हैं।
     </p>
     <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
         <span style="background:var(--cream);color:var(--brown);padding:0.2rem 0.7rem;border-radius:20px;font-size:0.8rem;font-weight:600;" data-en="40 Verses" data-hi="४० चौपाई">४० चौपाई</span>
@@ -2546,6 +2559,204 @@ body.dark-theme {
         </div>
     </div>
 </div>
+    <!-- DURGA CHALISA FULL TEXT (hidden by default) -->
+<div id="durga-chalisa-text" style="display:none; margin-top:2rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <button class="back-btn" onclick="document.getElementById('durga-chalisa-text').style.display='none'; document.getElementById('paathGrid').style.display='grid';">
+            <span data-en="← Back" data-hi="← वापस जाएं"></span>
+        </button>
+        <button class="favorite-btn" data-content-id="durga-chalisa" data-content-title="दुर्गा चालीसा" data-content-title-en="Durga Chalisa" data-section="paathmandir" onclick="toggleFavorite(this)">❤️ Favorite</button>
+    </div>
+    <div class="text-content" style="max-height:none; font-size:1.08rem; line-height:2;">
+        <h2 style="text-align:center; font-family:'Tiro Devanagari Sanskrit', serif;" data-en="🦁 Durga Chalisa 🦁" data-hi="🦁 दुर्गा चालीसा 🦁"></h2>
+        <p style="text-align:center; color:#888; margin-bottom:0.5rem;" data-en="Durga Chalisa — 40 Verses" data-hi="श्री दुर्गा चालीसा — ४० चौपाइयाँ"></p>
+        <p style="text-align:center; color:var(--brown); font-weight:600; margin-bottom:2rem;" data-en="Complete Text with Meaning" data-hi="पाठ अर्थ सहित — सम्पूर्ण"></p>
+
+        <!-- Introduction (Hindi/English) -->
+        <div class="sk-intro-box" data-en="Greetings devotees! Here is the sacred Durga Chalisa in praise of Goddess Durga."
+             data-hi="नमस्कार भक्तों! यहाँ प्रस्तुत है माँ दुर्गा की पवित्र चालीसा।">
+            नमस्कार भक्तों! यहाँ प्रस्तुत है माँ दुर्गा की पवित्र चालीसा।
+        </div>
+
+        <!-- DOHA / CHAUPAIS -->
+        <div class="verse" data-en="Namo Namo Durge Sukh Karani | Namo Namo Durge Dukh Harani ||"
+             data-hi="नमो नमो दुर्गे सुख करनी। नमो नमो दुर्गे दुःख हरनी॥">
+            नमो नमो दुर्गे सुख करनी। नमो नमो दुर्गे दुःख हरनी॥
+        </div>
+        <div class="verse" data-en="Nirankar Hai Jyoti Tumhari | Tihu Lok Phaili Ujiyari ||"
+             data-hi="निरंकार है ज्योति तुम्हारी। तिहूं लोक फैली उजियारी॥">
+            निरंकार है ज्योति तुम्हारी। तिहूं लोक फैली उजियारी॥
+        </div>
+        <div class="verse" data-en="Shashi Lalat Mukh Mahavishala | Netra Lal Bhrikuti Vikarala ||"
+             data-hi="शशि ललाट मुख महाविशाला। नेत्र लाल भृकुटि विकराला॥">
+            शशि ललाट मुख महाविशाला। नेत्र लाल भृकुटि विकराला॥
+        </div>
+        <div class="verse" data-en="Roop Matu Ko Adhik Suhave | Darash Karat Jan Ati Sukh Pave ||"
+             data-hi="रूप मातु को अधिक सुहावे। दरश करत जन अति सुख पावे॥">
+            रूप मातु को अधिक सुहावे। दरश करत जन अति सुख पावे॥
+        </div>
+        <div class="verse" data-en="Tum Sansar Shakti Lai Kina | Palan Hetu Ann Dhan Dina ||"
+             data-hi="तुम संसार शक्ति लै कीना। पालन हेतु अन्न धन दीना॥">
+            तुम संसार शक्ति लै कीना। पालन हेतु अन्न धन दीना॥
+        </div>
+        <div class="verse" data-en="Annapurna Hui Jag Pala | Tum Hi Adi Sundari Bala ||"
+             data-hi="अन्नपूर्णा हुई जग पाला। तुम ही आदि सुन्दरी बाला॥">
+            अन्नपूर्णा हुई जग पाला। तुम ही आदि सुन्दरी बाला॥
+        </div>
+        <div class="verse" data-en="Pralayakal Sab Nashan Hari | Tum Gauri Shiv Shankar Pyari ||"
+             data-hi="प्रलयकाल सब नाशन हारी। तुम गौरी शिवशंकर प्यारी॥">
+            प्रलयकाल सब नाशन हारी। तुम गौरी शिवशंकर प्यारी॥
+        </div>
+        <div class="verse" data-en="Shiv Yogi Tumhare Gun Gaven | Brahma Vishnu Tumhe Nit Dhyaven ||"
+             data-hi="शिव योगी तुम्हरे गुण गावें। ब्रह्मा विष्णु तुम्हें नित ध्यावें॥">
+            शिव योगी तुम्हरे गुण गावें। ब्रह्मा विष्णु तुम्हें नित ध्यावें॥
+        </div>
+        <div class="verse" data-en="Roop Saraswati Ko Tum Dhara | De Subuddhi Rishi Munin Ubara ||"
+             data-hi="रूप सरस्वती को तुम धारा। दे सुबुद्धि ऋषि मुनिन उबारा॥">
+            रूप सरस्वती को तुम धारा। दे सुबुद्धि ऋषि मुनिन उबारा॥
+        </div>
+        <div class="verse" data-en="Dharayo Roop Narasimha Ko Amba | Pargat Bhai Phadkar Khamba ||"
+             data-hi="धरयो रूप नरसिंह को अम्बा। परगट भई फाड़कर खम्बा॥">
+            धरयो रूप नरसिंह को अम्बा। परगट भई फाड़कर खम्बा॥
+        </div>
+        <div class="verse" data-en="Raksha Kari Prahlad Bachayo | Hiranyaksh Ko Swarg Pathayo ||"
+             data-hi="रक्षा करि प्रह्लाद बचायो। हिरण्याक्ष को स्वर्ग पठायो॥">
+            रक्षा करि प्रह्लाद बचायो। हिरण्याक्ष को स्वर्ग पठायो॥
+        </div>
+        <div class="verse" data-en="Lakshmi Roop Dharo Jag Mahin | Shri Narayan Ang Samahin ||"
+             data-hi="लक्ष्मी रूप धरो जग माहीं। श्री नारायण अंग समाहीं॥">
+            लक्ष्मी रूप धरो जग माहीं। श्री नारायण अंग समाहीं॥
+        </div>
+        <div class="verse" data-en="Ksheersindhu Mein Karat Vilasa | Dayasindhu Deejai Man Aasa ||"
+             data-hi="क्षीरसिन्धु में करत विलासा। दयासिन्धु दीजै मन आसा॥">
+            क्षीरसिन्धु में करत विलासा। दयासिन्धु दीजै मन आसा॥
+        </div>
+        <div class="verse" data-en="Hinglaj Mein Tumhi Bhavani | Mahima Amit Na Jaat Bakhani ||"
+             data-hi="हिंगलाज में तुम्हीं भवानी। महिमा अमित न जात बखानी॥">
+            हिंगलाज में तुम्हीं भवानी। महिमा अमित न जात बखानी॥
+        </div>
+        <div class="verse" data-en="Matangi Aru Dhumavati Mata | Bhuvaneshwari Bagala Sukh Data ||"
+             data-hi="मातंगी अरु धूमावति माता। भुवनेश्वरी बगला सुख दाता॥">
+            मातंगी अरु धूमावति माता। भुवनेश्वरी बगला सुख दाता॥
+        </div>
+        <div class="verse" data-en="Shri Bhairav Tara Jag Tarini | Chhinn Bhaal Bhav Dukh Nivarini ||"
+             data-hi="श्री भैरव तारा जग तारिणी। छिन्न भाल भव दुःख निवारिणी॥">
+            श्री भैरव तारा जग तारिणी। छिन्न भाल भव दुःख निवारिणी॥
+        </div>
+        <div class="verse" data-en="Kehari Vahan Soha Bhavani | Langur Veer Chalat Agvani ||"
+             data-hi="केहरि वाहन सोह भवानी। लांगुर वीर चलत अगवानी॥">
+            केहरि वाहन सोह भवानी। लांगुर वीर चलत अगवानी॥
+        </div>
+        <div class="verse" data-en="Kar Mein Khappar Khadga Virajai | Jako Dekh Kaal Dar Bhajai ||"
+             data-hi="कर में खप्पर खड्ग विराजै। जाको देख काल डर भाजै॥">
+            कर में खप्पर खड्ग विराजै। जाको देख काल डर भाजै॥
+        </div>
+        <div class="verse" data-en="Sohai Astra Aur Trishula | Jate Uthat Shatru Hiya Shula ||"
+             data-hi="सोहै अस्त्र और त्रिशूला। जाते उठत शत्रु हिय शूला॥">
+            सोहै अस्त्र और त्रिशूला। जाते उठत शत्रु हिय शूला॥
+        </div>
+        <div class="verse" data-en="Nagarkot Mein Tumhi Virajat | Tihulok Mein Danka Bajat ||"
+             data-hi="नगरकोट में तुम्हीं विराजत। तिहुंलोक में डंका बाजत॥">
+            नगरकोट में तुम्हीं विराजत। तिहुंलोक में डंका बाजत॥
+        </div>
+        <div class="verse" data-en="Shumbh Nishumbh Danav Tum Mare | Raktabeej Shankhan Sanhare ||"
+             data-hi="शुंभ निशुंभ दानव तुम मारे। रक्तबीज शंखन संहारे॥">
+            शुंभ निशुंभ दानव तुम मारे। रक्तबीज शंखन संहारे॥
+        </div>
+        <div class="verse" data-en="Mahishasur Nrip Ati Abhimani | Jehi Agh Bhaar Mahi Akulani ||"
+             data-hi="महिषासुर नृप अति अभिमानी। जेहि अघ भार मही अकुलानी॥">
+            महिषासुर नृप अति अभिमानी। जेहि अघ भार मही अकुलानी॥
+        </div>
+        <div class="verse" data-en="Roop Karal Kalika Dhara | Sen Sahit Tum Tihi Sanhara ||"
+             data-hi="रूप कराल कालिका धारा। सेन सहित तुम तिहि संहारा॥">
+            रूप कराल कालिका धारा। सेन सहित तुम तिहि संहारा॥
+        </div>
+        <div class="verse" data-en="Pari Gadh Santan Par Jab Jab | Bhai Sahay Matu Tum Tab Tab ||"
+             data-hi="परी गाढ़ संतन पर जब जब। भई सहाय मातु तुम तब तब॥">
+            परी गाढ़ संतन पर जब जब। भई सहाय मातु तुम तब तब॥
+        </div>
+        <div class="verse" data-en="Amarpuri Aru Basav Loka | Tav Mahima Sab Rahen Ashoka ||"
+             data-hi="अमरपुरी अरु बासव लोका। तब महिमा सब रहें अशोका॥">
+            अमरपुरी अरु बासव लोका। तब महिमा सब रहें अशोका॥
+        </div>
+        <div class="verse" data-en="Jwala Mein Hai Jyoti Tumhari | Tumhe Sada Poojen Nar-Nari ||"
+             data-hi="ज्वाला में है ज्योति तुम्हारी। तुम्हें सदा पूजें नर-नारी॥">
+            ज्वाला में है ज्योति तुम्हारी। तुम्हें सदा पूजें नर-नारी॥
+        </div>
+        <div class="verse" data-en="Prem Bhakti Se Jo Yash Gaven | Dukh Daridra Nikat Nahin Aven ||"
+             data-hi="प्रेम भक्ति से जो यश गावें। दुःख दारिद्र निकट नहिं आवें॥">
+            प्रेम भक्ति से जो यश गावें। दुःख दारिद्र निकट नहिं आवें॥
+        </div>
+        <div class="verse" data-en="Dhyave Tumhe Jo Nar Man Lai | Janm-Maran Tako Chhuti Jai ||"
+             data-hi="ध्यावे तुम्हें जो नर मन लाई। जन्म-मरण ताकौ छुटि जाई॥">
+            ध्यावे तुम्हें जो नर मन लाई। जन्म-मरण ताकौ छुटि जाई॥
+        </div>
+        <div class="verse" data-en="Jogi Sur Muni Kahat Pukari | Yog Na Ho Bin Shakti Tumhari ||"
+             data-hi="जोगी सुर मुनि कहत पुकारी। योग न हो बिन शक्ति तुम्हारी॥">
+            जोगी सुर मुनि कहत पुकारी। योग न हो बिन शक्ति तुम्हारी॥
+        </div>
+        <div class="verse" data-en="Shankar Acharaj Tap Keeno | Kaam Aru Krodh Jeeti Sab Leeno ||"
+             data-hi="शंकर आचारज तप कीनो। काम अरु क्रोध जीति सब लीनो॥">
+            शंकर आचारज तप कीनो। काम अरु क्रोध जीति सब लीनो॥
+        </div>
+        <div class="verse" data-en="Nishidin Dhyan Dharo Shankar Ko | Kahu Kaal Nahin Sumiro Tumko ||"
+             data-hi="निशिदिन ध्यान धरो शंकर को। काहु काल नहिं सुमिरो तुमको॥">
+            निशिदिन ध्यान धरो शंकर को। काहु काल नहिं सुमिरो तुमको॥
+        </div>
+        <div class="verse" data-en="Shakti Roop Ka Maram Na Payo | Shakti Gai Tab Man Pachhitayo ||"
+             data-hi="शक्ति रूप का मरम न पायो। शक्ति गई तब मन पछितायो॥">
+            शक्ति रूप का मरम न पायो। शक्ति गई तब मन पछितायो॥
+        </div>
+        <div class="verse" data-en="Sharanagat Hui Kirti Bakhani | Jai Jai Jai Jagadamba Bhavani ||"
+             data-hi="शरणागत हुई कीर्ति बखानी। जय जय जय जगदम्ब भवानी॥">
+            शरणागत हुई कीर्ति बखानी। जय जय जय जगदम्ब भवानी॥
+        </div>
+        <div class="verse" data-en="Bhai Prasann Adi Jagadamba | Dai Shakti Nahin Keen Vilamba ||"
+             data-hi="भई प्रसन्न आदि जगदम्बा। दई शक्ति नहिं कीन विलम्बा॥">
+            भई प्रसन्न आदि जगदम्बा। दई शक्ति नहिं कीन विलम्बा॥
+        </div>
+        <div class="verse" data-en="Moko Matu Kasht Ati Ghero | Tum Bin Kaun Harai Dukh Mero ||"
+             data-hi="मोको मातु कष्ट अति घेरो। तुम बिन कौन हरै दुःख मेरो॥">
+            मोको मातु कष्ट अति घेरो। तुम बिन कौन हरै दुःख मेरो॥
+        </div>
+        <div class="verse" data-en="Aasha Trishna Nipat Satave | Ripu Murakh Mohi Darpave ||"
+             data-hi="आशा तृष्णा निपट सतावें। रिपू मुरख मौही डरपावे॥">
+            आशा तृष्णा निपट सतावें। रिपू मुरख मौही डरपावे॥
+        </div>
+        <div class="verse" data-en="Shatru Naash Keejai Maharani | Sumiraun Ikchit Tumhe Bhavani ||"
+             data-hi="शत्रु नाश कीजै महारानी। सुमिरौं इकचित तुम्हें भवानी॥">
+            शत्रु नाश कीजै महारानी। सुमिरौं इकचित तुम्हें भवानी॥
+        </div>
+        <div class="verse" data-en="Karo Kripa He Matu Dayala | Riddhi-Siddhi Dai Karahu Nihala ||"
+             data-hi="करो कृपा हे मातु दयाला। ऋद्धि-सिद्धि दै करहु निहाला॥">
+            करो कृपा हे मातु दयाला। ऋद्धि-सिद्धि दै करहु निहाला॥
+        </div>
+        <div class="verse" data-en="Jab Lagi Jiyun Daya Phal Paun | Tumharo Yash Main Sada Sunaun ||"
+             data-hi="जब लगि जिऊं दया फल पाऊं । तुम्हरो यश मैं सदा सुनाऊं ॥">
+            जब लगि जिऊं दया फल पाऊं । तुम्हरो यश मैं सदा सुनाऊं ॥
+        </div>
+        <div class="verse" data-en="Durga Chalisa Jo Koi Gavae | Sab Sukh Bhog Parampad Pavae ||"
+             data-hi="दुर्गा चालीसा जो कोई गावै। सब सुख भोग परमपद पावै॥">
+            दुर्गा चालीसा जो कोई गावै। सब सुख भोग परमपद पावै॥
+        </div>
+        <div class="verse" data-en="Devidas Sharan Nij Jaani | Karahu Kripa Jagadamba Bhavani ||"
+             data-hi="देवीदास शरण निज जानी। करहु कृपा जगदम्ब भवानी॥">
+            देवीदास शरण निज जानी। करहु कृपा जगदम्ब भवानी॥
+        </div>
+
+        <!-- Closing Verse -->
+        <div class="verse" style="text-align:center; font-weight:700; margin-top:2rem;">
+            <span data-en="|| Iti Shri Durga Chalisa Sampurn ||" data-hi="॥ इति श्री दुर्गा चालीसा सम्पूर्ण ॥">
+                ॥ इति श्री दुर्गा चालीसा सम्पूर्ण ॥
+            </span>
+        </div>
+
+        <div style="text-align:center; background:linear-gradient(135deg,var(--cream),#ffe4cc); border-left:none; border-radius:12px; padding:2rem; margin-top:2rem;">
+            <span style="color:var(--saffron); font-size:1.2rem; font-weight:700;" data-en="|| Durga Chalisa Complete ||" data-hi="।। दुर्गा चालीसा सम्पूर्ण ।।">।। दुर्गा चालीसा सम्पूर्ण ।।</span><br>
+            <span style="color:var(--brown);">।। जय माता दी ।।</span>
+        </div>
+    </div>
+</div>
 
     <!-- PAATH MANDIR -->
     <div id="paath" class="section">
@@ -3923,6 +4134,7 @@ function showPaath(id) {
     document.getElementById('sundarkand-text').style.display = 'none';
     document.getElementById('hanuman-chalisa-text').style.display = 'none';
     document.getElementById('bajrang-baan-text').style.display = 'none';
+    document.getElementById('durga-chalisa-text').style.display = 'none';
 
     // Show the selected one
     if (id === 'sundarkand') {
@@ -3931,6 +4143,8 @@ function showPaath(id) {
         document.getElementById('hanuman-chalisa-text').style.display = 'block';
     } else if (id === 'bajrang-baan') {
         document.getElementById('bajrang-baan-text').style.display = 'block';
+    } else if (id === 'durga-chalisa') {
+        document.getElementById('durga-chalisa-text').style.display = 'block';
     }
 
     // Hide grid and main comments, render comments
@@ -4779,6 +4993,266 @@ function getTextContent(id) {
                 </div>
                 <p style="margin-top: 1.5rem; font-style: italic;">भगवान हनुमान की शक्ति, भक्ति और साहस की स्तुति करने वाली ४० चौपाइयां। यह सुरक्षा और मानसिक शांति प्रदान करती है।</p>
                 <p style="margin-top: 0.5rem; color: var(--saffron);">सम्पूर्ण चालीसा जल्द आ रही है...</p>
+            </div>`
+        },
+                'durga': {
+            en: `<div class="text-content">
+                <h2>🦁 Goddess Durga</h2>
+                <p>Durga is the divine mother, warrior goddess with ten arms who destroys evil forces. She is the embodiment of Shakti (power) and protects her devotees from all harm.</p>
+                <div id="durga-index">
+                    <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
+                        <div onclick="showDurgaSub('108names')" style="background: var(--cream); padding: 1.2rem; border-radius: 12px; cursor: pointer; border-left: 4px solid var(--saffron);">
+                            <h3 style="color: var(--saffron); margin: 0;" data-en="|| Shri Durga 108 Names ||" data-hi="॥ श्री दुर्गा १०८ नाम ॥">॥ Shri Durga 108 Names ॥</h3>
+                            <p style="margin: 0.5rem 0 0 0; color: var(--text);">108 sacred names of Goddess Durga with meanings.</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="durga-108names" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <button class="back-btn" onclick="showDurgaIndex()">← Back to Durga</button>
+                        <button class="favorite-btn" data-content-id="durga-108names" data-content-title="श्री दुर्गा १०८ नाम" data-content-title-en="Shri Durga 108 Names" data-section="deities" onclick="toggleFavorite(this)">❤️ Favorite</button>
+                    </div>
+                    <h3 style="color: var(--saffron); margin-top: 1rem;" data-en="|| Shri Durga 108 Names ||" data-hi="॥ श्री दुर्गा १०८ नाम ॥">॥ श्री दुर्गा १०८ नाम ॥</h3>
+                    <p style="text-align:center; color: var(--brown); margin-bottom: 2rem; font-style: italic;">108 Names of Goddess Durga with Meanings / माँ दुर्गा के 108 नाम, अर्थ सहित</p>
+                    
+                    <div class="verse" data-en="1. Sati – One who remains alive even after being consumed by fire" data-hi="1. सती- अग्नि में जल कर भी जीवित होने वाली"></div>
+                    <div class="verse" data-en="2. Saadhvi – The Optimistic one" data-hi="2. साध्वी- आशावादी"></div>
+                    <div class="verse" data-en="3. Bhavaprita – One who is loved by Lord Shiva" data-hi="3. भवप्रीता- भगवान शिव पर प्रीति रखने वाली"></div>
+                    <div class="verse" data-en="4. Bhavani – The resident of the Universe" data-hi="4. भवानी- ब्रह्मांड में निवास करने वाली"></div>
+                    <div class="verse" data-en="5. Bhavamochani – The absolver of worldly bondages" data-hi="5. भवमोचनी- संसारिक बंधनों से मुक्त करने वाली"></div>
+                    <div class="verse" data-en="6. Arya – The Goddess" data-hi="6. आर्या- देवी"></div>
+                    <div class="verse" data-en="7. Durga – The Invincible" data-hi="7. दुर्गा- अपराजेय"></div>
+                    <div class="verse" data-en="8. Jaya – The Victorious" data-hi="8. जया- विजयी"></div>
+                    <div class="verse" data-en="9. Aadya – The Reality of the beginning" data-hi="9. आद्य- शुरुआत की वास्तविकता"></div>
+                    <div class="verse" data-en="10. Trinetra – The Three-eyed one" data-hi="10. त्रिनेत्र- तीन आंखों वाली"></div>
+                    <div class="verse" data-en="11. Shuladharini – Holder of the Spear (Trident)" data-hi="11. शूलधारिणी- शूल धारण करने वाली"></div>
+                    <div class="verse" data-en="12. Pinakadharini – Holder of Shiva's Trident" data-hi="12. पिनाकधारिणी- शिव का त्रिशूल धारण करने वाली"></div>
+                    <div class="verse" data-en="13. Chitra – The Picturesque / Beautiful" data-hi="13. चित्रा- सुरम्य, सुंदर"></div>
+                    <div class="verse" data-en="14. Chandaghanta – One who rings the bell with a fierce sound" data-hi="14. चण्डघण्टा- प्रचण्ड स्वर से घण्टा नाद करने वाली, घंटे की आवाज निकालने वाली"></div>
+                    <div class="verse" data-en="15. Sudha – Goddess of Nectar (Amrit)" data-hi="15. सुधा- अमृत की देवी"></div>
+                    <div class="verse" data-en="16. Man – The power of reflection / Mind" data-hi="16. मन- मनन-शक्ति"></div>
+                    <div class="verse" data-en="17. Buddhi – The All-knowing (Goddess of Intelligence)" data-hi="17. बुद्धि- सर्वज्ञाता"></div>
+                    <div class="verse" data-en="18. Ahankara – One who possesses pride" data-hi="18. अहंकारा- अभिमान करने वाली"></div>
+                    <div class="verse" data-en="19. Chittarupa – One who is in a state of thought" data-hi="19. चित्तरूपा- वह जो सोच की अवस्था में है"></div>
+                    <div class="verse" data-en="20. Chita – The Death-bed" data-hi="20. चिता- मृत्युशय्या"></div>
+                    <div class="verse" data-en="21. Chiti – The Consciousness" data-hi="21. चिति- चेतना"></div>
+                    <div class="verse" data-en="22. Sarvamantramayi – One who possesses the knowledge of all Mantras" data-hi="22. सर्वमन्त्रमयी- सभी मंत्रों का ज्ञान रखने वाली"></div>
+                    <div class="verse" data-en="23. Satta – The Supreme Being who is above all" data-hi="23. सत्ता- सत-स्वरूपा, जो सब से ऊपर है"></div>
+                    <div class="verse" data-en="24. Satyananda Swarupini – The form of Eternal Bliss" data-hi="24. सत्यानंद स्वरूपिणी- अनन्त आनंद का रूप"></div>
+                    <div class="verse" data-en="25. Ananta – One whose form has no end" data-hi="25. अनन्ता- जिनके स्वरूप का कहीं अंत नहीं"></div>
+                    <div class="verse" data-en="26. Bhavini – The Creator of all / Beautiful woman" data-hi="26. भाविनी- सबको उत्पन्न करने वाली, खूबसूरत औरत"></div>
+                    <div class="verse" data-en="27. Bhavya – Worthy of feelings and meditation" data-hi="27. भाव्या- भावना एवं ध्यान करने योग्य"></div>
+                    <div class="verse" data-en="28. Bhavya – The Embodiment of welfare and grandeur" data-hi="28. भव्या- कल्याणरूपा, भव्यता के साथ"></div>
+                    <div class="verse" data-en="29. Abhavya – One than whom nothing is more grand" data-hi="29. अभव्या- जिससे बढ़कर भव्य कुछ नहीं"></div>
+                    <div class="verse" data-en="30. Sadagati – Always in motion / Bestower of Salvation" data-hi="30. सदागति- हमेशा गति में, मोक्ष दान"></div>
+                    <div class="verse" data-en="31. Shambhavi – Beloved of Shambhu (Shiva)" data-hi="31. शाम्भवी- शिवप्रिया, शंभू की पत्नी"></div>
+                    <div class="verse" data-en="32. Devamata – Mother of the Gods" data-hi="32. देवमाता- देवगण की माता"></div>
+                    <div class="verse" data-en="33. Chinta – The Worry/Thought" data-hi="33. चिन्ता- चिन्ता"></div>
+                    <div class="verse" data-en="34. Ratnapriya – Lover of Jewels" data-hi="34. रत्नप्रिया- गहने से प्यार करने वाली"></div>
+                    <div class="verse" data-en="35. Sarvavidya – The Abode of all knowledge" data-hi="35. सर्वविद्या- ज्ञान का निवास"></div>
+                    <div class="verse" data-en="36. Dakshakanya – Daughter of King Daksha" data-hi="36. दक्षकन्या- दक्ष की बेटी"></div>
+                    <div class="verse" data-en="37. Dakshayajnavinashini – The destroyer of Daksha's sacrifice (Yajna)" data-hi="37. दक्षयज्ञविनाशिनी- दक्ष के यज्ञ को रोकने वाली"></div>
+                    <div class="verse" data-en="38. Aparna – One who did not eat even a leaf during penance" data-hi="38. अपर्णा- तपस्या के समय पत्ते को भी न खाने वाली"></div>
+                    <div class="verse" data-en="39. Anekavarna – One who has many colors" data-hi="39. अनेकवर्णा- अनेक रंगों वाली"></div>
+                    <div class="verse" data-en="40. Patala – Red in color" data-hi="40. पाटला- लाल रंग वाली"></div>
+                    <div class="verse" data-en="41. Patalavati – Wearing the color of Roses" data-hi="41. पाटलावती- गुलाब के फूल"></div>
+                    <div class="verse" data-en="42. Pattambaraparidhana – Clad in silk garments" data-hi="42. पट्टाम्बरपरीधाना- रेशमी वस्त्र पहनने वाली"></div>
+                    <div class="verse" data-en="43. Kalamanjiraranjini – One who is pleased wearing tinkling anklets" data-hi="43. कलामंजीरारंजिनी- पायल को धारण करके प्रसन्न रहने वाली"></div>
+                    <div class="verse" data-en="44. Ameya – One who is beyond measure/limitless" data-hi="44. अमेय- जिसकी कोई सीमा नहीं"></div>
+                    <div class="verse" data-en="45. Vikrama – Infinitely powerful" data-hi="45. विक्रमा- असीम पराक्रमी"></div>
+                    <div class="verse" data-en="46. Krura – Cruel towards demons" data-hi="46. क्रूरा- दैत्यों के प्रति कठोर"></div>
+                    <div class="verse" data-en="47. Sundari – The beautiful one" data-hi="47. सुन्दरी- सुंदर रूप वाली"></div>
+                    <div class="verse" data-en="48. Surasundari – Extremely beautiful" data-hi="48. सुरसुन्दरी- अत्यंत सुंदर"></div>
+                    <div class="verse" data-en="49. Vanadurga – Goddess of the forests" data-hi="49. वनदुर्गा- जंगलों की देवी"></div>
+                    <div class="verse" data-en="50. Matangi – Goddess of Matanga" data-hi="50. मातंगी- मतंगा की देवी"></div>
+                    <div class="verse" data-en="51. Matangamunipujita – Worshipped by Sage Matanga" data-hi="51. मातंगमुनिपूजिता- बाबा मतंगा द्वारा पूजनीय"></div>
+                    <div class="verse" data-en="52. Brahmi – The power of Lord Brahma" data-hi="52. ब्राह्मी- भगवान ब्रह्मा की शक्ति"></div>
+                    <div class="verse" data-en="53. Maheshwari – The power of Lord Shiva" data-hi="53. माहेश्वरी- प्रभु शिव की शक्ति"></div>
+                    <div class="verse" data-en="54. Indri – The power of Lord Indra" data-hi="54. इंद्री- इंद्र की शक्ति"></div>
+                    <div class="verse" data-en="55. Kaumari – The Adolescent girl" data-hi="55. कौमारी- किशोरी"></div>
+                    <div class="verse" data-en="56. Vaishnavi – The Invincible" data-hi="56. वैष्णवी- अजेय"></div>
+                    <div class="verse" data-en="57. Chamunda – Destroyer of demons Chanda and Munda" data-hi="57. चामुण्डा- चंड और मुंड का नाश करने वाली"></div>
+                    <div class="verse" data-en="58. Varahi – One who rides on a Boar" data-hi="58. वाराही- वराह पर सवार होने वाली"></div>
+                    <div class="verse" data-en="59. Lakshmi – Goddess of Fortune" data-hi="59. लक्ष्मी- सौभाग्य की देवी"></div>
+                    <div class="verse" data-en="60. Purushakriti – One who takes the form of a Man" data-hi="60. पुरुषाकृति- वह जो पुरुष धारण कर ले"></div>
+                    <div class="verse" data-en="61. Vimilouttakarshini – The provider of Joy" data-hi="61. विमिलौत्त्कार्शिनी- आनन्द प्रदान करने वाली"></div>
+                    <div class="verse" data-en="62. Gyana – Full of knowledge" data-hi="62. ज्ञाना- ज्ञान से भरी हुई"></div>
+                    <div class="verse" data-en="63. Kriya – Present in every action" data-hi="63. क्रिया- हर कार्य में होने वाली"></div>
+                    <div class="verse" data-en="64. Nitya – The Eternal" data-hi="64. नित्या- अनन्त"></div>
+                    <div class="verse" data-en="65. Buddhida – Giver of wisdom" data-hi="65. बुद्धिदा- ज्ञान देने वाली"></div>
+                    <div class="verse" data-en="66. Bahula – One who has many forms" data-hi="66. बहुला- विभिन्न रूपों वाली"></div>
+                    <div class="verse" data-en="67. Bahulaprema – Loved by all" data-hi="67. बहुलप्रेमा- सर्व प्रिय"></div>
+                    <div class="verse" data-en="68. Sarvavahanavahana – One who rides all vehicles" data-hi="68. सर्ववाहनवाहना- सभी वाहन पर विराजमान होने वाली"></div>
+                    <div class="verse" data-en="69. Nishumbhashumbhahanani – Slayer of Shumbha and Nishumbha" data-hi="69. निशुम्भशुम्भहननी- शुम्भ, निशुम्भ का वध करने वाली"></div>
+                    <div class="verse" data-en="70. Mahishasuramardini – Slayer of the demon Mahishasura" data-hi="70. महिषासुरमर्दिनि- महिषासुर का वध करने वाली"></div>
+                    <div class="verse" data-en="71. Madhu-kaitabhahantri – Destroyer of demons Madhu and Kaitabh" data-hi="71. मधुकैटभहंत्री- मधु व कैटभ का नाश करने वाली"></div>
+                    <div class="verse" data-en="72. Chandamunda Vinashini – Destroyer of Chanda and Munda" data-hi="72. चण्डमुण्ड विनाशिनि- चंड और मुंड का नाश करने वाली"></div>
+                    <div class="verse" data-en="73. Sarvasuravinasha – Destroyer of all demons" data-hi="73. सर्वासुरविनाशा- सभी राक्षसों का नाश करने वाली"></div>
+                    <div class="verse" data-en="74. Sarvadanavaghatini – Possessing the power to annihilate all giants" data-hi="74. सर्वदानवघातिनी- संहार के लिए शक्ति रखने वाली"></div>
+                    <div class="verse" data-en="75. Sarvashastramayi – Proficient in all theories/scriptures" data-hi="75. सर्वशास्त्रमयी- सभी सिद्धांतों में निपुण"></div>
+                    <div class="verse" data-en="76. Satya – The Truth" data-hi="76. सत्या- सच्चाई"></div>
+                    <div class="verse" data-en="77. Sarvashastradharini – Possessor of all weapons" data-hi="77. सर्वशस्त्रधारिणी- सभी हथियारों धारण करने वाली"></div>
+                    <div class="verse" data-en="78. Anekashastrahasta – Possessor of many hand-held weapons" data-hi="78. अनेकशस्त्रहस्ता- कई हथियार धारण करने वाली"></div>
+                    <div class="verse" data-en="79. Anekastradharini – Possessor of many missile weapons" data-hi="79. अनेकास्त्रधारिणी- अनेक हथियारों को धारण करने वाली"></div>
+                    <div class="verse" data-en="80. Kumari – The beautiful young girl" data-hi="80. कुमारी- सुंदर किशोरी"></div>
+                    <div class="verse" data-en="81. Ekakanya – The Girl" data-hi="81. एककन्या- कन्या"></div>
+                    <div class="verse" data-en="82. Kaishori – The Adolescent girl" data-hi="82. कैशोरी- जवान लड़की"></div>
+                    <div class="verse" data-en="83. Yuvati – The Young woman" data-hi="83. युवती- नारी"></div>
+                    <div class="verse" data-en="84. Yati – The Ascetic" data-hi="84. यति- तपस्वी"></div>
+                    <div class="verse" data-en="85. Apraudha – One who never grows old" data-hi="85. अप्रौढा- जो कभी पुराना ना हो"></div>
+                    <div class="verse" data-en="86. Praudha – One who is old" data-hi="86. प्रौढा- जो पुराना है"></div>
+                    <div class="verse" data-en="87. Vriddhamata – The Motherly figure / Relaxed" data-hi="87. वृद्धमाता- शिथिल"></div>
+                    <div class="verse" data-en="88. Balaprada – Bestower of strength" data-hi="88. बलप्रदा- शक्ति देने वाली"></div>
+                    <div class="verse" data-en="89. Mahodari – One who holds the universe in her belly" data-hi="89. महोदरी- ब्रह्मांड को संभालने वाली"></div>
+                    <div class="verse" data-en="90. Muktakeshi – One with open/untied hair" data-hi="90. मुक्तकेशी- खुले बाल वाली"></div>
+                    <div class="verse" data-en="91. Ghorarupa – Having a fierce outlook" data-hi="91. घोररूपा- एक भयंकर दृष्टिकोण वाली"></div>
+                    <div class="verse" data-en="92. Mahabala – Having immense strength" data-hi="92. महाबला- अपार शक्ति वाली"></div>
+                    <div class="verse" data-en="93. Agnijwala – Like a poignant fire" data-hi="93. अग्निज्वाला- मार्मिक आग की तरह"></div>
+                    <div class="verse" data-en="94. Raudramukhi – Fierce face like the destroyer Rudra" data-hi="94. रौद्रमुखी- विध्वंसक रुद्र की तरह भयंकर चेहरा"></div>
+                    <div class="verse" data-en="95. Kalaratri – Black-colored / Goddess of the night" data-hi="95. कालरात्रि- काले रंग वाली"></div>
+                    <div class="verse" data-en="96. Tapasvini – One engaged in penance" data-hi="96. तपस्विनी- तपस्या में लगे हुए"></div>
+                    <div class="verse" data-en="97. Narayani – The destructive form of Lord Narayana" data-hi="97. नारायणी- भगवान नारायण की विनाशकारी रूप"></div>
+                    <div class="verse" data-en="98. Bhadrakali – The fierce form of Kali" data-hi="98. भद्रकाली- काली का भयंकर रूप"></div>
+                    <div class="verse" data-en="99. Vishnumaya – The illusion of Lord Vishnu" data-hi="99. विष्णुमाया- भगवान विष्णु का जादू"></div>
+                    <div class="verse" data-en="100. Jalodari – Resident of the cosmic waters" data-hi="100. जलोदरी- ब्रह्मांड में निवास करने वाली"></div>
+                    <div class="verse" data-en="101. Shivadhuti – Ambassador of Lord Shiva" data-hi="101. शिवदूती- भगवान शिव की राजदूत"></div>
+                    <div class="verse" data-en="102. Karali – The Violent / Dreadful" data-hi="102. करली- हिंसक"></div>
+                    <div class="verse" data-en="103. Ananta – The Indestructible" data-hi="103. अनन्ता- विनाश रहित"></div>
+                    <div class="verse" data-en="104. Parameshwari – The First Goddess" data-hi="104. परमेश्वरी- प्रथम देवी"></div>
+                    <div class="verse" data-en="105. Katyayani – Worshipped by Sage Katyayan" data-hi="105. कात्यायनी- ऋषि कात्यायन द्वारा पूजनीय"></div>
+                    <div class="verse" data-en="106. Savitri – Daughter of the Sun" data-hi="106. सावित्री- सूर्य की बेटी"></div>
+                    <div class="verse" data-en="107. Pratyaksha – The Manifest / Real" data-hi="107. प्रत्यक्षा- वास्तविक"></div>
+                    <div class="verse" data-en="108. Brahmavadini – One who resides everywhere in the present" data-hi="108. ब्रह्मवादिनी- वर्तमान में हर जगह वास करने वाली"></div>
+                </div>
+            </div>`,
+            hi: `<div class="text-content">
+                <h2>🦁 माँ दुर्गा</h2>
+                <p>दुर्गा दिव्य माता हैं, दस भुजाओं वाली योद्धा देवी जो बुरी शक्तियों का विनाश करती हैं। वे शक्ति की अवतार हैं और अपने भक्तों की सभी प्रकार से रक्षा करती हैं।</p>
+                <div id="durga-index">
+                    <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
+                        <div onclick="showDurgaSub('108names')" style="background: var(--cream); padding: 1.2rem; border-radius: 12px; cursor: pointer; border-left: 4px solid var(--saffron);">
+                            <h3 style="color: var(--saffron); margin: 0;" data-en="|| Shri Durga 108 Names ||" data-hi="॥ श्री दुर्गा १०८ नाम ॥">॥ श्री दुर्गा १०८ नाम ॥</h3>
+                            <p style="margin: 0.5rem 0 0 0; color: var(--text);">माँ दुर्गा के 108 पवित्र नाम अर्थ सहित।</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="durga-108names" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <button class="back-btn" onclick="showDurgaIndex()">← वापस दुर्गा में</button>
+                        <button class="favorite-btn" data-content-id="durga-108names" data-content-title="श्री दुर्गा १०८ नाम" data-content-title-en="Shri Durga 108 Names" data-section="deities" onclick="toggleFavorite(this)">❤️ पसंदीदा</button>
+                    </div>
+                    <h3 style="color: var(--saffron); margin-top: 1rem;" data-en="|| Shri Durga 108 Names ||" data-hi="॥ श्री दुर्गा १०८ नाम ॥">॥ श्री दुर्गा १०८ नाम ॥</h3>
+                    <p style="text-align:center; color: var(--brown); margin-bottom: 2rem; font-style: italic;">माँ दुर्गा के 108 नाम, अर्थ सहित</p>
+                    
+                    <div class="verse" data-en="1. Sati – One who remains alive even after being consumed by fire" data-hi="1. सती- अग्नि में जल कर भी जीवित होने वाली"></div>
+                    <div class="verse" data-en="2. Saadhvi – The Optimistic one" data-hi="2. साध्वी- आशावादी"></div>
+                    <div class="verse" data-en="3. Bhavaprita – One who is loved by Lord Shiva" data-hi="3. भवप्रीता- भगवान शिव पर प्रीति रखने वाली"></div>
+                    <div class="verse" data-en="4. Bhavani – The resident of the Universe" data-hi="4. भवानी- ब्रह्मांड में निवास करने वाली"></div>
+                    <div class="verse" data-en="5. Bhavamochani – The absolver of worldly bondages" data-hi="5. भवमोचनी- संसारिक बंधनों से मुक्त करने वाली"></div>
+                    <div class="verse" data-en="6. Arya – The Goddess" data-hi="6. आर्या- देवी"></div>
+                    <div class="verse" data-en="7. Durga – The Invincible" data-hi="7. दुर्गा- अपराजेय"></div>
+                    <div class="verse" data-en="8. Jaya – The Victorious" data-hi="8. जया- विजयी"></div>
+                    <div class="verse" data-en="9. Aadya – The Reality of the beginning" data-hi="9. आद्य- शुरुआत की वास्तविकता"></div>
+                    <div class="verse" data-en="10. Trinetra – The Three-eyed one" data-hi="10. त्रिनेत्र- तीन आंखों वाली"></div>
+                    <div class="verse" data-en="11. Shuladharini – Holder of the Spear (Trident)" data-hi="11. शूलधारिणी- शूल धारण करने वाली"></div>
+                    <div class="verse" data-en="12. Pinakadharini – Holder of Shiva's Trident" data-hi="12. पिनाकधारिणी- शिव का त्रिशूल धारण करने वाली"></div>
+                    <div class="verse" data-en="13. Chitra – The Picturesque / Beautiful" data-hi="13. चित्रा- सुरम्य, सुंदर"></div>
+                    <div class="verse" data-en="14. Chandaghanta – One who rings the bell with a fierce sound" data-hi="14. चण्डघण्टा- प्रचण्ड स्वर से घण्टा नाद करने वाली, घंटे की आवाज निकालने वाली"></div>
+                    <div class="verse" data-en="15. Sudha – Goddess of Nectar (Amrit)" data-hi="15. सुधा- अमृत की देवी"></div>
+                    <div class="verse" data-en="16. Man – The power of reflection / Mind" data-hi="16. मन- मनन-शक्ति"></div>
+                    <div class="verse" data-en="17. Buddhi – The All-knowing (Goddess of Intelligence)" data-hi="17. बुद्धि- सर्वज्ञाता"></div>
+                    <div class="verse" data-en="18. Ahankara – One who possesses pride" data-hi="18. अहंकारा- अभिमान करने वाली"></div>
+                    <div class="verse" data-en="19. Chittarupa – One who is in a state of thought" data-hi="19. चित्तरूपा- वह जो सोच की अवस्था में है"></div>
+                    <div class="verse" data-en="20. Chita – The Death-bed" data-hi="20. चिता- मृत्युशय्या"></div>
+                    <div class="verse" data-en="21. Chiti – The Consciousness" data-hi="21. चिति- चेतना"></div>
+                    <div class="verse" data-en="22. Sarvamantramayi – One who possesses the knowledge of all Mantras" data-hi="22. सर्वमन्त्रमयी- सभी मंत्रों का ज्ञान रखने वाली"></div>
+                    <div class="verse" data-en="23. Satta – The Supreme Being who is above all" data-hi="23. सत्ता- सत-स्वरूपा, जो सब से ऊपर है"></div>
+                    <div class="verse" data-en="24. Satyananda Swarupini – The form of Eternal Bliss" data-hi="24. सत्यानंद स्वरूपिणी- अनन्त आनंद का रूप"></div>
+                    <div class="verse" data-en="25. Ananta – One whose form has no end" data-hi="25. अनन्ता- जिनके स्वरूप का कहीं अंत नहीं"></div>
+                    <div class="verse" data-en="26. Bhavini – The Creator of all / Beautiful woman" data-hi="26. भाविनी- सबको उत्पन्न करने वाली, खूबसूरत औरत"></div>
+                    <div class="verse" data-en="27. Bhavya – Worthy of feelings and meditation" data-hi="27. भाव्या- भावना एवं ध्यान करने योग्य"></div>
+                    <div class="verse" data-en="28. Bhavya – The Embodiment of welfare and grandeur" data-hi="28. भव्या- कल्याणरूपा, भव्यता के साथ"></div>
+                    <div class="verse" data-en="29. Abhavya – One than whom nothing is more grand" data-hi="29. अभव्या- जिससे बढ़कर भव्य कुछ नहीं"></div>
+                    <div class="verse" data-en="30. Sadagati – Always in motion / Bestower of Salvation" data-hi="30. सदागति- हमेशा गति में, मोक्ष दान"></div>
+                    <div class="verse" data-en="31. Shambhavi – Beloved of Shambhu (Shiva)" data-hi="31. शाम्भवी- शिवप्रिया, शंभू की पत्नी"></div>
+                    <div class="verse" data-en="32. Devamata – Mother of the Gods" data-hi="32. देवमाता- देवगण की माता"></div>
+                    <div class="verse" data-en="33. Chinta – The Worry/Thought" data-hi="33. चिन्ता- चिन्ता"></div>
+                    <div class="verse" data-en="34. Ratnapriya – Lover of Jewels" data-hi="34. रत्नप्रिया- गहने से प्यार करने वाली"></div>
+                    <div class="verse" data-en="35. Sarvavidya – The Abode of all knowledge" data-hi="35. सर्वविद्या- ज्ञान का निवास"></div>
+                    <div class="verse" data-en="36. Dakshakanya – Daughter of King Daksha" data-hi="36. दक्षकन्या- दक्ष की बेटी"></div>
+                    <div class="verse" data-en="37. Dakshayajnavinashini – The destroyer of Daksha's sacrifice (Yajna)" data-hi="37. दक्षयज्ञविनाशिनी- दक्ष के यज्ञ को रोकने वाली"></div>
+                    <div class="verse" data-en="38. Aparna – One who did not eat even a leaf during penance" data-hi="38. अपर्णा- तपस्या के समय पत्ते को भी न खाने वाली"></div>
+                    <div class="verse" data-en="39. Anekavarna – One who has many colors" data-hi="39. अनेकवर्णा- अनेक रंगों वाली"></div>
+                    <div class="verse" data-en="40. Patala – Red in color" data-hi="40. पाटला- लाल रंग वाली"></div>
+                    <div class="verse" data-en="41. Patalavati – Wearing the color of Roses" data-hi="41. पाटलावती- गुलाब के फूल"></div>
+                    <div class="verse" data-en="42. Pattambaraparidhana – Clad in silk garments" data-hi="42. पट्टाम्बरपरीधाना- रेशमी वस्त्र पहनने वाली"></div>
+                    <div class="verse" data-en="43. Kalamanjiraranjini – One who is pleased wearing tinkling anklets" data-hi="43. कलामंजीरारंजिनी- पायल को धारण करके प्रसन्न रहने वाली"></div>
+                    <div class="verse" data-en="44. Ameya – One who is beyond measure/limitless" data-hi="44. अमेय- जिसकी कोई सीमा नहीं"></div>
+                    <div class="verse" data-en="45. Vikrama – Infinitely powerful" data-hi="45. विक्रमा- असीम पराक्रमी"></div>
+                    <div class="verse" data-en="46. Krura – Cruel towards demons" data-hi="46. क्रूरा- दैत्यों के प्रति कठोर"></div>
+                    <div class="verse" data-en="47. Sundari – The beautiful one" data-hi="47. सुन्दरी- सुंदर रूप वाली"></div>
+                    <div class="verse" data-en="48. Surasundari – Extremely beautiful" data-hi="48. सुरसुन्दरी- अत्यंत सुंदर"></div>
+                    <div class="verse" data-en="49. Vanadurga – Goddess of the forests" data-hi="49. वनदुर्गा- जंगलों की देवी"></div>
+                    <div class="verse" data-en="50. Matangi – Goddess of Matanga" data-hi="50. मातंगी- मतंगा की देवी"></div>
+                    <div class="verse" data-en="51. Matangamunipujita – Worshipped by Sage Matanga" data-hi="51. मातंगमुनिपूजिता- बाबा मतंगा द्वारा पूजनीय"></div>
+                    <div class="verse" data-en="52. Brahmi – The power of Lord Brahma" data-hi="52. ब्राह्मी- भगवान ब्रह्मा की शक्ति"></div>
+                    <div class="verse" data-en="53. Maheshwari – The power of Lord Shiva" data-hi="53. माहेश्वरी- प्रभु शिव की शक्ति"></div>
+                    <div class="verse" data-en="54. Indri – The power of Lord Indra" data-hi="54. इंद्री- इंद्र की शक्ति"></div>
+                    <div class="verse" data-en="55. Kaumari – The Adolescent girl" data-hi="55. कौमारी- किशोरी"></div>
+                    <div class="verse" data-en="56. Vaishnavi – The Invincible" data-hi="56. वैष्णवी- अजेय"></div>
+                    <div class="verse" data-en="57. Chamunda – Destroyer of demons Chanda and Munda" data-hi="57. चामुण्डा- चंड और मुंड का नाश करने वाली"></div>
+                    <div class="verse" data-en="58. Varahi – One who rides on a Boar" data-hi="58. वाराही- वराह पर सवार होने वाली"></div>
+                    <div class="verse" data-en="59. Lakshmi – Goddess of Fortune" data-hi="59. लक्ष्मी- सौभाग्य की देवी"></div>
+                    <div class="verse" data-en="60. Purushakriti – One who takes the form of a Man" data-hi="60. पुरुषाकृति- वह जो पुरुष धारण कर ले"></div>
+                    <div class="verse" data-en="61. Vimilouttakarshini – The provider of Joy" data-hi="61. विमिलौत्त्कार्शिनी- आनन्द प्रदान करने वाली"></div>
+                    <div class="verse" data-en="62. Gyana – Full of knowledge" data-hi="62. ज्ञाना- ज्ञान से भरी हुई"></div>
+                    <div class="verse" data-en="63. Kriya – Present in every action" data-hi="63. क्रिया- हर कार्य में होने वाली"></div>
+                    <div class="verse" data-en="64. Nitya – The Eternal" data-hi="64. नित्या- अनन्त"></div>
+                    <div class="verse" data-en="65. Buddhida – Giver of wisdom" data-hi="65. बुद्धिदा- ज्ञान देने वाली"></div>
+                    <div class="verse" data-en="66. Bahula – One who has many forms" data-hi="66. बहुला- विभिन्न रूपों वाली"></div>
+                    <div class="verse" data-en="67. Bahulaprema – Loved by all" data-hi="67. बहुलप्रेमा- सर्व प्रिय"></div>
+                    <div class="verse" data-en="68. Sarvavahanavahana – One who rides all vehicles" data-hi="68. सर्ववाहनवाहना- सभी वाहन पर विराजमान होने वाली"></div>
+                    <div class="verse" data-en="69. Nishumbhashumbhahanani – Slayer of Shumbha and Nishumbha" data-hi="69. निशुम्भशुम्भहननी- शुम्भ, निशुम्भ का वध करने वाली"></div>
+                    <div class="verse" data-en="70. Mahishasuramardini – Slayer of the demon Mahishasura" data-hi="70. महिषासुरमर्दिनि- महिषासुर का वध करने वाली"></div>
+                    <div class="verse" data-en="71. Madhu-kaitabhahantri – Destroyer of demons Madhu and Kaitabh" data-hi="71. मधुकैटभहंत्री- मधु व कैटभ का नाश करने वाली"></div>
+                    <div class="verse" data-en="72. Chandamunda Vinashini – Destroyer of Chanda and Munda" data-hi="72. चण्डमुण्ड विनाशिनि- चंड और मुंड का नाश करने वाली"></div>
+                    <div class="verse" data-en="73. Sarvasuravinasha – Destroyer of all demons" data-hi="73. सर्वासुरविनाशा- सभी राक्षसों का नाश करने वाली"></div>
+                    <div class="verse" data-en="74. Sarvadanavaghatini – Possessing the power to annihilate all giants" data-hi="74. सर्वदानवघातिनी- संहार के लिए शक्ति रखने वाली"></div>
+                    <div class="verse" data-en="75. Sarvashastramayi – Proficient in all theories/scriptures" data-hi="75. सर्वशास्त्रमयी- सभी सिद्धांतों में निपुण"></div>
+                    <div class="verse" data-en="76. Satya – The Truth" data-hi="76. सत्या- सच्चाई"></div>
+                    <div class="verse" data-en="77. Sarvashastradharini – Possessor of all weapons" data-hi="77. सर्वशस्त्रधारिणी- सभी हथियारों धारण करने वाली"></div>
+                    <div class="verse" data-en="78. Anekashastrahasta – Possessor of many hand-held weapons" data-hi="78. अनेकशस्त्रहस्ता- कई हथियार धारण करने वाली"></div>
+                    <div class="verse" data-en="79. Anekastradharini – Possessor of many missile weapons" data-hi="79. अनेकास्त्रधारिणी- अनेक हथियारों को धारण करने वाली"></div>
+                    <div class="verse" data-en="80. Kumari – The beautiful young girl" data-hi="80. कुमारी- सुंदर किशोरी"></div>
+                    <div class="verse" data-en="81. Ekakanya – The Girl" data-hi="81. एककन्या- कन्या"></div>
+                    <div class="verse" data-en="82. Kaishori – The Adolescent girl" data-hi="82. कैशोरी- जवान लड़की"></div>
+                    <div class="verse" data-en="83. Yuvati – The Young woman" data-hi="83. युवती- नारी"></div>
+                    <div class="verse" data-en="84. Yati – The Ascetic" data-hi="84. यति- तपस्वी"></div>
+                    <div class="verse" data-en="85. Apraudha – One who never grows old" data-hi="85. अप्रौढा- जो कभी पुराना ना हो"></div>
+                    <div class="verse" data-en="86. Praudha – One who is old" data-hi="86. प्रौढा- जो पुराना है"></div>
+                    <div class="verse" data-en="87. Vriddhamata – The Motherly figure / Relaxed" data-hi="87. वृद्धमाता- शिथिल"></div>
+                    <div class="verse" data-en="88. Balaprada – Bestower of strength" data-hi="88. बलप्रदा- शक्ति देने वाली"></div>
+                    <div class="verse" data-en="89. Mahodari – One who holds the universe in her belly" data-hi="89. महोदरी- ब्रह्मांड को संभालने वाली"></div>
+                    <div class="verse" data-en="90. Muktakeshi – One with open/untied hair" data-hi="90. मुक्तकेशी- खुले बाल वाली"></div>
+                    <div class="verse" data-en="91. Ghorarupa – Having a fierce outlook" data-hi="91. घोररूपा- एक भयंकर दृष्टिकोण वाली"></div>
+                    <div class="verse" data-en="92. Mahabala – Having immense strength" data-hi="92. महाबला- अपार शक्ति वाली"></div>
+                    <div class="verse" data-en="93. Agnijwala – Like a poignant fire" data-hi="93. अग्निज्वाला- मार्मिक आग की तरह"></div>
+                    <div class="verse" data-en="94. Raudramukhi – Fierce face like the destroyer Rudra" data-hi="94. रौद्रमुखी- विध्वंसक रुद्र की तरह भयंकर चेहरा"></div>
+                    <div class="verse" data-en="95. Kalaratri – Black-colored / Goddess of the night" data-hi="95. कालरात्रि- काले रंग वाली"></div>
+                    <div class="verse" data-en="96. Tapasvini – One engaged in penance" data-hi="96. तपस्विनी- तपस्या में लगे हुए"></div>
+                    <div class="verse" data-en="97. Narayani – The destructive form of Lord Narayana" data-hi="97. नारायणी- भगवान नारायण की विनाशकारी रूप"></div>
+                    <div class="verse" data-en="98. Bhadrakali – The fierce form of Kali" data-hi="98. भद्रकाली- काली का भयंकर रूप"></div>
+                    <div class="verse" data-en="99. Vishnumaya – The illusion of Lord Vishnu" data-hi="99. विष्णुमाया- भगवान विष्णु का जादू"></div>
+                    <div class="verse" data-en="100. Jalodari – Resident of the cosmic waters" data-hi="100. जलोदरी- ब्रह्मांड में निवास करने वाली"></div>
+                    <div class="verse" data-en="101. Shivadhuti – Ambassador of Lord Shiva" data-hi="101. शिवदूती- भगवान शिव की राजदूत"></div>
+                    <div class="verse" data-en="102. Karali – The Violent / Dreadful" data-hi="102. करली- हिंसक"></div>
+                    <div class="verse" data-en="103. Ananta – The Indestructible" data-hi="103. अनन्ता- विनाश रहित"></div>
+                    <div class="verse" data-en="104. Parameshwari – The First Goddess" data-hi="104. परमेश्वरी- प्रथम देवी"></div>
+                    <div class="verse" data-en="105. Katyayani – Worshipped by Sage Katyayan" data-hi="105. कात्यायनी- ऋषि कात्यायन द्वारा पूजनीय"></div>
+                    <div class="verse" data-en="106. Savitri – Daughter of the Sun" data-hi="106. सावित्री- सूर्य की बेटी"></div>
+                    <div class="verse" data-en="107. Pratyaksha – The Manifest / Real" data-hi="107. प्रत्यक्षा- वास्तविक"></div>
+                    <div class="verse" data-en="108. Brahmavadini – One who resides everywhere in the present" data-hi="108. ब्रह्मवादिनी- वर्तमान में हर जगह वास करने वाली"></div>
+                </div>
             </div>`
         },
         // ===== NEW: Vishnu Sahasranama content (full) =====
@@ -7471,6 +7945,21 @@ function jumpToContent(contentId) {
             document.getElementById('bajrang-baan-text').style.display = 'block';
         }, 100);
     }
+            // Durga Chalisa
+    else if (contentId === 'durga-chalisa') {
+        showSection('paathmandir');
+        setTimeout(() => {
+            document.getElementById('paathGrid').style.display = 'none';
+            document.getElementById('durga-chalisa-text').style.display = 'block';
+        }, 100);
+    }
+            // Durga 108 Names
+    else if (contentId === 'durga-108names') {
+        showText('durga');
+        setTimeout(() => {
+            showDurgaSub('108names');
+        }, 200);
+    }
     // Aartis
     else if (contentId.startsWith('aarti-')) {
         showSection('aarti');
@@ -7558,6 +8047,21 @@ function showShivaSub(section) {
 function showShivaIndex() {
     document.getElementById('shiva-index').style.display = 'block';
     document.getElementById('shiva-108names').style.display = 'none';
+}
+    // ======================================
+// DURGA 108 NAMES SUB-SECTION
+// ======================================
+function showDurgaSub(section) {
+    document.getElementById('durga-index').style.display = 'none';
+    const contentDiv = document.getElementById('durga-' + section);
+    contentDiv.style.display = 'block';
+    const favBtn = contentDiv.querySelector('.favorite-btn');
+    if (favBtn) loadFavoriteStatus(favBtn.dataset.contentId, favBtn);
+}
+
+function showDurgaIndex() {
+    document.getElementById('durga-index').style.display = 'block';
+    document.getElementById('durga-108names').style.display = 'none';
 }
 
 // ======================================
