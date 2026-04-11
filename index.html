@@ -845,11 +845,18 @@ body.dark-theme .ds-pl-panel { background:var(--card-bg); }
         <span style="background:var(--cream);color:var(--brown);padding:0.2rem 0.7rem;border-radius:20px;font-size:0.8rem;font-weight:600;" data-en="Unknown Author" data-hi="अज्ञात रचयिता">अज्ञात रचयिता</span>
     </div>
 </div>
-            <div class="card" style="border-top-color:#ccc;opacity:0.7;cursor:default;">
-                <div class="icon">🔱</div>
-                <h3 style="color:#aaa;">शिव तांडव स्तोत्रम</h3>
-                <p style="color:#bbb;">जल्द आ रहा है... Coming Soon</p>
-            </div>
+            <div class="card" onclick="showPaath('shiv-tandav')" style="border-top-color:#ff6b35;">
+    <div class="icon">🔱</div>
+    <h3 style="color:var(--saffron);" data-en="Shiv Tandav Stotram" data-hi="शिव ताण्डव स्तोत्रम्">शिव ताण्डव स्तोत्रम्</h3>
+    <p data-en="Composed by Ravana, the supreme devotee of Shiva. 17 verses describing Shiva's cosmic dance."
+       data-hi="परम शिवभक्त रावण द्वारा रचित। १७ श्लोकों में शिव के ताण्डव का वर्णन।">
+        परम शिवभक्त रावण द्वारा रचित। १७ श्लोकों में शिव के ताण्डव का वर्णन।
+    </p>
+    <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <span style="background:var(--cream);color:var(--brown);padding:0.2rem 0.7rem;border-radius:20px;font-size:0.8rem;font-weight:600;" data-en="17 Verses" data-hi="१७ श्लोक">१७ श्लोक</span>
+        <span style="background:var(--cream);color:var(--brown);padding:0.2rem 0.7rem;border-radius:20px;font-size:0.8rem;font-weight:600;" data-en="Ravana" data-hi="रावण">रावण</span>
+    </div>
+</div>
             <div class="card" onclick="showPaath('ram-raksha')" style="border-top-color:#ff6b35;">
                 <div class="icon">🛡️</div>
                 <h3 style="color:var(--saffron);" data-en="Ram Raksha Stotram" data-hi="राम रक्षा स्तोत्रम्">राम रक्षा स्तोत्रम्</h3>
@@ -3176,6 +3183,61 @@ body.dark-theme .ds-pl-panel { background:var(--card-bg); }
     </div>
 
 </div>
+    <!-- SHIV TANDAV STOTRAM FULL TEXT -->
+<div id="shiv-tandav-text" style="display:none; margin-top:2rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <button class="back-btn" onclick="document.getElementById('shiv-tandav-text').style.display='none'; document.getElementById('paathGrid').style.display='grid';">
+            <span data-en="← Back" data-hi="← वापस जाएं"></span>
+        </button>
+        <button class="favorite-btn" data-content-id="shiv-tandav" data-content-title="शिव ताण्डव स्तोत्रम्" data-content-title-en="Shiv Tandav Stotram" data-section="paathmandir" onclick="toggleFavorite(this)">❤️ Favorite</button>
+    </div>
+    <div class="text-content" style="max-height:none; font-size:1.08rem; line-height:2;">
+        <h2 style="text-align:center; font-family:'Tiro Devanagari Sanskrit', serif;" data-en="🔱 Shiv Tandav Stotram 🔱" data-hi="🔱 शिव ताण्डव स्तोत्रम् 🔱"></h2>
+        <p style="text-align:center; color:#888; margin-bottom:0.5rem;" data-en="Composed by Ravana — 17 Verses" data-hi="रावण रचित — १७ श्लोक"></p>
+        <p style="text-align:center; color:var(--brown); font-weight:600; margin-bottom:2rem;" data-en="The Cosmic Dance of Lord Shiva" data-hi="भगवान शिव का ब्रह्मांडीय नृत्य"></p>
+
+        <!-- Verse 1 -->
+        <div class="verse" data-en="Jatā-tavī-galaj-jala-pravāha-pāvita-sthale | Gale-'valambya lambitām bhujaṅga-tuṅga-mālikām || Damad-damad-damad-daman-nināda-vad-damar-vayam | Cakāra caṇḍa-tāṇḍavam tanotu naḥ śivaḥ śivam || 1 ||" data-hi="जटाटवीगलज्ज्वलप्रवाहपावितस्थले, गलेऽवलम्ब्यलम्बितां भुजङ्गतुङ्गमालिकाम्‌। डमड्डमड्डमड्डमन्निनादवड्डमर्वयं, चकारचण्डताण्डवं तनोतु नः शिवो शिवम्‌ ॥१॥"></div>
+        <!-- Verse 2 -->
+        <div class="verse" data-en="Jatā-katāha-sambhrama-bhraman-nilimpa-nirjharī | Vilola-vīci-vallarī-virājamāna-mūrdhani || Dhagad-dhagad-dhagaj-jvalal-lalāta-patta-pāvake | Kiśora-candra-śekhare ratiḥ pratikṣaṇam mama || 2 ||" data-hi="जटाकटाहसंभ्रमभ्रमन्निलिम्पनिर्झरी, विलोलवीचिवल्लरी विराजमानमूर्धनि। धगद्धगद्धगज्ज्वलल्ललाटपट्टपावके, किशोरचन्द्रशेखरे रतिः प्रतिक्षणं मम ॥२॥"></div>
+        <!-- Verse 3 -->
+        <div class="verse" data-en="Dharā-dharendra-nandinī-vilāsa-bandhu-bandhura | Sphurad-diganta-santati-pramoda-māna-mānase || Kṛpā-katākṣa-dhoraṇī-niruddha-durdharā-padi | Kvacid-digambare mano vinodam-etu vastuni || 3 ||" data-hi="धराधरेन्द्रनन्दिनी विलासबन्धुबन्धुरस्फुरद्दिगन्तसन्ततिप्रमोदमानमानसे। कृपाकटाक्षधोरणीनिरुद्धदुर्धरापदि क्वचिद्विगम्बरे मनोविनोदमेतु वस्तुनि ॥३॥"></div>
+        <!-- Verse 4 -->
+        <div class="verse" data-en="Jatā-bhujanga-piṅgala-sphurat-phaṇā-maṇi-prabhā | Kadamba-kuṅkuma-drava-pralipta-dig-vadhū-mukhe || Madāndha-sindhura-sphurat-tvag-uttarīya-medure | Mano-vinodam-adbhutam bibhartu bhūta-bhartari || 4 ||" data-hi="जटाभुजंगपिंगलस्फुरत्फणामणिप्रभा-कदंबकुंकुमद्रवप्रलिप्तदिग्वधूमुखे। मदांधसिंधुरस्फुरत्वगुत्तरीयमेदुरे मनोविनोदमद्भुतं बिभर्तुभूतभर्तरि ॥४॥"></div>
+        <!-- Verse 5 -->
+        <div class="verse" data-en="Sahasra-locana-prabhṛty-aśeṣa-lekha-śekhara | Prasūna-dhūli-dhoraṇī-vidhūsarāṅghri-pītha-bhūḥ || Bhujaṅga-rāja-mālayā-nibaddha-jāta-jūtakaḥ | Śriyai cirāya jāyatām cakora-bandhu-śekharaḥ || 5 ||" data-hi="सहस्रलोचनप्रभृत्यशेषलेखशेखर-प्रसूनधूलिधोरणी विधूसरांघ्रिपीठभूः। भुजंगराजमालयानिबद्धजाटजूटकः श्रियैचिरायजायतां चकोरबंधुशेखरः ॥५॥"></div>
+        <!-- Verse 6 -->
+        <div class="verse" data-en="Lalāta-catvara-jvalad-dhanañjaya-sphuliṅga-bhā | Nipīta-pañca-sāyakam naman-nilimpa-nāyakam || Sudhā-mayūkha-lekhayā virājamāna-śekharam | Mahā-kapāli-sampade śiro-jatālam-astu naḥ || 6 ||" data-hi="ललाटचत्वरज्वलद्धनंजयस्फुलिङ्गभा-निपीतपंचसायकंनमन्निलिंपनायकम्‌। सुधामयूखलेखया विराजमानशेखरं महाकपालिसंपदे शिरोजटालमस्तुनः ॥६॥"></div>
+        <!-- Verse 7 -->
+        <div class="verse" data-en="Karāla-bhāla-pattikā-dhagad-dhagad-dhagaj-jvalad | Dhanañjayā-dharī-kṛta-pracaṇḍa-pañca-sāyake || Dharā-dharendra-nandinī-kucāgra-citra-patraka | Prakalpanai-ka-śilpini trilocane ratir-mama || 7 ||" data-hi="करालभालपट्टिकाधगद्धगद्धगज्ज्वलद्धनंजया धरीकृतप्रचंडपंचसायके। धराधरेंद्रनंदिनीकुचाग्रचित्रपत्रकप्रकल्पनैकशिल्पिनी त्रिलोचनेरतिर्मम ॥७॥"></div>
+        <!-- Verse 8 -->
+        <div class="verse" data-en="Navīna-megha-maṇḍalī-niruddha-durdhara-sphurat | Kuhu-niśītha-nītamah prabaddha-baddha-kandharaḥ || Nilimpa-nirjharī-dharas-tanotu kṛtti-sindhuraḥ | Kalā-nidhāna-bandhuraḥ śriyam jagad-dhurandharaḥ || 8 ||" data-hi="नवीनमेघमंडलीनिरुद्धदुर्धरस्फुरत्कुहुनिशीथनीतमः प्रबद्धबद्धकन्धरः। निलिम्पनिर्झरीधरस्तनोतु कृत्तिसिंधुरः कलानिधानबंधुरः श्रियं जगंद्धुरंधरः ॥८॥"></div>
+        <!-- Verse 9 -->
+        <div class="verse" data-en="Praphulla-nīla-pankaja-prapañca-kālima-prabhā | Viḍambi-kaṇtha-kandharā-ruci-prabandha-kandharam || Smaracchidam puracchidam bhavacchidam makhacchidam | Gajacchidāndhakacchidam tam-antakacchidam bhaje || 9 ||" data-hi="प्रफुल्लनीलपंकजप्रपंचकालिमप्रभा-विडंबि कंठकंध रारुचि प्रबंधकंधरम्‌। स्मरच्छिदं पुरच्छिंद भवच्छिदं मखच्छिदं गजच्छिदांधकच्छिदं तमंतकच्छिदं भजे ॥९॥"></div>
+        <!-- Verse 10 -->
+        <div class="verse" data-en="Akharva-sarva-maṅgalā-kalā-kadamba-mañjarī | Rasa-pravāha-mādhurī-vijṛmbhaṇā-madhuvratam || Smarāntakam purāntakam bhavāntakam makhāntakam | Gajāntakāndhakāntakam tam-antakāntakam bhaje || 10 ||" data-hi="अखर्वसर्वमंगला कलाकदम्बमंजरी-रसप्रवाह माधुरी विजृंभणा मधुव्रतम्‌। स्मरांतकं पुरातकं भावंतकं मखांतकं गजांतकांधकांतकं तमंतकांतकं भजे ॥१०॥"></div>
+        <!-- Verse 11 -->
+        <div class="verse" data-en="Jayatvad-abhra-vibhrama-bhramad-bhujaṅgamas-phurad | Dhagad-dhagadvini-rgamat-karāla-bhāla-havyavāt || Dhimid-dhimid-dhimidhvanan-mṛdaṅga-tuṅga-maṅgala | Dhvani-krama-pravartitaḥ pracaṇḍa-tāṇḍavaḥ śivaḥ || 11 ||" data-hi="जयत्वदभ्रविभ्रमभ्रमद्भुजंगमस्फुरद्धगद्धगद्विनिर्गमत्कराल भाल हव्यवाट्। धिमिद्धिमिद्धिमिध्वनन्मृदङ्गतुङ्गमङ्गलध्वनिक्रमप्रवर्तित: प्रचण्ड ताण्डवः शिवः ॥११॥"></div>
+        <!-- Verse 12 -->
+        <div class="verse" data-en="Dṛṣad-vicitra-talpayor-bhujaṅga-mauktika-srajor | Gariṣtha-ratna-loṣthayoḥ suhṛd-vipakṣa-pakṣayoḥ || Tṛṇāravinda-cakṣuṣoḥ prajā-mahī-mahendrayoḥ | Samam pravartayan-manaḥ kadā sadāśivam bhaje || 12 ||" data-hi="दृषद्विचित्रतल्पयोर्भुजंगमौक्तिकमस्रजोर्गरिष्ठरत्नलोष्ठयोः सुहृद्विपक्षपक्षयोः। तृणारविंदचक्षुषोः प्रजामहीमहेन्द्रयोः समं प्रवर्तयन्मनः कदा सदाशिवं भजे ॥१२॥"></div>
+        <!-- Verse 13 -->
+        <div class="verse" data-en="Kadā nilimpa-nirjharī-nikuñja-kotare vasan | Vimukta-durmatiḥ sadā śiraḥ-stham-añjalim vahan || Vimukta-lola-locano lalāma-bhāla-lagnakaḥ | Śiveti mantram-uccaran kadā sukhī bhavāmy-aham || 13 ||" data-hi="कदा निलिंपनिर्झरी निकुञ्जकोटरे वसन्‌ विमुक्तदुर्मतिः सदा शिरःस्थमंजलिं वहन्‌। विमुक्तलोललोचनो ललामभाललग्नकः शिवेति मंत्रमुच्चरन्‌ कदा सुखी भवाम्यहम्‌ ॥१३॥"></div>
+        <!-- Verse 14 -->
+        <div class="verse" data-en="Nilimpa-nātha-nāgarī-kadamba-maula-mallikā | Nigumpha-nirbhara-kṣaran-madhūṣṇikā-manoharaḥ || Tanotu no mano-mudam vinodinīm-aharniśam | Pariśraya param padam tad-aṅgaja-tviṣām cayaḥ || 14 ||" data-hi="निलिम्प नाथनागरी कदम्ब मौलमल्लिका-निगुम्फनिर्भक्षरन्म धूष्णिकामनोहरः। तनोतु नो मनोमुदं विनोदिनींमहनिशं परिश्रय परं पदं तदंगजत्विषां चयः ॥१४॥"></div>
+        <!-- Verse 15 -->
+        <div class="verse" data-en="Pracaṇḍa-vādavānala-prabhā-śubha-pracāraṇī | Mahāṣta-siddhi-kāminī janāvahūta-jalpanā || Vimukta-vāma-locano vivāha-kālika-dhvaniḥ | Śiveti mantra-bhūṣago jagaj-jayāya jāyatām || 15 ||" data-hi="प्रचण्ड वाडवानल प्रभाशुभप्रचारणी महाष्टसिद्धिकामिनी जनावहूत जल्पना। विमुक्त वाम लोचनो विवाहकालिकध्वनिः शिवेति मन्त्रभूषगो जगज्जयाय जायताम्‌ ॥१५॥"></div>
+        <!-- Verse 16 -->
+        <div class="verse" data-en="Imam hi nityam-eva-mukt-amuktam-ottamam stavam | Paṭhan-smaran-bruvan-naro viśuddhim-eti santatam || Hare gurau subhaktim-āśu yāti nānyathā gatim | Vimohanam hi dehinām suśaṅkarasya cintanam || 16 ||" data-hi="इमं हि नित्यमेव मुक्तमुक्तमोत्तम स्तवं पठन्स्मरन्‌ ब्रुवन्नरो विशुद्धमेति संततम्‌। हरे गुरौ सुभक्तिमाशु याति नान्यथागतिं विमोहनं हि देहनां सुशंकरस्य चिंतनम् ॥१६॥"></div>
+        <!-- Phalashruti -->
+        <div class="verse" data-en="Pūjā-vasāna-samaye daśavaktra-gītam | Yaḥ śambhu-pūjana-param paṭhati pradoṣe || Tasya sthirām ratha-gajendra-turanga-yuktām | Lakṣmīm sadaiva sumukhīm pradadāti śambhuḥ || 17 ||" data-hi="पूजाऽवसानसमये दशवक्रत्रगीतं यः शम्भूपूजनपरम् पठति प्रदोषे । तस्य स्थिरां रथगजेंद्रतुरंगयुक्तां लक्ष्मी सदैव सुमुखीं प्रददाति शम्भुः ॥१७॥"></div>
+
+        <!-- Closing -->
+        <div style="text-align:center; background:linear-gradient(135deg,var(--cream),#ffe4cc); border-left:none; border-radius:12px; padding:2rem; margin-top:2rem;">
+            <span style="color:var(--saffron); font-size:1.2rem; font-weight:700;" data-en="|| Shiv Tandav Stotram Complete ||" data-hi="॥ शिव ताण्डव स्तोत्रम् सम्पूर्णम् ॥">॥ शिव ताण्डव स्तोत्रम् सम्पूर्णम् ॥</span><br>
+            <span style="color:var(--brown);">॥ ॐ नमः शिवाय ॥</span>
+        </div>
+    </div>
+</div>
 
     <!-- PAATH MANDIR -->
     <div id="paath" class="section">
@@ -4682,6 +4744,7 @@ function showPaath(id) {
     document.getElementById('bajrang-baan-text').style.display = 'none';
     document.getElementById('durga-chalisa-text').style.display = 'none';
     document.getElementById('ram-raksha-text').style.display = 'none';
+    document.getElementById('shiv-tandav-text').style.display = 'none';
 
     // Show the selected one
     if (id === 'sundarkand') {
@@ -4694,7 +4757,8 @@ function showPaath(id) {
         document.getElementById('durga-chalisa-text').style.display = 'block';
     } else if (id === 'ram-raksha') {
         document.getElementById('ram-raksha-text').style.display = 'block';
-    }
+    }  else if (id === 'shiv-tandav') {
+    document.getElementById('shiv-tandav-text').style.display = 'block';
 
     // Hide grid and main comments, render comments
     if (grid) grid.style.display = 'none';
@@ -9976,6 +10040,12 @@ function jumpToContent(contentId) {
             showDurgaSub('108names');
         }, 200);
     }
+        else if (contentId === 'shiv-tandav') {
+    showSection('paathmandir');
+    setTimeout(() => {
+        document.getElementById('paathGrid').style.display = 'none';
+        document.getElementById('shiv-tandav-text').style.display = 'block';
+    }, 100);
     // Aartis
     else if (contentId.startsWith('aarti-')) {
         showSection('aarti');
