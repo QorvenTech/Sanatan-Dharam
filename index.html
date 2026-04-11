@@ -4759,6 +4759,7 @@ function showPaath(id) {
         document.getElementById('ram-raksha-text').style.display = 'block';
     }  else if (id === 'shiv-tandav') {
     document.getElementById('shiv-tandav-text').style.display = 'block';
+    }    
 
     // Hide grid and main comments, render comments
     if (grid) grid.style.display = 'none';
@@ -10040,7 +10041,8 @@ function jumpToContent(contentId) {
             showDurgaSub('108names');
         }, 200);
     }
-        else if (contentId === 'shiv-tandav') {
+        // Shiv Tandav 
+    } else if (contentId === 'shiv-tandav') {
     showSection('paathmandir');
     setTimeout(() => {
         document.getElementById('paathGrid').style.display = 'none';
