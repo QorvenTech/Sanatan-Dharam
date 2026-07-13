@@ -1,5 +1,17 @@
 # Third-party notices
 
+## Panchang calculation engine
+
+`panchang-engine.js` is a locally bundled, pinned browser build of the Panchang core from [@ishubhamx/panchangam-js v3.0.0](https://www.npmjs.com/package/@ishubhamx/panchangam-js), together with its included [Astronomy Engine](https://github.com/cosinekitty/astronomy) dependency. Both are MIT-licensed. The bundle is kept local so daily Panchang calculations do not depend on a third-party runtime API; its linked license text is included in `panchang-engine.js.LEGAL.txt`.
+
+Source repositories:
+
+- [ishubhamx/Hindu-Panchangam-Legal](https://github.com/ishubhamx/Hindu-Panchangam-Legal)
+- [cosinekitty/astronomy](https://github.com/cosinekitty/astronomy)
+
+Copyright notices and the full bundled Astronomy Engine MIT license are retained in `panchang-engine.js.LEGAL.txt`.
+The MIT license text below also applies to the Panchang core.
+
 ## Bhagavad Gita shloka data
 
 The 300 additional “Shloka of the Day” entries in `shloka-data-1.js`, `shloka-data-2.js`, and `shloka-data-3.js` are derived from the [VedicScriptures Bhagavad Gita API](https://vedicscriptures.github.io/), which is distributed under the MIT License.

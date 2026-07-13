@@ -36,6 +36,8 @@
     <!-- ========== END SEO META TAGS ========== -->
 
     <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+    <!-- Pinned, locally bundled Panchang calculation engine (see THIRD_PARTY_NOTICES.md). -->
+    <script src="panchang-engine.js"></script>
     <!-- Favicon - shows logo in browser tab & Google search results -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -799,6 +801,15 @@ body.dark-theme .ds-pl-panel { background:var(--card-bg); }
                         style="display:none; position:absolute; top:calc(100% + 4px); left:0; right:0; background:var(--card-bg); border:2px solid var(--saffron); border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.25); z-index:1000; max-height:230px; overflow-y:auto;"></div>
                 </div>
                 <div style="font-size:0.78rem; color:#999; margin-top:0.3rem; padding-left:0.5rem;" data-en="✏️ Type above to change your city — works worldwide" data-hi="✏️ ऊपर टाइप करें अपना शहर बदलने के लिए — दुनियाभर के शहर उपलब्ध">✏️ Type above to change your city — works worldwide</div>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:0.55rem;flex-wrap:wrap;margin:-0.25rem 0 1.2rem;padding:0.7rem 0.85rem;background:rgba(255,107,53,0.08);border-radius:12px;">
+                <label for="panchang-calendar-type" style="font-size:0.82rem;font-weight:700;color:var(--brown);" data-en="Calendar tradition:" data-hi="पंचांग परंपरा:">Calendar tradition:</label>
+                <select id="panchang-calendar-type" onchange="panchangCalendarChange()" style="padding:0.35rem 0.55rem;border:1px solid var(--saffron);border-radius:8px;background:var(--card-bg);color:var(--text);font-family:inherit;font-size:0.82rem;">
+                    <option value="purnimanta">Purnimanta (North India)</option>
+                    <option value="amanta">Amanta (South & West India)</option>
+                </select>
+                <span style="font-size:0.76rem;color:#777;" data-en="Times are calculated in the selected city's local time." data-hi="समय चुने गए शहर के स्थानीय समय में गणना किए जाते हैं।">Times are calculated in the selected city's local time.</span>
             </div>
 
             <div id="panchang-loading" style="text-align: center; padding: 2rem; font-size:1.1rem;">🙏 Calculating Panchang…</div>
@@ -10234,10 +10245,8 @@ window.addEventListener('load', () => {
 
 // =====================================================
 //  🕉️  PANCHANG ENGINE
-//  Sunrise  : Astronomy.SearchRiseSet  (JPL DE421 — exact match to Drik)
-//  Planets  : Astronomy.SunPosition / GeoVector  (JPL DE421)
-//  Fallback : Meeus 60-term if CDN unavailable
-//  Ayanamsha: Lahiri IAU (SE_SIDM_LAHIRI)
+//  Legacy helpers below are retained for compatibility with older page code.
+//  The live Panchang renderer now uses the pinned local engine loaded above.
 // =====================================================
 
 function _r(d){return d*Math.PI/180;}
@@ -10252,7 +10261,7 @@ function _jd(Y,M,D,h){
 }
 function _jdToDate(jd){return new Date((jd-2440587.5)*86400000);}
 
-// Lahiri ayanamsha (matches Drik Panchang exactly)
+// Legacy Lahiri ayanamsha approximation.
 function _ayan(jd){
     var T=(jd-2451545.0)/36525.0;
     return 23.85064+T*(50.2388*100/3600);
@@ -10336,7 +10345,7 @@ function _findEndTime(Y,M,D,srMin,idxFn){
     return _fmtM(localMins)+(_jd(Y,M,D,24-_pTZ)<=endJD?' (next day)':'');
 }
 
-/* ── Sunrise/Sunset: Astronomy Engine (JPL exact) → NOAA fallback ── */
+/* ── Legacy Sunrise/Sunset: Astronomy Engine → NOAA fallback ── */
 function _sunriseSunset(Y,M,D,lat,lng,tzOffsetHours){
     if(typeof Astronomy!=='undefined'){
         try{
@@ -10554,7 +10563,7 @@ function _renderPanchang(p,srMin,ssMin,srFmt,ssFmt,city,dateLabel,prevSS,solNoon
         abhijitNote:isHi?'दिन का सर्वश्रेष्ठ मुहूर्त':'Most auspicious of the day',
         samvatLbl:  isHi?'विक्रम संवत':'Vikram Samvat',
         lahiri:     isHi?'लाहिरी अयनांश — उच्च परिशुद्धता':'Lahiri Ayanamsha — High Precision',
-        footer:     isHi?'✅ Astronomy Engine (JPL DE421) + Lahiri ayanamsha — Drik-level accuracy':'✅ Astronomy Engine (JPL DE421) + Lahiri ayanamsha — Drik-level accuracy'
+        footer:     isHi?'गणना किए गए समय — स्थानीय परंपरा की पुष्टि करें':'Calculated timings — confirm local tradition'
     };
 
     var masaVal=isHi?p.masaHi:p.masa;
@@ -10603,107 +10612,145 @@ function _renderPanchang(p,srMin,ssMin,srFmt,ssFmt,city,dateLabel,prevSS,solNoon
       +'<div style="text-align:center;font-size:0.76rem;color:#aaa;margin-top:0.6rem;padding-top:0.6rem;border-top:1px solid var(--border-light);">'+L.footer+'</div>';
 }
 
-/* ── Location ── */
-var _pLat=28.6139,_pLng=77.2090,_pCity='New Delhi',_pTZ=5.5;
+/* ── Trusted Panchang: pinned, local calculation engine + IANA time zones ── */
+var _pLat=28.6139,_pLng=77.2090,_pCity='New Delhi',_pTimeZone='Asia/Kolkata',_pTZ=5.5;
+var _pCalendar='purnimanta',_citySearchTimer=null,_panchangLast=null;
+var _panchangPartFormatters={};
+var _panchangTithiEn=['Pratipada','Dwitiya','Tritiya','Chaturthi','Panchami','Shashthi','Saptami','Ashtami','Navami','Dashami','Ekadashi','Dwadashi','Trayodashi','Chaturdashi','Purnima','Pratipada','Dwitiya','Tritiya','Chaturthi','Panchami','Shashthi','Saptami','Ashtami','Navami','Dashami','Ekadashi','Dwadashi','Trayodashi','Chaturdashi','Amavasya'];
+var _panchangTithiHi=['प्रतिपदा','द्वितीया','तृतीया','चतुर्थी','पंचमी','षष्ठी','सप्तमी','अष्टमी','नवमी','दशमी','एकादशी','द्वादशी','त्रयोदशी','चतुर्दशी','पूर्णिमा','प्रतिपदा','द्वितीया','तृतीया','चतुर्थी','पंचमी','षष्ठी','सप्तमी','अष्टमी','नवमी','दशमी','एकादशी','द्वादशी','त्रयोदशी','चतुर्दशी','अमावस्या'];
+var _panchangNakshatraHi=['अश्विनी','भरणी','कृत्तिका','रोहिणी','मृगशिरा','आर्द्रा','पुनर्वसु','पुष्य','आश्लेषा','मघा','पूर्व फाल्गुनी','उत्तर फाल्गुनी','हस्त','चित्रा','स्वाती','विशाखा','अनुराधा','ज्येष्ठा','मूल','पूर्व आषाढ़','उत्तर आषाढ़','श्रवण','धनिष्ठा','शतभिषा','पूर्व भाद्रपद','उत्तर भाद्रपद','रेवती'];
+var _panchangYogaHi=['विष्कम्भ','प्रीति','आयुष्मान','सौभाग्य','शोभन','अतिगण्ड','सुकर्मा','धृति','शूल','गण्ड','वृद्धि','ध्रुव','व्याघात','हर्षण','वज्र','सिद्धि','व्यतीपात','वरीयान','परिघ','शिव','सिद्ध','साध्य','शुभ','शुक्ल','ब्रह्म','महेन्द्र','वैधृति'];
+var _panchangKaranaHi={Bava:'बव',Balava:'बालव',Kaulava:'कौलव',Taitila:'तैतिल',Garaja:'गरज',Vanija:'वणिज',Vishti:'विष्टि (भद्रा)',Shakuni:'शकुनि',Chatushpada:'चतुष्पद',Naga:'नाग',Kimstughna:'किंस्तुघ्न'};
+var _panchangMasaHi=['चैत्र','वैशाख','ज्येष्ठ','आषाढ़','श्रावण','भाद्रपद','आश्विन','कार्तिक','मार्गशीर्ष','पौष','माघ','फाल्गुन'];
+var _panchangVaraEn=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var _panchangVaraHi=['रविवार','सोमवार','मंगलवार','बुधवार','गुरुवार','शुक्रवार','शनिवार'];
 
-/* ── Main loader ── */
+function _panchangFormatter(tz){
+    if(!_panchangPartFormatters[tz])_panchangPartFormatters[tz]=new Intl.DateTimeFormat('en-US',{timeZone:tz,year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',second:'numeric',hourCycle:'h23'});
+    return _panchangPartFormatters[tz];
+}
+function _panchangParts(date,tz){
+    var parts=_panchangFormatter(tz).formatToParts(date),out={};
+    for(var i=0;i<parts.length;i++)if(parts[i].type!=='literal')out[parts[i].type]=parseInt(parts[i].value,10);
+    return out;
+}
+function _panchangOffsetAt(tz,Y,M,D,h,m){
+    var probe=new Date(Date.UTC(Y,M-1,D,h||0,m||0,0));
+    var p=_panchangParts(probe,tz);
+    return Math.round((Date.UTC(p.year,p.month-1,p.day,p.hour,p.minute,p.second)-probe.getTime())/60000);
+}
+function _panchangCityDate(){
+    var p=_panchangParts(new Date(),_pTimeZone);
+    return {Y:p.year,M:p.month,D:p.day};
+}
+function _panchangInputDate(Y,M,D){
+    var offset=_panchangOffsetAt(_pTimeZone,Y,M,D,12,0);
+    _pTZ=offset/60;
+    return new Date(Date.UTC(Y,M-1,D,12,0,0)-offset*60000);
+}
+function _panchangTime(date,Y,M,D){
+    if(!date)return '—';
+    var isHi=(typeof currentLang!=='undefined'&&currentLang==='hi');
+    var time=new Intl.DateTimeFormat('en-US',{timeZone:_pTimeZone,hour:'numeric',minute:'2-digit',hour12:true}).format(date);
+    var p=_panchangParts(date,_pTimeZone);
+    return time+(p.year!==Y||p.month!==M||p.day!==D?(isHi?' (अगले दिन)':' (next day)'):'');
+}
+function _panchangRange(period,Y,M,D){
+    return period&&period.start&&period.end?_panchangTime(period.start,Y,M,D)+' – '+_panchangTime(period.end,Y,M,D):'—';
+}
+function _panchangEsc(value){return String(value==null?'':value).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function _trustedPanchang(Y,M,D){
+    if(!window.SanatanPanchangEngine||!window.SanatanPanchangEngine.getPanchangam)throw new Error('The verified Panchang engine could not be loaded.');
+    var engine=window.SanatanPanchangEngine;
+    return engine.getPanchangam(_panchangInputDate(Y,M,D),new engine.Observer(_pLat,_pLng,0),{timezoneOffset:Math.round(_pTZ*60),calendarType:_pCalendar});
+}
+function _panchangSummary(p){
+    var tNum=p.tithi+1,weekday=p.vara;
+    return {tNum:tNum,pakshaS:p.paksha,pakshaHi:p.paksha==='Shukla'?'शुक्ल':'कृष्ण',tithi:_panchangTithiEn[p.tithi],tithiHi:_panchangTithiHi[p.tithi],weekday:weekday,vara:_panchangVaraEn[weekday],varaHi:_panchangVaraHi[weekday]};
+}
+function _renderTrustedPanchang(p,Y,M,D,dateLabel){
+    var isHi=(typeof currentLang!=='undefined'&&currentLang==='hi'),s=_panchangSummary(p);
+    var masa=(p.masa.isAdhika?(isHi?'अधिक ':'Adhika '):'')+(isHi?_panchangMasaHi[p.masa.index]:p.masa.name);
+    var nakshatra=isHi?_panchangNakshatraHi[p.nakshatra]:['Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu','Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni','Hasta','Chitra','Swati','Vishakha','Anuradha','Jyeshtha','Mula','Purva Ashadha','Uttara Ashadha','Shravana','Dhanishta','Shatabhisha','Purva Bhadrapada','Uttara Bhadrapada','Revati'][p.nakshatra];
+    var yoga=isHi?_panchangYogaHi[p.yoga]:['Vishkambha','Priti','Ayushman','Saubhagya','Shobhana','Atiganda','Sukarma','Dhriti','Shula','Ganda','Vriddhi','Dhruva','Vyaghata','Harshana','Vajra','Siddhi','Vyatipata','Variyan','Parigha','Shiva','Siddha','Sadhya','Shubha','Shukla','Brahma','Mahendra','Vaidhriti'][p.yoga];
+    var karana=isHi?(_panchangKaranaHi[p.karana]||p.karana):p.karana;
+    var karanaEnd=p.karanas&&p.karanas.length?_panchangTime(p.karanas[0].endTime,Y,M,D):'—';
+    var endsAt=isHi?'समाप्ति: ':'Ends: ';
+    var L={sun:isHi?'☀️ सूर्य समय':'☀️ SUN & MOON',pancha:isHi?'🕉️ पंचांग — पाँच अंग':'🕉️ PANCHA ANGA — FIVE LIMBS',bad:isHi?'⚠️ अशुभ काल':'⚠️ INAUSPICIOUS PERIODS',good:isHi?'✅ शुभ मुहूर्त':'✅ AUSPICIOUS MUHURATS',sunrise:isHi?'सूर्योदय':'Sunrise',sunset:isHi?'सूर्यास्त':'Sunset',moonrise:isHi?'चंद्रोदय':'Moonrise',moonset:isHi?'चंद्रास्त':'Moonset',tithi:isHi?'तिथि':'Tithi',vara:isHi?'वार':'Vara',nak:isHi?'नक्षत्र':'Nakshatra',yoga:isHi?'योग':'Yoga',karana:isHi?'करण':'Karana',paksha:isHi?'पक्ष':'Paksha',rahu:isHi?'राहु काल':'Rahu Kaal',gulika:isHi?'गुलिक काल':'Gulika Kaal',yama:isHi?'यमघण्ट':'Yamaganda',brahma:isHi?'ब्रह्म मुहूर्त':'Brahma Muhurta',abhijit:isHi?'अभिजित मुहूर्त':'Abhijit Muhurta',local:isHi?'समय स्थानीय हैं':'Times are local',method:isHi?'गणना पद्धति':'Calculation method',convention:isHi?'परंपरा':'Convention'};
+    function box(icon,label,value,end){return '<div style="background:var(--cream);border-radius:12px;padding:0.9rem 1.05rem;border-left:4px solid var(--saffron);display:flex;flex-direction:column;gap:0.22rem;"><span style="font-size:0.76rem;font-weight:700;color:var(--brown);text-transform:uppercase;letter-spacing:0.04em;">'+icon+' '+label+'</span><span style="font-size:1rem;font-weight:600;color:var(--text);">'+value+'</span>'+(end?'<span style="font-size:0.76rem;color:#e07000;font-weight:600;">⏰ '+endsAt+end+'</span>':'')+'</div>';}
+    function period(icon,label,value,color){return '<div style="background:var(--cream);border-radius:12px;padding:0.9rem 1.05rem;border-left:4px solid '+color+';display:flex;flex-direction:column;gap:0.22rem;"><span style="font-size:0.76rem;font-weight:700;color:'+color+';text-transform:uppercase;">'+icon+' '+label+'</span><span style="font-size:0.96rem;font-weight:600;color:var(--text);">'+value+'</span></div>';}
+    var convention=_pCalendar==='amanta'?(isHi?'अमांत':'Amanta'):(isHi?'पूर्णिमांत':'Purnimanta');
+    return '<div style="background:linear-gradient(135deg,var(--saffron),#c94a00);color:white;border-radius:12px;padding:1rem 1.4rem;margin-bottom:1.2rem;display:flex;flex-wrap:wrap;gap:0.8rem;align-items:center;justify-content:space-between;"><div><div style="font-size:1.2rem;font-weight:700;">'+dateLabel+'</div><div style="font-size:0.88rem;opacity:0.92;">'+(isHi?'विक्रम संवत':'Vikram Samvat')+' '+p.samvat.vikram+' | '+masa+'</div></div><div style="text-align:right;"><div style="font-size:0.95rem;font-weight:600;">📍 '+_panchangEsc(_pCity)+'</div><div style="font-size:0.78rem;opacity:0.88;">'+_panchangEsc(_pTimeZone)+' · '+L.local+'</div></div></div>'
+      +'<div style="font-size:0.84rem;font-weight:700;color:var(--brown);letter-spacing:0.06em;margin-bottom:0.55rem;">'+L.sun+'</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:0.7rem;margin-bottom:1.25rem;">'+box('🌅',L.sunrise,_panchangTime(p.sunrise,Y,M,D))+box('🌇',L.sunset,_panchangTime(p.sunset,Y,M,D))+box('🌙',L.moonrise,_panchangTime(p.moonrise,Y,M,D))+box('🌘',L.moonset,_panchangTime(p.moonset,Y,M,D))+'</div>'
+      +'<div style="font-size:0.84rem;font-weight:700;color:var(--brown);letter-spacing:0.06em;margin-bottom:0.55rem;">'+L.pancha+'</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:0.7rem;margin-bottom:1.25rem;">'+box('🌙',L.tithi,(isHi?s.pakshaHi:s.pakshaS)+' '+(isHi?s.tithiHi:s.tithi)+' ('+s.tNum+')',_panchangTime(p.tithiEndTime,Y,M,D))+box('📅',L.vara,isHi?s.varaHi:s.vara)+box('⭐',L.nak,nakshatra,_panchangTime(p.nakshatraEndTime,Y,M,D))+box('🧘',L.yoga,yoga,_panchangTime(p.yogaEndTime,Y,M,D))+box('📿',L.karana,karana,karanaEnd)+box('🌗',L.paksha,isHi?s.pakshaHi:s.pakshaS)+'</div>'
+      +'<div style="font-size:0.84rem;font-weight:700;color:var(--brown);letter-spacing:0.06em;margin-bottom:0.55rem;">'+L.bad+'</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:0.7rem;margin-bottom:1.25rem;">'+period('🔴',L.rahu,_panchangRange({start:p.rahuKalamStart,end:p.rahuKalamEnd},Y,M,D),'#c94a00')+period('🟤',L.gulika,_panchangRange(p.gulikaKalam,Y,M,D),'#9b5b23')+period('🟡',L.yama,_panchangRange(p.yamagandaKalam,Y,M,D),'#a56b00')+'</div>'
+      +'<div style="font-size:0.84rem;font-weight:700;color:var(--brown);letter-spacing:0.06em;margin-bottom:0.55rem;">'+L.good+'</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:0.7rem;margin-bottom:0.8rem;">'+period('🌄',L.brahma,_panchangRange(p.brahmaMuhurta,Y,M,D),'#2f855a')+period('⚡',L.abhijit,_panchangRange(p.abhijitMuhurta,Y,M,D),'#b7791f')+'</div>'
+      +'<div style="background:rgba(255,107,53,0.08);border-radius:10px;padding:0.75rem 0.9rem;font-size:0.76rem;color:#6b4a2d;line-height:1.45;"><strong>🛡️ '+L.method+':</strong> Lahiri (Chitrapaksha) ayanamsa · sunrise-based day · '+L.convention+': '+convention+'. '+(isHi?'धार्मिक अनुष्ठानों के लिए स्थानीय मंदिर/परंपरा के निर्देश को प्राथमिकता दें।':'For religious observances, follow the guidance of your local temple or tradition where it differs.')+'</div>';
+}
+function _panchangShowError(message){
+    var loading=document.getElementById('panchang-loading'),container=document.getElementById('panchang-content');
+    if(loading){loading.innerHTML='⚠️ '+_panchangEsc(message);loading.style.display='block';}
+    if(container)container.style.display='none';
+}
+function _panchangSetControls(Y,M,D){
+    var val=Y+'-'+(M<10?'0':'')+M+'-'+(D<10?'0':'')+D,picker=document.getElementById('panchang-date-picker');
+    if(picker)picker.value=val;
+    var day=document.getElementById('pd-day'),month=document.getElementById('pd-month'),year=document.getElementById('pd-year');
+    if(day)day.value=D;if(month)month.value=M;if(year)year.value=Y;
+}
 function loadPanchangForDate(dateVal){
-    var container=document.getElementById('panchang-content');
-    var loading=document.getElementById('panchang-loading');
+    var container=document.getElementById('panchang-content'),loading=document.getElementById('panchang-loading');
     if(!container||!loading)return;
-    loading.innerHTML='🙏 Calculating Panchang…';
-    loading.style.display='block';
-    container.style.display='none';
+    loading.innerHTML='🙏 Calculating Panchang…';loading.style.display='block';container.style.display='none';
     setTimeout(function(){
         try{
-            var date;
-            if(!dateVal||dateVal==='today'){
-                date=new Date();
-                var picker=document.getElementById('panchang-date-picker');
-                if(picker)picker.value=date.toISOString().split('T')[0];
-                // Sync the 3-part selects too
-                if(document.getElementById('pd-day')){
-                    document.getElementById('pd-day').value=date.getDate();
-                    document.getElementById('pd-month').value=date.getMonth()+1;
-                    document.getElementById('pd-year').value=date.getFullYear();
-                }
-            }else{
-                var pts=dateVal.split('-');
-                date=new Date(parseInt(pts[0]),parseInt(pts[1])-1,parseInt(pts[2]));
-            }
-            var Y=date.getFullYear(),M=date.getMonth()+1,D=date.getDate();
-            var ss=_sunriseSunset(Y,M,D,_pLat,_pLng,_pTZ);
-            // Get previous day's sunset for accurate dynamic night-muhurta (Brahma Muhurta)
-            var prevD=new Date(date); prevD.setDate(prevD.getDate()-1);
-            var prevSS=_sunriseSunset(prevD.getFullYear(),prevD.getMonth()+1,prevD.getDate(),_pLat,_pLng,_pTZ).sunset;
-            // Get exact solar transit (solar noon) for pinpoint Abhijit accuracy
-            var solNoon=(ss.sunrise+ss.sunset)/2; // arithmetic fallback
-            if(typeof Astronomy!=='undefined'){
-                try{
-                    var obs=new Astronomy.Observer(_pLat,_pLng,0);
-                    var startUTC=new Date(Date.UTC(Y,M-1,D,0,0,0)-_pTZ*3600000);
-                    var transit=Astronomy.SearchHourAngle(Astronomy.Body.Sun,obs,0,startUTC,1);
-                    if(transit&&transit.time){
-                        var tUTC=transit.time.date;
-                        var tMin=(tUTC.getUTCHours()*60+tUTC.getUTCMinutes()+tUTC.getUTCSeconds()/60)+_pTZ*60;
-                        solNoon=((tMin%1440)+1440)%1440;
-                    }
-                }catch(e){}
-            }
-            var p=_calcPanchang(Y,M,D,ss.sunrise);
-            var srFmt=_fmtM(ss.sunrise),ssFmt=_fmtM(ss.sunset);
-            var dateLabel=date.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-            container.innerHTML=_renderPanchang(p,ss.sunrise,ss.sunset,srFmt,ssFmt,_pCity,dateLabel,prevSS,solNoon);
-            loading.style.display='none';
-            container.style.display='block';
-            if(typeof Astronomy!=='undefined')
-                console.log('✅ Astronomy Engine (JPL DE421) active — Drik-level accuracy');
-            else
-                console.warn('⚠️ Astronomy CDN not loaded — Meeus fallback active (±3 min)');
-        }catch(e){
-            console.error('Panchang error:',e);
-            loading.innerHTML='❌ Error: '+(e&&e.message?e.message:'unknown')+'. Please refresh.';
-        }
-    },30);
+            var Y,M,D;
+            if(!dateVal||dateVal==='today'){var today=_panchangCityDate();Y=today.Y;M=today.M;D=today.D;}else{var pts=dateVal.split('-');Y=parseInt(pts[0],10);M=parseInt(pts[1],10);D=parseInt(pts[2],10);}
+            if(!Y||!M||!D||new Date(Date.UTC(Y,M-1,D)).getUTCMonth()!==M-1)throw new Error('Please choose a valid date.');
+            var p=_trustedPanchang(Y,M,D);
+            if(!p.sunrise||!p.sunset)throw new Error('Sunrise and sunset are unavailable for this date and location.');
+            var dateLabel=new Intl.DateTimeFormat('en-IN',{timeZone:_pTimeZone,weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(_panchangInputDate(Y,M,D));
+            _panchangLast={data:p,Y:Y,M:M,D:D};
+            _panchangSetControls(Y,M,D);
+            container.innerHTML=_renderTrustedPanchang(p,Y,M,D,dateLabel);
+            loading.style.display='none';container.style.display='block';
+            if(typeof _tvbRender==='function')_tvbRender();
+        }catch(e){console.error('Panchang calculation error:',e);_panchangShowError((e&&e.message)?e.message:'Panchang could not be calculated.');}
+    },0);
 }
-
-/* ── City Search Autocomplete ── */
-var _citySearchTimer=null;
+function panchangCalendarChange(){
+    var select=document.getElementById('panchang-calendar-type');
+    _pCalendar=select&&select.value==='amanta'?'amanta':'purnimanta';
+    try{localStorage.setItem('sanatan-panchang-calendar',_pCalendar);}catch(e){}
+    var picker=document.getElementById('panchang-date-picker');
+    loadPanchangForDate(picker&&picker.value?picker.value:'today');
+}
 function panchangCitySearch(val){
     clearTimeout(_citySearchTimer);
     var dd=document.getElementById('panchang-city-dropdown');
-    if(!val||val.length<2){dd.style.display='none';return;}
+    if(!dd||!val||val.length<2){if(dd)dd.style.display='none';return;}
     _citySearchTimer=setTimeout(function(){
         fetch('https://nominatim.openstreetmap.org/search?q='+encodeURIComponent(val)+'&format=json&limit=8&addressdetails=1')
-        .then(function(r){return r.json();})
+        .then(function(r){if(!r.ok)throw new Error('City search is unavailable.');return r.json();})
         .then(function(results){
             if(!results||!results.length){dd.style.display='none';return;}
             dd.innerHTML='';
             results.forEach(function(r){
-                var addr=r.address||{};
-                var shortName=addr.city||addr.town||addr.village||addr.county||r.display_name.split(',')[0];
-                var region=[addr.state,addr.country].filter(Boolean).join(', ');
-                var item=document.createElement('div');
+                var addr=r.address||{},shortName=addr.city||addr.town||addr.village||addr.county||String(r.display_name||'').split(',')[0],region=[addr.state,addr.country].filter(Boolean).join(', '),item=document.createElement('div');
                 item.style.cssText='padding:0.6rem 1rem;cursor:pointer;font-size:0.88rem;border-bottom:1px solid rgba(255,255,255,0.1);';
-                item.onmouseover=function(){this.style.background='rgba(255,153,0,0.15)';};
-                item.onmouseout=function(){this.style.background='';};
-                item.innerHTML='<strong>'+shortName+'</strong>'+(region?'<span style="color:#999;font-size:0.8rem;"> — '+region+'</span>':'');
+                item.textContent=shortName+(region?' — '+region:'');
+                item.onmouseover=function(){this.style.background='rgba(255,153,0,0.15)';};item.onmouseout=function(){this.style.background='';};
                 item.addEventListener('click',function(){
-                    var lat=parseFloat(r.lat),lng=parseFloat(r.lon);
-                    var cityLabel=shortName+(region?', '+region:'');
-                    document.getElementById('panchang-city-input').value=cityLabel;
-                    dd.style.display='none';
-                    fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lng+'&timezone=auto&forecast_days=0')
-                    .then(function(tr){return tr.json();})
+                    var lat=parseFloat(r.lat),lng=parseFloat(r.lon),cityLabel=shortName+(region?', '+region:'');
+                    dd.style.display='none';_panchangShowError('Confirming the selected city time zone…');
+                    fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lng+'&timezone=auto&forecast_days=1')
+                    .then(function(tr){if(!tr.ok)throw new Error('Time zone lookup failed.');return tr.json();})
                     .then(function(td){
-                        _pLat=lat;_pLng=lng;_pCity=cityLabel;
-                        _pTZ=(td.utc_offset_seconds||0)/3600;
-                        loadPanchangForDate(document.getElementById('panchang-date-picker').value||'today');
-                    }).catch(function(){
-                        _pLat=lat;_pLng=lng;_pCity=cityLabel;
-                        _pTZ=Math.round(lng/15*2)/2;
-                        loadPanchangForDate(document.getElementById('panchang-date-picker').value||'today');
-                    });
+                        if(!td.timezone)throw new Error('The city time zone could not be confirmed.');
+                        _pLat=lat;_pLng=lng;_pCity=cityLabel;_pTimeZone=td.timezone;
+                        document.getElementById('panchang-city-input').value=cityLabel;
+                        var picker=document.getElementById('panchang-date-picker');loadPanchangForDate(picker&&picker.value?picker.value:'today');
+                    }).catch(function(){_panchangShowError('We could not confirm this city\'s time zone. Please try another search result.');});
                 });
                 dd.appendChild(item);
             });
@@ -10711,17 +10758,14 @@ function panchangCitySearch(val){
         }).catch(function(){dd.style.display='none';});
     },320);
 }
-document.addEventListener('click',function(e){
-    var dd=document.getElementById('panchang-city-dropdown');
-    var inp=document.getElementById('panchang-city-input');
-    if(dd&&inp&&!inp.contains(e.target)&&!dd.contains(e.target))dd.style.display='none';
-});
+document.addEventListener('click',function(e){var dd=document.getElementById('panchang-city-dropdown'),inp=document.getElementById('panchang-city-input');if(dd&&inp&&!inp.contains(e.target)&&!dd.contains(e.target))dd.style.display='none';});
 
 /* ── Init ── */
 function displayTodaysPanchang(){
-    var inp=document.getElementById('panchang-city-input');
+    var inp=document.getElementById('panchang-city-input'),select=document.getElementById('panchang-calendar-type');
     if(inp)inp.value=_pCity;
-    _pTZ=-(new Date().getTimezoneOffset())/60;
+    try{_pCalendar=localStorage.getItem('sanatan-panchang-calendar')==='amanta'?'amanta':'purnimanta';}catch(e){}
+    if(select)select.value=_pCalendar;
     loadPanchangForDate('today');
 }
 
@@ -12053,10 +12097,11 @@ function _tvbRender() {
   if (!strip) return;
 
   var now = new Date();
-  var Y = now.getFullYear(), M = now.getMonth() + 1, D = now.getDate();
+  var cityToday = _panchangCityDate();
+  var Y = cityToday.Y, M = cityToday.M, D = cityToday.D;
   var p;
   try {
-    p = _calcPanchang(Y, M, D, 6.5 * 60);
+    p = _panchangSummary(_trustedPanchang(Y, M, D));
   } catch(e) { return; }
 
   var isHi = (typeof currentLang !== 'undefined') ? (currentLang === 'hi') : false;
@@ -12065,7 +12110,7 @@ function _tvbRender() {
   var dayNamesHi = ['रविवार','सोमवार','मंगलवार','बुधवार','गुरुवार','शुक्रवार','शनिवार'];
   var monthNamesEn = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var monthNamesHi = ['जन','फर','मार','अप्र','मई','जून','जुल','अग','सित','अक्ट','नव','दिस'];
-  var dow = now.getDay();
+  var dow = new Date(Date.UTC(Y, M - 1, D)).getUTCDay();
 
   var dateStr = isHi
     ? (dayNamesHi[dow] + ', ' + D + ' ' + monthNamesHi[M-1] + ' ' + Y)
