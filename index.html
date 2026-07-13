@@ -371,6 +371,8 @@ body.dark-theme .tvb-strip { background: linear-gradient(135deg, #3a1500 0%, #6b
 .fc-header { text-align:center; margin-bottom:2rem; }
 .fc-header h2 { font-family:'Tiro Devanagari Sanskrit',serif; color:var(--saffron); font-size:2rem; }
 .fc-header p { color:#888; font-size:0.95rem; margin-top:0.4rem; }
+.fc-reference { margin:1rem auto 0; max-width:760px; padding:0.75rem 0.95rem; border-radius:10px; background:rgba(255,107,53,0.08); color:var(--brown); font-size:0.82rem; line-height:1.5; }
+.fc-reference strong { color:var(--saffron); }
 .fc-year-label { font-family:'Tiro Devanagari Sanskrit',serif; font-size:1.4rem; font-weight:700; color:var(--brown); min-width:60px; text-align:center; }
 .fc-months { display:flex; flex-direction:column; gap:1.5rem; }
 .fc-month-block { background:var(--card-bg); border-radius:14px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.07); }
@@ -3851,8 +3853,16 @@ body.dark-theme .ds-pl-panel { background:var(--card-bg); }
     ══════════════════════════════════════ -->
     <div id="festival-calendar" class="section">
       <div class="fc-header">
-        <h2 data-en="🗓️ Hindu Festival Calendar 2026" data-hi="🗓️ हिंदू पर्व कैलेंडर 2026">🗓️ Hindu Festival Calendar 2026</h2>
-        <p data-en="Major Hindu festivals &amp; auspicious days" data-hi="प्रमुख हिंदू पर्व और शुभ दिन">Major Hindu festivals &amp; auspicious days</p>
+        <h2 id="fc-title">🗓️ Hindu Festival Calendar</h2>
+        <p id="fc-subtitle">Major Hindu festivals &amp; auspicious days</p>
+        <div style="display:flex;justify-content:center;align-items:center;gap:0.65rem;margin-top:1rem;">
+          <label for="fc-year-select" style="font-size:0.86rem;font-weight:700;color:var(--brown);">Year</label>
+          <select id="fc-year-select" onchange="fcSelectYear(this.value)" style="padding:0.42rem 0.65rem;border:1px solid var(--saffron);border-radius:8px;background:var(--card-bg);color:var(--text);font:inherit;font-weight:700;">
+            <option value="2025">2025</option>
+            <option value="2026" selected>2026</option>
+          </select>
+        </div>
+        <div class="fc-reference" id="fc-reference"></div>
       </div>
       <div class="fc-months" id="fc-months-container"></div>
     </div>
@@ -4544,6 +4554,10 @@ function toggleLanguage() {
     // Re-render Tithi/Vrat Banner in new language
     if (typeof _tvbRender === 'function') {
         _tvbRender();
+    }
+    // Re-render Festival Calendar entries that are generated dynamically.
+    if (typeof fcRender === 'function' && document.getElementById('fc-months-container')) {
+        fcRender();
     }
 }
 
@@ -12165,78 +12179,58 @@ window.addEventListener('load', function() { setTimeout(_tvbRender, 200); });
 /* ══════════════════════════════════════════════════════
    FESTIVAL CALENDAR
 ══════════════════════════════════════════════════════ */
-var _fcYear = new Date().getFullYear();
+var _fcYear = 2026;
+var _fcSupportedYears = [2025, 2026];
 var _fcCache = {};
 
-/* ── Improved tithi finder — checks 3 IST time-points per day ──
-   Catches short tithis (e.g. Pratipada) that start & end between two sunrises */
-function _fcFindTithi(year, fromM, fromD, tIdx) {
-  for (var i = 0; i < 65; i++) {
-    var dt = new Date(year, fromM - 1, fromD + i);
-    var y=dt.getFullYear(), m=dt.getMonth()+1, d=dt.getDate();
-    try {
-      /* IST 6 AM = UTC 0:30 | IST 9 AM = UTC 3:30 | IST 12 PM = UTC 6:30 */
-      if (_tithiIdx(_jd(y,m,d,0.5))===tIdx ||
-          _tithiIdx(_jd(y,m,d,3.5))===tIdx ||
-          _tithiIdx(_jd(y,m,d,6.5))===tIdx)
-        return {y:y, m:m, d:d, v:false};
-    } catch(e) {}
-  }
-  return null;
-}
-
 /* ── Pre-verified accurate dates (year → key → {m,d}) ──
-   Hindu lunar dates shift every year and some years have Adhika Masa
-   (intercalary month) which can shift the second half by ~30 days.
-   Verified dates marked v:true — calculated dates marked v:false.
-   Source: cross-referenced with Drik Panchang & user-confirmed data.      */
+   Reference checked for New Delhi using the Purnimanta convention.
+   Festival observance may depend on sunrise, midnight, and pradosh.
+   Unreviewed years are intentionally not guessed from a simple tithi scan.
+   Source: reviewed against Drik Panchang festival references. */
 var _fcVerified = {
   2025: {
-    sankranti:{m:1,d:14,v:true},   republic:{m:1,d:26,v:true},
+    sankranti:{m:1,d:14,v:true},
     basant:{m:2,d:2,v:true},        shivratri:{m:2,d:26,v:true},
     holika:{m:3,d:13,v:true},       holi:{m:3,d:14,v:true},
     navratri1:{m:3,d:30,v:true},    ramnavami:{m:4,d:6,v:true},
     hanuman:{m:4,d:12,v:true},      baisakhi:{m:4,d:14,v:true},
     akshaya:{m:4,d:30,v:true},      buddha:{m:5,d:12,v:true},
-    gurpurnima:{m:7,d:10,v:true},   nagpanchami:{m:8,d:1,v:true},
+    gurpurnima:{m:7,d:10,v:true},   nagpanchami:{m:7,d:29,v:true},
     raksha:{m:8,d:9,v:true},        janmashtami:{m:8,d:16,v:true},
-    ganesh:{m:8,d:27,v:true},       ganeshvis:{m:9,d:5,v:true},
-    navratri2:{m:10,d:2,v:true},    dussehra:{m:10,d:2,v:true},
-    sharadpurn:{m:10,d:6,v:true},   karwa:{m:10,d:20,v:true},
-    dhanteras:{m:10,d:28,v:true},   chotidiwali:{m:10,d:29,v:true},
-    diwali:{m:10,d:30,v:true},      govardhan:{m:10,d:31,v:true},
-    bhaidooj:{m:11,d:1,v:true},     devuthani:{m:11,d:10,v:true},
-    kartikpurn:{m:11,d:15,v:true},  christmas:{m:12,d:25,v:true}
+    ganesh:{m:8,d:27,v:true},       ganeshvis:{m:9,d:6,v:true},
+    navratri2:{m:9,d:22,v:true},    dussehra:{m:10,d:2,v:true},
+    sharadpurn:{m:10,d:6,v:true},   karwa:{m:10,d:10,v:true},
+    dhanteras:{m:10,d:18,v:true},   chotidiwali:{m:10,d:20,v:true},
+    diwali:{m:10,d:20,v:true},      govardhan:{m:10,d:22,v:true},
+    bhaidooj:{m:10,d:23,v:true},    devuthani:{m:11,d:1,v:true},
+    kartikpurn:{m:11,d:5,v:true}
   },
   2026: {
     /* ── First half: user-confirmed dates ── */
-    sankranti:{m:1,d:14,v:true},    republic:{m:1,d:26,v:true},
+    sankranti:{m:1,d:14,v:true},
     basant:{m:1,d:23,v:true},       shivratri:{m:2,d:15,v:true},
     holika:{m:3,d:3,v:true},        holi:{m:3,d:4,v:true},
-    navratri1:{m:3,d:19,v:true},    ramnavami:{m:3,d:27,v:true},
+    navratri1:{m:3,d:19,v:true},    ramnavami:{m:3,d:26,v:true},
     hanuman:{m:4,d:2,v:true},       baisakhi:{m:4,d:14,v:true},
-    akshaya:{m:4,d:20,v:true},      buddha:{m:5,d:2,v:true},
+    akshaya:{m:4,d:20,v:true},      buddha:{m:5,d:1,v:true},
     /* ── Mid-year: Adhika Ashadha pushes all ~30 days later than normal ── */
     /* Guru Purnima = Nija Ashadha Purnima (not Adhika Ashadha) */
-    gurpurnima:{m:7,d:25,v:false},
+    gurpurnima:{m:7,d:29,v:true},
     /* Shravana S5, Shravana Purnima */
-    nagpanchami:{m:8,d:15,v:false},  raksha:{m:8,d:25,v:false},
+    nagpanchami:{m:8,d:17,v:true},   raksha:{m:8,d:28,v:true},
     /* Bhadrapada S4, S14, Krishna 8 */
-    ganesh:{m:9,d:25,v:false},       ganeshvis:{m:10,d:5,v:false},
-    janmashtami:{m:9,d:16,v:false},
+    ganesh:{m:9,d:14,v:true},        ganeshvis:{m:9,d:25,v:true},
+    janmashtami:{m:9,d:4,v:true},
     /* ── Diwali cluster: all derived from confirmed navratri2 = Oct 11 ──
        Ashvina S1=Oct11 → Purnima=Oct25 → K4(Karwa)=Oct29 →
        K13(Dhanteras)=Nov7 → K14(ChotiDiwali)=Nov8 → Amavasya(Diwali)=Nov9 */
     navratri2:{m:10,d:11,v:true},    dussehra:{m:10,d:20,v:true},
     sharadpurn:{m:10,d:25,v:true},   karwa:{m:10,d:29,v:true},
-    dhanteras:{m:11,d:7,v:true},     chotidiwali:{m:11,d:8,v:true},
-    diwali:{m:11,d:9,v:true},        govardhan:{m:11,d:10,v:true},
+    dhanteras:{m:11,d:6,v:true},     chotidiwali:{m:11,d:8,v:true},
+    diwali:{m:11,d:8,v:true},        govardhan:{m:11,d:10,v:true},
     bhaidooj:{m:11,d:11,v:true},     devuthani:{m:11,d:20,v:true},
-    kartikpurn:{m:11,d:24,v:true},   christmas:{m:12,d:25,v:true}
-  },
-  2027: {
-    sankranti:{m:1,d:14,v:true},  republic:{m:1,d:26,v:true},
-    baisakhi:{m:4,d:14,v:true},   christmas:{m:12,d:25,v:true}
+    kartikpurn:{m:11,d:24,v:true}
   }
 };
 
@@ -12281,33 +12275,26 @@ function _fcGetDates(year) {
   var precomp = _fcVerified[year] || {};
   var map = {};
   _fcDefs.forEach(function(f) {
-    /* 1. Use verified date if available */
     if (precomp[f.key]) {
       map[f.key] = {y:year, m:precomp[f.key].m, d:precomp[f.key].d, v:precomp[f.key].v};
-      return;
     }
-    /* 2. Compute from tithi engine */
-    var date = null;
-    if (f.type === 'fixed') {
-      date = {y:year, m:f.m, d:f.d, v:true};
-    } else if (f.type === 'tithi') {
-      try { date = _fcFindTithi(year, f.fromM, f.fromD, f.tIdx); } catch(e) {}
-    } else if (f.type === 'after') {
-      var base = map[f.ref];
-      if (base) {
-        var dt = new Date(base.y, base.m-1, base.d + f.add);
-        date = {y:dt.getFullYear(), m:dt.getMonth()+1, d:dt.getDate(), v:base.v};
-      }
-    }
-    if (date) map[f.key] = date;
   });
   _fcCache[year] = map;
   return map;
 }
 
 function fcChangeYear(dir) {
-  _fcYear += dir;
-  document.getElementById('fc-year-label').textContent = _fcYear;
+  var i=_fcSupportedYears.indexOf(_fcYear), next=_fcSupportedYears[i+dir];
+  if (next) _fcYear=next;
+  var select=document.getElementById('fc-year-select');
+  if (select) select.value=_fcYear;
+  fcRender();
+}
+
+function fcSelectYear(year) {
+  year=parseInt(year,10);
+  if (_fcSupportedYears.indexOf(year)===-1) return;
+  _fcYear=year;
   fcRender();
 }
 
@@ -12315,6 +12302,13 @@ function fcRender() {
   var container = document.getElementById('fc-months-container');
   if (!container) return;
   var isHi = (typeof currentLang !== 'undefined') && currentLang === 'hi';
+  var title=document.getElementById('fc-title'), subtitle=document.getElementById('fc-subtitle'), reference=document.getElementById('fc-reference'), yearSelect=document.getElementById('fc-year-select');
+  if (title) title.textContent=isHi?'🗓️ हिंदू पर्व कैलेंडर '+_fcYear:'🗓️ Hindu Festival Calendar '+_fcYear;
+  if (subtitle) subtitle.textContent=isHi?'प्रमुख हिंदू पर्व और शुभ दिन':'Major Hindu festivals & auspicious days';
+  if (yearSelect) yearSelect.value=_fcYear;
+  if (reference) reference.innerHTML=isHi
+    ? '<strong>संदर्भ:</strong> नई दिल्ली, भारत · पूर्णिमांत (उत्तर भारत) परंपरा। तिथियाँ संदर्भ-आधारित हैं; अन्य शहरों और स्थानीय मंदिर परंपराओं में कभी-कभी एक दिन का अंतर हो सकता है।'
+    : '<strong>Reference:</strong> New Delhi, India · Purnimanta (North India) convention. Dates are reference-checked; another city or local temple tradition can occasionally observe a different day.';
   var today = new Date();
   var todayY=today.getFullYear(), todayM=today.getMonth()+1, todayD=today.getDate();
 
