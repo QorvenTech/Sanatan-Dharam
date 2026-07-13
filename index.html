@@ -3868,6 +3868,9 @@ body.dark-theme .ds-pl-panel { background:var(--card-bg); }
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script src="shloka-data-1.js"></script>
+<script src="shloka-data-2.js"></script>
+<script src="shloka-data-3.js"></script>
 
 <script>
 // ======================================
@@ -11891,6 +11894,10 @@ var _sotdData = [
 
 
 ];
+
+if (Array.isArray(window._sotdAdditionalData)) {
+  _sotdData = _sotdData.concat(window._sotdAdditionalData);
+}
 
 var _sotdIndex = 0;
 
