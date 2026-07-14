@@ -638,6 +638,82 @@ body.dark-theme .texts-search input { color:#f6eaca; } body.dark-theme .scriptur
 @media(max-width:1160px) { .texts-scripture-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .texts-library-grid { grid-template-columns:minmax(0,1fr) 300px; } }
 @media(max-width:880px) { .texts-library-grid { grid-template-columns:1fr; } .texts-start-panel { display:grid; grid-template-columns:1fr 1fr; gap:0 1rem; } .texts-start-panel h3, .texts-start-panel > p, .texts-start-all { grid-column:1 / -1; } .texts-quote-grid { grid-template-columns:1fr; } }
 @media(max-width:620px) { .texts-library { padding:1rem 0 2.5rem; } .texts-hero { min-height:410px; align-items:flex-start; padding:1.35rem; background-image:linear-gradient(180deg,rgba(255,253,247,.98) 0%,rgba(255,253,247,.94) 45%,rgba(255,253,247,.38) 78%,rgba(255,253,247,.12) 100%),url('assets/sacred-texts-library-hero.webp'); background-position:70% center; } .texts-hero h2 { font-size:2.9rem; } .texts-hero p { font-size:.9rem; } .texts-search { min-width:100%; } .texts-filter-bar { gap:.42rem; } .texts-filter { padding:.3rem .68rem; } .texts-scripture-grid { grid-template-columns:1fr; } .scripture-card { min-height:172px; } .scripture-art { width:88px; min-width:88px; height:126px; } .texts-start-panel { display:block; } .texts-quote { min-height:auto; } body.dark-theme .texts-hero { background-image:linear-gradient(180deg,rgba(25,28,39,.98) 0%,rgba(25,28,39,.91) 48%,rgba(25,28,39,.37) 100%),url('assets/sacred-texts-library-hero.webp'); } }
+
+/* ===== TRUSTED PANCHANG REDESIGN ===== */
+#panchang { max-width:none; padding:0; }
+.panchang-library { padding:1.8rem 0 3.5rem; color:var(--home-ink); }
+.panchang-breadcrumb { display:flex; align-items:center; gap:.55rem; margin:0 0 1rem; color:#6c635a; font-size:.84rem; }
+.panchang-breadcrumb button { border:0; padding:0; background:none; color:inherit; cursor:pointer; font:inherit; }
+.panchang-breadcrumb span { color:#b87528; }
+.panchang-hero { min-height:340px; display:flex; align-items:center; padding:clamp(1.45rem,4vw,3.4rem); border:1px solid var(--home-line); border-radius:16px; background-color:#fcf5e4; background-image:linear-gradient(90deg,rgba(255,253,247,.99) 0%,rgba(255,253,247,.96) 34%,rgba(255,253,247,.56) 56%,rgba(255,253,247,.04) 100%),url('assets/panchang-astronomy-hero.webp'); background-repeat:no-repeat; background-position:center; background-size:cover; overflow:hidden; }
+.panchang-hero-copy { max-width:560px; }
+.panchang-hero h2 { margin:0; color:var(--home-ink); font:700 clamp(2.45rem,5.2vw,4.65rem)/.98 'Crimson Pro',serif; letter-spacing:-.025em; }
+.panchang-hero h2 span { display:block; margin-top:.4rem; color:#a3601f; font:700 clamp(1.6rem,3.1vw,2.75rem)/1.05 'Tiro Devanagari Sanskrit',serif; letter-spacing:0; }
+.panchang-hero-line { width:min(100%,490px); height:1px; margin:1rem 0; background:linear-gradient(90deg,#d0a164,transparent); position:relative; }
+.panchang-hero-line::after { content:'✧'; position:absolute; top:50%; left:43%; transform:translate(-50%,-50%); padding:0 .5rem; background:#fffdf7; color:#bb7826; }
+.panchang-hero p { max-width:510px; margin:0; color:#43495b; font-size:1rem; line-height:1.65; }
+.panchang-control-grid { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr); gap:.85rem; margin-top:1rem; }
+.panchang-location, .panchang-date-nav, .panchang-notice, .panchang-convention, .panchang-method-link, .panchang-values, .panchang-solar, .panchang-meaning, .panchang-periods, .panchang-methods, .panchang-disclaimer { border:1px solid var(--home-line); border-radius:10px; background:linear-gradient(145deg,#fffefa,#fffaf0); box-shadow:0 5px 16px rgba(85,53,13,.045); }
+.panchang-location { min-height:62px; display:flex; align-items:center; gap:.75rem; padding:.7rem 1rem; }
+.panchang-location > span { color:#9f5e1c; font-size:1.55rem; }
+.panchang-city-wrap { position:relative; flex:1; min-width:0; }
+.panchang-city-input { width:100%; padding:0; border:0; outline:0; background:transparent; color:var(--home-ink); font:700 1.25rem 'Crimson Pro',serif; }
+.panchang-city-input::placeholder { color:#8d877d; }
+.panchang-change-location, .panchang-date-button, .panchang-method-link { border:1px solid #d8b984; border-radius:7px; background:#fffdf7; color:#9a5c1d; cursor:pointer; font:700 .8rem 'Crimson Pro',serif; }
+.panchang-change-location { min-height:36px; padding:.45rem .75rem; white-space:nowrap; }
+.panchang-city-dropdown { display:none; position:absolute; top:calc(100% + 12px); left:-2.8rem; right:0; z-index:1000; max-height:230px; overflow-y:auto; border:1px solid #c99b5d; border-radius:10px; background:#fffdf7; box-shadow:0 10px 25px rgba(50,30,10,.16); }
+.panchang-date-nav { min-height:62px; display:grid; grid-template-columns:48px 1fr 48px; gap:.55rem; align-items:center; padding:.45rem; }
+.panchang-date-button { min-height:40px; font-size:1.55rem; line-height:1; }
+.panchang-date-label { min-width:0; color:var(--home-ink); text-align:center; font:700 1.05rem 'Crimson Pro',serif; }
+.panchang-trust-row { display:grid; grid-template-columns:1fr minmax(240px,.58fr); gap:.85rem; margin-top:.85rem; }
+.panchang-notice, .panchang-convention { min-height:46px; display:flex; align-items:center; gap:.6rem; padding:.6rem .9rem; color:#53596b; font-size:.8rem; }
+.panchang-notice b { color:#a76420; font-size:1rem; }
+.panchang-convention { justify-content:space-between; }
+.panchang-calendar-select { min-height:31px; padding:.3rem .5rem; border:0; border-radius:6px; outline:0; background:var(--home-ink); color:#fff; font:700 .74rem inherit; }
+.panchang-dashboard { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr); gap:.85rem; margin-top:.85rem; }
+.panchang-values { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); padding:.7rem 0; }
+.panchang-value { min-width:0; padding:.3rem .6rem .5rem; border-right:1px solid #eadcc4; text-align:center; }
+.panchang-value:last-child { border-right:0; }
+.panchang-value-icon { display:block; color:#af6c22; font-size:1.25rem; line-height:1; }
+.panchang-value small { display:block; margin-top:.42rem; color:#6f675f; font-size:.68rem; }
+.panchang-value strong { display:block; margin-top:.22rem; color:var(--home-ink); font:700 .95rem/1.12 'Crimson Pro',serif; overflow-wrap:anywhere; }
+.panchang-value em { display:block; margin-top:.22rem; color:#7e552c; font:700 .7rem/1.1 'Tiro Devanagari Sanskrit',serif; font-style:normal; }
+.panchang-solar { display:grid; grid-template-columns:repeat(4,1fr); margin-top:.85rem; }
+.panchang-solar-item { min-width:0; padding:.8rem .85rem; border-right:1px solid #eadcc4; }
+.panchang-solar-item:last-child { border-right:0; }
+.panchang-solar-item span { color:#ad6a21; font-size:1.3rem; }
+.panchang-solar-item small { display:block; margin-top:.24rem; color:#6f675f; font-size:.68rem; }
+.panchang-solar-item strong { display:block; margin-top:.18rem; color:var(--home-ink); font:700 1.06rem 'Crimson Pro',serif; white-space:nowrap; }
+.panchang-meaning { padding:1.1rem 1.15rem; }
+.panchang-meaning h3 { margin:0 0 .55rem; color:var(--home-ink); font:700 1.3rem 'Crimson Pro',serif; }
+.panchang-meaning h3 span { color:#bd7829; font-size:1.3rem; }
+.panchang-meaning p { margin:0; color:#525869; font-size:.83rem; line-height:1.58; }
+.panchang-meaning small { display:block; margin-top:.75rem; padding-top:.7rem; border-top:1px solid #eadcc4; color:#8a663e; font-size:.7rem; line-height:1.4; }
+.panchang-bottom-grid { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(330px,.85fr); gap:.85rem; margin-top:.85rem; }
+.panchang-periods { padding:1.1rem; }
+.panchang-section-title { margin:0 0 .75rem; color:var(--home-ink); font:700 1.45rem 'Crimson Pro',serif; }
+.panchang-section-title span { margin-left:.25rem; color:#b7792a; font:700 .9rem 'Tiro Devanagari Sanskrit',serif; }
+.panchang-period-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.65rem; }
+.panchang-period-grid + .panchang-section-title { margin-top:1rem; text-align:center; }
+.panchang-period { min-width:0; padding:.7rem; border:1px solid #eadcc4; border-radius:8px; background:#fffdf7; }
+.panchang-period span { color:#ad6a21; font-size:1.15rem; }
+.panchang-period small { display:block; margin-top:.28rem; color:#6f675f; font-size:.68rem; }
+.panchang-period strong { display:block; margin-top:.2rem; color:var(--home-ink); font:700 .91rem/1.2 'Crimson Pro',serif; }
+.panchang-methods { overflow:hidden; }
+.panchang-method-link { width:100%; min-height:49px; display:grid; grid-template-columns:25px 1fr auto; gap:.45rem; align-items:center; padding:.55rem .8rem; border:0; border-bottom:1px solid #eadcc4; border-radius:0; background:transparent; text-align:left; color:var(--home-ink); }
+.panchang-method-link:last-child { border-bottom:0; }
+.panchang-method-link > span { color:#b87528; font-size:1rem; text-align:center; }
+.panchang-method-link b { font-size:.77rem; }
+.panchang-method-link small { color:#6d7180; font:400 .7rem inherit; text-align:right; }
+.panchang-disclaimer { display:flex; align-items:center; gap:.65rem; margin-top:.85rem; padding:.75rem .95rem; color:#5a5e6c; font-size:.78rem; line-height:1.45; }
+.panchang-disclaimer span { color:#b77524; font-size:1.15rem; }
+body.dark-theme .panchang-hero { background-image:linear-gradient(90deg,rgba(25,28,39,.98) 0%,rgba(25,28,39,.94) 38%,rgba(25,28,39,.48) 60%,rgba(25,28,39,.06) 100%),url('assets/panchang-astronomy-hero.webp'); }
+body.dark-theme .panchang-breadcrumb, body.dark-theme .panchang-hero p, body.dark-theme .panchang-notice, body.dark-theme .panchang-convention, body.dark-theme .panchang-value small, body.dark-theme .panchang-solar-item small, body.dark-theme .panchang-meaning p, body.dark-theme .panchang-period small, body.dark-theme .panchang-method-link small, body.dark-theme .panchang-disclaimer { color:#c8cad2; }
+body.dark-theme .panchang-hero h2, body.dark-theme .panchang-location, body.dark-theme .panchang-date-label, body.dark-theme .panchang-value strong, body.dark-theme .panchang-solar-item strong, body.dark-theme .panchang-meaning h3, body.dark-theme .panchang-section-title, body.dark-theme .panchang-period strong, body.dark-theme .panchang-method-link { color:#f6eaca; }
+body.dark-theme .panchang-location, body.dark-theme .panchang-date-nav, body.dark-theme .panchang-notice, body.dark-theme .panchang-convention, body.dark-theme .panchang-values, body.dark-theme .panchang-solar, body.dark-theme .panchang-meaning, body.dark-theme .panchang-periods, body.dark-theme .panchang-methods, body.dark-theme .panchang-disclaimer, body.dark-theme .panchang-period { background:#252837; border-color:#4a4350; }
+body.dark-theme .panchang-city-input, body.dark-theme .panchang-change-location, body.dark-theme .panchang-date-button { color:#f6eaca; background:#252837; border-color:#625c66; }
+@media(max-width:980px) { .panchang-control-grid, .panchang-trust-row, .panchang-dashboard, .panchang-bottom-grid { grid-template-columns:1fr; } .panchang-meaning { min-height:0; } }
+@media(max-width:650px) { .panchang-library { padding:1rem 0 2.5rem; } .panchang-hero { min-height:410px; align-items:flex-start; padding:1.35rem; background-image:linear-gradient(180deg,rgba(255,253,247,.98) 0%,rgba(255,253,247,.94) 44%,rgba(255,253,247,.39) 76%,rgba(255,253,247,.1) 100%),url('assets/panchang-astronomy-hero.webp'); background-position:69% center; } .panchang-hero h2 { font-size:2.85rem; } .panchang-hero p { font-size:.91rem; } .panchang-location { padding:.7rem; } .panchang-city-input { font-size:1.07rem; } .panchang-change-location { padding:.42rem .55rem; } .panchang-trust-row { gap:.55rem; } .panchang-notice { min-height:42px; } .panchang-convention { flex-wrap:wrap; } .panchang-values { grid-template-columns:repeat(5,minmax(0,1fr)); gap:0; padding:.55rem 0; } .panchang-value { padding:.45rem .28rem .55rem; } .panchang-value:nth-child(5) { border-right:0; } .panchang-value:nth-child(n+6) { border-top:1px solid #eadcc4; } .panchang-value strong { font-size:.84rem; } .panchang-value small { font-size:.61rem; } .panchang-solar { grid-template-columns:repeat(2,1fr); } .panchang-solar-item:nth-child(2) { border-right:0; } .panchang-solar-item:nth-child(n+3) { border-top:1px solid #eadcc4; } .panchang-solar-item { padding:.7rem; } .panchang-period-grid { grid-template-columns:1fr; } .panchang-period-grid.panchang-auspicious { grid-template-columns:1fr 1fr; } .panchang-method-link small { max-width:145px; } body.dark-theme .panchang-hero { background-image:linear-gradient(180deg,rgba(25,28,39,.98) 0%,rgba(25,28,39,.91) 48%,rgba(25,28,39,.37) 100%),url('assets/panchang-astronomy-hero.webp'); } }
     </style>
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7XCYH7G1S"></script>
@@ -13041,6 +13117,186 @@ function filterSacredTexts(category, button) {
   _applySacredTextFilters();
 }
 function searchSacredTexts() { _applySacredTextFilters(); }
+</script>
+
+<script>
+/* Panchang presentation: the layout is new; calculations stay on the verified local engine. */
+(function () {
+  var page = document.getElementById('panchang');
+  if (!page) return;
+
+  page.innerHTML = `
+    <div class="panchang-library">
+      <div class="panchang-breadcrumb"><button type="button" onclick="showSection('home')">⌂ &nbsp;Home</button><span>/</span><strong>Panchang</strong></div>
+      <section class="panchang-hero" aria-labelledby="panchang-page-title">
+        <div class="panchang-hero-copy">
+          <h2 id="panchang-page-title">Today's Panchang<span>आज का पंचांग</span></h2>
+          <div class="panchang-hero-line"></div>
+          <p>Accurate daily Panchang timings calculated for your selected location, with clear methodology and regional convention support.</p>
+        </div>
+      </section>
+
+      <div class="panchang-control-grid">
+        <div class="panchang-location">
+          <span>●</span>
+          <div class="panchang-city-wrap">
+            <input class="panchang-city-input" type="text" id="panchang-city-input" autocomplete="off" placeholder="Search a city" aria-label="Search city for Panchang" />
+            <div class="panchang-city-dropdown" id="panchang-city-dropdown"></div>
+          </div>
+          <button class="panchang-change-location" type="button" id="panchang-location-button">◎ Change location</button>
+        </div>
+        <div class="panchang-date-nav" aria-label="Change Panchang date">
+          <button class="panchang-date-button" type="button" id="panchang-previous-date" aria-label="Previous day">‹</button>
+          <div class="panchang-date-label" id="panchang-date-label">Loading date…</div>
+          <button class="panchang-date-button" type="button" id="panchang-next-date" aria-label="Next day">›</button>
+        </div>
+      </div>
+
+      <div class="panchang-trust-row">
+        <div class="panchang-notice"><b>ⓘ</b><span id="panchang-location-notice">Times are calculated for your selected location.</span></div>
+        <div class="panchang-convention">
+          <label for="panchang-calendar-type">Calendar tradition</label>
+          <select id="panchang-calendar-type" class="panchang-calendar-select" aria-label="Calendar tradition">
+            <option value="purnimanta">Purnimanta (North India)</option>
+            <option value="amanta">Amanta (South & West India)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="panchang-dashboard">
+        <div>
+          <div class="panchang-values" id="panchang-values" aria-live="polite"></div>
+          <div class="panchang-solar" id="panchang-solar"></div>
+        </div>
+        <aside class="panchang-meaning">
+          <h3><span>“</span> What this means today</h3>
+          <p id="panchang-meaning-copy">Panchang information is being calculated for your selected location.</p>
+          <small id="panchang-meaning-note">For a specific religious observance, follow your family or local temple tradition where it differs.</small>
+        </aside>
+      </div>
+
+      <div class="panchang-bottom-grid">
+        <section class="panchang-periods" aria-labelledby="panchang-period-title">
+          <h3 class="panchang-section-title" id="panchang-period-title">Sensitive Time Periods<span>संवेदनशील समय</span></h3>
+          <div class="panchang-period-grid" id="panchang-sensitive-periods"></div>
+          <h3 class="panchang-section-title">Auspicious Muhurat<span>शुभ मुहूर्त</span></h3>
+          <div class="panchang-period-grid panchang-auspicious" id="panchang-auspicious-periods"></div>
+        </section>
+        <section class="panchang-methods" aria-label="Panchang methodology and sources">
+          <button class="panchang-method-link" type="button"><span>◉</span><b>Location &amp; Timezone Basis</b><small id="panchang-method-timezone">—</small></button>
+          <button class="panchang-method-link" type="button"><span>☼</span><b>Astronomical Calculations</b><small>Sunrise, sunset, moonrise, moonset</small></button>
+          <button class="panchang-method-link" type="button"><span>✦</span><b>Tithi &amp; Nakshatra Calculation</b><small>Lahiri (Chitrapaksha) ayanamsa</small></button>
+          <button class="panchang-method-link" type="button"><span>▤</span><b>Regional Conventions</b><small id="panchang-method-convention">—</small></button>
+          <button class="panchang-method-link" type="button"><span>✥</span><b>Sources &amp; Transparency</b><small>Local astronomical calculation engine</small></button>
+        </section>
+      </div>
+      <div class="panchang-disclaimer"><span>ⓘ</span><div>Festival observance and local temple traditions can vary by city and tradition. Use this Panchang as a transparent astronomical reference and confirm special observances locally.</div></div>
+      <input type="date" id="panchang-date-picker" tabindex="-1" aria-hidden="true" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;" />
+      <select id="pd-day" aria-hidden="true" tabindex="-1" style="display:none;"></select><select id="pd-month" aria-hidden="true" tabindex="-1" style="display:none;"></select><select id="pd-year" aria-hidden="true" tabindex="-1" style="display:none;"></select>
+      <div id="panchang-loading" role="status" aria-live="polite" style="position:absolute;left:-9999px;"></div>
+      <div id="panchang-content" aria-hidden="true" style="display:none;"></div>
+    </div>`;
+
+  function byId(id) { return document.getElementById(id); }
+  function pText(id, value) { var el = byId(id); if (el) el.textContent = value == null ? '—' : value; }
+  function pDateValue(Y, M, D) { return Y + '-' + (M < 10 ? '0' : '') + M + '-' + (D < 10 ? '0' : '') + D; }
+  function isHindiPanchang() { return typeof currentLang !== 'undefined' && currentLang === 'hi'; }
+  function pName(list, index) { return list && list[index] ? list[index] : '—'; }
+  function pMetric(icon, label, value, secondary) {
+    return '<div class="panchang-value"><span class="panchang-value-icon">' + icon + '</span><small>' + label + '</small><strong>' + _panchangEsc(value) + '</strong>' + (secondary ? '<em>' + _panchangEsc(secondary) + '</em>' : '') + '</div>';
+  }
+  function pSolar(icon, label, value) {
+    return '<div class="panchang-solar-item"><span>' + icon + '</span><small>' + label + '</small><strong>' + _panchangEsc(value) + '</strong></div>';
+  }
+  function pPeriod(icon, label, value) {
+    return '<div class="panchang-period"><span>' + icon + '</span><small>' + label + '</small><strong>' + _panchangEsc(value) + '</strong></div>';
+  }
+  function currentPanchangDate() {
+    var picker = byId('panchang-date-picker'), parts = picker && picker.value ? picker.value.split('-') : null;
+    if (parts && parts.length === 3) return { Y:parseInt(parts[0], 10), M:parseInt(parts[1], 10), D:parseInt(parts[2], 10) };
+    return _panchangCityDate();
+  }
+  window.panchangShiftDate = function (offset) {
+    var current = currentPanchangDate();
+    var d = new Date(Date.UTC(current.Y, current.M - 1, current.D + offset));
+    loadPanchangForDate(pDateValue(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate()));
+  };
+  byId('panchang-previous-date').addEventListener('click', function () { window.panchangShiftDate(-1); });
+  byId('panchang-next-date').addEventListener('click', function () { window.panchangShiftDate(1); });
+  byId('panchang-location-button').addEventListener('click', function () { byId('panchang-city-input').focus(); });
+  byId('panchang-city-input').addEventListener('input', function () { if (typeof panchangCitySearch === 'function') panchangCitySearch(this.value); });
+  byId('panchang-calendar-type').addEventListener('change', function () { if (typeof panchangCalendarChange === 'function') panchangCalendarChange(); });
+
+  window._panchangShowError = function (message) {
+    pText('panchang-loading', message || 'Panchang could not be calculated.');
+    pText('panchang-meaning-copy', message || 'Panchang could not be calculated for this location and date.');
+  };
+
+  window.loadPanchangForDate = function (dateVal) {
+    var status = byId('panchang-loading');
+    if (status) status.textContent = 'Calculating Panchang…';
+    try {
+      var Y, M, D;
+      if (!dateVal || dateVal === 'today') {
+        var today = _panchangCityDate(); Y = today.Y; M = today.M; D = today.D;
+      } else {
+        var parts = dateVal.split('-'); Y = parseInt(parts[0], 10); M = parseInt(parts[1], 10); D = parseInt(parts[2], 10);
+      }
+      if (!Y || !M || !D || new Date(Date.UTC(Y, M - 1, D)).getUTCMonth() !== M - 1) throw new Error('Please choose a valid date.');
+      var p = _trustedPanchang(Y, M, D);
+      if (!p.sunrise || !p.sunset) throw new Error('Sunrise and sunset are unavailable for this date and location.');
+      var hi = isHindiPanchang(), summary = _panchangSummary(p);
+      var nakshatraEn = ['Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu','Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni','Hasta','Chitra','Swati','Vishakha','Anuradha','Jyeshtha','Mula','Purva Ashadha','Uttara Ashadha','Shravana','Dhanishta','Shatabhisha','Purva Bhadrapada','Uttara Bhadrapada','Revati'];
+      var yogaEn = ['Vishkambha','Priti','Ayushman','Saubhagya','Shobhana','Atiganda','Sukarma','Dhriti','Shula','Ganda','Vriddhi','Dhruva','Vyaghata','Harshana','Vajra','Siddhi','Vyatipata','Variyan','Parigha','Shiva','Siddha','Sadhya','Shubha','Shukla','Brahma','Mahendra','Vaidhriti'];
+      var nakshatra = hi ? pName(_panchangNakshatraHi, p.nakshatra) : pName(nakshatraEn, p.nakshatra);
+      var yoga = hi ? pName(_panchangYogaHi, p.yoga) : pName(yogaEn, p.yoga);
+      var karana = hi ? (_panchangKaranaHi[p.karana] || p.karana) : p.karana;
+      var dateLabel = new Intl.DateTimeFormat(hi ? 'hi-IN' : 'en-IN', { timeZone:_pTimeZone, weekday:'long', year:'numeric', month:'long', day:'numeric' }).format(_panchangInputDate(Y, M, D));
+      var convention = _pCalendar === 'amanta' ? 'Amanta (South & West India)' : 'Purnimanta (North India)';
+      byId('panchang-date-picker').value = pDateValue(Y, M, D);
+      byId('panchang-city-input').value = _pCity;
+      byId('panchang-calendar-type').value = _pCalendar;
+      pText('panchang-date-label', dateLabel);
+      pText('panchang-location-notice', 'Calculated for ' + _pCity + ' · ' + _pTimeZone);
+      pText('panchang-method-timezone', _pTimeZone);
+      pText('panchang-method-convention', convention);
+      byId('panchang-values').innerHTML = [
+        pMetric('▣', hi ? 'दिनांक' : 'Date', new Intl.DateTimeFormat(hi ? 'hi-IN' : 'en-IN', {timeZone:_pTimeZone, day:'numeric', month:'short', year:'numeric'}).format(_panchangInputDate(Y, M, D)), 'Shaka ' + (p.samvat && p.samvat.shaka ? p.samvat.shaka : '—')),
+        pMetric('☼', hi ? 'वार' : 'Weekday', hi ? summary.varaHi : summary.vara, hi ? summary.vara : summary.varaHi),
+        pMetric('☾', hi ? 'पक्ष' : 'Paksha', hi ? summary.pakshaHi + ' पक्ष' : summary.pakshaS + ' Paksha', ''),
+        pMetric('◐', hi ? 'तिथि' : 'Tithi', hi ? summary.tithiHi : summary.tithi, hi ? summary.tithi : summary.tithiHi),
+        pMetric('✦', hi ? 'नक्षत्र' : 'Nakshatra', nakshatra, hi ? pName(nakshatraEn, p.nakshatra) : pName(_panchangNakshatraHi, p.nakshatra)),
+        pMetric('ॐ', hi ? 'योग' : 'Yoga', yoga, hi ? pName(yogaEn, p.yoga) : pName(_panchangYogaHi, p.yoga)),
+        pMetric('✤', hi ? 'करण' : 'Karana', karana, '')
+      ].join('');
+      byId('panchang-solar').innerHTML = [
+        pSolar('☀', hi ? 'सूर्योदय' : 'Sunrise', _panchangTime(p.sunrise, Y, M, D)),
+        pSolar('◒', hi ? 'सूर्यास्त' : 'Sunset', _panchangTime(p.sunset, Y, M, D)),
+        pSolar('☾', hi ? 'चंद्रोदय' : 'Moonrise', _panchangTime(p.moonrise, Y, M, D)),
+        pSolar('◔', hi ? 'चंद्रास्त' : 'Moonset', _panchangTime(p.moonset, Y, M, D))
+      ].join('');
+      byId('panchang-sensitive-periods').innerHTML = [
+        pPeriod('☊', hi ? 'राहु काल' : 'Rahu Kaal', _panchangRange({start:p.rahuKalamStart, end:p.rahuKalamEnd}, Y, M, D)),
+        pPeriod('◉', hi ? 'गुलिक काल' : 'Gulika Kaal', _panchangRange(p.gulikaKalam, Y, M, D)),
+        pPeriod('⚚', hi ? 'यमगण्ड' : 'Yamaganda', _panchangRange(p.yamagandaKalam, Y, M, D))
+      ].join('');
+      byId('panchang-auspicious-periods').innerHTML = [
+        pPeriod('☼', hi ? 'अभिजीत मुहूर्त' : 'Abhijit Muhurat', _panchangRange(p.abhijitMuhurta, Y, M, D)),
+        pPeriod('❀', hi ? 'ब्रह्म मुहूर्त' : 'Brahma Muhurta', _panchangRange(p.brahmaMuhurta, Y, M, D))
+      ].join('');
+      pText('panchang-meaning-copy', hi ? (summary.pakshaHi + ' पक्ष की ' + summary.tithiHi + ' तिथि और ' + nakshatra + ' नक्षत्र ' + _pCity + ' के लिए दिखाए गए हैं। पूजा, अध्ययन या व्रत की विशेष विधि के लिए अपने परिवार और स्थानीय मंदिर की परंपरा का पालन करें।') : ('The ' + summary.tithi + ' of ' + summary.pakshaS + ' Paksha and ' + nakshatra + ' Nakshatra are shown for ' + _pCity + '. For a specific puja, study, or observance, follow your family and local temple tradition.'));
+      _panchangLast = {data:p, Y:Y, M:M, D:D};
+      if (status) status.textContent = '';
+      if (typeof _tvbRender === 'function') _tvbRender();
+    } catch (error) {
+      console.error('Panchang calculation error:', error);
+      window._panchangShowError(error && error.message ? error.message : 'Panchang could not be calculated.');
+    }
+  };
+  var initialSelect = byId('panchang-calendar-type');
+  try { _pCalendar = localStorage.getItem('sanatan-panchang-calendar') === 'amanta' ? 'amanta' : 'purnimanta'; } catch (error) {}
+  if (initialSelect) initialSelect.value = _pCalendar;
+})();
 </script>
 
 </body>
