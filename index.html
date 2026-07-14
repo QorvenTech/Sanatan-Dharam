@@ -579,6 +579,65 @@ body.dark-theme .home-today-card, body.dark-theme .home-panchang-preview, body.d
 body.dark-theme .home-card-label, body.dark-theme .home-utility-header h2, body.dark-theme .home-panchang-values > div > strong, body.dark-theme .home-timeline-item strong { color:#f6eaca; }
 body.dark-theme .home-shloka-sanskrit { color:#f6eaca; } body.dark-theme .home-shloka-meaning, body.dark-theme .home-card-label small, body.dark-theme .home-panchang-values > div > small { color:#c8cad2; }
 @media(max-width:720px) { .sanatan-hero h2 { font-size:2.75rem; } .home-panchang-values > div:nth-child(3) { border-right:0; } .home-panchang-values > div:nth-child(4), .home-panchang-values > div:nth-child(5) { border-top:1px solid var(--home-line); padding-top:.7rem; } .home-utility-header { align-items:center; } .home-utility-header button { max-width:130px; white-space:normal; text-align:right; } .home-paath-card { min-height:205px; background-position:72% center; } }
+
+/* ===== SACRED TEXTS LIBRARY ===== */
+#texts { max-width:none; padding:0; }
+.texts-library { padding:1.8rem 0 3.5rem; color:var(--home-ink); }
+.texts-breadcrumb { display:flex; align-items:center; gap:.55rem; margin:0 0 1rem; color:#6c635a; font-size:.84rem; }
+.texts-breadcrumb button { border:0; padding:0; background:transparent; color:inherit; cursor:pointer; font:inherit; }
+.texts-breadcrumb span { color:#b87528; }
+.texts-hero { min-height:350px; display:flex; align-items:center; padding:clamp(1.4rem,4vw,3.3rem); border:1px solid var(--home-line); border-radius:16px; background-color:#fcf5e4; background-image:linear-gradient(90deg,rgba(255,253,247,.98) 0%,rgba(255,253,247,.95) 34%,rgba(255,253,247,.53) 56%,rgba(255,253,247,.04) 100%),url('assets/sacred-texts-library-hero.webp'); background-repeat:no-repeat; background-position:center; background-size:cover; overflow:hidden; }
+.texts-hero-copy { max-width:560px; }
+.texts-hero h2 { margin:0; color:var(--home-ink); font:700 clamp(2.5rem,5.2vw,4.7rem)/.98 'Crimson Pro',serif; letter-spacing:-.025em; }
+.texts-hero h2 span { display:block; margin-top:.42rem; color:#a3601f; font:700 clamp(1.6rem,3.2vw,2.8rem)/1.05 'Tiro Devanagari Sanskrit',serif; letter-spacing:0; }
+.texts-hero-line { width:min(100%,510px); height:1px; margin:1rem 0; background:linear-gradient(90deg,#d0a164,transparent); position:relative; }
+.texts-hero-line::after { content:'✦'; position:absolute; top:50%; left:43%; transform:translate(-50%,-50%); padding:0 .5rem; background:#fffdf7; color:#bb7826; font-size:1rem; }
+.texts-hero p { max-width:540px; margin:0; color:#43495b; font-size:1rem; line-height:1.65; }
+.texts-tools { display:flex; flex-wrap:wrap; gap:.75rem; margin:1.15rem 0 1.65rem; }
+.texts-search { min-width:min(100%,430px); flex:1; display:flex; align-items:center; gap:.7rem; min-height:47px; padding:0 .95rem; background:#fffefa; border:1px solid #d9bc88; border-radius:999px; color:#5e6070; }
+.texts-search svg { flex:0 0 auto; width:19px; height:19px; stroke:var(--home-ink); }
+.texts-search input { width:100%; border:0; outline:0; background:transparent; color:var(--home-ink); font:inherit; font-size:.9rem; }
+.texts-search input::placeholder { color:#8f8a83; }
+.texts-filter-bar { display:flex; flex-wrap:wrap; gap:.55rem; }
+.texts-filter { min-height:33px; padding:.33rem .92rem; border:1px solid #d8b984; border-radius:7px; background:#fffdf7; color:#995d1e; cursor:pointer; font:700 .76rem 'Crimson Pro',serif; }
+.texts-filter.active, .texts-filter:hover { background:var(--home-ink); border-color:var(--home-ink); color:#fff; }
+.texts-library-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(280px,.33fr); gap:1.15rem; }
+.texts-scripture-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.85rem; }
+.scripture-card { min-height:205px; padding:.72rem; display:flex; gap:.74rem; border:1px solid var(--home-line); border-radius:11px; background:linear-gradient(145deg,#fffefa,#fffaf0); text-align:left; color:var(--home-ink); cursor:pointer; font:inherit; box-shadow:0 5px 16px rgba(85,53,13,.055); transition:transform .2s, box-shadow .2s, border-color .2s; }
+.scripture-card:hover { transform:translateY(-2px); border-color:#c69048; box-shadow:0 9px 21px rgba(85,53,13,.1); }
+.scripture-art { width:92px; min-width:92px; height:133px; overflow:hidden; border-radius:7px; background:#e7d0a6; }
+.scripture-art img { width:100%; height:100%; object-fit:cover; display:block; }
+.scripture-card-copy { min-width:0; display:flex; flex-direction:column; }
+.scripture-card h3 { margin:0; color:var(--home-ink); font:700 1.15rem/1.05 'Crimson Pro',serif; }
+.scripture-card h3 span { display:block; margin-top:.17rem; color:#5b4051; font:700 .86rem/1.12 'Tiro Devanagari Sanskrit',serif; }
+.scripture-card p { margin:.46rem 0 .55rem; color:#4d5262; font-size:.76rem; line-height:1.42; }
+.scripture-card-footer { margin-top:auto; padding-top:.5rem; border-top:1px solid #eee1c9; display:flex; justify-content:space-between; gap:.4rem; align-items:center; color:#5d6170; font-size:.68rem; }
+.scripture-card-footer strong { color:#a7621e; font:700 .73rem 'Crimson Pro',serif; white-space:nowrap; }
+.texts-start-panel { min-height:100%; padding:1.15rem; border:1px solid var(--home-line); border-radius:11px; background:linear-gradient(145deg,#fffefa,#fcf3e1); box-shadow:0 5px 16px rgba(85,53,13,.055); }
+.texts-start-panel h3 { margin:0; color:var(--home-ink); font:700 1.5rem 'Crimson Pro',serif; }
+.texts-start-panel > p { margin:.35rem 0 .75rem; color:#5b5d68; font-size:.78rem; line-height:1.45; }
+.starter-read { width:100%; display:grid; grid-template-columns:48px 1fr auto; align-items:center; gap:.65rem; padding:.67rem 0; border:0; border-bottom:1px solid #ecdfc7; background:transparent; color:var(--home-ink); text-align:left; cursor:pointer; font:inherit; }
+.starter-read:last-of-type { border-bottom:0; }
+.starter-read img { width:48px; height:56px; border-radius:5px; object-fit:cover; }
+.starter-read strong { display:block; font:700 .87rem/1.15 'Crimson Pro',serif; }
+.starter-read span { display:block; margin-top:.18rem; color:#5d6070; font-size:.68rem; line-height:1.25; }
+.starter-read b { color:#9e5d1d; font-size:1.05rem; }
+.texts-start-all { width:100%; margin-top:.75rem; padding:.46rem 0 0; border:0; background:transparent; color:#9c5b1d; cursor:pointer; font:700 .8rem 'Crimson Pro',serif; }
+.texts-teachings { margin-top:1.7rem; }
+.texts-teachings h3 { margin:0 0 .8rem; color:var(--home-ink); text-align:center; font:700 1.75rem 'Crimson Pro',serif; }
+.texts-teachings h3::after { content:'✦'; display:block; margin-top:.15rem; color:#bb7826; font-size:.95rem; }
+.texts-quote-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.85rem; }
+.texts-quote { min-height:125px; padding:1.2rem 1.35rem; border:1px solid var(--home-line); border-radius:10px; background:#fffefa; text-align:center; }
+.texts-quote q { color:#353a4c; font:600 1rem/1.45 'Crimson Pro',serif; }
+.texts-quote cite { display:block; margin-top:.65rem; color:#a7631e; font:700 .78rem 'Crimson Pro',serif; }
+body.dark-theme .texts-breadcrumb, body.dark-theme .texts-hero p, body.dark-theme .scripture-card p, body.dark-theme .texts-start-panel > p, body.dark-theme .starter-read span { color:#c8cad2; }
+body.dark-theme .texts-hero { background-image:linear-gradient(90deg,rgba(25,28,39,.98) 0%,rgba(25,28,39,.94) 38%,rgba(25,28,39,.48) 60%,rgba(25,28,39,.05) 100%),url('assets/sacred-texts-library-hero.webp'); }
+body.dark-theme .texts-hero h2, body.dark-theme .scripture-card h3, body.dark-theme .texts-start-panel h3, body.dark-theme .texts-teachings h3, body.dark-theme .starter-read { color:#f6eaca; }
+body.dark-theme .texts-search, body.dark-theme .texts-filter, body.dark-theme .scripture-card, body.dark-theme .texts-start-panel, body.dark-theme .texts-quote { background:#252837; border-color:#4a4350; }
+body.dark-theme .texts-search input { color:#f6eaca; } body.dark-theme .scripture-card-footer { border-color:#4a4350; } body.dark-theme .texts-quote q { color:#f6eaca; }
+@media(max-width:1160px) { .texts-scripture-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .texts-library-grid { grid-template-columns:minmax(0,1fr) 300px; } }
+@media(max-width:880px) { .texts-library-grid { grid-template-columns:1fr; } .texts-start-panel { display:grid; grid-template-columns:1fr 1fr; gap:0 1rem; } .texts-start-panel h3, .texts-start-panel > p, .texts-start-all { grid-column:1 / -1; } .texts-quote-grid { grid-template-columns:1fr; } }
+@media(max-width:620px) { .texts-library { padding:1rem 0 2.5rem; } .texts-hero { min-height:410px; align-items:flex-start; padding:1.35rem; background-image:linear-gradient(180deg,rgba(255,253,247,.98) 0%,rgba(255,253,247,.94) 45%,rgba(255,253,247,.38) 78%,rgba(255,253,247,.12) 100%),url('assets/sacred-texts-library-hero.webp'); background-position:70% center; } .texts-hero h2 { font-size:2.9rem; } .texts-hero p { font-size:.9rem; } .texts-search { min-width:100%; } .texts-filter-bar { gap:.42rem; } .texts-filter { padding:.3rem .68rem; } .texts-scripture-grid { grid-template-columns:1fr; } .scripture-card { min-height:172px; } .scripture-art { width:88px; min-width:88px; height:126px; } .texts-start-panel { display:block; } .texts-quote { min-height:auto; } body.dark-theme .texts-hero { background-image:linear-gradient(180deg,rgba(25,28,39,.98) 0%,rgba(25,28,39,.91) 48%,rgba(25,28,39,.37) 100%),url('assets/sacred-texts-library-hero.webp'); } }
     </style>
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7XCYH7G1S"></script>
@@ -844,14 +903,61 @@ body.dark-theme .home-shloka-sanskrit { color:#f6eaca; } body.dark-theme .home-s
 
     <!-- SACRED TEXTS -->
     <div id="texts" class="section">
-        <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Sacred Texts" data-hi="पवित्र ग्रंथ">Sacred Texts</h2>
-        <div class="cards-grid">
-            <div class="card" onclick="showText('bhagavad-gita')"><div class="icon">📖</div><h3 data-en="Bhagavad Gita" data-hi="भगवद गीता">Bhagavad Gita</h3><p data-en="The divine discourse between Lord Krishna and Arjuna. Contains 700 verses of eternal wisdom on dharma, karma, and moksha." data-hi="भगवान कृष्ण और अर्जुन के बीच दिव्य संवाद। धर्म, कर्म और मोक्ष पर शाश्वत ज्ञान के 700 श्लोक।">The divine discourse between Lord Krishna and Arjuna. Contains 700 verses of eternal wisdom on dharma, karma, and moksha.</p></div>
-            <div class="card" onclick="showText('ramayan')"><div class="icon">🏹</div><h3 data-en="Ramayan" data-hi="रामायण">Ramayan</h3><p data-en="Epic tale of Lord Rama composed by Sage Valmiki with 24,000 verses teaching dharma and devotion." data-hi="ऋषि वाल्मीकि द्वारा रचित भगवान राम की महाकाव्य कथा। धर्म और भक्ति सिखाने वाले 24,000 श्लोक।">Epic tale of Lord Rama composed by Sage Valmiki with 24,000 verses teaching dharma and devotion.</p></div>
-            <div class="card" onclick="showText('mahabharata')"><div class="icon">⚔️</div><h3 data-en="Mahabharata" data-hi="महाभारत">Mahabharata</h3><p data-en="World's longest epic with 100,000 verses narrating the great war between Pandavas and Kauravas." data-hi="विश्व का सबसे लंबा महाकाव्य जिसमें पांडवों और कौरवों के बीच महायुद्ध का वर्णन है।">World's longest epic with 100,000 verses narrating the great war between Pandavas and Kauravas.</p></div>
-            <div class="card" onclick="showText('vedas')"><div class="icon">📜</div><h3 data-en="Four Vedas" data-hi="चार वेद">Four Vedas</h3><p data-en="The oldest scriptures - Rigveda, Yajurveda, Samaveda, and Atharvaveda. Foundation of Hindu philosophy." data-hi="सबसे प्राचीन धर्मग्रंथ — ऋग्वेद, यजुर्वेद, सामवेद और अथर्ववेद। हिंदू दर्शन की नींव।">The oldest scriptures - Rigveda, Yajurveda, Samaveda, and Atharvaveda. Foundation of Hindu philosophy.</p></div>
-            <div class="card" onclick="showText('upanishads')"><div class="icon">🕉️</div><h3 data-en="Upanishads" data-hi="उपनिषद">Upanishads</h3><p data-en="Philosophical texts exploring Atman and Brahman. Core of Vedantic philosophy with 108 major Upanishads." data-hi="आत्मा और ब्रह्म की खोज करने वाले दार्शनिक ग्रंथ। 108 प्रमुख उपनिषदों के साथ वेदांत दर्शन का मूल।">Philosophical texts exploring Atman and Brahman. Core of Vedantic philosophy with 108 major Upanishads.</p></div>
-            <div class="card" onclick="showText('puranas')"><div class="icon">📚</div><h3 data-en="Puranas" data-hi="पुराण">Puranas</h3><p data-en="18 major Puranas with creation stories, genealogies, cosmic cycles, and divine teachings." data-hi="सृष्टि की कहानियां, वंशावली, ब्रह्मांडीय चक्र और दिव्य शिक्षाओं वाले 18 प्रमुख पुराण।">18 major Puranas with creation stories, genealogies, cosmic cycles, and divine teachings.</p></div>
+        <div class="texts-library">
+            <div class="texts-breadcrumb"><button onclick="showSection('home')">⌂ <span data-en="Home" data-hi="होम">Home</span></button><span>／</span><b data-en="Sacred Texts" data-hi="पवित्र ग्रंथ">Sacred Texts</b></div>
+            <section class="texts-hero" aria-labelledby="texts-library-title">
+                <div class="texts-hero-copy">
+                    <h2 id="texts-library-title">Sacred Texts<span>पवित्र ग्रंथ</span></h2>
+                    <div class="texts-hero-line"></div>
+                    <p data-en="Explore timeless Hindu scriptures with context, translations and meaning." data-hi="संदर्भ, अनुवाद और भावार्थ के साथ कालातीत हिंदू ग्रंथों का अन्वेषण करें।">Explore timeless Hindu scriptures with context, translations and meaning.</p>
+                </div>
+            </section>
+
+            <div class="texts-tools">
+                <label class="texts-search" aria-label="Search sacred texts"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg><input id="texts-search-input" type="search" oninput="searchSacredTexts(this.value)" placeholder="Search a scripture, chapter or teaching" data-en-placeholder="Search a scripture, chapter or teaching" data-hi-placeholder="ग्रंथ, अध्याय या शिक्षा खोजें"></label>
+                <div class="texts-filter-bar" role="group" aria-label="Sacred text categories">
+                    <button class="texts-filter active" onclick="filterSacredTexts('all',this)" data-en="All" data-hi="सभी">All</button>
+                    <button class="texts-filter" onclick="filterSacredTexts('itihasa',this)" data-en="Itihasa" data-hi="इतिहास">Itihasa</button>
+                    <button class="texts-filter" onclick="filterSacredTexts('vedas',this)" data-en="Vedas" data-hi="वेद">Vedas</button>
+                    <button class="texts-filter" onclick="filterSacredTexts('upanishads',this)" data-en="Upanishads" data-hi="उपनिषद">Upanishads</button>
+                    <button class="texts-filter" onclick="filterSacredTexts('puranas',this)" data-en="Puranas" data-hi="पुराण">Puranas</button>
+                    <button class="texts-filter" onclick="filterSacredTexts('gita',this)" data-en="Gita" data-hi="गीता">Gita</button>
+                </div>
+            </div>
+
+            <div class="texts-library-grid">
+                <div class="texts-scripture-grid" id="texts-scripture-grid">
+                    <button class="scripture-card" data-text-category="gita" data-search="bhagavad gita geeta krishna arjuna dharma karma moksha" onclick="showText('bhagavad-gita')">
+                        <span class="scripture-art"><img src="assets/text-bhagavad-gita.webp" alt="Krishna and Arjuna illustration"></span><span class="scripture-card-copy"><h3 data-en="Bhagavad Gita" data-hi="भगवद गीता">Bhagavad Gita<span data-en="" data-hi="भगवद गीता"></span></h3><p data-en="The divine discourse of Krishna and Arjuna on dharma, karma and moksha." data-hi="धर्म, कर्म और मोक्ष पर श्रीकृष्ण और अर्जुन का दिव्य संवाद।">The divine discourse of Krishna and Arjuna on dharma, karma and moksha.</p><span class="scripture-card-footer"><span data-en="18 Chapters · 700 Verses" data-hi="18 अध्याय · 700 श्लोक">18 Chapters · 700 Verses</span><strong data-en="Read with meaning →" data-hi="भावार्थ सहित पढ़ें →">Read with meaning →</strong></span></span>
+                    </button>
+                    <button class="scripture-card" data-text-category="itihasa" data-search="ramayan ramayana rama sita valmiki devotion dharma" onclick="showText('ramayan')">
+                        <span class="scripture-art"><img src="assets/text-ramayan.webp" alt="Rama and Sita illustration"></span><span class="scripture-card-copy"><h3 data-en="Ramayan" data-hi="रामायण">Ramayan<span data-en="" data-hi="रामायण"></span></h3><p data-en="Valmiki's epic of Shri Rama: devotion, righteousness and ideal living." data-hi="श्रीराम की महाकाव्य कथा: भक्ति, मर्यादा और आदर्श जीवन।">Valmiki's epic of Shri Rama: devotion, righteousness and ideal living.</p><span class="scripture-card-footer"><span data-en="7 Kandas · 24,000 Verses" data-hi="7 कांड · 24,000 श्लोक">7 Kandas · 24,000 Verses</span><strong data-en="Read with meaning →" data-hi="भावार्थ सहित पढ़ें →">Read with meaning →</strong></span></span>
+                    </button>
+                    <button class="scripture-card" data-text-category="itihasa" data-search="mahabharata krishna arjuna kurukshetra pandavas dharma" onclick="showText('mahabharata')">
+                        <span class="scripture-art"><img src="assets/text-mahabharata.webp" alt="Mahabharata chariot illustration"></span><span class="scripture-card-copy"><h3 data-en="Mahabharata" data-hi="महाभारत">Mahabharata<span data-en="" data-hi="महाभारत"></span></h3><p data-en="The great epic of dharma, choice and humanity's enduring struggles." data-hi="धर्म, निर्णय और मानव जीवन के शाश्वत संघर्षों का महान महाकाव्य।">The great epic of dharma, choice and humanity's enduring struggles.</p><span class="scripture-card-footer"><span data-en="18 Parvas · 100,000+ Verses" data-hi="18 पर्व · 100,000+ श्लोक">18 Parvas · 100,000+ Verses</span><strong data-en="Read with meaning →" data-hi="भावार्थ सहित पढ़ें →">Read with meaning →</strong></span></span>
+                    </button>
+                    <button class="scripture-card" data-text-category="vedas" data-search="four vedas rigveda yajurveda samaveda atharvaveda" onclick="showText('vedas')">
+                        <span class="scripture-art"><img src="assets/text-vedas.webp" alt="Four Vedas manuscripts illustration"></span><span class="scripture-card-copy"><h3 data-en="Four Vedas" data-hi="चार वेद">Four Vedas<span data-en="" data-hi="चार वेद"></span></h3><p data-en="Rigveda, Yajurveda, Samaveda and Atharvaveda: foundations of Vedic wisdom." data-hi="ऋग्वेद, यजुर्वेद, सामवेद और अथर्ववेद: वैदिक ज्ञान की आधारशिला।">Rigveda, Yajurveda, Samaveda and Atharvaveda: foundations of Vedic wisdom.</p><span class="scripture-card-footer"><span data-en="Four Samhitas" data-hi="चार संहिताएँ">Four Samhitas</span><strong data-en="Read with meaning →" data-hi="भावार्थ सहित पढ़ें →">Read with meaning →</strong></span></span>
+                    </button>
+                    <button class="scripture-card" data-text-category="upanishads" data-search="upanishads atman brahman vedanta philosophy" onclick="showText('upanishads')">
+                        <span class="scripture-art"><img src="assets/text-upanishads.webp" alt="Sage teaching students illustration"></span><span class="scripture-card-copy"><h3 data-en="Upanishads" data-hi="उपनिषद">Upanishads<span data-en="" data-hi="उपनिषद"></span></h3><p data-en="Philosophical inquiry into Atman, Brahman and the path of self-knowledge." data-hi="आत्मा, ब्रह्म और आत्मज्ञान के मार्ग पर दार्शनिक चिंतन।">Philosophical inquiry into Atman, Brahman and the path of self-knowledge.</p><span class="scripture-card-footer"><span data-en="108 Principal Texts" data-hi="108 प्रमुख ग्रंथ">108 Principal Texts</span><strong data-en="Read with meaning →" data-hi="भावार्थ सहित पढ़ें →">Read with meaning →</strong></span></span>
+                    </button>
+                    <button class="scripture-card" data-text-category="puranas" data-search="puranas purana creation stories cosmology divine teachings" onclick="showText('puranas')">
+                        <span class="scripture-art"><img src="assets/text-puranas.webp" alt="Purana cosmic manuscript illustration"></span><span class="scripture-card-copy"><h3 data-en="Puranas" data-hi="पुराण">Puranas<span data-en="" data-hi="पुराण"></span></h3><p data-en="Sacred narratives of creation, divine teachings, cosmic cycles and tradition." data-hi="सृष्टि, दिव्य शिक्षाओं, ब्रह्मांडीय चक्रों और परंपरा की पवित्र कथाएँ।">Sacred narratives of creation, divine teachings, cosmic cycles and tradition.</p><span class="scripture-card-footer"><span data-en="18 Major Puranas" data-hi="18 प्रमुख पुराण">18 Major Puranas</span><strong data-en="Read with meaning →" data-hi="भावार्थ सहित पढ़ें →">Read with meaning →</strong></span></span>
+                    </button>
+                </div>
+
+                <aside class="texts-start-panel" aria-label="Start here recommendations">
+                    <h3 data-en="Start here" data-hi="यहाँ से शुरू करें">Start here</h3><p data-en="Begin your journey with these recommended reads." data-hi="इन सुझाए गए ग्रंथों से अपनी यात्रा आरंभ करें।">Begin your journey with these recommended reads.</p>
+                    <button class="starter-read" onclick="showText('bhagavad-gita')"><img src="assets/text-bhagavad-gita.webp" alt=""><span><strong data-en="Begin with Bhagavad Gita" data-hi="भगवद गीता से आरंभ करें">Begin with Bhagavad Gita</strong><span data-en="Duty, devotion and inner peace." data-hi="धर्म, भक्ति और आंतरिक शांति।">Duty, devotion and inner peace.</span></span><b>›</b></button>
+                    <button class="starter-read" onclick="showText('ramayan')"><img src="assets/text-ramayan.webp" alt=""><span><strong data-en="Ramayan for devotion" data-hi="भक्ति के लिए रामायण">Ramayan for devotion</strong><span data-en="Follow Shri Rama's path of ideal living." data-hi="श्रीराम के आदर्श जीवन पथ को जानें।">Follow Shri Rama's path of ideal living.</span></span><b>›</b></button>
+                    <button class="starter-read" onclick="showText('upanishads')"><img src="assets/text-upanishads.webp" alt=""><span><strong data-en="Upanishads for reflection" data-hi="चिंतन के लिए उपनिषद">Upanishads for reflection</strong><span data-en="Explore the deeper questions of self and reality." data-hi="आत्मा और सत्य के गहरे प्रश्नों पर चिंतन करें।">Explore the deeper questions of self and reality.</span></span><b>›</b></button>
+                    <button class="starter-read" onclick="showText('mahabharata')"><img src="assets/text-mahabharata.webp" alt=""><span><strong data-en="Mahabharata and dharma" data-hi="महाभारत और धर्म">Mahabharata and dharma</strong><span data-en="Wisdom for difficult choices in life." data-hi="जीवन के कठिन निर्णयों के लिए ज्ञान।">Wisdom for difficult choices in life.</span></span><b>›</b></button>
+                    <button class="texts-start-all" onclick="filterSacredTexts('all',document.querySelector('.texts-filter'))" data-en="View all scriptures →" data-hi="सभी ग्रंथ देखें →">View all scriptures →</button>
+                </aside>
+            </div>
+
+            <section class="texts-teachings" aria-labelledby="texts-teachings-title"><h3 id="texts-teachings-title" data-en="Teachings for everyday life" data-hi="दैनिक जीवन के लिए शिक्षाएँ">Teachings for everyday life</h3><div class="texts-quote-grid"><article class="texts-quote"><q data-en="You have a right to perform your prescribed duty, but you are not entitled to the fruits of your actions." data-hi="कर्म करने का तुम्हारा अधिकार है, फल पर नहीं।">You have a right to perform your prescribed duty, but you are not entitled to the fruits of your actions.</q><cite>— Bhagavad Gita 2.47</cite></article><article class="texts-quote"><q data-en="Where there is devotion, there is grace; where there is grace, there is God." data-hi="जहाँ भक्ति है, वहाँ कृपा है; जहाँ कृपा है, वहाँ भगवान हैं।">Where there is devotion, there is grace; where there is grace, there is God.</q><cite>— Ramayan</cite></article><article class="texts-quote"><q data-en="Know the Self, and all is known; realize the Self, and be free." data-hi="आत्मा को जानो, सब जान जाओ; आत्मा को पहचानो और मुक्त हो जाओ।">Know the Self, and all is known; realize the Self, and be free.</q><cite>— Upanishads</cite></article></div></section>
         </div>
         <div id="texts-comments" class="comments-section" style="margin-top:2rem;"></div>
     </div>
@@ -12915,6 +13021,26 @@ function dsPlRender() {
     };
   }
 })();
+</script>
+
+<script>
+/* Sacred Texts filtering stays fully client-side and only exposes available site content. */
+var _sacredTextCategory = 'all';
+function _applySacredTextFilters() {
+  var query = (document.getElementById('texts-search-input') || {value:''}).value.toLowerCase().trim();
+  document.querySelectorAll('.scripture-card[data-text-category]').forEach(function(card) {
+    var categoryMatch = _sacredTextCategory === 'all' || card.dataset.textCategory === _sacredTextCategory;
+    var queryMatch = !query || (card.dataset.search || '').indexOf(query) !== -1 || card.textContent.toLowerCase().indexOf(query) !== -1;
+    card.style.display = categoryMatch && queryMatch ? '' : 'none';
+  });
+}
+function filterSacredTexts(category, button) {
+  _sacredTextCategory = category;
+  document.querySelectorAll('.texts-filter').forEach(function(filter) { filter.classList.remove('active'); });
+  if (button) button.classList.add('active');
+  _applySacredTextFilters();
+}
+function searchSacredTexts() { _applySacredTextFilters(); }
 </script>
 
 </body>
