@@ -13650,7 +13650,6 @@ function searchSacredTexts() { _applySacredTextFilters(); }
     paint(savedUnits);
     window.addEventListener('scroll', update, {passive:true});
     window.addEventListener('resize', update, {passive:true});
-    if (window.MutationObserver) new MutationObserver(update).observe(root, {childList:true, subtree:true});
   }
   bindPaathProgress(experience, 'hanuman-chalisa', 43);
   bindPaathProgress(sundarExperience, 'sundar-kand', 62);
