@@ -45,6 +45,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="favicon-512x512.png">
     <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="gita-reader.css">
     <style>
         /* ========== YOUR EXISTING CSS (unchanged) ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -5089,18 +5090,27 @@ window.currentTextId = null;
 
 // Update showText to store the ID
 function showText(id) {
+    const previousTextId = window.currentTextId;
     window.currentTextId = id;
     const display = document.getElementById('text-display');
     const active = document.querySelector('.section.active');
+    const isGitaReader = id === 'bhagavad-gita' && typeof window.renderBhagavadGitaReader === 'function';
     
     if (display) {
-        display.innerHTML = `<button class="back-btn" onclick="goBack()">← Back</button>` + getTextContent(id);
+        display.classList.toggle('gita-display', isGitaReader);
+        display.innerHTML = (isGitaReader ? '' : `<button class="back-btn" onclick="goBack()">← Back</button>`) + getTextContent(id);
         display.style.display = 'block';
         // Populate verse divs ONLY inside text-display (avoids circular call with applyLanguage)
         const lang = currentLang || 'en';
         display.querySelectorAll('[data-en][data-hi]').forEach(el => {
             el.textContent = el.getAttribute('data-' + lang);
         });
+        if (isGitaReader && typeof window.initBhagavadGitaReader === 'function') {
+            window.setTimeout(window.initBhagavadGitaReader, 0);
+            if (previousTextId !== id) {
+                window.setTimeout(() => display.scrollIntoView({ behavior: 'smooth', block: 'start' }), 20);
+            }
+        }
     }
     if (active) active.style.display = 'none';
 }
@@ -5375,6 +5385,9 @@ function closePaath() {
 // ======================================
 function getTextContent(id) {
     const lang = currentLang || 'en';
+    if (id === 'bhagavad-gita' && typeof window.renderBhagavadGitaReader === 'function') {
+        return window.renderBhagavadGitaReader();
+    }
     const contents = {
         'bhagavad-gita': {
             en: `<div class="text-content"><h2>Bhagavad Gita – The Song of God</h2><p>The Bhagavad Gita is a 700-verse scripture forming part of the Mahabharata – a sacred text. It is one of the most important texts in Hinduism and is considered to be one of the world's major religious scriptures.</p>
@@ -13851,6 +13864,7 @@ function searchSacredTexts() { _applySacredTextFilters(); }
 </script>
 
 <script src="paath-readers.js"></script>
+<script src="gita-reader.js"></script>
 
 </body>
 </html>

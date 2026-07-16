@@ -1,0 +1,851 @@
+/* Bhagavad Gita reader — reusable visual foundation for internal sacred texts. */
+#text-display.gita-display {
+  width: 100%;
+  min-width: 0;
+}
+
+.gita-reader {
+  --gita-scale: 1;
+  --gita-navy: #18243a;
+  --gita-wine: #733329;
+  --gita-gold: #b8792c;
+  --gita-line: #e5d5b8;
+  --gita-paper: #fffdf7;
+  --gita-muted: #626775;
+  width: 100%;
+  min-width: 0;
+  padding: .15rem 0 3.5rem;
+  color: var(--gita-navy);
+}
+
+.gita-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: .48rem;
+  margin: 0 0 .9rem;
+  color: #696158;
+  font-size: .8rem;
+  line-height: 1.4;
+}
+
+.gita-breadcrumb button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+
+.gita-breadcrumb button:hover,
+.gita-breadcrumb button:focus-visible {
+  color: var(--gita-wine);
+  text-decoration: underline;
+}
+
+.gita-breadcrumb i {
+  color: var(--gita-gold);
+  font-style: normal;
+}
+
+.gita-hero {
+  position: relative;
+  min-height: 345px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: clamp(1.5rem, 4vw, 3.6rem);
+  border: 1px solid #3a2a22;
+  border-radius: 17px;
+  background-color: #15191f;
+  background-image:
+    linear-gradient(90deg, rgba(13, 20, 31, .99) 0%, rgba(15, 23, 36, .96) 38%, rgba(17, 23, 31, .63) 59%, rgba(17, 23, 31, .14) 100%),
+    url('assets/text-bhagavad-gita.webp');
+  background-position: center, 77% 35%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 0 16px 34px rgba(39, 30, 20, .16);
+  color: #fff8e7;
+}
+
+.gita-hero-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 650px;
+}
+
+.gita-kicker {
+  margin: 0 0 .65rem;
+  color: #e2b76f;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.gita-hero h1 {
+  margin: 0;
+  color: #fff9e9;
+  font: 700 clamp(2.8rem, 6vw, 5.25rem)/.92 'Crimson Pro', serif;
+  letter-spacing: -.035em;
+}
+
+.gita-hero h1 span {
+  display: block;
+  margin-top: .48rem;
+  color: #f4c26e;
+  font: 700 clamp(1.75rem, 3.4vw, 3rem)/1.05 'Tiro Devanagari Sanskrit', serif;
+  letter-spacing: 0;
+}
+
+.gita-hero-description {
+  max-width: 570px;
+  margin: 1rem 0 0;
+  color: #e8e2d5;
+  font-size: .93rem;
+  line-height: 1.62;
+}
+
+.gita-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-top: 1rem;
+}
+
+.gita-hero-meta span {
+  padding: .35rem .64rem;
+  border: 1px solid rgba(225, 183, 111, .44);
+  border-radius: 999px;
+  background: rgba(7, 12, 20, .42);
+  color: #f4e6cb;
+  font-size: .67rem;
+  font-weight: 700;
+}
+
+.gita-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .58rem;
+  margin-top: 1.2rem;
+}
+
+.gita-primary-button,
+.gita-secondary-button {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .63rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font: 700 .78rem 'Roboto', sans-serif;
+  transition: transform .18s, border-color .18s, background .18s;
+}
+
+.gita-primary-button {
+  border: 1px solid #d9a552;
+  background: #bd7d2f;
+  color: #fff;
+}
+
+.gita-secondary-button {
+  border: 1px solid rgba(236, 204, 150, .66);
+  background: rgba(15, 20, 30, .55);
+  color: #fff8e7;
+}
+
+.gita-primary-button:hover,
+.gita-secondary-button:hover {
+  transform: translateY(-1px);
+}
+
+.gita-trust-note {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: .6rem;
+  align-items: start;
+  margin-top: .8rem;
+  padding: .72rem .85rem;
+  border: 1px solid var(--gita-line);
+  border-radius: 9px;
+  background: linear-gradient(145deg, #fffefa, #fff9ed);
+  color: #585d68;
+  font-size: .72rem;
+  line-height: 1.48;
+}
+
+.gita-trust-mark {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #c8954d;
+  border-radius: 50%;
+  color: #a46620;
+  font: 800 .72rem 'Roboto', sans-serif;
+}
+
+.gita-reading-layout {
+  display: grid;
+  grid-template-columns: minmax(225px, 265px) minmax(0, 1fr);
+  gap: .9rem;
+  align-items: start;
+  margin-top: .9rem;
+}
+
+.gita-outline,
+.gita-reader-panel,
+.gita-source-section,
+.gita-related-section {
+  min-width: 0;
+  border: 1px solid var(--gita-line);
+  border-radius: 11px;
+  background: linear-gradient(145deg, #fffefa, #fffaf1);
+  box-shadow: 0 6px 17px rgba(75, 52, 20, .055);
+}
+
+.gita-outline {
+  position: sticky;
+  top: 106px;
+  max-height: calc(100vh - 125px);
+  overflow: hidden;
+}
+
+.gita-outline-heading {
+  padding: .82rem .9rem .7rem;
+  border-bottom: 1px solid var(--gita-line);
+}
+
+.gita-outline-heading p {
+  margin: 0;
+  color: var(--gita-gold);
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.gita-outline-heading h2 {
+  margin: .17rem 0 0;
+  color: var(--gita-navy);
+  font: 700 1.18rem 'Crimson Pro', serif;
+}
+
+.gita-outline-list {
+  max-height: calc(100vh - 205px);
+  overflow-y: auto;
+  padding: .35rem;
+  scrollbar-width: thin;
+  scrollbar-color: #c89c5c transparent;
+}
+
+.gita-outline-item {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  gap: .5rem;
+  align-items: center;
+  padding: .47rem .5rem;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: #3e4555;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+
+.gita-outline-item:hover {
+  border-color: #e0c79d;
+  background: #fffdf7;
+}
+
+.gita-outline-item.active {
+  border-color: #c6924a;
+  background: #f6ead4;
+  color: #6e3028;
+}
+
+.gita-outline-number {
+  color: var(--gita-gold);
+  font: 700 .74rem 'Roboto', sans-serif;
+}
+
+.gita-outline-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 700 .75rem 'Crimson Pro', serif;
+}
+
+.gita-outline-count {
+  color: #787b83;
+  font-size: .56rem;
+  white-space: nowrap;
+}
+
+.gita-reader-panel {
+  overflow: hidden;
+}
+
+.gita-chapter-section {
+  padding: 1rem;
+  border-bottom: 1px solid var(--gita-line);
+}
+
+.gita-chapter-kicker {
+  margin: 0;
+  color: var(--gita-gold);
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.gita-chapter-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  margin-top: .2rem;
+}
+
+.gita-chapter-heading h2 {
+  margin: 0;
+  color: var(--gita-navy);
+  font: 700 clamp(1.85rem, 4vw, 2.7rem)/1 'Crimson Pro', serif;
+}
+
+.gita-chapter-heading h2 span {
+  display: block;
+  margin-top: .28rem;
+  color: var(--gita-wine);
+  font: 700 1.12rem/1.2 'Tiro Devanagari Sanskrit', serif;
+}
+
+.gita-chapter-heading p {
+  max-width: 270px;
+  margin: 0;
+  color: var(--gita-muted);
+  text-align: right;
+  font-size: .69rem;
+  line-height: 1.45;
+}
+
+.gita-mobile-outline {
+  display: none;
+  margin-top: .75rem;
+  border: 1px solid var(--gita-line);
+  border-radius: 8px;
+  background: var(--gita-paper);
+}
+
+.gita-mobile-outline summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding: .55rem .7rem;
+  color: var(--gita-navy);
+  cursor: pointer;
+  font: 700 .78rem 'Roboto', sans-serif;
+  list-style: none;
+}
+
+.gita-mobile-outline summary::-webkit-details-marker { display: none; }
+.gita-mobile-outline summary::after { content: '+'; color: var(--gita-gold); font-size: 1.15rem; }
+.gita-mobile-outline[open] summary::after { content: '−'; }
+.gita-mobile-outline .gita-outline-list { max-height: 300px; border-top: 1px solid var(--gita-line); }
+
+.gita-toolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto auto;
+  gap: .65rem;
+  align-items: end;
+  padding: .85rem 1rem;
+  border-bottom: 1px solid var(--gita-line);
+  background: #fffdf8;
+}
+
+.gita-select-wrap label,
+.gita-control-label {
+  display: block;
+  margin-bottom: .28rem;
+  color: #71737b;
+  font-size: .59rem;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.gita-select-row {
+  display: grid;
+  grid-template-columns: 37px minmax(0, 1fr) 37px;
+  gap: .35rem;
+}
+
+.gita-select-row select,
+.gita-square-button,
+.gita-toggle-button,
+.gita-text-button {
+  min-height: 37px;
+  border: 1px solid #d8bc8d;
+  border-radius: 7px;
+  background: var(--gita-paper);
+  color: var(--gita-navy);
+  font: 700 .7rem 'Roboto', sans-serif;
+}
+
+.gita-select-row select {
+  width: 100%;
+  min-width: 0;
+  padding: 0 .5rem;
+  cursor: pointer;
+}
+
+.gita-square-button,
+.gita-toggle-button,
+.gita-text-button {
+  padding: .4rem .64rem;
+  cursor: pointer;
+}
+
+.gita-square-button {
+  color: var(--gita-gold);
+  font: 700 1.15rem 'Crimson Pro', serif;
+}
+
+.gita-control-group {
+  display: flex;
+  gap: .3rem;
+}
+
+.gita-toggle-button.active,
+.gita-text-button.active {
+  border-color: var(--gita-wine);
+  background: var(--gita-wine);
+  color: #fff;
+}
+
+.gita-reader-status {
+  padding: .75rem 1rem .68rem;
+  background: #fffaf0;
+}
+
+.gita-progress-copy {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .7rem;
+  color: #656975;
+  font-size: .65rem;
+}
+
+.gita-progress-copy strong {
+  color: var(--gita-wine);
+  font-size: .68rem;
+}
+
+.gita-progress-track {
+  height: 4px;
+  overflow: hidden;
+  margin-top: .42rem;
+  border-radius: 999px;
+  background: #eadfc9;
+}
+
+.gita-progress-track span {
+  width: 0;
+  height: 100%;
+  display: block;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #9d5c25, #d6a34f);
+  transition: width .25s ease;
+}
+
+.gita-verse-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem;
+  padding: .65rem 1rem .8rem;
+  border-bottom: 1px solid var(--gita-line);
+  background: #fffaf0;
+}
+
+.gita-verse-nav button {
+  min-width: 34px;
+  min-height: 30px;
+  padding: .25rem .42rem;
+  border: 1px solid #d9bd8d;
+  border-radius: 6px;
+  background: #fffdf8;
+  color: #6f3b2f;
+  cursor: pointer;
+  font: 700 .64rem 'Roboto', sans-serif;
+}
+
+.gita-verse-nav button:hover,
+.gita-verse-nav button:focus-visible {
+  border-color: #9b5d23;
+  background: #f4e6cc;
+}
+
+.gita-verse-list {
+  display: grid;
+  gap: .72rem;
+  padding: .85rem;
+  background: #faf4e9;
+}
+
+.gita-verse-card {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid #e1cfb0;
+  border-radius: 10px;
+  background: var(--gita-paper);
+  box-shadow: 0 4px 12px rgba(70, 45, 15, .045);
+  scroll-margin-top: 120px;
+}
+
+.gita-verse-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding-bottom: .65rem;
+  border-bottom: 1px solid #ebdfca;
+}
+
+.gita-verse-reference {
+  color: var(--gita-wine);
+  font: 700 .82rem 'Crimson Pro', serif;
+}
+
+.gita-bookmark-button {
+  min-height: 32px;
+  padding: .34rem .6rem;
+  border: 1px solid #d4b783;
+  border-radius: 7px;
+  background: #fffdf8;
+  color: #7a552d;
+  cursor: pointer;
+  font: 700 .62rem 'Roboto', sans-serif;
+}
+
+.gita-bookmark-button.saved {
+  border-color: #8a4638;
+  background: #8a4638;
+  color: #fff;
+}
+
+.gita-sanskrit {
+  margin: .85rem 0 0;
+  color: #27334a;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  text-align: center;
+  font: 400 calc(1.2rem * var(--gita-scale))/1.85 'Tiro Devanagari Sanskrit', serif;
+}
+
+.gita-transliteration {
+  margin: .75rem 0 0;
+  padding: .68rem .75rem;
+  border-radius: 7px;
+  background: #f8edda;
+  color: #6a4c3d;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  text-align: center;
+  font: italic calc(.82rem * var(--gita-scale))/1.65 'Crimson Pro', serif;
+}
+
+.gita-meaning {
+  margin-top: .7rem;
+  border: 1px solid #e4d3b7;
+  border-radius: 8px;
+  background: #fffaf1;
+}
+
+.gita-meaning summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 42px;
+  padding: .55rem .7rem;
+  color: #6e342c;
+  cursor: pointer;
+  font: 700 .68rem 'Roboto', sans-serif;
+  list-style: none;
+}
+
+.gita-meaning summary::-webkit-details-marker { display: none; }
+.gita-meaning summary::after { content: '+'; color: var(--gita-gold); font-size: 1.05rem; }
+.gita-meaning[open] summary::after { content: '−'; }
+
+.gita-meaning-body {
+  padding: .05rem .75rem .75rem;
+  border-top: 1px solid #eadcc4;
+}
+
+.gita-translation {
+  margin: .7rem 0 0;
+  color: #454b59;
+  overflow-wrap: anywhere;
+  font-size: calc(.78rem * var(--gita-scale));
+  line-height: 1.65;
+}
+
+.gita-translation strong {
+  display: block;
+  margin-bottom: .18rem;
+  color: var(--gita-gold);
+  font-size: .6rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.gita-reader[data-meaning-lang="en"] .gita-translation-hi { display: none; }
+.gita-reader[data-meaning-lang="hi"] .gita-translation-en { display: none; }
+
+.gita-source-section,
+.gita-related-section {
+  margin-top: .9rem;
+  padding: 1rem;
+}
+
+.gita-section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: .75rem;
+}
+
+.gita-section-heading h2 {
+  margin: 0;
+  color: var(--gita-navy);
+  font: 700 1.45rem 'Crimson Pro', serif;
+}
+
+.gita-section-heading p {
+  max-width: 560px;
+  margin: 0;
+  color: var(--gita-muted);
+  text-align: right;
+  font-size: .68rem;
+  line-height: 1.45;
+}
+
+.gita-method-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .6rem;
+}
+
+.gita-method-card,
+.gita-resource-card,
+.gita-related-card {
+  min-width: 0;
+  padding: .78rem;
+  border: 1px solid #e4d2b3;
+  border-radius: 8px;
+  background: var(--gita-paper);
+}
+
+.gita-method-card b,
+.gita-resource-card b,
+.gita-related-card b {
+  display: block;
+  color: var(--gita-navy);
+  font: 700 .83rem 'Crimson Pro', serif;
+}
+
+.gita-method-card p,
+.gita-resource-card p,
+.gita-related-card p {
+  margin: .3rem 0 0;
+  color: var(--gita-muted);
+  font-size: .65rem;
+  line-height: 1.48;
+}
+
+.gita-method-card a,
+.gita-resource-card a {
+  display: inline-flex;
+  margin-top: .5rem;
+  color: var(--gita-wine);
+  font-size: .64rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.gita-method-card a:hover,
+.gita-resource-card a:hover { text-decoration: underline; }
+
+.gita-resource-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .55rem;
+  margin-top: .65rem;
+}
+
+.gita-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .6rem;
+}
+
+.gita-related-card {
+  width: 100%;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+
+.gita-related-card:hover {
+  border-color: #b8792c;
+  background: #fffaf0;
+}
+
+.gita-related-card span {
+  display: block;
+  margin-top: .45rem;
+  color: var(--gita-wine);
+  font-size: .62rem;
+  font-weight: 800;
+}
+
+.gita-device-note {
+  margin: .75rem 0 0;
+  color: #777a83;
+  font-size: .61rem;
+  line-height: 1.45;
+}
+
+body.dark-theme .gita-reader {
+  --gita-navy: #f5ead0;
+  --gita-wine: #e7a878;
+  --gita-gold: #e2b76f;
+  --gita-line: #4e4750;
+  --gita-paper: #272a37;
+  --gita-muted: #c7c9d1;
+}
+
+body.dark-theme .gita-breadcrumb,
+body.dark-theme .gita-trust-note,
+body.dark-theme .gita-progress-copy,
+body.dark-theme .gita-outline-count,
+body.dark-theme .gita-translation,
+body.dark-theme .gita-method-card p,
+body.dark-theme .gita-resource-card p,
+body.dark-theme .gita-related-card p,
+body.dark-theme .gita-device-note { color: #c7c9d1; }
+
+body.dark-theme .gita-trust-note,
+body.dark-theme .gita-outline,
+body.dark-theme .gita-reader-panel,
+body.dark-theme .gita-source-section,
+body.dark-theme .gita-related-section,
+body.dark-theme .gita-mobile-outline,
+body.dark-theme .gita-toolbar,
+body.dark-theme .gita-reader-status,
+body.dark-theme .gita-verse-nav,
+body.dark-theme .gita-verse-list,
+body.dark-theme .gita-verse-card,
+body.dark-theme .gita-meaning,
+body.dark-theme .gita-method-card,
+body.dark-theme .gita-resource-card,
+body.dark-theme .gita-related-card,
+body.dark-theme .gita-select-row select,
+body.dark-theme .gita-square-button,
+body.dark-theme .gita-toggle-button,
+body.dark-theme .gita-text-button,
+body.dark-theme .gita-bookmark-button {
+  background: #252837;
+  border-color: #4e4750;
+  color: #f5ead0;
+}
+
+body.dark-theme .gita-outline-item { color: #ddd5c6; }
+body.dark-theme .gita-outline-item:hover { background: #303342; border-color: #6b5b4b; }
+body.dark-theme .gita-outline-item.active { background: #4e352f; border-color: #c48b4b; color: #fff2d7; }
+body.dark-theme .gita-sanskrit { color: #f5ead0; }
+body.dark-theme .gita-transliteration { background: #31313b; color: #e2c8a8; }
+body.dark-theme .gita-meaning-body,
+body.dark-theme .gita-verse-head,
+body.dark-theme .gita-chapter-section { border-color: #4e4750; }
+
+@media (max-width: 980px) {
+  .gita-reading-layout { grid-template-columns: 215px minmax(0, 1fr); }
+  .gita-toolbar { grid-template-columns: 1fr 1fr; }
+  .gita-select-wrap { grid-column: 1 / -1; }
+  .gita-resource-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .gita-reader { padding-bottom: 2.5rem; }
+  .gita-breadcrumb { flex-wrap: wrap; font-size: .72rem; }
+  .gita-hero {
+    min-height: clamp(500px, 138vw, 570px);
+    align-items: flex-end;
+    padding: 1.25rem;
+    background-image:
+      linear-gradient(180deg, rgba(12, 17, 25, .05) 0%, rgba(12, 17, 25, .16) 34%, rgba(12, 17, 25, .9) 72%, rgba(12, 17, 25, .99) 100%),
+      url('assets/text-bhagavad-gita.webp');
+    background-position: center, center 26%;
+  }
+  .gita-hero h1 { font-size: clamp(2.45rem, 12vw, 3.25rem); }
+  .gita-hero h1 span { font-size: clamp(1.55rem, 7.2vw, 2rem); }
+  .gita-hero-description { font-size: .82rem; line-height: 1.52; }
+  .gita-hero-meta span { font-size: .61rem; }
+  .gita-hero-actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .gita-primary-button,
+  .gita-secondary-button { width: 100%; padding: .58rem .65rem; font-size: .7rem; }
+  .gita-reading-layout { display: block; }
+  .gita-outline { display: none; }
+  .gita-mobile-outline { display: block; }
+  .gita-chapter-section { padding: .85rem; }
+  .gita-chapter-heading { display: block; }
+  .gita-chapter-heading p { max-width: none; margin-top: .45rem; text-align: left; }
+  .gita-toolbar { grid-template-columns: 1fr; padding: .75rem .85rem; }
+  .gita-select-wrap { grid-column: auto; }
+  .gita-control-group { width: 100%; }
+  .gita-toggle-button,
+  .gita-text-button { flex: 1; }
+  .gita-verse-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: .6rem .85rem .72rem;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+  }
+  .gita-verse-nav button { flex: 0 0 auto; scroll-snap-align: start; }
+  .gita-verse-list { padding: .65rem; }
+  .gita-verse-card { padding: .78rem; scroll-margin-top: 86px; }
+  .gita-verse-head { align-items: start; }
+  .gita-bookmark-button { max-width: 118px; }
+  .gita-sanskrit { font-size: calc(1.08rem * var(--gita-scale)); line-height: 1.78; }
+  .gita-transliteration { font-size: calc(.76rem * var(--gita-scale)); text-align: left; }
+  .gita-section-heading { display: block; }
+  .gita-section-heading p { margin-top: .35rem; text-align: left; }
+  .gita-method-grid,
+  .gita-related-grid { grid-template-columns: 1fr; }
+  .gita-resource-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 430px) {
+  .gita-hero-actions { grid-template-columns: 1fr; }
+  .gita-hero-meta { gap: .32rem; }
+  .gita-hero-meta span { padding: .3rem .48rem; }
+  .gita-progress-copy { align-items: flex-start; }
+  .gita-verse-head { gap: .35rem; }
+  .gita-bookmark-button { padding: .3rem .45rem; font-size: .58rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gita-primary-button,
+  .gita-secondary-button,
+  .gita-progress-track span { transition: none; }
+}
