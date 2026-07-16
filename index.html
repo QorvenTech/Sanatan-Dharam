@@ -46,6 +46,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="favicon-512x512.png">
     <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="gita-reader.css">
+    <link rel="stylesheet" href="scripture-readers.css">
     <style>
         /* ========== YOUR EXISTING CSS (unchanged) ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -5095,10 +5096,12 @@ function showText(id) {
     const display = document.getElementById('text-display');
     const active = document.querySelector('.section.active');
     const isGitaReader = id === 'bhagavad-gita' && typeof window.renderBhagavadGitaReader === 'function';
+    const isResourceReader = Array.isArray(window.sacredResourceReaderIds) && window.sacredResourceReaderIds.includes(id) && typeof window.renderSacredResourceReader === 'function';
     
     if (display) {
         display.classList.toggle('gita-display', isGitaReader);
-        display.innerHTML = (isGitaReader ? '' : `<button class="back-btn" onclick="goBack()">← Back</button>`) + getTextContent(id);
+        display.classList.toggle('scripture-display', isResourceReader);
+        display.innerHTML = ((isGitaReader || isResourceReader) ? '' : `<button class="back-btn" onclick="goBack()">← Back</button>`) + getTextContent(id);
         display.style.display = 'block';
         // Populate verse divs ONLY inside text-display (avoids circular call with applyLanguage)
         const lang = currentLang || 'en';
@@ -5107,6 +5110,12 @@ function showText(id) {
         });
         if (isGitaReader && typeof window.initBhagavadGitaReader === 'function') {
             window.setTimeout(window.initBhagavadGitaReader, 0);
+            if (previousTextId !== id) {
+                window.setTimeout(() => display.scrollIntoView({ behavior: 'smooth', block: 'start' }), 20);
+            }
+        }
+        if (isResourceReader && typeof window.initSacredResourceReader === 'function') {
+            window.setTimeout(window.initSacredResourceReader, 0);
             if (previousTextId !== id) {
                 window.setTimeout(() => display.scrollIntoView({ behavior: 'smooth', block: 'start' }), 20);
             }
@@ -5387,6 +5396,9 @@ function getTextContent(id) {
     const lang = currentLang || 'en';
     if (id === 'bhagavad-gita' && typeof window.renderBhagavadGitaReader === 'function') {
         return window.renderBhagavadGitaReader();
+    }
+    if (Array.isArray(window.sacredResourceReaderIds) && window.sacredResourceReaderIds.includes(id) && typeof window.renderSacredResourceReader === 'function') {
+        return window.renderSacredResourceReader(id);
     }
     const contents = {
         'bhagavad-gita': {
@@ -13865,6 +13877,7 @@ function searchSacredTexts() { _applySacredTextFilters(); }
 
 <script src="paath-readers.js"></script>
 <script src="gita-reader.js"></script>
+<script src="scripture-readers.js"></script>
 
 </body>
 </html>
