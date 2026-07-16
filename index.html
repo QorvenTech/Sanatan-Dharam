@@ -13500,12 +13500,12 @@ function searchSacredTexts() { _applySacredTextFilters(); }
   if (libraryGrid) {
     libraryGrid.className = 'paath-library-grid';
     libraryGrid.innerHTML = '<header class="paath-library-intro"><div><p>Curated devotional reading</p><h2>Paath Mandir<span>\u092a\u093e\u0920 \u092e\u0902\u0926\u093f\u0930</span></h2></div><small>Read sacred paath with care, context and a calm, focused reading experience.</small></header>' +
-      libraryCard('hanuman-chalisa', 'featured hanuman', '', 'Hanuman Chalisa', '\u0939\u0928\u0941\u092e\u093e\u0928 \u091a\u093e\u0932\u0940\u0938\u093e', 'A guided reading experience with Hindi, transliteration and meaning.', 'Daily recitation') +
-      libraryCard('sundarkand', 'featured sundar', '', 'Sundar Kand', '\u0938\u0941\u0902\u0926\u0930\u0915\u093e\u0902\u0921', 'The fifth chapter of Ramcharitmanas, following Hanumanji\'s journey to Lanka.', 'Ramcharitmanas') +
-      libraryCard('shiv-tandav', 'featured shiva', '', 'Shiva Tandava Stotram', '\u0936\u093f\u0935 \u0924\u093e\u0902\u0921\u0935 \u0938\u094d\u0924\u094b\u0924\u094d\u0930\u092e\u094d', 'The powerful traditional stotram describing the cosmic dance of Lord Shiva.', 'Traditional stotram') +
-      libraryCard('bajrang-baan', 'featured bajrang', '', 'Bajrang Baan', '\u092c\u091c\u0930\u0902\u0917 \u092c\u093e\u0923', 'A devotional hymn for courage, strength and protection.', '40 verses') +
-      libraryCard('durga-chalisa', 'featured durga', '', 'Durga Chalisa', '\u0926\u0941\u0930\u094d\u0917\u093e \u091a\u093e\u0932\u0940\u0938\u093e', 'A reverent paath in praise of Maa Durga.', '40 verses') +
-      libraryCard('ram-raksha', 'featured ram-raksha', '', 'Ram Raksha Stotram', '\u0930\u093e\u092e \u0930\u0915\u094d\u0937\u093e \u0938\u094d\u0924\u094b\u0924\u094d\u0930\u092e\u094d', 'A traditional stotram dedicated to Lord Rama.', 'Traditional paath');
+      libraryCard('hanuman-chalisa', 'featured hanuman', '', 'Hanuman Chalisa', '\u0939\u0928\u0941\u092e\u093e\u0928 \u091a\u093e\u0932\u0940\u0938\u093e', 'A guided reading experience with Hindi, transliteration and meaning.', '40 Chaupais') +
+      libraryCard('sundarkand', 'featured sundar', '', 'Sundar Kand', '\u0938\u0941\u0902\u0926\u0930\u0915\u093e\u0902\u0921', 'The complete fifth chapter of Ramcharitmanas with Chaupais, Chhands and all 60 Dohas.', 'Complete paath') +
+      libraryCard('shiv-tandav', 'featured shiva', '', 'Shiva Tandava Stotram', '\u0936\u093f\u0935 \u0924\u093e\u0902\u0921\u0935 \u0938\u094d\u0924\u094b\u0924\u094d\u0930\u092e\u094d', 'The powerful traditional stotram describing the cosmic dance of Lord Shiva.', '17 verses') +
+      libraryCard('bajrang-baan', 'featured bajrang', '', 'Bajrang Baan', '\u092c\u091c\u0930\u0902\u0917 \u092c\u093e\u0923', 'A devotional hymn for courage, strength and protection.', 'Complete paath') +
+      libraryCard('durga-chalisa', 'featured durga', '', 'Durga Chalisa', '\u0926\u0941\u0930\u094d\u0917\u093e \u091a\u093e\u0932\u0940\u0938\u093e', 'A reverent paath in praise of Maa Durga.', 'Complete Chalisa') +
+      libraryCard('ram-raksha', 'featured ram-raksha', '', 'Ram Raksha Stotram', '\u0930\u093e\u092e \u0930\u0915\u094d\u0937\u093e \u0938\u094d\u0924\u094b\u0924\u094d\u0930\u092e\u094d', 'A traditional stotram dedicated to Lord Rama.', 'Viniyog · Dhyanam · 38 verses');
   }
   var verses = [
     { label:'Doha 1', hi:'\u0936\u094d\u0930\u0940\u0917\u0941\u0930\u0941 \u091a\u0930\u0928 \u0938\u0930\u094b\u091c \u0930\u091c, \u0928\u093f\u091c \u092e\u0928\u0941 \u092e\u0941\u0915\u0941\u0930\u0941 \u0938\u0941\u0927\u093e\u0930\u093f \u0964\n\u092c\u0930\u0928\u090a\u0901 \u0930\u0918\u0941\u092c\u0930 \u092c\u093f\u092e\u0932 \u091c\u0938\u0941, \u091c\u094b \u0926\u093e\u092f\u0915 \u092b\u0932 \u091a\u093e\u0930\u093f \u0965', tr:'Shri guru charan saroj raj, nij manu mukuru sudhari |\nBaranau Raghubar bimal jasu, jo dayak phal chari ||', meaning:'With the dust of the Guru\'s lotus feet, I cleanse the mirror of my mind. I describe the pure glory of Lord Rama, which bestows the four fruits of life.' },
@@ -13599,6 +13599,7 @@ function searchSacredTexts() { _applySacredTextFilters(); }
       return { label:label, hi:hi.join('\n'), tr:tr.join('\n'), meaningEn:hanumanMeanings[index][0], meaningHi:hanumanMeanings[index][1] };
     }).filter(function (verse) { return verse.hi; });
   }
+  verses = getHanumanCompleteVerses().slice(0, 6);
   var experience = document.createElement('div');
   experience.id = 'paath-experience';
   experience.className = 'paath-experience';
@@ -13681,13 +13682,59 @@ function searchSacredTexts() { _applySacredTextFilters(); }
     'Tulsidas says that those who lovingly read or hear this beautiful account of Lord Rama attain devotion and cross the ocean of worldly existence.'
   ];
   function getSundarCompleteVerses() {
-    return Array.prototype.map.call(document.querySelectorAll('#sundarkand-text .bhavaarth-box'), function (box, index) {
-      var verse = box.previousElementSibling;
-      while (verse && !verse.classList.contains('verse')) verse = verse.previousElementSibling;
-      var hi = normalizedText(verse), meaningNode = box.querySelector('.bhavaarth-text');
-      return { label:'Doha ' + (index + 1), hi:hi, tr:devanagariToRoman(hi), meaningEn:sundarMeaningEn[index] || '', meaningHi:normalizedText(meaningNode) };
-    }).filter(function (verse) { return verse.hi && verse.meaningHi; });
+    var source = document.querySelector('#sundarkand-text .text-content');
+    if (!source) return [];
+    var opening = source.querySelector('.verse');
+    var boxes = source.querySelectorAll('.bhavaarth-box');
+    var complete = [];
+    var openingText = normalizedText(opening);
+    if (openingText) {
+      complete.push({
+        label:'Opening invocation',
+        hi:openingText,
+        tr:devanagariToRoman(openingText),
+        meaningEn:'The invocation bows to compassionate Lord Rama, asks for pure and unwavering devotion, and salutes Hanuman as the mighty, wise and beloved servant of Shri Rama.',
+        meaningHi:'मंगलाचरण में करुणामय श्रीराम को प्रणाम, निर्मल और अटूट भक्ति की प्रार्थना तथा अतुलित बल, ज्ञान और गुणों के धाम श्री हनुमान जी को नमन किया गया है।'
+      });
+    }
+    Array.prototype.forEach.call(boxes, function (box, index) {
+      var start = index ? boxes[index - 1].nextElementSibling : (opening ? opening.nextElementSibling : source.firstElementChild);
+      var node = start, parts = [], hasChhand = false;
+      while (node && node !== box) {
+        if (node.matches('h3, p, .verse')) {
+          var part = normalizedText(node);
+          if (part) {
+            parts.push(part);
+            if (node.classList.contains('sk-chand') || /छन्द|छंद/.test(part)) hasChhand = true;
+          }
+        }
+        node = node.nextElementSibling;
+      }
+      var hi = parts.join('\n\n');
+      var meaningNode = box.querySelector('.bhavaarth-text');
+      complete.push({
+        label:(hasChhand ? 'Chaupai · Chhand · ' : 'Chaupai · ') + 'Doha ' + (index + 1),
+        hi:hi,
+        tr:devanagariToRoman(hi),
+        meaningEn:sundarMeaningEn[index] || '',
+        meaningHi:normalizedText(meaningNode)
+      });
+    });
+    var completion = boxes.length ? boxes[boxes.length - 1].nextElementSibling : null;
+    while (completion && !completion.classList.contains('verse')) completion = completion.nextElementSibling;
+    var completionText = normalizedText(completion);
+    if (completionText) {
+      complete.push({
+        label:'Completion',
+        hi:completionText,
+        tr:devanagariToRoman(completionText),
+        meaningEn:'The complete Sundar Kand concludes here with salutations to Sita and Rama.',
+        meaningHi:'यहाँ सम्पूर्ण सुंदरकाण्ड का समापन सीताराम को प्रणाम के साथ होता है।'
+      });
+    }
+    return complete.filter(function (verse) { return verse.hi && verse.tr && verse.meaningEn && verse.meaningHi; });
   }
+  sundarVerses = getSundarCompleteVerses().slice(0, 2);
   var sundarExperience = document.createElement('div');
   sundarExperience.id = 'sundar-paath-experience';
   sundarExperience.className = 'paath-experience';
@@ -13699,6 +13746,17 @@ function searchSacredTexts() { _applySacredTextFilters(); }
     '<section class="paath-info-grid"><article class="paath-info-card"><h3><span>&#128214;</span> About this Paath</h3><p>Sundar Kand is the fifth chapter of Ramcharitmanas, narrating Hanumanji\'s journey to Lanka, Sita Mata\'s darshan and the burning of Lanka.</p></article><article class="paath-info-card"><h3><span>&#10048;</span> Source &amp; Tradition</h3><p>Composed by Goswami Tulsidas in Awadhi. Recited across generations as a source of devotion, courage and inner strength.</p></article><article class="paath-info-card"><h3><span>&#9788;</span> Respectful Reading</h3><p>Read with a pure heart, in a clean and quiet space. Follow your family or local temple tradition for observance.</p></article></section>' +
     '<section class="paath-mobile-progress"><div class="paath-progress-label"><span>Your reading progress</span><b data-paath-progress-label>0%</b></div><div class="paath-progress-track"><b data-paath-progress-bar></b></div></section><section class="paath-mobile-accordions" id="sundar-paath-info"><details><summary>In this Paath</summary><p>Opening invocation, all 60 Dohas, transliteration and complete Hindi and English meanings.</p></details><details><summary>About this Paath</summary><p>Sundar Kand is the fifth chapter of Ramcharitmanas, centered on Hanumanji\'s journey to Lanka.</p></details><details><summary>Source &amp; Tradition</summary><p>Composed by Goswami Tulsidas in Awadhi and recited with devotion across many traditions.</p></details><details><summary>Respectful Reading</summary><p>Read at your own pace and follow the customs of your family and local temple.</p></details></section><section class="paath-mobile-related"><h3>Related Paaths</h3><div class="paath-related"><button type="button" onclick="showPaath(\'hanuman-chalisa\')"><img src="assets/paath-hanuman-chalisa.png" alt="Hanuman Chalisa"><span><b>Hanuman Chalisa</b><small>Daily recitation</small></span><i>&#8250;</i></button></div><div class="paath-related"><button type="button" onclick="showPaath(\'shiv-tandav\')"><img src="assets/paath-shiva-tandava.png" alt="Shiva Tandava Stotram"><span><b>Shiva Tandava Stotram</b><small>Traditional stotram</small></span><i>&#8250;</i></button></div></section>';
   page.appendChild(sundarExperience);
+  var sundarMeta = sundarExperience.querySelectorAll('.paath-meta span');
+  if (sundarMeta[1]) sundarMeta[1].textContent = 'Complete text · 60 Dohas';
+  if (sundarMeta[2]) sundarMeta[2].textContent = 'Long-form recitation';
+  var sundarMore = sundarExperience.querySelector('#sundar-paath-more');
+  if (sundarMore) sundarMore.innerHTML = 'View complete Sundar Kand &#8594;';
+  var sundarOutline = sundarExperience.querySelector('.paath-outline');
+  if (sundarOutline) sundarOutline.innerHTML = '<li class="active">Opening invocation</li><li>Complete Chaupais &amp; Chhands</li><li>60 Dohas</li><li>Hindi &amp; English meanings</li>';
+  var sundarTime = sundarExperience.querySelector('.paath-sidebar .paath-progress-label:last-child b');
+  if (sundarTime) sundarTime.textContent = 'Complete paath';
+  var sundarMobileSummary = sundarExperience.querySelector('#sundar-paath-info details:first-child p');
+  if (sundarMobileSummary) sundarMobileSummary.textContent = 'Full opening invocation, every Chaupai and Chhand, all 60 Dohas, transliteration, and Hindi/English section meanings.';
   function applyCurrentLanguage(root) {
     var lang = activeLanguage();
     Array.prototype.forEach.call(root.querySelectorAll('[data-en][data-hi]'), function (node) {
@@ -13777,14 +13835,14 @@ function searchSacredTexts() { _applySacredTextFilters(); }
     var button = document.getElementById('sundar-paath-more');
     if (!button || button.getAttribute('data-open')) return;
     var all = getSundarCompleteVerses(), list = document.getElementById('sundar-paath-verse-list');
-    if (all.length !== 60) { button.textContent = 'Complete text could not be verified'; return; }
+    if (all.length !== 62) { button.textContent = 'Complete text could not be verified'; return; }
     var holder = document.createElement('div');
     holder.className = 'paath-verse-list';
-    holder.innerHTML = all.map(function (verse, index) { return verseCard(verse, index + 2); }).join('');
+    holder.innerHTML = all.slice(2).map(function (verse, index) { return verseCard(verse, index + 2); }).join('');
     list.appendChild(holder);
     applyCurrentLanguage(holder);
     button.setAttribute('data-open', 'true');
-    button.textContent = 'All 60 Dohas are open';
+    button.textContent = 'Complete Sundar Kand is open';
     button.disabled = true;
     if (sundarExperience._updatePaathProgress) sundarExperience._updatePaathProgress();
   };
