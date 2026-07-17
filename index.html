@@ -49,6 +49,7 @@
     <link rel="stylesheet" href="scripture-readers.css">
     <link rel="stylesheet" href="mantra-experience.css">
     <link rel="stylesheet" href="deity-experience.css">
+    <link rel="stylesheet" href="ritual-experience.css">
     <style>
         /* ========== YOUR EXISTING CSS (unchanged) ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1368,18 +1369,48 @@ body.dark-theme .paath-library-intro, body.dark-theme .paath-library-card:not(.f
     </div>
 
     <!-- RITUALS -->
-    <div id="rituals" class="section">
-        <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Rituals & Practices" data-hi="रीति-रिवाज और प्रथाएं">Rituals & Practices</h2>
-        <div class="cards-grid">
-            <div class="card" onclick="showText('puja')"><div class="icon">🙏</div><h3 data-en="Puja" data-hi="पूजा">Puja</h3><p data-en="Worship with sixteen steps (shodasha upachara) including offerings and aarti." data-hi="प्रसाद और आरती सहित सोलह चरणों (षोडशोपचार) के साथ पूजा।">Worship with sixteen steps (shodasha upachara) including offerings and aarti.</p></div>
-            <div class="card" onclick="showText('yoga')"><div class="icon">🧘</div><h3 data-en="Yoga" data-hi="योग">Yoga</h3><p data-en="Eight-limbed practice combining asanas, pranayama, and meditation for self-realization." data-hi="आत्म-साक्षात्कार के लिए आसन, प्राणायाम और ध्यान को मिलाकर आठ अंगों वाली साधना।">Eight-limbed practice combining asanas, pranayama, and meditation for self-realization.</p></div>
-            <div class="card" onclick="showText('meditation')"><div class="icon">🕉️</div><h3 data-en="Dhyana" data-hi="ध्यान">Dhyana</h3><p data-en="Meditation practice for spiritual clarity, inner peace, and divine connection." data-hi="आध्यात्मिक स्पष्टता, आंतरिक शांति और दिव्य संबंध के लिए ध्यान साधना।">Meditation practice for spiritual clarity, inner peace, and divine connection.</p></div>
-            <div class="card" onclick="showText('aarti')"><div class="icon">🔥</div><h3 data-en="Aarti" data-hi="आरती">Aarti</h3><p data-en="Devotional songs with light offering expressing love and removing darkness." data-hi="प्रेम व्यक्त करने और अंधकार दूर करने के लिए दीप अर्पण के साथ भक्ति गीत।">Devotional songs with light offering expressing love and removing darkness.</p></div>
-            <div class="card" onclick="showText('fasting')"><div class="icon">🌾</div><h3 data-en="Vrat" data-hi="व्रत">Vrat</h3><p data-en="Spiritual fasting to purify body and mind on specific days and festivals." data-hi="विशिष्ट दिनों और त्योहारों पर शरीर और मन को शुद्ध करने के लिए आध्यात्मिक उपवास।">Spiritual fasting to purify body and mind on specific days and festivals.</p></div>
-            <div class="card" onclick="showText('charity')"><div class="icon">💝</div><h3 data-en="Daan" data-hi="दान">Daan</h3><p data-en="Charitable giving - anna daan (food), vidya daan (knowledge) for spiritual growth." data-hi="दान देना — अन्न दान (भोजन), विद्या दान (ज्ञान) आध्यात्मिक विकास के लिए।">Charitable giving - anna daan (food), vidya daan (knowledge) for spiritual growth.</p></div>
-            <div class="card" onclick="showText('yagna')"><div class="icon">🔥</div><h3 data-en="Yagna" data-hi="यज्ञ">Yagna</h3><p data-en="Vedic fire ceremony with mantras for purification and cosmic harmony." data-hi="शुद्धि और ब्रह्मांडीय सामंजस्य के लिए मंत्रों के साथ वैदिक अग्नि समारोह।">Vedic fire ceremony with mantras for purification and cosmic harmony.</p></div>
-            <div class="card" onclick="showText('japa')"><div class="icon">📿</div><h3 data-en="Japa" data-hi="जप">Japa</h3><p data-en="Repetitive mantra chanting with mala (108 beads) for concentration and progress." data-hi="एकाग्रता और प्रगति के लिए माला (108 मनकों) के साथ बार-बार मंत्र जाप।">Repetitive mantra chanting with mala (108 beads) for concentration and progress.</p></div>
+    <div id="rituals" class="section ritual-library" data-ritual-filter="all">
+        <nav class="ritual-breadcrumb" aria-label="Breadcrumb"><button type="button" onclick="showSection('home')" data-en="Home" data-hi="होम">Home</button><span>/</span><strong data-en="Rituals & Practices" data-hi="अनुष्ठान और साधनाएँ">Rituals & Practices</strong></nav>
+        <section class="ritual-library-hero" aria-labelledby="ritual-library-title">
+            <div class="ritual-library-hero-copy">
+                <p class="ritual-kicker" data-en="Educational practice library" data-hi="शैक्षिक साधना संग्रह">Educational practice library</p>
+                <h1 id="ritual-library-title">Rituals &amp; Practices<span>अनुष्ठान और साधनाएँ</span></h1>
+                <p data-en="Learn the purpose, preparation and traditional context of Sanatan practices with clarity and respect." data-hi="सनातन साधनाओं के उद्देश्य, तैयारी और पारंपरिक संदर्भ को स्पष्टता और सम्मान के साथ समझें।">Learn the purpose, preparation and traditional context of Sanatan practices with clarity and respect.</p>
+                <p class="ritual-hero-note" data-en="Guidance varies across regions, sampradayas and family traditions." data-hi="मार्गदर्शन क्षेत्र, संप्रदाय और पारिवारिक परंपरा के अनुसार बदलता है।">Guidance varies across regions, sampradayas and family traditions.</p>
+                <div class="ritual-hero-actions"><button type="button" class="ritual-primary-action" onclick="ritualScrollToLibrary()" data-en="Explore Practices" data-hi="साधनाएँ देखें">Explore Practices</button><button type="button" class="ritual-secondary-action" onclick="ritualScrollToPathway()" data-en="Beginner Guide" data-hi="आरंभिक मार्गदर्शिका">Beginner Guide</button></div>
+            </div>
+        </section>
+        <section class="ritual-discovery" aria-label="Find a ritual or practice">
+            <label class="ritual-search-wrap"><span class="sr-only" data-en="Search practices" data-hi="साधनाएँ खोजें">Search practices</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.6"></circle><path d="m16 16 5 5"></path></svg><input id="ritual-search" type="search" autocomplete="off" oninput="searchRituals()" data-placeholder-en="Search rituals and practices" data-placeholder-hi="अनुष्ठान और साधनाएँ खोजें" placeholder="Search rituals and practices"></label>
+            <button type="button" class="ritual-mobile-filter-trigger" onclick="ritualToggleFilters(this)" aria-expanded="false"><span data-en="Filters" data-hi="फ़िल्टर">Filters</span><b>⌄</b></button>
+            <div class="ritual-filter-row" role="group" aria-label="Practice categories">
+                <button type="button" class="ritual-filter active" aria-pressed="true" onclick="filterRituals('all',this)" data-en="All" data-hi="सभी">All</button>
+                <button type="button" class="ritual-filter" aria-pressed="false" onclick="filterRituals('daily',this)" data-en="Daily Practice" data-hi="दैनिक साधना">Daily Practice</button>
+                <button type="button" class="ritual-filter" aria-pressed="false" onclick="filterRituals('puja',this)" data-en="Puja" data-hi="पूजा">Puja</button>
+                <button type="button" class="ritual-filter" aria-pressed="false" onclick="filterRituals('home',this)" data-en="Home" data-hi="गृह">Home</button>
+                <button type="button" class="ritual-filter" aria-pressed="false" onclick="filterRituals('festival',this)" data-en="Festival" data-hi="उत्सव">Festival</button>
+                <button type="button" class="ritual-filter" aria-pressed="false" onclick="filterRituals('beginner',this)" data-en="Beginner Friendly" data-hi="आरंभिक">Beginner Friendly</button>
+            </div>
+        </section>
+        <div class="ritual-library-layout" id="ritual-library-content">
+            <aside class="ritual-refine-panel" aria-label="Refine practices">
+                <h2 data-en="Refine" data-hi="चयन सँवारें">Refine</h2>
+                <p data-en="Practice setting" data-hi="साधना स्थान">Practice setting</p>
+                <button type="button" onclick="filterRituals('all',document.querySelector('.ritual-filter'))" data-en="All settings" data-hi="सभी स्थान">All settings</button>
+                <button type="button" onclick="filterRituals('daily',document.querySelectorAll('.ritual-filter')[1])" data-en="Daily practice" data-hi="दैनिक साधना">Daily practice</button>
+                <button type="button" onclick="filterRituals('home',document.querySelectorAll('.ritual-filter')[3])" data-en="Home practice" data-hi="गृह साधना">Home practice</button>
+                <button type="button" onclick="filterRituals('festival',document.querySelectorAll('.ritual-filter')[4])" data-en="Festival observance" data-hi="उत्सव साधना">Festival observance</button>
+                <hr><p data-en="Guidance level" data-hi="मार्गदर्शन स्तर">Guidance level</p>
+                <button type="button" onclick="filterRituals('beginner',document.querySelectorAll('.ritual-filter')[5])" data-en="Beginner overview" data-hi="आरंभिक परिचय">Beginner overview</button>
+                <small data-en="Tradition-dependent practices should be learned from a qualified practitioner." data-hi="परंपरा-आधारित साधनाएँ योग्य आचार्य या प्रशिक्षक से सीखें।">Tradition-dependent practices should be learned from a qualified practitioner.</small>
+            </aside>
+            <main class="ritual-library-main">
+                <section class="ritual-featured-section"><h2 class="ritual-section-title" data-en="Featured Practice" data-hi="प्रमुख साधना">Featured Practice</h2><div id="ritual-featured-card"></div></section>
+                <section class="ritual-grid-section"><h2 class="ritual-section-title" data-en="Explore Rituals & Practices" data-hi="अनुष्ठान और साधनाएँ देखें">Explore Rituals & Practices</h2><div id="ritual-card-grid" class="ritual-card-grid"></div><p id="ritual-no-results" class="ritual-no-results" hidden data-en="No available practice matches this search. Try another word or clear the filter." data-hi="इस खोज से कोई उपलब्ध साधना नहीं मिली। दूसरा शब्द आज़माएँ या फ़िल्टर हटाएँ।">No available practice matches this search.</p></section>
+            </main>
         </div>
+        <section class="ritual-pathway" id="ritual-pathway"><div><p class="ritual-kicker" data-en="A respectful first step" data-hi="सम्मानपूर्ण पहला कदम">A respectful first step</p><h2 data-en="New to Sanatan practices?" data-hi="सनातन साधनाओं की शुरुआत">New to Sanatan practices?</h2><p data-en="Begin with context, thoughtful preparation and a simple practice suited to your tradition." data-hi="संदर्भ समझें, सम्मानपूर्वक तैयारी करें और अपनी परंपरा के अनुरूप सरल साधना से आरंभ करें।">Begin with context, thoughtful preparation and a simple practice suited to your tradition.</p></div><ol><li><b>1</b><span><strong data-en="Understand purpose" data-hi="उद्देश्य समझें">Understand purpose</strong><small data-en="Learn the meaning and context." data-hi="अर्थ और संदर्भ जानें।">Learn the meaning and context.</small></span></li><li><b>2</b><span><strong data-en="Prepare respectfully" data-hi="सम्मानपूर्वक तैयारी">Prepare respectfully</strong><small data-en="Keep the space clean and calm." data-hi="स्थान स्वच्छ और शांत रखें।">Keep the space clean and calm.</small></span></li><li><b>3</b><span><strong data-en="Follow trusted guidance" data-hi="विश्वसनीय मार्गदर्शन लें">Follow trusted guidance</strong><small data-en="Respect family and lineage customs." data-hi="कुल और संप्रदाय की रीति का सम्मान करें।">Respect family and lineage customs.</small></span></li></ol><div class="ritual-pathway-actions"><button type="button" onclick="showText('meditation')" data-en="Open the beginner pathway" data-hi="आरंभिक मार्ग खोलें">Open the beginner pathway</button><button type="button" onclick="showText('puja')" data-en="Understand Puja →" data-hi="पूजा समझें →">Understand Puja →</button><button type="button" onclick="showText('japa')" data-en="Learn about Japa →" data-hi="जप जानें →">Learn about Japa →</button></div></section>
+        <section class="ritual-source-note" id="ritual-source-note"><span class="ritual-source-icon" aria-hidden="true">▤</span><div><h2 data-en="Tradition & Source Note" data-hi="परंपरा और स्रोत टिप्पणी">Tradition & Source Note</h2><p data-en="Procedures, names and materials vary by region, sampradaya, temple and family tradition. These guides are educational overviews, not universal mandatory instructions." data-hi="विधियाँ, नाम और सामग्री क्षेत्र, संप्रदाय, मंदिर और पारिवारिक परंपरा के अनुसार बदलते हैं। ये शैक्षिक परिचय हैं, सार्वभौमिक अनिवार्य निर्देश नहीं।">Procedures, names and materials vary by region, sampradaya, temple and family tradition.</p></div><a href="https://vedicheritage.gov.in/vedangas/kalpa/" target="_blank" rel="noopener" data-en="Sources and methodology ↗" data-hi="स्रोत और पद्धति ↗">Sources and methodology ↗</a></section>
         <div id="rituals-comments" class="comments-section" style="margin-top:2rem;"></div>
     </div>
 
@@ -5244,13 +5275,15 @@ function showText(id) {
     const isResourceReader = Array.isArray(window.sacredResourceReaderIds) && window.sacredResourceReaderIds.includes(id) && typeof window.renderSacredResourceReader === 'function';
     const isMantraReader = Array.isArray(window.mantraReaderIds) && window.mantraReaderIds.includes(id) && typeof window.renderMantraReader === 'function';
     const isDeityReader = Array.isArray(window.deityReaderIds) && window.deityReaderIds.includes(id) && typeof window.renderDeityReader === 'function';
+    const isRitualReader = Array.isArray(window.ritualReaderIds) && window.ritualReaderIds.includes(id) && typeof window.renderRitualReader === 'function';
     
     if (display) {
         display.classList.toggle('gita-display', isGitaReader);
         display.classList.toggle('scripture-display', isResourceReader);
         display.classList.toggle('mantra-display', isMantraReader);
         display.classList.toggle('deity-display', isDeityReader);
-        display.innerHTML = ((isGitaReader || isResourceReader || isMantraReader || isDeityReader) ? '' : `<button class="back-btn" onclick="goBack()">← Back</button>`) + (isDeityReader ? window.renderDeityReader(id) : getTextContent(id));
+        display.classList.toggle('ritual-display', isRitualReader);
+        display.innerHTML = ((isGitaReader || isResourceReader || isMantraReader || isDeityReader || isRitualReader) ? '' : `<button class="back-btn" onclick="goBack()">← Back</button>`) + (isRitualReader ? window.renderRitualReader(id) : (isDeityReader ? window.renderDeityReader(id) : getTextContent(id)));
         display.style.display = 'block';
         // Populate verse divs ONLY inside text-display (avoids circular call with applyLanguage)
         const lang = currentLang || 'en';
@@ -5277,6 +5310,12 @@ function showText(id) {
         }
         if (isDeityReader && typeof window.initDeityReader === 'function') {
             window.setTimeout(window.initDeityReader, 0);
+            if (previousTextId !== id) {
+                window.setTimeout(() => display.scrollIntoView({ behavior: 'smooth', block: 'start' }), 20);
+            }
+        }
+        if (isRitualReader && typeof window.initRitualReader === 'function') {
+            window.setTimeout(window.initRitualReader, 0);
             if (previousTextId !== id) {
                 window.setTimeout(() => display.scrollIntoView({ behavior: 'smooth', block: 'start' }), 20);
             }
@@ -5491,6 +5530,7 @@ function showSection(id) {
     if (id === 'panchang') setTimeout(displayTodaysPanchang, 80);
     if (id === 'mantras' && typeof window.initMantraLibrary === 'function') setTimeout(window.initMantraLibrary, 30);
     if (id === 'deities' && typeof window.initDeityLibrary === 'function') setTimeout(window.initDeityLibrary, 30);
+    if (id === 'rituals' && typeof window.initRitualLibrary === 'function') setTimeout(window.initRitualLibrary, 30);
 
     const display = document.getElementById('text-display');
     if (display) display.style.display = 'none';
@@ -14049,6 +14089,7 @@ function searchSacredTexts() { _applySacredTextFilters(); }
 <script src="scripture-readers.js"></script>
 <script src="mantra-experience.js"></script>
 <script src="deity-experience.js"></script>
+<script src="ritual-experience.js"></script>
 
 </body>
 </html>

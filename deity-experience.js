@@ -71,7 +71,7 @@
       sourceUrl: 'https://www.britishmuseum.org/collection/object/A_1920-0917-0-112', sourceName: 'British Museum — Rama and Lakshmana'
     },
     durga: {
-      title: 'Durga', titleHi: 'दुर्गा', honorific: 'Goddess Durga', honorificHi: 'माँ दुर्गा', category: 'devi', categoryLabel: pair('Devi', 'देवी'), image: 'assets/deity-durga.webp', museumImage: true,
+      title: 'Durga', titleHi: 'दुर्गा', honorific: 'Goddess Durga', honorificHi: 'माँ दुर्गा', category: 'devi', categoryLabel: pair('Devi', 'देवी'), image: 'assets/deity-durga.webp',
       subtitle: pair('The Divine Mother revered as strength, protection and victory over disorder.', 'शक्ति, संरक्षण और अधर्म पर विजय के रूप में पूजित दिव्य माता।'), tradition: pair('Shakta and regional traditions', 'शाक्त और क्षेत्रीय परंपराएँ'),
       overview: pair('Durga is revered as the powerful and protective Divine Mother. In Devi traditions she confronts forces that destabilise cosmic and moral order, while remaining compassionate toward devotees.', 'दुर्गा को शक्तिशाली और रक्षक दिव्य माता के रूप में पूजित किया जाता है। देवी परंपराओं में वे ब्रह्मांडीय और नैतिक व्यवस्था को बाधित करने वाली शक्तियों का सामना करती हैं और भक्तों के प्रति करुणामयी रहती हैं।'),
       themes: [item('Protective Strength', 'रक्षक शक्ति', 'Power is directed toward protection and restoration of balance.', 'शक्ति का उपयोग संरक्षण और संतुलन की पुनर्स्थापना के लिए होता है.', 'shield'), item('Courage', 'साहस', 'Durga’s composure models courage without panic.', 'दुर्गा का धैर्य भय से परे साहस का आदर्श प्रस्तुत करता है.', 'lion'), item('Divine Mother', 'दिव्य माता', 'Fierceness and compassion coexist in many Devi traditions.', 'अनेक देवी परंपराओं में उग्रता और करुणा साथ रहती हैं.', 'lotus')],
@@ -119,7 +119,7 @@
       sourceUrl: 'https://www.metmuseum.org/art/collection/search/37397', sourceName: 'The Met — Chola Ganesha'
     },
     hanuman: {
-      title: 'Hanuman', titleHi: 'हनुमान', honorific: 'Lord Hanuman', honorificHi: 'भगवान हनुमान', category: 'beloved', categoryLabel: pair('Beloved Deity', 'लोकप्रिय आराध्य'), image: 'assets/deity-hanuman.webp', museumImage: true,
+      title: 'Hanuman', titleHi: 'हनुमान', honorific: 'Lord Hanuman', honorificHi: 'भगवान हनुमान', category: 'beloved', categoryLabel: pair('Beloved Deity', 'लोकप्रिय आराध्य'), image: 'assets/deity-hanuman.webp',
       subtitle: pair('Devotee of Rama, honoured for courage, service and unwavering bhakti.', 'रामभक्त, साहस, सेवा और अटूट भक्ति के लिए पूजित।'), tradition: pair('Ram, Vaishnava and broad devotional traditions', 'राम, वैष्णव और व्यापक भक्ति परंपराएँ'),
       overview: pair('Hanuman is a central figure of the Ramayana and a widely revered exemplar of devotion, courage, strength and selfless service. Traditions remember him as learned, eloquent and wholly dedicated to Rama.', 'हनुमान रामायण के केंद्रीय पात्र और भक्ति, साहस, शक्ति तथा निस्वार्थ सेवा के व्यापक आदर्श हैं। परंपराएँ उन्हें विद्वान, वाक्पटु और राम के प्रति पूर्णतः समर्पित मानती हैं।'),
       themes: [item('Bhakti', 'भक्ति', 'Hanuman’s strength is directed by devotion rather than pride.', 'हनुमान की शक्ति अहंकार नहीं, भक्ति से संचालित होती है.', 'lotus'), item('Selfless Service', 'निस्वार्थ सेवा', 'Action is offered for the welfare of others and in loyalty to dharma.', 'कर्म दूसरों के कल्याण और धर्म के प्रति निष्ठा में अर्पित है.', 'hand'), item('Courage', 'साहस', 'Courage joins physical ability with resolve and clarity.', 'साहस शारीरिक क्षमता को संकल्प और स्पष्टता से जोड़ता है.', 'mace')],

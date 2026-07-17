@@ -16,10 +16,8 @@ The MIT license text below also applies to the Panchang core.
 
 The following deity reference images are cropped and WebP-converted derivatives of public-domain works supplied through The Metropolitan Museum of Art Open Access program:
 
-- `assets/deity-durga.webp` — [The Goddess Durga Slaying the Demon Buffalo Mahisha](https://www.metmuseum.org/art/collection/search/74502).
 - `assets/deity-lakshmi.webp` — [Lakshmi](https://www.metmuseum.org/art/collection/search/78264).
 - `assets/deity-saraswati.webp` — [Goddess Sarasvati](https://www.metmuseum.org/art/collection/search/849503).
-- `assets/deity-hanuman.webp` — [Hanuman Conversing](https://www.metmuseum.org/art/collection/search/38945).
 
 The Met marks these source images as Public Domain and provides them through its [Open Access program](https://www.metmuseum.org/policies/terms-and-conditions#open-access).
 

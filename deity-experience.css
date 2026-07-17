@@ -389,6 +389,8 @@
   color: var(--deity-muted);
 }
 
+.deity-no-results[hidden] { display: none; }
+
 .deity-featured-card {
   padding: .55rem;
   border-radius: 11px;
