@@ -48,6 +48,7 @@
     <link rel="stylesheet" href="gita-reader.css">
     <link rel="stylesheet" href="scripture-readers.css">
     <link rel="stylesheet" href="mantra-experience.css">
+    <link rel="stylesheet" href="deity-experience.css">
     <style>
         /* ========== YOUR EXISTING CSS (unchanged) ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1301,27 +1302,52 @@ body.dark-theme .paath-library-intro, body.dark-theme .paath-library-card:not(.f
     </div>
 
     <!-- DEITIES -->
-    <div id="deities" class="section">
-        <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Divine Deities" data-hi="दिव्य देवी-देवता">Divine Deities</h2>
-        <div class="cards-grid">
-            <div class="card" onclick="showText('brahma')"><div class="icon">🌟</div><h3 data-en="Brahma" data-hi="ब्रह्मा">Brahma</h3><p data-en="Creator of the universe in the Trimurti. Associated with creation, knowledge, and Vedas." data-hi="त्रिमूर्ति में ब्रह्मांड के निर्माता। सृजन, ज्ञान और वेदों से जुड़े हैं।">Creator of the universe in the Trimurti. Associated with creation, knowledge, and Vedas.</p></div>
-            <div class="card" onclick="showText('vishnu')"><div class="icon">🪷</div><h3 data-en="Vishnu" data-hi="विष्णु">Vishnu</h3><p data-en="Preserver with ten avatars including Rama and Krishna. Maintains cosmic dharma." data-hi="राम और कृष्ण सहित दस अवतारों वाले पालनकर्ता। ब्रह्मांडीय धर्म की रक्षा करते हैं।">Preserver with ten avatars including Rama and Krishna. Maintains cosmic dharma.</p></div>
-            <div class="card" onclick="showText('shiva')">  <!-- Change from showText('shiva') to this -->
-    <div class="icon">🔱</div>
-    <h3 data-en="Shiva" data-hi="शिव">Shiva</h3>
-    <p data-en="The transformer, supreme yogi, lord of cosmic dance (Nataraja), and meditation."
-       data-hi="संहारकर्ता, परम योगी, ब्रह्मांडीय नृत्य (नटराज) और ध्यान के स्वामी।">
-        The transformer, supreme yogi, lord of cosmic dance (Nataraja), and meditation.
-    </p>
-</div>
-            <div class="card" onclick="showText('krishna')"><div class="icon">🦚</div><h3 data-en="Krishna" data-hi="कृष्ण">Krishna</h3><p data-en="Eighth Vishnu avatar, Gita teacher, embodiment of divine love and wisdom." data-hi="विष्णु के आठवें अवतार, गीता के शिक्षक, दिव्य प्रेम और ज्ञान के अवतार।">Eighth Vishnu avatar, Gita teacher, embodiment of divine love and wisdom.</p></div>
-            <div class="card" onclick="showText('rama')"><div class="icon">🏹</div><h3 data-en="Rama" data-hi="राम">Rama</h3><p data-en="Seventh Vishnu avatar, ideal king (Maryada Purushottam), Ramayana hero." data-hi="विष्णु के सातवें अवतार, आदर्श राजा (मर्यादा पुरुषोत्तम), रामायण के नायक।">Seventh Vishnu avatar, ideal king (Maryada Purushottam), Ramayana hero.</p></div>
-            <div class="card" onclick="showText('durga')"><div class="icon">🦁</div><h3 data-en="Durga" data-hi="दुर्गा">Durga</h3><p data-en="Divine mother, warrior goddess with ten arms who destroys evil forces." data-hi="दिव्य माता, दस भुजाओं वाली योद्धा देवी जो बुरी शक्तियों का विनाश करती हैं।">Divine mother, warrior goddess with ten arms who destroys evil forces.</p><div style="margin-top:0.5rem; font-size:0.8rem; color:var(--saffron);">📿 108 Names Available</div></div>
-            <div class="card" onclick="showText('lakshmi')"><div class="icon">💫</div><h3 data-en="Lakshmi" data-hi="लक्ष्मी">Lakshmi</h3><p data-en="Goddess of wealth, prosperity, fortune. Vishnu's consort and symbol of abundance." data-hi="धन, समृद्धि, भाग्य की देवी। विष्णु की पत्नी और प्रचुरता का प्रतीक।">Goddess of wealth, prosperity, fortune. Vishnu's consort and symbol of abundance.</p></div>
-            <div class="card" onclick="showText('saraswati')"><div class="icon">🎵</div><h3 data-en="Saraswati" data-hi="सरस्वती">Saraswati</h3><p data-en="Goddess of knowledge, music, arts, wisdom. Brahma's consort, patron of learning." data-hi="ज्ञान, संगीत, कला, बुद्धि की देवी। ब्रह्मा की पत्नी, शिक्षा की संरक्षक।">Goddess of knowledge, music, arts, wisdom. Brahma's consort, patron of learning.</p></div>
-            <div class="card" onclick="showText('ganesha')"><div class="icon">🐘</div><h3 data-en="Ganesha" data-hi="गणेश">Ganesha</h3><p data-en="Elephant-headed remover of obstacles, lord of beginnings and sciences." data-hi="हाथी के सिर वाले विघ्नहर्ता, नई शुरुआत और विज्ञान के स्वामी।">Elephant-headed remover of obstacles, lord of beginnings and sciences.</p></div>
-            <div class="card" onclick="showText('hanuman')"><div class="icon">💪</div><h3 data-en="Hanuman" data-hi="हनुमान">Hanuman</h3><p data-en="Monkey god, Rama's devotee, symbol of strength, courage, and selfless service." data-hi="वानर देवता, राम के भक्त, शक्ति, साहस और निस्वार्थ सेवा के प्रतीक।">Monkey god, Rama's devotee, symbol of strength, courage, and selfless service.</p></div>
+    <div id="deities" class="section deity-library" data-deity-filter="all">
+        <nav class="deity-breadcrumb" aria-label="Breadcrumb"><button type="button" onclick="showSection('home')" data-en="Home" data-hi="होम">Home</button><span>/</span><strong data-en="Deities" data-hi="देवी-देवता">Deities</strong></nav>
+        <section class="deity-library-hero" aria-labelledby="deity-library-title">
+            <div class="deity-library-hero-copy">
+                <p class="deity-kicker" data-en="Educational knowledge library" data-hi="शैक्षिक ज्ञान संग्रह">Educational knowledge library</p>
+                <h1 id="deity-library-title">Deities <span>देवी-देवता</span></h1>
+                <p data-en="Explore divine forms, stories and symbolism honoured across Sanatan traditions." data-hi="सनातन परंपराओं में पूजित दिव्य स्वरूपों, कथाओं और प्रतीकों का परिचय।">Explore divine forms, stories and symbolism honoured across Sanatan traditions.</p>
+                <p class="deity-hero-note" data-en="Names, forms and interpretations can vary by sampradaya and region." data-hi="नाम, स्वरूप और व्याख्याएँ संप्रदाय और क्षेत्र के अनुसार भिन्न हो सकती हैं।">Names, forms and interpretations can vary by sampradaya and region.</p>
+                <div class="deity-hero-actions"><button type="button" class="deity-primary-action" onclick="deityScrollToLibrary()" data-en="Explore Deities" data-hi="देवी-देवता देखें">Explore Deities</button><button type="button" class="deity-secondary-action" onclick="deityScrollToGuide()" data-en="Understanding Divine Forms" data-hi="दिव्य स्वरूपों को समझें">Understanding Divine Forms</button></div>
+            </div>
+        </section>
+
+        <section class="deity-discovery" aria-label="Find a deity">
+            <label class="deity-search-wrap"><span class="sr-only" data-en="Search deities" data-hi="देवी-देवता खोजें">Search deities</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m16 16 5 5"></path></svg><input id="deity-search" type="search" autocomplete="off" oninput="searchDeities()" placeholder="Search by deity, form or tradition" data-placeholder-en="Search by deity, form or tradition" data-placeholder-hi="देवता, स्वरूप या परंपरा से खोजें"></label>
+            <div class="deity-filter-row" role="group" aria-label="Deity categories">
+                <button type="button" class="deity-filter active" aria-pressed="true" onclick="filterDeities('all',this)" data-en="All" data-hi="सभी">All</button>
+                <button type="button" class="deity-filter" aria-pressed="false" onclick="filterDeities('trimurti',this)" data-en="Trimurti" data-hi="त्रिमूर्ति">Trimurti</button>
+                <button type="button" class="deity-filter" aria-pressed="false" onclick="filterDeities('devi',this)" data-en="Devi" data-hi="देवी">Devi</button>
+                <button type="button" class="deity-filter" aria-pressed="false" onclick="filterDeities('avatar',this)" data-en="Avatars" data-hi="अवतार">Avatars</button>
+                <button type="button" class="deity-filter" aria-pressed="false" onclick="filterDeities('beloved',this)" data-en="Beloved Deities" data-hi="लोकप्रिय आराध्य">Beloved Deities</button>
+            </div>
+        </section>
+
+        <div class="deity-library-layout" id="deity-library-content">
+            <main class="deity-library-panel">
+                <h2 class="deity-section-title" data-en="Explore Divine Forms" data-hi="दिव्य स्वरूप देखें">Explore Divine Forms</h2>
+                <div class="deity-card-grid" id="deity-library-grid" aria-live="polite"></div>
+                <div class="deity-no-results" id="deity-no-results" hidden><p data-en="No supported deity matches this search. Try another word or clear the filters." data-hi="इस खोज से कोई उपलब्ध देवता नहीं मिला। दूसरा शब्द आज़माएँ या फ़िल्टर हटाएँ।">No supported deity matches this search. Try another word or clear the filters.</p></div>
+            </main>
+            <aside class="deity-featured-panel" aria-labelledby="deity-featured-title">
+                <h2 class="deity-section-title" id="deity-featured-title" data-en="Featured Deity" data-hi="प्रमुख देवता">Featured Deity</h2>
+                <article class="deity-featured-card">
+                    <img src="assets/deity-shiva.webp" alt="Lord Shiva meditating with trishula, damaru, crescent moon and Nandi" width="900" height="900">
+                    <div class="deity-featured-copy"><h3>Shiva / शिव</h3><p data-en="Revered across diverse traditions as the great yogi, transformer and lord of the cosmic dance." data-hi="विविध परंपराओं में महायोगी, रूपांतरणकर्ता और ब्रह्मांडीय नृत्य के स्वामी के रूप में पूजित।">Revered across diverse traditions as the great yogi, transformer and lord of the cosmic dance.</p><div class="deity-tags"><span>Trimurti</span><span data-en="Shaiva traditions" data-hi="शैव परंपराएँ">Shaiva traditions</span></div><button type="button" class="deity-primary-action" onclick="showText('shiva')" data-en="Explore Shiva" data-hi="शिव परिचय देखें">Explore Shiva</button></div>
+                    <p class="deity-featured-source" data-en="Iconography checked against museum and traditional references." data-hi="स्वरूप-विज्ञान संग्रहालय और पारंपरिक संदर्भों से जाँचा गया है।">Iconography checked against museum and traditional references.</p>
+                </article>
+                <article class="deity-guide-card" id="deity-guide">
+                    <h2 data-en="Understanding Divine Forms" data-hi="दिव्य स्वरूपों को समझना">Understanding Divine Forms</h2><h3>दिव्य स्वरूपों को समझना</h3>
+                    <p data-en="Sanatan traditions approach the Divine through many names, forms and philosophical understandings. This guide introduces iconography and stories without treating one interpretation as universal." data-hi="सनातन परंपराएँ ईश्वर को अनेक नामों, स्वरूपों और दार्शनिक दृष्टियों से समझती हैं। यह मार्गदर्शिका किसी एक व्याख्या को सार्वभौमिक माने बिना प्रतीक और कथाएँ प्रस्तुत करती है।">Sanatan traditions approach the Divine through many names, forms and philosophical understandings. This guide introduces iconography and stories without treating one interpretation as universal.</p>
+                    <div class="deity-guide-links"><button type="button" onclick="showText('brahma')">🪷 <span data-en="Names & Forms" data-hi="नाम और स्वरूप">Names & Forms</span></button><button type="button" onclick="showText('shiva')">ॐ <span data-en="Symbols & Iconography" data-hi="प्रतीक और स्वरूप-विज्ञान">Symbols & Iconography</span></button><button type="button" onclick="deityScrollToSources()">⌂ <span data-en="Traditions & Sources" data-hi="परंपराएँ और स्रोत">Traditions & Sources</span></button></div>
+                    <button type="button" class="deity-primary-action" onclick="showText('shiva')" data-en="Read the beginner guide" data-hi="आरंभिक मार्गदर्शिका पढ़ें">Read the beginner guide</button>
+                </article>
+            </aside>
         </div>
+
+        <section class="deity-source-note" id="deity-source-note"><span class="deity-source-icon" aria-hidden="true">▤</span><div><h2 data-en="Tradition & Source Note" data-hi="परंपरा और स्रोत टिप्पणी">Tradition & Source Note</h2><p data-en="Depictions reflect widely known scriptural, temple and devotional traditions. Attributes and practices can vary by region, sampradaya and family tradition." data-hi="ये चित्रण प्रसिद्ध शास्त्रीय, मंदिर और भक्ति परंपराओं को दर्शाते हैं। आयुध, स्वरूप और व्यवहार क्षेत्र, संप्रदाय और कुल परंपरा के अनुसार बदल सकते हैं।">Depictions reflect widely known scriptural, temple and devotional traditions. Attributes and practices can vary by region, sampradaya and family tradition.</p></div><button type="button" onclick="showSection('texts')" data-en="Sources and methodology ›" data-hi="स्रोत और पद्धति ›">Sources and methodology ›</button></section>
         <div id="deities-comments" class="comments-section" style="margin-top:2rem;"></div>
     </div>
 
@@ -5217,12 +5243,14 @@ function showText(id) {
     const isGitaReader = id === 'bhagavad-gita' && typeof window.renderBhagavadGitaReader === 'function';
     const isResourceReader = Array.isArray(window.sacredResourceReaderIds) && window.sacredResourceReaderIds.includes(id) && typeof window.renderSacredResourceReader === 'function';
     const isMantraReader = Array.isArray(window.mantraReaderIds) && window.mantraReaderIds.includes(id) && typeof window.renderMantraReader === 'function';
+    const isDeityReader = Array.isArray(window.deityReaderIds) && window.deityReaderIds.includes(id) && typeof window.renderDeityReader === 'function';
     
     if (display) {
         display.classList.toggle('gita-display', isGitaReader);
         display.classList.toggle('scripture-display', isResourceReader);
         display.classList.toggle('mantra-display', isMantraReader);
-        display.innerHTML = ((isGitaReader || isResourceReader || isMantraReader) ? '' : `<button class="back-btn" onclick="goBack()">← Back</button>`) + getTextContent(id);
+        display.classList.toggle('deity-display', isDeityReader);
+        display.innerHTML = ((isGitaReader || isResourceReader || isMantraReader || isDeityReader) ? '' : `<button class="back-btn" onclick="goBack()">← Back</button>`) + (isDeityReader ? window.renderDeityReader(id) : getTextContent(id));
         display.style.display = 'block';
         // Populate verse divs ONLY inside text-display (avoids circular call with applyLanguage)
         const lang = currentLang || 'en';
@@ -5243,6 +5271,12 @@ function showText(id) {
         }
         if (isMantraReader && typeof window.initMantraReader === 'function') {
             window.setTimeout(window.initMantraReader, 0);
+            if (previousTextId !== id) {
+                window.setTimeout(() => display.scrollIntoView({ behavior: 'smooth', block: 'start' }), 20);
+            }
+        }
+        if (isDeityReader && typeof window.initDeityReader === 'function') {
+            window.setTimeout(window.initDeityReader, 0);
             if (previousTextId !== id) {
                 window.setTimeout(() => display.scrollIntoView({ behavior: 'smooth', block: 'start' }), 20);
             }
@@ -5456,6 +5490,7 @@ function showSection(id) {
     if (id === 'festival-calendar') setTimeout(fcRender, 30);
     if (id === 'panchang') setTimeout(displayTodaysPanchang, 80);
     if (id === 'mantras' && typeof window.initMantraLibrary === 'function') setTimeout(window.initMantraLibrary, 30);
+    if (id === 'deities' && typeof window.initDeityLibrary === 'function') setTimeout(window.initDeityLibrary, 30);
 
     const display = document.getElementById('text-display');
     if (display) display.style.display = 'none';
@@ -14013,6 +14048,7 @@ function searchSacredTexts() { _applySacredTextFilters(); }
 <script src="gita-reader.js"></script>
 <script src="scripture-readers.js"></script>
 <script src="mantra-experience.js"></script>
+<script src="deity-experience.js"></script>
 
 </body>
 </html>
