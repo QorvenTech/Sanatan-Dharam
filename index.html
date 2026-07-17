@@ -47,6 +47,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="gita-reader.css">
     <link rel="stylesheet" href="scripture-readers.css">
+    <link rel="stylesheet" href="mantra-experience.css">
     <style>
         /* ========== YOUR EXISTING CSS (unchanged) ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1169,15 +1170,133 @@ body.dark-theme .paath-library-intro, body.dark-theme .paath-library-card:not(.f
     </div>
 
     <!-- MANTRAS -->
-    <div id="mantras" class="section">
-        <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Mantras & Prayers" data-hi="मंत्र और प्रार्थनाएं">Mantras & Prayers</h2>
-        <div class="cards-grid">
-            <div class="card" onclick="showText('gayatri-mantra')"><div class="icon">☀️</div><h3 data-en="Gayatri Mantra" data-hi="गायत्री मंत्र">Gayatri Mantra</h3><p data-en="Most sacred Rigvedic mantra invoking divine light for wisdom and spiritual awakening." data-hi="ज्ञान और आध्यात्मिक जागृति के लिए दिव्य प्रकाश का आह्वान करने वाला सबसे पवित्र ऋग्वैदिक मंत्र।">Most sacred Rigvedic mantra invoking divine light for wisdom and spiritual awakening.</p></div>
-            <div class="card" onclick="showText('maha-mrityunjaya')"><div class="icon">🔱</div><h3 data-en="Maha Mrityunjaya" data-hi="महा मृत्युंजय मंत्र">Maha Mrityunjaya</h3><p data-en="Powerful Shiva mantra for health, healing, protection, and liberation from death cycles." data-hi="स्वास्थ्य, उपचार, सुरक्षा और मृत्यु चक्र से मुक्ति के लिए शक्तिशाली शिव मंत्र।">Powerful Shiva mantra for health, healing, protection, and liberation from death cycles.</p></div>
-            <div class="card" onclick="showText('om-mantra')"><div class="icon">🕉️</div><h3 data-en="Om - Pranava" data-hi="ॐ - प्रणव">Om - Pranava</h3><p data-en="Primordial sound of cosmic consciousness. Foundation of all mantras and meditation." data-hi="ब्रह्मांडीय चेतना की आदि ध्वनि। सभी मंत्रों और ध्यान की नींव।">Primordial sound of cosmic consciousness. Foundation of all mantras and meditation.</p></div>
-            <div class="card" onclick="showText('ganesh-mantra')"><div class="icon">🐘</div><h3 data-en="Ganesh Mantras" data-hi="गणेश मंत्र">Ganesh Mantras</h3><p data-en="Mantras for removing obstacles and success in new beginnings. Om Gan Ganapataye Namaha." data-hi="विघ्न हटाने और नई शुरुआत में सफलता के लिए मंत्र। ॐ गं गणपतये नमः।">Mantras for removing obstacles and success in new beginnings. Om Gan Ganapataye Namaha.</p></div>
-            <div class="card" onclick="showText('hanuman-chalisa')"><div class="icon">💪</div><h3 data-en="Hanuman Chalisa" data-hi="हनुमान चालीसा">Hanuman Chalisa</h3><p data-en="40-verse hymn by Tulsidas for strength, courage, and protection from negativity." data-hi="तुलसीदास द्वारा रचित 40 छंदों की स्तुति। शक्ति, साहस और नकारात्मकता से सुरक्षा के लिए।">40-verse hymn by Tulsidas for strength, courage, and protection from negativity.</p></div>
+    <div id="mantras" class="section mantra-library" data-mantra-filter="all">
+        <nav class="mantra-breadcrumb" aria-label="Breadcrumb">
+            <button type="button" onclick="showSection('home')" data-en="Home" data-hi="होम">Home</button>
+            <span>/</span>
+            <strong data-en="Mantras" data-hi="मंत्र">Mantras</strong>
+        </nav>
+
+        <section class="mantra-hero" aria-labelledby="mantra-library-title">
+            <div class="mantra-hero-copy">
+                <p class="mantra-kicker" data-en="Sacred sound · thoughtful practice" data-hi="पवित्र ध्वनि · विचारपूर्ण साधना">Sacred sound · thoughtful practice</p>
+                <h1 id="mantra-library-title">Mantras<span>मंत्र संग्रह</span></h1>
+                <p data-en="Sacred Sanskrit verses for reflection, prayer and traditional practice—presented with meaning, context and respect." data-hi="चिंतन, प्रार्थना और पारंपरिक साधना के लिए पवित्र संस्कृत मंत्र—अर्थ, संदर्भ और सम्मान के साथ।">Sacred Sanskrit verses for reflection, prayer and traditional practice—presented with meaning, context and respect.</p>
+                <div class="mantra-hero-actions">
+                    <button type="button" class="mantra-primary-action" onclick="mantraScrollToLibrary()" data-en="Explore Mantras" data-hi="मंत्र देखें">Explore Mantras</button>
+                    <button type="button" class="mantra-secondary-action" onclick="mantraOpenPracticeGuide()" data-en="Practice Guide" data-hi="अभ्यास मार्गदर्शिका">Practice Guide</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="mantra-discovery" aria-label="Find a mantra">
+            <label class="mantra-search-wrap">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m15.4 15.4 5.1 5.1"></path></svg>
+                <span class="sr-only" data-en="Search mantras" data-hi="मंत्र खोजें">Search mantras</span>
+                <input id="mantra-search" type="search" autocomplete="off" oninput="searchMantras()" placeholder="Search by mantra, tradition or purpose" aria-label="Search mantras">
+            </label>
+            <div class="mantra-filter-row" role="group" aria-label="Filter mantras">
+                <button type="button" class="mantra-filter active" aria-pressed="true" onclick="filterMantras('all',this)" data-en="All" data-hi="सभी">All</button>
+                <button type="button" class="mantra-filter" aria-pressed="false" onclick="filterMantras('vedic',this)" data-en="Vedic" data-hi="वैदिक">Vedic</button>
+                <button type="button" class="mantra-filter" aria-pressed="false" onclick="filterMantras('shiva',this)" data-en="Shiva" data-hi="शिव">Shiva</button>
+                <button type="button" class="mantra-filter" aria-pressed="false" onclick="filterMantras('ganesha',this)" data-en="Ganesha" data-hi="गणेश">Ganesha</button>
+                <button type="button" class="mantra-filter" aria-pressed="false" onclick="filterMantras('meditation',this)" data-en="Meditation" data-hi="ध्यान">Meditation</button>
+            </div>
+        </section>
+
+        <div class="mantra-library-columns">
+            <section aria-labelledby="featured-mantra-title">
+                <h2 class="mantra-section-title" id="featured-mantra-title" data-en="Featured Mantra" data-hi="विशेष मंत्र">Featured Mantra</h2>
+                <article class="mantra-featured" data-mantra-categories="vedic meditation" data-mantra-search="gayatri mantra गायत्री मंत्र rigveda rigvedic savitr wisdom reflection illumination ध्यान वैदिक">
+                    <img class="mantra-featured-image" src="assets/mantra-gayatri.webp" alt="Traditional golden sun illustration for the Gayatri Mantra" width="760" height="760">
+                    <div class="mantra-featured-copy">
+                        <div class="mantra-card-heading">
+                            <h3>Gayatri Mantra<span>गायत्री मंत्र</span></h3>
+                            <button type="button" class="mantra-save-icon favorite-btn" data-content-id="gayatri-mantra" data-content-title="गायत्री मंत्र" data-content-title-en="Gayatri Mantra" data-section="mantras" aria-label="Save Gayatri Mantra" aria-pressed="false" onclick="mantraToggleFavorite(this)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h11v17l-5.5-3.6-5.5 3.6z"></path></svg></button>
+                        </div>
+                        <div class="mantra-tags"><span class="mantra-tag" data-en="Rigvedic" data-hi="ऋग्वैदिक">Rigvedic</span><span class="mantra-tag" data-en="Text only" data-hi="केवल पाठ">Text only</span></div>
+                        <p data-en="A traditional invocation to Savitr, presented for prayer, reflection and clarity." data-hi="सविता देव का पारंपरिक आवाहन, प्रार्थना, चिंतन और सद्बुद्धि के लिए प्रस्तुत।">A traditional invocation to Savitr, presented for prayer, reflection and clarity.</p>
+                        <div class="mantra-card-purpose" data-en="Reflection · illumination" data-hi="चिंतन · सद्बुद्धि">Reflection · illumination</div>
+                        <button type="button" class="mantra-card-open" onclick="showText('gayatri-mantra')" data-en="Begin practice" data-hi="अभ्यास आरंभ करें">Begin practice</button>
+                    </div>
+                </article>
+            </section>
+
+            <section class="mantra-library-panel" id="mantra-library-panel" aria-labelledby="browse-mantras-title">
+                <h2 class="mantra-section-title" id="browse-mantras-title" data-en="Mantra Library" data-hi="मंत्र संग्रह">Mantra Library</h2>
+                <div class="mantra-card-grid">
+                    <article class="mantra-library-card" data-mantra-categories="vedic meditation" data-mantra-search="gayatri mantra गायत्री मंत्र rigveda rigvedic savitr wisdom reflection illumination meditation वैदिक ध्यान">
+                        <button type="button" class="mantra-save-icon favorite-btn" data-content-id="gayatri-mantra" data-content-title="गायत्री मंत्र" data-content-title-en="Gayatri Mantra" data-section="mantras" aria-label="Save Gayatri Mantra" aria-pressed="false" onclick="mantraToggleFavorite(this)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h11v17l-5.5-3.6-5.5 3.6z"></path></svg></button>
+                        <h3>Gayatri Mantra<span>गायत्री मंत्र</span></h3>
+                        <img class="mantra-card-art" src="assets/mantra-gayatri.webp" alt="Golden sun symbol" width="760" height="760" loading="lazy">
+                        <div class="mantra-tags"><span class="mantra-tag" data-en="Rigvedic" data-hi="ऋग्वैदिक">Rigvedic</span><span class="mantra-tag" data-en="Text only" data-hi="केवल पाठ">Text only</span></div>
+                        <p data-en="A prayer to Savitr, traditionally recited for reflection and clarity." data-hi="सविता देव की प्रार्थना, पारंपरिक रूप से चिंतन और सद्बुद्धि के लिए।">A prayer to Savitr, traditionally recited for reflection and clarity.</p>
+                        <div class="mantra-card-purpose" data-en="Wisdom & reflection" data-hi="सद्बुद्धि और चिंतन">Wisdom & reflection</div>
+                        <button type="button" class="mantra-card-open" onclick="showText('gayatri-mantra')" data-en="Begin practice" data-hi="अभ्यास आरंभ करें">Begin practice</button>
+                    </article>
+
+                    <article class="mantra-library-card" data-mantra-categories="vedic shiva meditation" data-mantra-search="maha mrityunjaya महामृत्युंजय मंत्र shiva rudra rigveda courage contemplation prayer शिव वैदिक ध्यान">
+                        <button type="button" class="mantra-save-icon favorite-btn" data-content-id="maha-mrityunjaya" data-content-title="महामृत्युंजय मंत्र" data-content-title-en="Maha Mrityunjaya Mantra" data-section="mantras" aria-label="Save Maha Mrityunjaya Mantra" aria-pressed="false" onclick="mantraToggleFavorite(this)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h11v17l-5.5-3.6-5.5 3.6z"></path></svg></button>
+                        <h3>Maha Mrityunjaya<span>महामृत्युंजय मंत्र</span></h3>
+                        <img class="mantra-card-art" src="assets/mantra-shiva.webp" alt="Lord Shiva in meditation" width="760" height="760" loading="lazy">
+                        <div class="mantra-tags"><span class="mantra-tag" data-en="Shiva tradition" data-hi="शिव परंपरा">Shiva tradition</span><span class="mantra-tag" data-en="Text only" data-hi="केवल पाठ">Text only</span></div>
+                        <p data-en="A Vedic prayer associated with Shiva, courage and freedom from fear." data-hi="शिव से संबंधित साहस, चिंतन और भय से मुक्ति की वैदिक प्रार्थना।">A Vedic prayer associated with Shiva, courage and freedom from fear.</p>
+                        <div class="mantra-card-purpose" data-en="Prayer & contemplation" data-hi="प्रार्थना और चिंतन">Prayer & contemplation</div>
+                        <button type="button" class="mantra-card-open" onclick="showText('maha-mrityunjaya')" data-en="Begin practice" data-hi="अभ्यास आरंभ करें">Begin practice</button>
+                    </article>
+
+                    <article class="mantra-library-card" data-mantra-categories="vedic meditation" data-mantra-search="om pranava ॐ प्रणव mandukya upanishad sacred syllable meditation ध्यान वैदिक">
+                        <button type="button" class="mantra-save-icon favorite-btn" data-content-id="om-mantra" data-content-title="ॐ — प्रणव" data-content-title-en="Om — Pranava" data-section="mantras" aria-label="Save Om Pranava" aria-pressed="false" onclick="mantraToggleFavorite(this)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h11v17l-5.5-3.6-5.5 3.6z"></path></svg></button>
+                        <h3>Om — Pranava<span>ॐ प्रणव</span></h3>
+                        <div class="mantra-om-art" aria-hidden="true">ॐ</div>
+                        <div class="mantra-tags"><span class="mantra-tag" data-en="Sacred syllable" data-hi="पवित्र अक्षर">Sacred syllable</span><span class="mantra-tag" data-en="Text only" data-hi="केवल पाठ">Text only</span></div>
+                        <p data-en="The sacred syllable contemplated across many Sanatan traditions." data-hi="अनेक सनातन परंपराओं में चिंतन किया जाने वाला पवित्र प्रणव।">The sacred syllable contemplated across many Sanatan traditions.</p>
+                        <div class="mantra-card-purpose" data-en="Meditation" data-hi="ध्यान">Meditation</div>
+                        <button type="button" class="mantra-card-open" onclick="showText('om-mantra')" data-en="Begin practice" data-hi="अभ्यास आरंभ करें">Begin practice</button>
+                    </article>
+
+                    <article class="mantra-library-card" data-mantra-categories="ganesha" data-mantra-search="ganesh ganesha mantra गणेश मंत्र ganapati ganapataye invocation beginnings prayer गाणपत्य">
+                        <button type="button" class="mantra-save-icon favorite-btn" data-content-id="ganesh-mantra" data-content-title="गणेश मंत्र" data-content-title-en="Ganesh Mantra" data-section="mantras" aria-label="Save Ganesh Mantra" aria-pressed="false" onclick="mantraToggleFavorite(this)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h11v17l-5.5-3.6-5.5 3.6z"></path></svg></button>
+                        <h3>Ganesh Mantra<span>गणेश मंत्र</span></h3>
+                        <img class="mantra-card-art" src="assets/mantra-ganesha.webp" alt="Traditional illustration of Lord Ganesha" width="760" height="760" loading="lazy">
+                        <div class="mantra-tags"><span class="mantra-tag" data-en="Ganapatya tradition" data-hi="गाणपत्य परंपरा">Ganapatya tradition</span><span class="mantra-tag" data-en="Text only" data-hi="केवल पाठ">Text only</span></div>
+                        <p data-en="A concise traditional salutation to Ganapati at a mindful beginning." data-hi="मंगल और सजग आरंभ में गणपति को अर्पित संक्षिप्त पारंपरिक नमस्कार।">A concise traditional salutation to Ganapati at a mindful beginning.</p>
+                        <div class="mantra-card-purpose" data-en="Beginnings & prayer" data-hi="आरंभ और प्रार्थना">Beginnings & prayer</div>
+                        <button type="button" class="mantra-card-open" onclick="showText('ganesh-mantra')" data-en="Begin practice" data-hi="अभ्यास आरंभ करें">Begin practice</button>
+                    </article>
+                </div>
+                <div class="mantra-no-results" id="mantra-no-results" hidden><p data-en="No supported mantra matches this search. Try another word or clear the filters." data-hi="इस खोज से कोई उपलब्ध मंत्र नहीं मिला। दूसरा शब्द आज़माएँ या फ़िल्टर हटाएँ।">No supported mantra matches this search. Try another word or clear the filters.</p></div>
+            </section>
         </div>
+
+        <section class="mantra-support-grid" id="mantra-start-here" aria-label="Mantra guidance and related resources">
+            <article class="mantra-support-card">
+                <h2 data-en="Start here" data-hi="यहाँ से आरंभ करें">Start here</h2>
+                <div class="mantra-start-links">
+                    <button type="button" onclick="showText('gayatri-mantra')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c2.1 2.3 2.6 4.2 1.4 5.8-.9 1.2-2.8 1.4-3.9.4C7.8 6.9 9.1 4.5 12 2.2z"></path><path d="M4 11h16c-.7 5.1-3.5 8-8 8s-7.3-2.9-8-8zM3 21h18"></path></svg><span><strong data-en="New to mantra practice?" data-hi="मंत्र अभ्यास में नए हैं?">New to mantra practice?</strong><small data-en="Learn the basics and begin with respect." data-hi="मूल बातें समझें और सम्मान से आरंभ करें।">Learn the basics and begin with respect.</small></span></button>
+                    <button type="button" onclick="showText('om-mantra')"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v4m0 12v4M2 12h4m12 0h4M4.9 4.9l2.8 2.8m8.6 8.6 2.8 2.8m0-14.2-2.8 2.8m-8.6 8.6-2.8 2.8"></path></svg><span><strong data-en="Short daily reflection" data-hi="संक्षिप्त दैनिक चिंतन">Short daily reflection</strong><small data-en="Use a simple text at your own pace." data-hi="सरल पाठ को अपनी गति से पढ़ें।">Use a simple text at your own pace.</small></span></button>
+                    <button type="button" onclick="showText('gayatri-mantra')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v11H9l-5 4z"></path><path d="M8 8h8M8 11h5"></path></svg><span><strong data-en="Understanding pronunciation" data-hi="उच्चारण को समझें">Understanding pronunciation</strong><small data-en="Guidance for learning with clarity and care." data-hi="स्पष्टता और सावधानी से सीखने का मार्गदर्शन।">Guidance for learning with clarity and care.</small></span></button>
+                </div>
+            </article>
+
+            <article class="mantra-support-card">
+                <div class="mantra-support-heading"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20c-4-2.2-6-5.2-6-9 3.4.2 5.3 1.6 6 4.3.7-2.7 2.6-4.1 6-4.3 0 3.8-2 6.8-6 9z"></path><path d="M12 15.3C9.4 12.6 9.4 7.8 12 3c2.6 4.8 2.6 9.6 0 12.3zM4 21h16"></path></svg><div><h3 data-en="Respectful practice note" data-hi="सम्मानपूर्वक अभ्यास">Respectful practice note</h3><p data-en="Pronunciation and customs vary by lineage and tradition. Some practices require guidance or initiation. This library supports learning and reflection; no outcomes are promised or guaranteed." data-hi="उच्चारण और रीति परंपरा के अनुसार बदलते हैं। कुछ साधनाओं में मार्गदर्शन या दीक्षा आवश्यक होती है। यह संग्रह सीखने और चिंतन के लिए है; किसी फल की गारंटी नहीं देता।">Pronunciation and customs vary by lineage and tradition. Some practices require guidance or initiation. This library supports learning and reflection; no outcomes are promised or guaranteed.</p></div></div>
+            </article>
+
+            <article class="mantra-support-card">
+                <h3 data-en="Related resources" data-hi="संबंधित संसाधन">Related resources</h3>
+                <div class="mantra-resource-links">
+                    <button type="button" onclick="showSection('paathmandir')"><img src="assets/paath-hanuman-chalisa.png" alt="Hanuman Chalisa" width="50" height="45" loading="lazy"><span><strong>Hanuman Chalisa</strong><small data-en="Paath Mandir" data-hi="पाठ मंदिर">Paath Mandir</small></span><b>›</b></button>
+                    <button type="button" onclick="showSection('aarti')"><img src="assets/festival-diwali.webp" alt="Lit oil lamps" width="50" height="45" loading="lazy"><span><strong data-en="Browse Aarti" data-hi="आरती संग्रह">Browse Aarti</strong><small data-en="Devotional prayers" data-hi="भक्तिमय प्रार्थनाएँ">Devotional prayers</small></span><b>›</b></button>
+                </div>
+            </article>
+        </section>
+
+        <section class="mantra-trust-strip">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V10h14v11M4 10h16L12 3zM9 21v-6h6v6M8 11v2m8-2v2"></path></svg>
+            <div><strong data-en="Source & trust" data-hi="स्रोत और विश्वास">Source & trust</strong><p data-en="Content is checked against traditional scriptures and respected references with careful cross-referencing." data-hi="सामग्री को पारंपरिक ग्रंथों और सम्मानित संदर्भों से सावधानीपूर्वक जाँचा जाता है।">Content is checked against traditional scriptures and respected references with careful cross-referencing.</p></div>
+            <div><small data-en="Method: scripture-based references · traditional context · cross-checking · transparent limitations" data-hi="पद्धति: शास्त्रीय संदर्भ · पारंपरिक संदर्भ · परस्पर जाँच · सीमाओं की स्पष्ट जानकारी">Method: scripture-based references · traditional context · cross-checking · transparent limitations</small></div>
+        </section>
         <div id="mantras-comments" class="comments-section" style="margin-top:2rem;"></div>
     </div>
 
@@ -5097,11 +5216,13 @@ function showText(id) {
     const active = document.querySelector('.section.active');
     const isGitaReader = id === 'bhagavad-gita' && typeof window.renderBhagavadGitaReader === 'function';
     const isResourceReader = Array.isArray(window.sacredResourceReaderIds) && window.sacredResourceReaderIds.includes(id) && typeof window.renderSacredResourceReader === 'function';
+    const isMantraReader = Array.isArray(window.mantraReaderIds) && window.mantraReaderIds.includes(id) && typeof window.renderMantraReader === 'function';
     
     if (display) {
         display.classList.toggle('gita-display', isGitaReader);
         display.classList.toggle('scripture-display', isResourceReader);
-        display.innerHTML = ((isGitaReader || isResourceReader) ? '' : `<button class="back-btn" onclick="goBack()">← Back</button>`) + getTextContent(id);
+        display.classList.toggle('mantra-display', isMantraReader);
+        display.innerHTML = ((isGitaReader || isResourceReader || isMantraReader) ? '' : `<button class="back-btn" onclick="goBack()">← Back</button>`) + getTextContent(id);
         display.style.display = 'block';
         // Populate verse divs ONLY inside text-display (avoids circular call with applyLanguage)
         const lang = currentLang || 'en';
@@ -5116,6 +5237,12 @@ function showText(id) {
         }
         if (isResourceReader && typeof window.initSacredResourceReader === 'function') {
             window.setTimeout(window.initSacredResourceReader, 0);
+            if (previousTextId !== id) {
+                window.setTimeout(() => display.scrollIntoView({ behavior: 'smooth', block: 'start' }), 20);
+            }
+        }
+        if (isMantraReader && typeof window.initMantraReader === 'function') {
+            window.setTimeout(window.initMantraReader, 0);
             if (previousTextId !== id) {
                 window.setTimeout(() => display.scrollIntoView({ behavior: 'smooth', block: 'start' }), 20);
             }
@@ -5321,10 +5448,14 @@ function showSection(id) {
     if (typeof dsPlUnsubscribe === 'function' && id !== 'divine-sangrah') dsPlUnsubscribe();
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     const section = document.getElementById(id);
-    if (section) section.classList.add('active');
+    if (section) {
+        section.classList.add('active');
+        section.style.display = '';
+    }
     if (id === 'divine-sangrah') { setTimeout(dsInit, 50); setTimeout(dsPlRender, 80); }
     if (id === 'festival-calendar') setTimeout(fcRender, 30);
     if (id === 'panchang') setTimeout(displayTodaysPanchang, 80);
+    if (id === 'mantras' && typeof window.initMantraLibrary === 'function') setTimeout(window.initMantraLibrary, 30);
 
     const display = document.getElementById('text-display');
     if (display) display.style.display = 'none';
@@ -5399,6 +5530,9 @@ function getTextContent(id) {
     }
     if (Array.isArray(window.sacredResourceReaderIds) && window.sacredResourceReaderIds.includes(id) && typeof window.renderSacredResourceReader === 'function') {
         return window.renderSacredResourceReader(id);
+    }
+    if (Array.isArray(window.mantraReaderIds) && window.mantraReaderIds.includes(id) && typeof window.renderMantraReader === 'function') {
+        return window.renderMantraReader(id);
     }
     const contents = {
         'bhagavad-gita': {
@@ -13878,6 +14012,7 @@ function searchSacredTexts() { _applySacredTextFilters(); }
 <script src="paath-readers.js"></script>
 <script src="gita-reader.js"></script>
 <script src="scripture-readers.js"></script>
+<script src="mantra-experience.js"></script>
 
 </body>
 </html>
