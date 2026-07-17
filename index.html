@@ -50,6 +50,7 @@
     <link rel="stylesheet" href="mantra-experience.css">
     <link rel="stylesheet" href="deity-experience.css">
     <link rel="stylesheet" href="ritual-experience.css">
+    <link rel="stylesheet" href="aarti-experience.css">
     <style>
         /* ========== YOUR EXISTING CSS (unchanged) ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -4175,7 +4176,8 @@ body.dark-theme .paath-library-intro, body.dark-theme .paath-library-card:not(.f
 
     <div id="text-display" style="display:none;"></div>
     <!-- AARTI SECTION -->
-    <div id="aarti" class="section">
+    <div id="aarti" class="section aarti-library">
+        <div id="aarti-experience-library"></div>
         <h2 style="text-align:center;color:var(--saffron);font-size:2rem;margin-bottom:2rem;" data-en="Aarti – Devotional Hymns" data-hi="आरती – भक्ति गीत">Aarti – Devotional Hymns</h2>
         <div class="cards-grid" id="aartiGrid">
             <!-- Ganesh Aarti card -->
@@ -5276,6 +5278,7 @@ function showText(id) {
     const isMantraReader = Array.isArray(window.mantraReaderIds) && window.mantraReaderIds.includes(id) && typeof window.renderMantraReader === 'function';
     const isDeityReader = Array.isArray(window.deityReaderIds) && window.deityReaderIds.includes(id) && typeof window.renderDeityReader === 'function';
     const isRitualReader = Array.isArray(window.ritualReaderIds) && window.ritualReaderIds.includes(id) && typeof window.renderRitualReader === 'function';
+    const isAartiReader = Array.isArray(window.aartiReaderIds) && window.aartiReaderIds.includes(id) && typeof window.renderAartiReader === 'function';
     
     if (display) {
         display.classList.toggle('gita-display', isGitaReader);
@@ -5283,7 +5286,8 @@ function showText(id) {
         display.classList.toggle('mantra-display', isMantraReader);
         display.classList.toggle('deity-display', isDeityReader);
         display.classList.toggle('ritual-display', isRitualReader);
-        display.innerHTML = ((isGitaReader || isResourceReader || isMantraReader || isDeityReader || isRitualReader) ? '' : `<button class="back-btn" onclick="goBack()">← Back</button>`) + (isRitualReader ? window.renderRitualReader(id) : (isDeityReader ? window.renderDeityReader(id) : getTextContent(id)));
+        display.classList.toggle('aarti-display', isAartiReader);
+        display.innerHTML = ((isGitaReader || isResourceReader || isMantraReader || isDeityReader || isRitualReader || isAartiReader) ? '' : `<button class="back-btn" onclick="goBack()">← Back</button>`) + (isAartiReader ? window.renderAartiReader(id) : (isRitualReader ? window.renderRitualReader(id) : (isDeityReader ? window.renderDeityReader(id) : getTextContent(id))));
         display.style.display = 'block';
         // Populate verse divs ONLY inside text-display (avoids circular call with applyLanguage)
         const lang = currentLang || 'en';
@@ -5316,6 +5320,12 @@ function showText(id) {
         }
         if (isRitualReader && typeof window.initRitualReader === 'function') {
             window.setTimeout(window.initRitualReader, 0);
+            if (previousTextId !== id) {
+                window.setTimeout(() => display.scrollIntoView({ behavior: 'smooth', block: 'start' }), 20);
+            }
+        }
+        if (isAartiReader && typeof window.initAartiReader === 'function') {
+            window.setTimeout(window.initAartiReader, 0);
             if (previousTextId !== id) {
                 window.setTimeout(() => display.scrollIntoView({ behavior: 'smooth', block: 'start' }), 20);
             }
@@ -5531,6 +5541,7 @@ function showSection(id) {
     if (id === 'mantras' && typeof window.initMantraLibrary === 'function') setTimeout(window.initMantraLibrary, 30);
     if (id === 'deities' && typeof window.initDeityLibrary === 'function') setTimeout(window.initDeityLibrary, 30);
     if (id === 'rituals' && typeof window.initRitualLibrary === 'function') setTimeout(window.initRitualLibrary, 30);
+    if (id === 'aarti' && typeof window.initAartiLibrary === 'function') setTimeout(window.initAartiLibrary, 30);
 
     const display = document.getElementById('text-display');
     if (display) display.style.display = 'none';
@@ -14090,6 +14101,7 @@ function searchSacredTexts() { _applySacredTextFilters(); }
 <script src="mantra-experience.js"></script>
 <script src="deity-experience.js"></script>
 <script src="ritual-experience.js"></script>
+<script src="aarti-experience.js"></script>
 
 </body>
 </html>
