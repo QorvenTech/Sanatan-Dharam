@@ -51,6 +51,8 @@
     <link rel="stylesheet" href="deity-experience.css?v=20260718-2">
     <link rel="stylesheet" href="ritual-experience.css">
     <link rel="stylesheet" href="aarti-experience.css?v=20260718-2">
+    <link rel="stylesheet" href="divine-library-experience.css?v=20260718-1">
+    <link rel="stylesheet" href="my-library-experience.css?v=20260718-1">
     <style>
         /* ========== YOUR EXISTING CSS (unchanged) ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -952,7 +954,7 @@ body.dark-theme .paath-library-intro, body.dark-theme .paath-library-card:not(.f
         <li><a href="#" onclick="showSection('festivals')" data-en="Festivals"    data-hi="त्यौहार">Festivals</a></li>
         <li><a href="#" onclick="showSection('rituals')"   data-en="Rituals"      data-hi="रीति-रिवाज">Rituals</a></li>
         <li><a href="#" onclick="showSection('panchang')"     data-en="Panchang"       data-hi="पंचांग">Panchang</a></li>
-        <li><a href="#" onclick="showFavorites()">🌟 My Favorites</a></li>
+        <li><a href="#" onclick="showFavorites(); return false;" data-en="My Library" data-hi="मेरी लाइब्रेरी">My Library</a></li>
         <li><a href="#" onclick="showSection('paathmandir')" data-en="📖 Paath Mandir" data-hi="📖 पाठ मंदिर">📖 Paath Mandir</a></li>
         <li><a href="#" onclick="showSection('aarti')" data-en="Aarti" data-hi="आरती">Aarti</a></li>
         <li><a href="#" onclick="showSection('divine-sangrah')" data-en="🕉️ Divine Sangrah" data-hi="🕉️ दिव्य संग्रह">🕉️ Divine Sangrah</a></li>
@@ -5007,6 +5009,10 @@ auth.onAuthStateChanged(user => {
     currentUser = user;
     updateHeaderUI();
     if (currentSection) renderComments(currentSection);
+    const librarySection = document.getElementById('favorites-section');
+    if (librarySection && librarySection.classList.contains('active') && typeof window.showFavorites === 'function') {
+        setTimeout(window.showFavorites, 0);
+    }
 });
 
 // ======================================
@@ -14102,6 +14108,8 @@ function searchSacredTexts() { _applySacredTextFilters(); }
 <script src="deity-experience.js?v=20260718-2"></script>
 <script src="ritual-experience.js"></script>
 <script src="aarti-experience.js?v=20260718-2"></script>
+<script src="divine-library-experience.js?v=20260718-1"></script>
+<script src="my-library-experience.js?v=20260718-1"></script>
 
 </body>
 </html>
