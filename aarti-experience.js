@@ -56,7 +56,7 @@
       meaningHi: 'यह आरती लक्ष्मी के मंगल, उदारता और कल्याणकारी स्वरूप का स्मरण करती है। समृद्धि का भाव नैतिक और भक्तिमय संदर्भ में है, किसी निश्चित भौतिक परिणाम की गारंटी नहीं।'
     },
     kuber: {
-      title: 'Kuber Aarti', titleHi: 'कुबेर आरती', deity: 'Kuber', deityHi: 'कुबेर', deityId: '', category: 'lakshmi', image: '',
+      title: 'Kuber Aarti', titleHi: 'कुबेर आरती', deity: 'Kuber', deityHi: 'कुबेर', deityId: '', category: 'lakshmi', image: 'assets/deity-kuber.webp',
       tradition: 'Regional devotional text', traditionHi: 'क्षेत्रीय भक्तिमय पाठ',
       summary: 'A devotional text associated with Kuber, presented with tradition and source context.',
       summaryHi: 'कुबेर से संबद्ध भक्तिमय पाठ, जिसे परंपरा और स्रोत-संदर्भ के साथ प्रस्तुत किया गया है।',
@@ -98,7 +98,60 @@
     }
   };
 
-  IDS.forEach(function (id) { A[id].id = id; A[id].source = A[id].source || 'https://en.wikipedia.org/wiki/Arti_(Hinduism)'; });
+  var VERIFIED_SOURCES = {
+    ganesh: 'https://www.drikpanchang.com/lyrics/aarti/shree-ganesh/jay-ganesh-aarti.html?ck=1&lang=hi',
+    durga: 'https://www.drikpanchang.com/lyrics/aarti/durga-mata/durga-mata-aarti.html?ck=1&lang=en',
+    saraswati: 'https://www.drikpanchang.com/lyrics/aarti/saraswati-mata/saraswati-mata-aarti.html?ck=1&lang=en',
+    krishna: 'https://www.drikpanchang.com/lyrics/aarti/lord-krishna/kunj-bihari-aarti.html?ck=1&lang=hi',
+    lakshmi: 'https://www.drikpanchang.com/lyrics/aarti/lakshmi-mata/lakshmi-mata-aarti.html?ck=1&lang=hi',
+    kuber: 'https://www.bhaktibharat.com/aarti/shri-kuber-aarti-jai-kuber-swami',
+    jagdish: 'https://www.drikpanchang.com/lyrics/aarti/lord-narayan/jai-jagdish-aarti.html',
+    ambe: 'https://www.drikpanchang.com/lyrics/aarti/ambe-mata/ambe-mata-aarti.html?ck=1&lang=hi',
+    shiv: 'https://www.drikpanchang.com/lyrics/aarti/lord-shiva/shiva-aarti.html'
+  };
+
+  var VERIFIED_LYRICS = {
+    durga: {
+      hi: [
+        'अम्बे तू है जगदम्बे काली, जय दुर्गे खप्पर वाली,\nतेरे ही गुण गावें भारती, ओ मैया हम सब उतारे तेरी आरती।\nओ मैया हम सब उतारे तेरी आरती॥',
+        'तेरे भक्त जनों पर माता भीर पड़ी है भारी।\nदानव दल पर टूट पड़ो माँ करके सिंह सवारी॥\nसौ-सौ सिंहों से बलशाली, है अष्ट भुजाओं वाली,\nदुष्टों को तू ही ललकारती।\nओ मैया हम सब उतारे तेरी आरती॥',
+        'माँ-बेटे का है इस जग में बड़ा ही निर्मल नाता।\nपूत-कपूत सुने हैं पर ना माता सुनी कुमाता॥\nसब पे करुणा दर्शाने वाली, अमृत बरसाने वाली,\nदुखियों के दुखड़े निवारती।\nओ मैया हम सब उतारे तेरी आरती॥',
+        'नहीं मांगते धन और दौलत, न चांदी न सोना।\nहम तो मांगें तेरे चरणों में छोटा सा कोना॥\nसबकी बिगड़ी बनाने वाली, लाज बचाने वाली,\nसतियों के सत को संवारती।\nओ मैया हम सब उतारे तेरी आरती॥',
+        'चरण शरण में खड़े तुम्हारी, ले पूजा की थाली।\nवरद हस्त सर पर रख दो माँ, संकट हरने वाली॥\nमाँ भर दो भक्ति रस प्याली, अष्ट भुजाओं वाली,\nभक्तों के कारज तू ही सारती।\nओ मैया हम सब उतारे तेरी आरती॥'
+      ],
+      roman: [
+        'Ambe Tu Hai Jagdambe Kaali, Jai Durge Khappar Vaali,\nTere Hi Gun Gaavein Bharati, O Maiya Hum Sab Utaare Teri Aarti.\nO Maiya Hum Sab Utaare Teri Aarti.',
+        'Tere Bhakt Janon Par Maata Bheer Padi Hai Bhaari.\nDaanav Dal Par Toot Pado Maa Karke Singh Savaari.\nSau-Sau Singhon Se Balshaali, Hai Asht Bhujaaon Vaali,\nDushton Ko Tu Hi Lalkaarti.\nO Maiya Hum Sab Utaare Teri Aarti.',
+        'Maa-Bete Ka Hai Is Jag Mein Bada Hi Nirmal Naata.\nPoot-Kapoot Sune Hain Par Na Maata Suni Kumaata.\nSab Pe Karuna Darsaane Vaali, Amrit Barsaane Vaali,\nDukhiyon Ke Dukhde Nivaarti.\nO Maiya Hum Sab Utaare Teri Aarti.',
+        'Nahin Maangte Dhan Aur Daulat, Na Chaandi Na Sona.\nHum To Maangein Tere Charnon Mein Chhota Sa Kona.\nSabki Bigdi Banaane Vaali, Laaj Bachaane Vaali,\nSatiyon Ke Sat Ko Savaarti.\nO Maiya Hum Sab Utaare Teri Aarti.',
+        'Charan Sharan Mein Khade Tumhaari, Le Pooja Ki Thaali.\nVarad Hast Sar Par Rakh Do Maa, Sankat Harne Vaali.\nMaa Bhar Do Bhakti Ras Pyaali, Asht Bhujaaon Vaali,\nBhakton Ke Kaaraj Tu Hi Saarti.\nO Maiya Hum Sab Utaare Teri Aarti.'
+      ]
+    },
+    saraswati: {
+      hi: [
+        'जय सरस्वती माता, मैया जय सरस्वती माता।\nसदगुण वैभव शालिनी, त्रिभुवन विख्याता॥\nजय सरस्वती माता॥',
+        'चन्द्रवदनि पद्मासिनि, द्युति मंगलकारी।\nसोहे शुभ हंस सवारी, अतुल तेजधारी॥\nजय सरस्वती माता॥',
+        'बाएं कर में वीणा, दाएं कर माला।\nशीश मुकुट मणि सोहे, गल मोतियन माला॥\nजय सरस्वती माता॥',
+        'देवी शरण जो आए, उनका उद्धार किया।\nपैठी मंथरा दासी, रावण संहार किया॥\nजय सरस्वती माता॥',
+        'विद्या ज्ञान प्रदायिनि, ज्ञान प्रकाश भरो।\nमोह अज्ञान और तिमिर का, जग से नाश करो॥\nजय सरस्वती माता॥',
+        'धूप दीप फल मेवा, माँ स्वीकार करो।\nज्ञानचक्षु दे माता, जग निस्तार करो॥\nजय सरस्वती माता॥',
+        'माँ सरस्वती की आरती, जो कोई जन गावे।\nहितकारी सुखकारी, ज्ञान भक्ति पावे॥\nजय सरस्वती माता॥',
+        'जय सरस्वती माता, जय जय सरस्वती माता।\nसदगुण वैभव शालिनी, त्रिभुवन विख्याता॥\nजय सरस्वती माता॥'
+      ],
+      roman: [
+        'Jai Saraswati Mata, Maiya Jai Saraswati Mata.\nSadgun Vaibhav Shaalini, Tribhuvan Vikhyaata.\nJai Saraswati Mata.',
+        'Chandravadan Padmaasini, Dyuti Mangalkaari.\nSohe Shubh Hans Savaari, Atul Tejdhaari.\nJai Saraswati Mata.',
+        'Baayein Kar Mein Veena, Daayein Kar Maala.\nSheesh Mukut Mani Sohe, Gal Motiyan Maala.\nJai Saraswati Mata.',
+        'Devi Sharan Jo Aaye, Unka Uddhaar Kiya.\nPaithi Manthara Daasi, Raavan Sanhaar Kiya.\nJai Saraswati Mata.',
+        'Vidya Gyaan Pradaayini, Gyaan Prakaash Bharo.\nMoh Agyaan Aur Timir Ka, Jag Se Naash Karo.\nJai Saraswati Mata.',
+        'Dhoop Deep Phal Meva, Maa Sweekaar Karo.\nGyaan Chakshu De Mata, Jag Nistaar Karo.\nJai Saraswati Mata.',
+        'Maa Saraswati Ki Aarti, Jo Koi Jan Gaave.\nHitkaari Sukhkaari, Gyaan Bhakti Paave.\nJai Saraswati Mata.',
+        'Jai Saraswati Mata, Jai Jai Saraswati Mata.\nSadgun Vaibhav Shaalini, Tribhuvan Vikhyaata.\nJai Saraswati Mata.'
+      ]
+    }
+  };
+
+  IDS.forEach(function (id) { A[id].id = id; A[id].source = VERIFIED_SOURCES[id]; });
 
   function lang() { return (typeof currentLang !== 'undefined' && currentLang === 'hi') ? 'hi' : 'en'; }
   function tr(en, hi) { return lang() === 'hi' ? hi : en; }
@@ -106,6 +159,8 @@
   function normalize(value) { return String(value || '').replace(/\r/g, '').trim(); }
   function splitVerses(value) { return normalize(value).split(/\n\s*\n+/).map(function (v) { return v.trim(); }).filter(Boolean); }
   function getLegacyLyrics(id) {
+    var verified = VERIFIED_LYRICS[id];
+    if (verified) return verified.hi.map(function (hi, index) { return {hi: hi, roman: verified.roman[index] || ''}; });
     var source = document.querySelector('#aarti-' + id + '-text .verse');
     var hi = source ? source.getAttribute('data-hi') : '';
     var roman = source ? source.getAttribute('data-en') : '';
@@ -218,14 +273,14 @@
     var prev = A[IDS[(IDS.indexOf(id)+IDS.length-1)%IDS.length]];
     var next = A[IDS[(IDS.indexOf(id)+1)%IDS.length]];
     return '<article class="aarti-reader" data-aarti-id="' + id + '" data-font-scale="1" style="--aarti-progress:0%;--aarti-line:1.42"><nav class="aarti-breadcrumb" aria-label="Breadcrumb"><button type="button" onclick="aartiReturnToLibrary()">' + tr('Home','होम') + '</button><span>/</span><button type="button" onclick="aartiReturnToLibrary()">' + tr('Aarti Sangrah','आरती संग्रह') + '</button><span>/</span><strong>' + (lang()==='hi'?d.titleHi:d.title) + '</strong></nav>' +
-      '<section class="aarti-reader-hero"><div class="aarti-reader-hero-copy"><h1>' + d.titleHi + '<span>' + d.title + '</span></h1><div class="aarti-reader-meta"><span>♙ ' + tr('Associated deity: ','संबद्ध देवता: ') + (lang()==='hi'?d.deityHi:d.deity) + '</span><span>ⓘ ' + tr('Context: ','संदर्भ: ') + tr(d.context,d.contextHi) + '</span></div><div class="aarti-reader-tags"><span>' + tr(d.tradition,d.traditionHi) + '</span><span>' + tr('Text only','केवल पाठ') + '</span></div><div class="aarti-reader-actions">' + favoriteButton(d,false) + '<button type="button" onclick="aartiCopyLyrics(this)">▣ <span>' + tr('Copy Lyrics','बोल कॉपी करें') + '</span></button><button type="button" onclick="aartiShareCurrent()">⌯ <span>' + tr('Share','साझा करें') + '</span></button></div><div class="aarti-audio-note">ⓘ ' + tr('No verified audio source attached · Text-only reader','कोई सत्यापित ऑडियो स्रोत संलग्न नहीं · केवल पाठ') + '</div></div></section>' +
+      '<section class="aarti-reader-hero"><div class="aarti-reader-deity-visual"><img src="' + d.image + '" alt="' + esc((lang()==='hi'?d.deityHi:d.deity) + ' devotional illustration') + '" width="900" height="900"></div><div class="aarti-reader-hero-copy"><h1>' + d.titleHi + '<span>' + d.title + '</span></h1><div class="aarti-reader-meta"><span>♙ ' + tr('Associated deity: ','संबद्ध देवता: ') + (lang()==='hi'?d.deityHi:d.deity) + '</span><span>ⓘ ' + tr('Context: ','संदर्भ: ') + tr(d.context,d.contextHi) + '</span></div><div class="aarti-reader-tags"><span>' + tr(d.tradition,d.traditionHi) + '</span><span>' + tr('Text only','केवल पाठ') + '</span></div><div class="aarti-reader-actions">' + favoriteButton(d,false) + '<button type="button" onclick="aartiCopyLyrics(this)">▣ <span>' + tr('Copy Lyrics','बोल कॉपी करें') + '</span></button><button type="button" onclick="aartiShareCurrent()">⌯ <span>' + tr('Share','साझा करें') + '</span></button></div><div class="aarti-audio-note">ⓘ ' + tr('No verified audio source attached · Text-only reader','कोई सत्यापित ऑडियो स्रोत संलग्न नहीं · केवल पाठ') + '</div></div></section>' +
       '<section class="aarti-reader-toolbar" aria-label="Reader controls"><button type="button" onclick="aartiToggleMeaningLanguage()">▤ ' + tr('Hindi / English Meaning','हिंदी / English अर्थ') + '</button><button type="button" class="active" onclick="aartiToggleRoman(this)">A̲ ' + tr('Transliteration','लिप्यंतरण') + '</button><button type="button" class="active" onclick="aartiToggleMeaning(this)">▤ ' + tr('Meaning','अर्थ') + '</button><div class="aarti-size-control"><button type="button" onclick="aartiChangeTextSize(-.08)">A−</button><span>|</span><button type="button" onclick="aartiChangeTextSize(.08)">A+</button></div><label>¶ <select onchange="aartiSetLineSpacing(this.value)"><option value="1.32">' + tr('Compact','सघन') + '</option><option value="1.42" selected>' + tr('Line Spacing','पंक्ति अंतर') + '</option><option value="1.62">' + tr('Spacious','विस्तृत') + '</option></select></label><button type="button" onclick="aartiToggleWake(this)">☾ ' + tr('Keep screen awake','स्क्रीन चालू रखें') + '<span class="aarti-switch"><b></b></span></button></section>' +
       '<div class="aarti-reader-layout"><main class="aarti-lyrics-panel"><h2>' + tr('Aarti Lyrics · ','आरती के बोल · ') + d.titleHi + '</h2><div class="aarti-verse-list" id="aarti-verse-list">' + verseCards(d) + '</div><button type="button" class="aarti-mobile-more" onclick="aartiShowMoreVerses(this)">' + tr('View more verses','और पद देखें') + '⌄</button></main>' +
       '<section class="aarti-meaning-panel"><h2>' + tr('Meaning (Explanation)','अर्थ और व्याख्या') + '</h2><div class="aarti-meaning-tabs"><button type="button" class="active" data-aarti-meaning-tab="hi" onclick="aartiMeaningTab(\'hi\',this)">हिंदी व्याख्या</button><button type="button" data-aarti-meaning-tab="en" onclick="aartiMeaningTab(\'en\',this)">English Meaning</button></div><div class="aarti-meaning-copy" data-aarti-meaning="hi"><p>' + meaningHi + '</p></div><div class="aarti-meaning-copy" data-aarti-meaning="en" hidden><p>' + meaningEn + '</p></div></section>' +
       '<aside class="aarti-reader-side"><section class="aarti-progress-card"><h2>' + tr('Reading Progress','पठन प्रगति') + '</h2><div class="aarti-progress-ring"><b data-aarti-progress-text>0%</b></div><p>' + tr('You are reading ','आप पढ़ रहे हैं ') + '<strong>' + (lang()==='hi'?d.titleHi:d.title) + '</strong></p><div class="aarti-progress-line"><b></b></div><div class="aarti-side-status"><span>▤</span><span>' + tr('Text-only status','केवल-पाठ स्थिति') + '<small>' + tr('No audio source attached','कोई ऑडियो स्रोत संलग्न नहीं') + '</small></span></div></section>' +
       '<section class="aarti-deity-card"><h2>' + tr('Associated Deity','संबद्ध देवता') + '</h2><div>' + (d.image?'<img src="'+d.image+'" alt="" width="55" height="55">':'<span>ॐ</span>') + '<span><strong>' + (lang()==='hi'?d.deityHi:d.deity) + '</strong><small>' + tr(d.summary,d.summaryHi) + '</small></span></div><button type="button" onclick="aartiOpenDeity()">' + tr('Explore deity','देवता परिचय') + ' →</button></section><section class="aarti-variation-card"><h2>' + tr('Variation Note','पाठांतर टिप्पणी') + '</h2><p>' + tr('Widely recited versions differ in wording, verse order and local custom.','प्रचलित संस्करणों में शब्द, पद-क्रम और स्थानीय रीति का अंतर मिलता है।') + '</p></section></aside>' +
       '<aside class="aarti-jump-panel"><h2>' + tr('Jump to Verse','पद पर जाएँ') + '</h2>' + jumpButtons(d) + '</aside></div>' +
-      '<section class="aarti-reader-info"><article class="aarti-info-card"><span>⌂</span><div><h2>' + tr('Context & Tradition','संदर्भ और परंपरा') + '</h2><p>' + tr(d.context,d.contextHi) + '</p></div></article><article class="aarti-info-card"><span>▤</span><div><h2>' + tr('Source & Variation Note','स्रोत और पाठांतर') + '</h2><p>' + tr('Readers and publishers should verify source, tradition and local practice before sharing or publishing.','साझा या प्रकाशित करने से पहले स्रोत, परंपरा और स्थानीय पाठ की पुष्टि करें।') + ' <a href="' + d.source + '" target="_blank" rel="noopener">↗</a></p></div></article><section class="aarti-related-reader"><h2>' + tr('Related & Supported','संबंधित पाठ') + '</h2><div class="aarti-related-reader-grid">' + (d.deityId?'<button type="button" onclick="aartiOpenDeity()">' + (lang()==='hi'?d.deityHi:d.deity) + '<br>' + tr('Deity','देवता') + '</button>':'<button type="button" onclick="showSection(\'deities\')">' + tr('Deities Library','देवी-देवता') + '</button>') + rel.map(function(rid){return '<button type="button" onclick="showAarti(\''+rid+'\')">'+(lang()==='hi'?A[rid].titleHi:A[rid].title)+'</button>';}).join('') + '<button type="button" onclick="showText(\'puja\')">' + tr('Puja Guide','पूजा मार्गदर्शिका') + '</button></div></section></section>' +
+      '<section class="aarti-reader-info"><article class="aarti-info-card"><span>⌂</span><div><h2>' + tr('Context & Tradition','संदर्भ और परंपरा') + '</h2><p>' + tr(d.context,d.contextHi) + '</p></div></article><article class="aarti-info-card"><span>▤</span><div><h2>' + tr('Verified Text Source','सत्यापित पाठ स्रोत') + '</h2><p>' + tr('This complete displayed version was checked line by line against the selected published source; customary wording may still vary locally.','यह पूर्ण प्रदर्शित पाठ चुने गए प्रकाशित स्रोत से पंक्ति-दर-पंक्ति जाँचा गया है; स्थानीय परंपरा में शब्दावली फिर भी भिन्न हो सकती है।') + ' <a href="' + d.source + '" target="_blank" rel="noopener">' + tr('Open source','स्रोत खोलें') + ' ↗</a></p></div></article><section class="aarti-related-reader"><h2>' + tr('Related & Supported','संबंधित पाठ') + '</h2><div class="aarti-related-reader-grid">' + (d.deityId?'<button type="button" onclick="aartiOpenDeity()">' + (lang()==='hi'?d.deityHi:d.deity) + '<br>' + tr('Deity','देवता') + '</button>':'<button type="button" onclick="showSection(\'deities\')">' + tr('Deities Library','देवी-देवता') + '</button>') + rel.map(function(rid){return '<button type="button" onclick="showAarti(\''+rid+'\')">'+(lang()==='hi'?A[rid].titleHi:A[rid].title)+'</button>';}).join('') + '<button type="button" onclick="showText(\'puja\')">' + tr('Puja Guide','पूजा मार्गदर्शिका') + '</button></div></section></section>' +
       '<nav class="aarti-reader-nav" aria-label="Previous and next Aarti"><button type="button" onclick="showAarti(\''+prev.id+'\')">← <small>' + tr('Previous Aarti','पिछली आरती') + '</small><br>'+(lang()==='hi'?prev.titleHi:prev.title)+'</button><div class="aarti-safety-reminder">🪔 ' + tr('Offer attention while reading. Keep lamps and incense safely away from flammable materials.','ध्यान से पाठ करें। दीप और धूप को ज्वलनशील वस्तुओं से सुरक्षित दूरी पर रखें।') + '</div><button type="button" onclick="showAarti(\''+next.id+'\')"><small>' + tr('Next Aarti','अगली आरती') + '</small> →<br>'+(lang()==='hi'?next.titleHi:next.title)+'</button></nav>' +
       '<nav class="aarti-mobile-controls" aria-label="Mobile reader controls"><button type="button" onclick="aartiChangeTextSize(-.08)">A−</button><button type="button" onclick="aartiChangeTextSize(.08)">A+</button><button type="button" onclick="aartiCycleLineSpacing()">¶ ' + tr('Spacing','अंतर') + '</button><button type="button" onclick="aartiToggleWake(this)">☾ ' + tr('Awake','जागृत') + '</button><button type="button" onclick="aartiToggleContents()">☷ ' + tr('Contents','विषय') + '</button></nav><div class="aarti-mobile-contents" id="aarti-mobile-contents">' + jumpButtons(d) + '</div></article>';
   };

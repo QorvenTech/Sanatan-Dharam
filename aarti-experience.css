@@ -112,8 +112,11 @@
 /* Reader */
 #text-display.aarti-display { margin: 0; padding: 0 0 2.5rem; border: 0; background: transparent; box-shadow: none; }
 .aarti-reader { --aarti-scale: 1; color: var(--aarti-navy); font-family: "Crimson Pro", Georgia, serif; }
-.aarti-reader-hero { min-height: 244px; padding: 1.25rem 2rem; display: flex; align-items: center; border: 1px solid #bd7419; border-radius: 9px; background-image: linear-gradient(90deg, rgba(4,15,31,.98) 0%, rgba(4,15,31,.93) 30%, rgba(4,15,31,.32) 50%, rgba(4,15,31,.05) 100%), url("assets/aarti-reader-hero.webp"); background-position: center; background-size: cover; color: white; overflow: hidden; }
-.aarti-reader-hero-copy { width: min(480px, 40%); }
+.aarti-reader-hero { position: relative; min-height: 244px; padding: 1.25rem 2rem; display: flex; align-items: center; border: 1px solid #bd7419; border-radius: 9px; background-image: linear-gradient(90deg, rgba(4,15,31,.99) 0%, rgba(4,15,31,.96) 46%, rgba(4,15,31,.82) 100%), url("assets/aarti-reader-hero.webp"); background-position: center; background-size: cover; color: white; overflow: hidden; }
+.aarti-reader-deity-visual { position: absolute; z-index: 0; top: 12px; right: 12px; bottom: 12px; width: 49%; overflow: hidden; border: 1px solid rgba(239,182,90,.78); border-radius: 7px; background: #e9d3ad; box-shadow: 0 8px 28px rgba(0,0,0,.28); }
+.aarti-reader-deity-visual::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(5,18,36,.46), transparent 24%), linear-gradient(0deg, rgba(5,18,36,.18), transparent 40%); pointer-events: none; }
+.aarti-reader-deity-visual img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center 24%; }
+.aarti-reader-hero-copy { position: relative; z-index: 1; width: min(520px, 44%); }
 .aarti-reader-hero h1 { margin: 0; color: #efb65a; font: 700 clamp(2rem,3.2vw,3.5rem)/.95 "Tiro Devanagari Sanskrit", "Crimson Pro", serif; }
 .aarti-reader-hero h1 span { display: block; margin-top: .2rem; font: 700 .7em "Crimson Pro", serif; }
 .aarti-reader-meta { margin: .55rem 0; display: grid; gap: .25rem; color: #f2e5cf; font-size: .72rem; }
@@ -275,7 +278,10 @@ body.dark-theme .aarti-verse-hi { color: #f5e6cf; }
   .aarti-guide-card button { grid-column: 1 / -1; }
 
   #text-display.aarti-display { padding-bottom: 64px; }
-  .aarti-reader-hero { min-height: 530px; padding: 1.15rem; align-items: flex-end; background-image: linear-gradient(180deg, rgba(4,15,31,.02) 0%, rgba(4,15,31,.06) 38%, rgba(4,15,31,.93) 57%, #06182f 100%), url("assets/aarti-reader-hero.webp"); background-position: 68% top; background-size: auto 235px; background-repeat: no-repeat; background-color: #06182f; }
+  .aarti-reader-hero { min-height: 585px; padding: 275px 1.15rem 1.15rem; align-items: flex-end; background: linear-gradient(180deg, #102039 0%, #06182f 100%); }
+  .aarti-reader-deity-visual { top: 0; right: 0; bottom: auto; left: 0; width: 100%; height: 255px; border: 0; border-bottom: 1px solid #bd7419; border-radius: 0; box-shadow: none; }
+  .aarti-reader-deity-visual::after { background: linear-gradient(0deg, rgba(5,18,36,.42), transparent 38%); }
+  .aarti-reader-deity-visual img { object-position: center 22%; }
   .aarti-reader-hero-copy { width: 100%; }
   .aarti-reader-hero h1 { font-size: 2.4rem; }
   .aarti-reader-actions { grid-template-columns: 1fr 1fr; }
@@ -328,6 +334,7 @@ body.dark-theme .aarti-verse-hi { color: #f5e6cf; }
   header, footer, .aarti-breadcrumb, .aarti-reader-actions, .aarti-reader-toolbar, .aarti-reader-side, .aarti-jump-panel, .aarti-related-reader, .aarti-reader-nav, .aarti-mobile-controls, .aarti-mobile-contents, .comments-section { display: none !important; }
   #text-display.aarti-display { padding: 0; }
   .aarti-reader-hero { min-height: auto; padding: 1rem; background: white !important; border: 1px solid #999; color: #111; }
+  .aarti-reader-deity-visual { display: none; }
   .aarti-reader-hero h1, .aarti-reader-meta { color: #111; }
   .aarti-reader-hero-copy { width: 100%; }
   .aarti-reader-layout, .aarti-reader-info { display: block; }

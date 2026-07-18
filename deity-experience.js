@@ -83,7 +83,7 @@
       sourceUrl: 'https://www.metmuseum.org/art/collection/search/74502', sourceName: 'The Met — Durga Slaying Mahisha'
     },
     lakshmi: {
-      title: 'Lakshmi', titleHi: 'लक्ष्मी', honorific: 'Goddess Lakshmi', honorificHi: 'माँ लक्ष्मी', category: 'devi', categoryLabel: pair('Devi', 'देवी'), image: 'assets/deity-lakshmi.webp', museumImage: true,
+      title: 'Lakshmi', titleHi: 'लक्ष्मी', honorific: 'Goddess Lakshmi', honorificHi: 'माँ लक्ष्मी', category: 'devi', categoryLabel: pair('Devi', 'देवी'), image: 'assets/deity-lakshmi.webp', museumImage: false,
       subtitle: pair('Associated with auspiciousness, prosperity, beauty and well-being.', 'शुभता, समृद्धि, सौंदर्य और कल्याण से संबद्ध।'), tradition: pair('Vaishnava, Shakta and household traditions', 'वैष्णव, शाक्त और गृह परंपराएँ'),
       overview: pair('Lakshmi is revered as the goddess of Shri—auspiciousness, prosperity, beauty and flourishing. Her worship extends across temples, homes and diverse regional traditions.', 'लक्ष्मी श्री—शुभता, समृद्धि, सौंदर्य और उन्नति—की देवी के रूप में पूजित हैं। उनकी उपासना मंदिरों, घरों और विविध क्षेत्रीय परंपराओं में होती है।'),
       themes: [item('Auspiciousness', 'शुभता', 'Prosperity includes well-being, harmony and ethical flourishing.', 'समृद्धि में कल्याण, सामंजस्य और नैतिक उन्नति भी शामिल है.', 'lotus'), item('Generosity', 'उदारता', 'Abundance gains meaning through responsible sharing.', 'समृद्धि उत्तरदायी बाँटने से सार्थक होती है.', 'vessel'), item('Beauty & Order', 'सौंदर्य और व्यवस्था', 'Shri joins grace with the conditions that help life flourish.', 'श्री सौंदर्य को जीवन के विकास की अनुकूल परिस्थितियों से जोड़ती है.', 'lotus')],
@@ -92,10 +92,10 @@
       teachings: [item('Gratitude', 'कृतज्ञता', 'Notice and honour the conditions that sustain life.', 'जीवन को सहारा देने वाली परिस्थितियों को पहचानें और सम्मान दें.', 'lotus'), item('Ethical prosperity', 'धार्मिक समृद्धि', 'Well-being is strengthened by generosity and fairness.', 'उदारता और न्याय से कल्याण मजबूत होता है.', 'balance'), item('Care for the home', 'गृह की देखभाल', 'Order, welcome and cleanliness carry symbolic importance.', 'व्यवस्था, स्वागत और स्वच्छता का प्रतीकात्मक महत्व है.', 'lamp')],
       festival: pair('Diwali and Lakshmi Puja', 'दीपावली और लक्ष्मी पूजा'), festivalNote: pair('Household and regional practices vary widely.', 'गृह और क्षेत्रीय रीति-रिवाज बहुत विविध हैं।'),
       mantras: [{ id: 'om-mantra', title: 'Om — Pranava', titleHi: 'ॐ प्रणव' }], related: ['vishnu', 'durga', 'saraswati'],
-      sourceUrl: 'https://www.metmuseum.org/art/collection/search/78264', sourceName: 'The Met — Lakshmi (1894)'
+      sourceUrl: 'https://www.metmuseum.org/art/collection/search/849494', sourceName: 'Iconography reference — The Met: Goddess Kamalatmika'
     },
     saraswati: {
-      title: 'Saraswati', titleHi: 'सरस्वती', honorific: 'Goddess Saraswati', honorificHi: 'माँ सरस्वती', category: 'devi', categoryLabel: pair('Devi', 'देवी'), image: 'assets/deity-saraswati.webp', museumImage: true,
+      title: 'Saraswati', titleHi: 'सरस्वती', honorific: 'Goddess Saraswati', honorificHi: 'माँ सरस्वती', category: 'devi', categoryLabel: pair('Devi', 'देवी'), image: 'assets/deity-saraswati.webp', museumImage: false,
       subtitle: pair('Goddess of knowledge, learning, music, speech and the arts.', 'ज्ञान, शिक्षा, संगीत, वाणी और कलाओं की देवी।'), tradition: pair('Vedic, Puranic and learning traditions', 'वैदिक, पौराणिक और विद्या परंपराएँ'),
       overview: pair('Saraswati is revered as the goddess of knowledge, learning, eloquent speech, music and the arts. Her imagery joins disciplined study with creative expression.', 'सरस्वती ज्ञान, विद्या, वाणी, संगीत और कलाओं की देवी के रूप में पूजित हैं। उनका स्वरूप अनुशासित अध्ययन और रचनात्मक अभिव्यक्ति को जोड़ता है।'),
       themes: [item('Knowledge', 'ज्ञान', 'Learning grows through attention, inquiry and practice.', 'ज्ञान ध्यान, जिज्ञासा और अभ्यास से बढ़ता है.', 'book'), item('Speech', 'वाणी', 'Thoughtful expression is treated as a sacred responsibility.', 'विचारपूर्ण अभिव्यक्ति को पवित्र उत्तरदायित्व माना जाता है.', 'speech'), item('Music & Art', 'संगीत और कला', 'The vina joins technique, harmony and creative insight.', 'वीणा तकनीक, सामंजस्य और रचनात्मक अंतर्दृष्टि को जोड़ती है.', 'vina')],
@@ -104,7 +104,7 @@
       teachings: [item('Learn continuously', 'निरंतर सीखना', 'Knowledge remains alive through study and reflection.', 'ज्ञान अध्ययन और मनन से जीवंत रहता है.', 'book'), item('Practice the craft', 'कला का अभ्यास', 'Skill and inspiration grow together through discipline.', 'अनुशासन से कौशल और प्रेरणा साथ विकसित होते हैं.', 'vina'), item('Speak responsibly', 'उत्तरदायी वाणी', 'Clarity and care should guide expression.', 'स्पष्टता और संवेदनशीलता वाणी का मार्गदर्शन करें.', 'speech')],
       festival: pair('Vasant Panchami', 'वसंत पंचमी'), festivalNote: pair('Celebrated through worship, learning, music and regional customs.', 'पूजा, विद्यारंभ, संगीत और क्षेत्रीय रीति से मनाया जाता है।'),
       mantras: [{ id: 'gayatri-mantra', title: 'Gayatri Mantra', titleHi: 'गायत्री मंत्र' }], related: ['brahma', 'lakshmi', 'ganesha'],
-      sourceUrl: 'https://www.metmuseum.org/art/collection/search/849503', sourceName: 'The Met — Goddess Sarasvati'
+      sourceUrl: 'https://www.britishmuseum.org/collection/object/A_2016-3051-158', sourceName: 'Iconography reference — British Museum: Sarasvati'
     },
     ganesha: {
       title: 'Ganesha', titleHi: 'गणेश', honorific: 'Lord Ganesha', honorificHi: 'भगवान गणेश', category: 'beloved', categoryLabel: pair('Beloved Deity', 'लोकप्रिय आराध्य'), image: 'assets/deity-ganesha.webp',
