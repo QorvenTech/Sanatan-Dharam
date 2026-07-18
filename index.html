@@ -53,6 +53,8 @@
     <link rel="stylesheet" href="aarti-experience.css?v=20260718-2">
     <link rel="stylesheet" href="divine-library-experience.css?v=20260718-1">
     <link rel="stylesheet" href="my-library-experience.css?v=20260718-1">
+    <link rel="stylesheet" href="auth-experience.css?v=20260718-1">
+    <link rel="stylesheet" href="account-profile-experience.css?v=20260718-1">
     <style>
         /* ========== YOUR EXISTING CSS (unchanged) ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -937,7 +939,10 @@ body.dark-theme .paath-library-intro, body.dark-theme .paath-library-card:not(.f
                     <div class="user-avatar" id="headerAvatar">U</div>
                     <span class="user-name" id="headerUserName">User</span>
                     <span class="user-caret">▾</span>
-                    <div class="user-dropdown" id="userDropdown"><a class="logout-link" onclick="logout()">🚪 Logout</a></div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a onclick="event.stopPropagation(); showAccountProfile(); return false;">Account &amp; Profile</a>
+                        <a class="logout-link" onclick="logout()">🚪 Logout</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -4547,6 +4552,9 @@ body.dark-theme .paath-library-intro, body.dark-theme .paath-library-card:not(.f
             <div id="favorites-list">Loading your favorites...</div>
         </div>
     </div>
+
+    <!-- ACCOUNT & PROFILE -->
+    <div id="account-profile" class="section"></div>
 
     <!-- ══════════════════════════════════════
          FESTIVAL CALENDAR
@@ -14110,6 +14118,8 @@ function searchSacredTexts() { _applySacredTextFilters(); }
 <script src="aarti-experience.js?v=20260718-2"></script>
 <script src="divine-library-experience.js?v=20260718-1"></script>
 <script src="my-library-experience.js?v=20260718-1"></script>
+<script src="auth-experience.js?v=20260718-1"></script>
+<script src="account-profile-experience.js?v=20260718-1"></script>
 
 </body>
 </html>

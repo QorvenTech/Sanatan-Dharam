@@ -1,0 +1,253 @@
+.modal-overlay#loginModal {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: none;
+  overflow-y: auto;
+  background: #fbf7ef;
+  color: #10284c;
+  font-family: "Crimson Pro", "Tiro Devanagari Sanskrit", Georgia, serif;
+}
+
+.modal-overlay#loginModal.open { display: block; }
+body.auth-page-open { overflow: hidden; }
+
+#loginModal .auth-page {
+  min-height: 100%;
+  width: 100%;
+  padding: clamp(18px, 2vw, 30px) clamp(18px, 3.2vw, 50px) 18px;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(207, 145, 34, .08), transparent 25%),
+    radial-gradient(circle at 90% 94%, rgba(116, 18, 22, .05), transparent 28%),
+    #fbf7ef;
+}
+
+#loginModal .auth-topbar,
+#loginModal .auth-footer {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+#loginModal .auth-topbar {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid #d7ae72;
+  padding-bottom: 12px;
+  background: transparent;
+  color: #10284c;
+  box-shadow: none;
+}
+
+#loginModal .auth-brand {
+  border: 0;
+  background: transparent;
+  color: #10284c;
+  display: grid;
+  grid-template-columns: 62px auto;
+  align-items: center;
+  column-gap: 12px;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+
+#loginModal .auth-brand .auth-lotus { width: 62px; height: 62px; color: #b85f13; }
+#loginModal .auth-brand strong { font-size: clamp(1.55rem, 2.25vw, 2.15rem); line-height: 1; }
+#loginModal .auth-brand small { color: #8a2b20; display: block; font-size: 1rem; margin-top: 4px; }
+
+#loginModal .auth-back {
+  border: 0;
+  background: transparent;
+  color: #10284c;
+  cursor: pointer;
+  font: 600 1.1rem "Crimson Pro", serif;
+  padding: 10px;
+}
+
+#loginModal .auth-back:hover { color: #8b171c; }
+
+#loginModal .auth-shell {
+  width: min(1210px, 100%);
+  margin: 20px auto 16px;
+  display: grid;
+  grid-template-columns: minmax(390px, .96fr) minmax(470px, 1.04fr);
+  min-height: 570px;
+  border: 1px solid rgba(184, 122, 45, .38);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(60, 33, 9, .12);
+  background: #fffaf3;
+}
+
+#loginModal .auth-art {
+  position: relative;
+  min-height: 570px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 54px 46px;
+  color: #fff7e5;
+  background:
+    linear-gradient(180deg, rgba(3, 20, 43, .5), rgba(3, 18, 39, .94)),
+    url("assets/sacred-texts-library-hero.webp") center / cover no-repeat;
+}
+
+#loginModal .auth-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(173, 36, 17, .16), transparent 45%);
+  pointer-events: none;
+}
+
+#loginModal .auth-art-copy { position: relative; z-index: 1; max-width: 460px; }
+#loginModal .auth-art h2 { color: #f4ba58; font-size: clamp(2rem, 3.4vw, 3.15rem); line-height: 1.05; margin: 0 0 14px; }
+#loginModal .auth-art p { font-size: 1.18rem; line-height: 1.45; margin: 0 auto; }
+#loginModal .auth-art-note { margin-top: 34px !important; padding-top: 24px; border-top: 1px solid rgba(233, 173, 73, .55); color: #ffe3a4; }
+#loginModal .auth-shanti { margin-top: 42px; color: #f4ba58; font-size: 1.18rem; }
+
+#loginModal .auth-panel {
+  position: relative;
+  padding: clamp(34px, 4vw, 54px) clamp(30px, 5vw, 68px);
+  background:
+    radial-gradient(circle at 100% 12%, rgba(204, 141, 41, .09), transparent 24%),
+    #fffaf3;
+}
+
+#loginModal .auth-view[hidden],
+#loginModal .auth-success[hidden] { display: none !important; }
+
+#loginModal .auth-heading { margin-bottom: 18px; padding: 0; background: transparent; color: inherit; box-shadow: none; }
+#loginModal .auth-heading h1 { color: #74161c; font-size: clamp(2rem, 3vw, 2.65rem); line-height: 1.06; margin: 0; }
+#loginModal .auth-heading h1 span { display: block; font-size: 1.35rem; margin-top: 6px; }
+#loginModal .auth-heading p { color: #263653; font-size: 1.06rem; line-height: 1.35; margin-top: 8px; }
+
+#loginModal .auth-alert {
+  display: none;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 13px;
+  border-radius: 8px;
+  font-size: .98rem;
+  line-height: 1.3;
+  margin-bottom: 13px;
+}
+#loginModal .auth-alert.visible { display: flex; }
+#loginModal .error-msg.auth-alert { color: #9d1b25; border: 1px solid #d9535d; background: #fff1ef; }
+#loginModal .success-msg.auth-alert { color: #15572d; border: 1px solid #69a57a; background: #f0f8ef; }
+
+#loginModal .auth-google,
+#loginModal .auth-primary,
+#loginModal .auth-secondary {
+  width: 100%;
+  min-height: 46px;
+  border-radius: 7px;
+  cursor: pointer;
+  font: 600 1.08rem "Crimson Pro", serif;
+  transition: transform .15s ease, filter .15s ease;
+}
+#loginModal button:focus-visible, #loginModal input:focus-visible { outline: 3px solid rgba(204, 139, 31, .3); outline-offset: 2px; }
+#loginModal .auth-google:hover, #loginModal .auth-primary:hover, #loginModal .auth-secondary:hover { filter: brightness(.97); transform: translateY(-1px); }
+#loginModal .auth-google { border: 1px solid #9d3d2d; color: #17243f; background: #fffdf9; display: flex; align-items: center; justify-content: center; gap: 12px; }
+#loginModal .auth-google svg { width: 22px; height: 22px; }
+#loginModal .auth-primary { border: 1px solid #7d1118; color: white; background: linear-gradient(90deg, #781016, #9a191e 52%, #781016); margin-top: 13px; }
+#loginModal .auth-secondary { border: 1px solid #a65e3e; color: #7a161b; background: transparent; }
+#loginModal button[disabled] { opacity: .58; cursor: wait; transform: none; }
+
+#loginModal .auth-divider { display: flex; align-items: center; gap: 14px; color: #743027; margin: 17px 0 13px; }
+#loginModal .auth-divider::before, #loginModal .auth-divider::after { content: ""; height: 1px; flex: 1; background: #e5cbaa; }
+
+#loginModal .auth-field { margin: 0 0 12px; }
+#loginModal .auth-field label { display: block; margin-bottom: 5px; color: #1b2943; font-weight: 600; font-size: .98rem; }
+#loginModal .auth-input-wrap { position: relative; }
+#loginModal .auth-input-wrap input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #d9b889;
+  border-radius: 7px;
+  background: #fffdf9;
+  color: #152a4d;
+  padding: 0 45px 0 14px;
+  font: 1rem "Crimson Pro", serif;
+}
+#loginModal .auth-input-wrap input.invalid { border-color: #c82d37; background: #fff8f7; }
+#loginModal .password-toggle { position: absolute; right: 5px; top: 50%; transform: translateY(-50%); width: 36px; height: 34px; border: 0; background: transparent; color: #10284c; cursor: pointer; }
+#loginModal .field-error { color: #a81f29; display: block; min-height: 0; margin-top: 4px; font-size: .88rem; }
+#loginModal .field-error:empty { display: none; }
+
+#loginModal .auth-row { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin: 4px 0 5px; }
+#loginModal .auth-check { display: flex; align-items: flex-start; gap: 9px; cursor: pointer; color: #172741; line-height: 1.25; }
+#loginModal .auth-check input { width: 18px; height: 18px; accent-color: #891319; flex: 0 0 auto; }
+#loginModal .auth-link { border: 0; background: none; color: #143d78; cursor: pointer; padding: 0; font: 600 .98rem "Crimson Pro", serif; text-decoration: none; }
+#loginModal .auth-switch { text-align: center; border-bottom: 1px solid #e5cbaa; padding: 12px 0 13px; color: #172741; }
+#loginModal .auth-privacy { display: flex; align-items: flex-start; gap: 13px; color: #4d4b45; line-height: 1.35; padding-top: 12px; }
+#loginModal .auth-privacy span { font-size: 1.55rem; color: #8a2b20; }
+
+#loginModal .auth-language { margin: 12px 0; }
+#loginModal .auth-language > span { display: block; font-weight: 600; margin-bottom: 7px; }
+#loginModal .auth-segment { display: grid; grid-template-columns: repeat(3, 1fr); }
+#loginModal .auth-segment button { min-height: 40px; background: #fffdf9; color: #6f2422; border: 1px solid #c99161; font: 600 1rem "Crimson Pro", serif; cursor: pointer; }
+#loginModal .auth-segment button:first-child { border-radius: 6px 0 0 6px; }
+#loginModal .auth-segment button:last-child { border-radius: 0 6px 6px 0; }
+#loginModal .auth-segment button.active { background: #851319; color: white; }
+
+#loginModal .auth-requirements { padding: 9px 12px; border: 1px solid #ead1b3; border-radius: 7px; background: #fffaf3; font-size: .9rem; color: #6b3e31; display: grid; gap: 3px; }
+#loginModal .auth-requirements span::before { content: "○"; margin-right: 8px; }
+#loginModal .auth-requirements span.met { color: #176033; }
+#loginModal .auth-requirements span.met::before { content: "✓"; }
+
+#loginModal .auth-recovery-steps { display: flex; gap: 8px; align-items: center; margin-bottom: 20px; }
+#loginModal .auth-recovery-steps span { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; border: 1px solid #c68b3b; color: #82201e; font-weight: 700; }
+#loginModal .auth-recovery-steps i { height: 1px; flex: 1; background: #dfbd8e; }
+#loginModal .auth-recovery-steps span.active { color: white; background: #851319; }
+#loginModal .auth-email-art { font-size: 4rem; text-align: center; margin: 14px 0; color: #b66d1a; }
+#loginModal .auth-confirm-copy { font-size: 1.08rem; text-align: center; line-height: 1.4; margin-bottom: 16px; }
+#loginModal .auth-help-list { display: grid; gap: 6px; padding: 0 0 15px 22px; color: #34445e; }
+
+#loginModal .auth-success { text-align: center; padding-top: 40px; }
+#loginModal .auth-success-icon { margin: 0 auto 15px; width: 72px; height: 72px; border: 2px solid #2d7644; color: #2d7644; border-radius: 50%; display: grid; place-items: center; font-size: 2.3rem; }
+#loginModal .auth-success h2 { color: #74161c; font-size: 2.1rem; }
+#loginModal .auth-success p { margin: 8px 0 20px; font-size: 1.08rem; }
+
+#loginModal .auth-footer { border-top: 1px solid #d7ae72; padding: 14px 4px 0; margin-top: 0; display: flex; align-items: center; justify-content: space-between; color: #14356a; background: transparent; text-align: left; }
+#loginModal .auth-footer nav { position: static; min-height: 0; display: flex; gap: 24px; padding: 0; background: none; border: 0; box-shadow: none; }
+#loginModal .auth-footer a, #loginModal .auth-footer button { border: 0; background: none; color: #14356a; cursor: pointer; text-decoration: none; font: 600 .98rem "Crimson Pro", serif; }
+
+@media (max-width: 800px) {
+  #loginModal .auth-page { padding: 12px clamp(12px, 3.5vw, 24px) 18px; }
+  #loginModal .auth-topbar { min-height: 74px; }
+  #loginModal .auth-brand { grid-template-columns: 54px auto; column-gap: 8px; }
+  #loginModal .auth-brand .auth-lotus { width: 54px; height: 54px; }
+  #loginModal .auth-brand strong { font-size: clamp(1.35rem, 6vw, 1.85rem); }
+  #loginModal .auth-brand small { font-size: .86rem; }
+  #loginModal .auth-back { font-size: .95rem; padding: 7px 0; white-space: nowrap; }
+  #loginModal .auth-shell { display: block; min-height: 0; margin-top: 16px; border-radius: 16px; }
+  #loginModal .auth-art { min-height: 225px; padding: 34px 24px; align-items: flex-start; background-position: center; }
+  #loginModal .auth-art h2 { font-size: 2rem; }
+  #loginModal .auth-art p { font-size: 1.05rem; }
+  #loginModal .auth-art-note { margin-top: 18px !important; padding-top: 15px; }
+  #loginModal .auth-shanti { display: none; }
+  #loginModal .auth-panel { padding: 28px clamp(22px, 6vw, 42px) 32px; }
+  #loginModal .auth-heading h1 { font-size: 2rem; }
+  #loginModal .auth-heading h1 span { font-size: 1.22rem; }
+  #loginModal .auth-footer { flex-direction: column; gap: 10px; text-align: center; }
+}
+
+@media (max-width: 440px) {
+  #loginModal .auth-brand { grid-template-columns: 45px auto; }
+  #loginModal .auth-brand .auth-lotus { width: 45px; height: 45px; }
+  #loginModal .auth-brand small { display: none; }
+  #loginModal .auth-back { font-size: .88rem; }
+  #loginModal .auth-art { min-height: 205px; }
+  #loginModal .auth-panel { padding-inline: 19px; }
+  #loginModal .auth-row { align-items: flex-start; }
+  #loginModal .auth-footer nav { gap: 14px; }
+}
+
+[data-theme="dark"] #loginModal .auth-page,
+[data-theme="dark"] #loginModal .auth-panel { background-color: #fffaf3; color: #10284c; }

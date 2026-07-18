@@ -93,6 +93,7 @@
       '<div class="library-sync-line"><span aria-hidden="true">☁</span><div><strong data-en="Account-synced saves" data-hi="अकाउंट से सिंक संग्रह">Account-synced saves</strong><small data-en="Available after sign-in" data-hi="साइन इन के बाद उपलब्ध">Available after sign-in</small></div><b aria-label="Active">✓</b></div>' +
       '<button type="button" onclick="libraryScrollToSaved()"><span aria-hidden="true">▥</span><span data-en="Library overview" data-hi="लाइब्रेरी का परिचय">Library overview</span></button>' +
       '<button type="button" onclick="libraryScrollToPrivacy()"><span aria-hidden="true">♢</span><span data-en="Sync & privacy" data-hi="सिंक और गोपनीयता">Sync & privacy</span></button>' +
+      '<button type="button" onclick="showAccountProfile()"><span aria-hidden="true">⚙</span><span data-en="Account &amp; Profile" data-hi="खाता और प्रोफ़ाइल">Account &amp; Profile</span></button>' +
     '</aside>';
   }
 
