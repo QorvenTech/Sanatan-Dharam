@@ -21,6 +21,8 @@
     'durga-chalisa': 'assets/paath-durga-chalisa.png',
     'ram-raksha': 'assets/paath-ram-raksha.png',
     'shiv-tandav': 'assets/paath-shiva-tandava.png',
+    'ramayan-aavahan': 'assets/ramayan-aavahan.webp',
+    'ramayan-visarjan': 'assets/ramayan-visarjan.webp',
     'gayatri-mantra': 'assets/mantra-gayatri.webp',
     'maha-mrityunjaya': 'assets/mantra-shiva.webp',
     'om-mantra': 'assets/mantra-gayatri.webp',
@@ -248,6 +250,7 @@
   };
 
   window.libraryOpenItem = function (id, section) {
+    if ((id === 'ramayan-aavahan' || id === 'ramayan-visarjan') && typeof showText === 'function') { showText(id); return; }
     if (/^aarti-/.test(id) && typeof showText === 'function') { showText(id); return; }
     if (/^ritual-/.test(id) && typeof showText === 'function') { showText(id); return; }
     if (section === 'deities' && /-(108names|sahasranama)$/.test(id) && typeof jumpToContent === 'function') { jumpToContent(id); return; }

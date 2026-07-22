@@ -61,6 +61,8 @@
 .library-card-open { display: grid; grid-template-columns: 92px minmax(0,1fr); gap: .75rem; width: 100%; height: 100%; padding: .7rem; border: 0; background: transparent; color: inherit; text-align: left; cursor: pointer; }
 .library-card-art { display: grid; place-items: center; min-height: 112px; overflow: hidden; border-radius: 6px; background: #fff8e9; color: #b66d0c; font-size: 2.2rem; }
 .library-card-art img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: sepia(.12) saturate(.9); }
+.library-card-art img[src$="ramayan-aavahan.webp"],
+.library-card-art img[src$="ramayan-visarjan.webp"] { object-position: 32% center; }
 .library-card-copy { display: flex; flex-direction: column; min-width: 0; padding-right: .8rem; }
 .library-card-copy p { margin: 0; color: #a56513 !important; font-size: .67rem; font-weight: 700; text-transform: uppercase; }
 .library-card-copy h3 { margin: .18rem 0 .35rem !important; color: var(--lib-navy) !important; font-size: 1.05rem !important; line-height: 1.12; }

@@ -33,17 +33,18 @@
       eyebrowEn: 'Sacred epic · Dharma and devotion',
       eyebrowHi: 'पवित्र महाकाव्य · धर्म और भक्ति',
       artwork: 'assets/text-ramayan.webp',
-      descriptionEn: 'Read the seven Kandas of Goswami Tulsidas\'s Ramcharitmanas and open the complete Ramayan editions already preserved by this website.',
-      descriptionHi: 'गोस्वामी तुलसीदास कृत रामचरितमानस के सातों काण्ड पढ़ें और वेबसाइट पर पहले से उपलब्ध सम्पूर्ण रामायण संस्करण खोलें।',
-      noteEn: 'The seven hosted Kand files are Ramcharitmanas editions. The complete Valmiki Ramayan and language editions open from the existing Internet Archive sources.',
-      noteHi: 'होस्ट किए गए सात काण्ड रामचरितमानस के संस्करण हैं। सम्पूर्ण वाल्मीकि रामायण और भाषा संस्करण मौजूदा Internet Archive स्रोतों से खुलते हैं।',
+      descriptionEn: 'Read the seven Kandas of Goswami Tulsidas\'s Ramcharitmanas, its opening and closing prayers, and the complete Ramayan editions preserved by this website.',
+      descriptionHi: 'गोस्वामी तुलसीदास कृत रामचरितमानस के सातों काण्ड, आरम्भ-समापन प्रार्थनाएँ और वेबसाइट पर उपलब्ध सम्पूर्ण रामायण संस्करण पढ़ें।',
+      noteEn: 'The opening and closing prayers use the complete text already preserved by this website. Wording can vary by region and recitation tradition.',
+      noteHi: 'आरम्भ और समापन प्रार्थनाएँ वेबसाइट पर पहले से सुरक्षित सम्पूर्ण पाठ पर आधारित हैं। क्षेत्र और पाठ-परम्परा के अनुसार शब्द बदल सकते हैं।',
       stats: [
         ['7', 'Kandas', 'काण्ड'],
-        ['10', 'working resources', 'कार्यशील संसाधन'],
+        ['12', 'working resources', 'कार्यशील संसाधन'],
         ['Hindi · Sanskrit · English · Tamil', 'available editions', 'उपलब्ध संस्करण']
       ],
       groups: [
         { id: 'kandas', en: 'Seven Kandas', hi: 'सात काण्ड' },
+        { id: 'prayers', en: 'Opening & closing prayers', hi: 'आरम्भ और समापन प्रार्थना' },
         { id: 'complete', en: 'Complete & language editions', hi: 'सम्पूर्ण व भाषा संस्करण' }
       ],
       resources: [
@@ -54,6 +55,8 @@
         resource('sundar-kand', 'kandas', 'Sundar Kand', 'सुन्दरकाण्ड', 'Hanumanji\'s journey to Lanka, Sita Mata\'s darshan and the message of courage and devotion.', 'हनुमानजी की लंका यात्रा, सीता माता के दर्शन और साहस-भक्ति का संदेश।', 'pdfs/5_SundarKand.pdf', '25', '0.2 MB', 'Hosted PDF · Ramcharitmanas'),
         resource('lanka-kand', 'kandas', 'Lanka Kand', 'लंकाकाण्ड', 'The battle in Lanka, Ravana\'s defeat and the reunion with Sita Mata.', 'लंका का युद्ध, रावण वध और सीता माता से पुनर्मिलन।', 'pdfs/6_LankaKand.pdf', '58', '0.4 MB', 'Hosted PDF · Ramcharitmanas'),
         resource('uttar-kand', 'kandas', 'Uttar Kand', 'उत्तरकाण्ड', 'The concluding Kand of Ramcharitmanas and teachings that follow Shri Rama\'s return.', 'रामचरितमानस का समापन काण्ड और श्रीराम की वापसी के बाद की शिक्षाएँ।', 'pdfs/7_UttarKand.pdf', '65', '12.7 MB', 'Hosted PDF · Ramcharitmanas'),
+        resource('ramayan-aavahan', 'prayers', 'Shri Ramayan Aavahan', 'श्री रामायण आवाहन', 'Complete traditional invocation before beginning Ramayan paath, with Devanagari and Roman transliteration.', 'रामायण पाठ आरम्भ करने से पहले किया जाने वाला सम्पूर्ण पारम्परिक आवाहन, देवनागरी और रोमन लिप्यंतरण सहित।', '', '', '', 'Internal text reader · Ramcharitmanas tradition', { internalId: 'ramayan-aavahan', available: true }),
+        resource('ramayan-visarjan', 'prayers', 'Shri Ramayan Visarjan', 'श्री रामायण विसर्जन', 'Complete traditional closing prayer after Ramayan paath, with Devanagari and Roman transliteration.', 'रामायण पाठ के बाद की जाने वाली सम्पूर्ण पारम्परिक समापन प्रार्थना, देवनागरी और रोमन लिप्यंतरण सहित।', '', '', '', 'Internal text reader · Ramcharitmanas tradition', { internalId: 'ramayan-visarjan', available: true }),
         resource('valmiki-complete', 'complete', 'Valmiki Ramayan — Hindi & Sanskrit', 'वाल्मीकि रामायण — हिन्दी व संस्कृत', 'Complete Hindi and Sanskrit edition from the website\'s existing Internet Archive collection.', 'वेबसाइट के मौजूदा Internet Archive संग्रह से सम्पूर्ण हिन्दी-संस्कृत संस्करण।', 'https://archive.org/download/mahabharat-hindi/Ramayan_Hindi_Sanskrit.pdf', '', '', 'Internet Archive · External PDF', { external: true }),
         resource('ramcharitmanas-english', 'complete', 'Ramcharitmanas — English translation', 'रामचरितमानस — अंग्रेज़ी अनुवाद', 'An English-language Ramcharitmanas edition from the existing Internet Archive record.', 'मौजूदा Internet Archive अभिलेख से अंग्रेज़ी भाषा का रामचरितमानस संस्करण।', 'https://archive.org/details/1318-sri-ramchritmanas-roman', '', '', 'Internet Archive · External record', { external: true, record: true }),
         resource('ramayan-tamil', 'complete', 'Ramayan — Tamil edition', 'रामायण — तमिल संस्करण', 'Tamil-language Ramayan from the website\'s existing Internet Archive collection.', 'वेबसाइट के मौजूदा Internet Archive संग्रह से तमिल भाषा का रामायण संस्करण।', 'https://archive.org/download/mahabharat-hindi/Ramayan_Tamil.pdf', '', '', 'Internet Archive · External PDF', { external: true })
@@ -262,7 +265,9 @@
     var status = item.available
       ? '<span class="scripture-resource-status available">' + icon('check') + bi('Available', 'उपलब्ध') + '</span>'
       : '<span class="scripture-resource-status unavailable">' + icon('info') + bi('Edition not hosted', 'संस्करण होस्टेड नहीं') + '</span>';
-    var actions = item.available
+    var actions = item.internalId
+      ? '<button type="button" class="scripture-resource-open" onclick="scriptureTrackOpen(\'' + readerId + '\',\'' + item.key + '\');showText(\'' + item.internalId + '\')">' + icon('book') + bi('Open reader', 'पाठक खोलें') + '</button>'
+      : item.available
       ? '<a class="scripture-resource-open" href="' + esc(item.href) + '" target="_blank" rel="noopener" onclick="scriptureTrackOpen(\'' + readerId + '\',\'' + item.key + '\')">' + icon('book') + bi(item.record ? 'Open source record' : 'Open reader', item.record ? 'स्रोत अभिलेख खोलें' : 'पाठक खोलें') + '</a>' +
         (item.local ? '<a class="scripture-resource-download" href="' + esc(item.href) + '" download onclick="scriptureTrackOpen(\'' + readerId + '\',\'' + item.key + '\')">' + icon('download') + bi('Download PDF', 'PDF डाउनलोड करें') + '</a>' : '')
       : '<button type="button" class="scripture-resource-disabled" disabled>' + icon('info') + bi('No verified file yet', 'सत्यापित फ़ाइल अभी नहीं') + '</button>';

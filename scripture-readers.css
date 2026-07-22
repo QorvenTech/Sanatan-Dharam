@@ -662,6 +662,7 @@
   border: 1px solid var(--scripture-gold);
   background: var(--scripture-gold);
   color: #fff;
+  cursor: pointer;
 }
 
 .scripture-resource-download {
