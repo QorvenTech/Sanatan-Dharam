@@ -1,0 +1,614 @@
+/*
+ * Final light/dark theme polish.
+ * Loaded after every feature stylesheet so the shared shell and older readers
+ * use one accessible night palette without changing their light appearance.
+ */
+
+.theme-icon-btn {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 38px;
+  overflow: hidden;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.theme-icon-btn .theme-glyph {
+  display: block;
+  transform: translateY(-1px);
+  font-size: 1.08rem;
+}
+
+.mantra-breadcrumb,
+.deity-breadcrumb,
+.ritual-breadcrumb,
+.paath-breadcrumb,
+.ramayan-prayer-breadcrumb {
+  position: static;
+  top: auto;
+  z-index: auto;
+  padding: 0;
+  background: transparent;
+  border-bottom: 0;
+  box-shadow: none;
+}
+
+.home-shloka-card .home-card-label {
+  justify-content: flex-start;
+}
+
+.home-shloka-card .home-card-label > div {
+  min-width: 0;
+}
+
+.home-shloka-share {
+  width: 36px;
+  height: 36px;
+  margin-left: auto;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 36px;
+  border: 1px solid #d8b47b;
+  border-radius: 50%;
+  background: rgba(255, 253, 247, .7);
+  color: #a35d18;
+  cursor: pointer;
+  font: 800 1.08rem/1 system-ui, sans-serif;
+  transition: transform .18s ease, background .18s ease, color .18s ease;
+}
+
+.home-shloka-share:hover {
+  transform: translateY(-1px);
+  background: #b86a1c;
+  color: #fff;
+}
+
+.home-shloka-share[data-state="done"] {
+  border-color: #4f7f47;
+  background: #e9f3df;
+  color: #35652f;
+}
+
+.home-shloka-share:focus-visible,
+.theme-icon-btn:focus-visible {
+  outline: 3px solid rgba(202, 132, 43, .3);
+  outline-offset: 3px;
+}
+
+.mantra-practice-saved span {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.mantra-practice-saved svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+}
+
+body.dark-theme {
+  --home-ink: #f7ead1;
+  --home-paper: #181b25;
+  --home-parchment: #252833;
+  --home-line: #514b4d;
+  --home-wine: #a84452;
+  --card-bg: #252833;
+  --comment-bg: #222630;
+  --border-light: #514b4d;
+  --text: #f2e5d0;
+  --cream: #2b2e39;
+  background: #181b25;
+  color: #f2e5d0;
+  color-scheme: dark;
+}
+
+body.dark-theme .container,
+body.dark-theme .section {
+  color: #f2e5d0;
+}
+
+body.dark-theme .site-header,
+body.dark-theme > nav {
+  background: rgba(24, 27, 37, .98);
+  border-color: #514b4d;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, .22);
+}
+
+body.dark-theme .site-brand-hi,
+body.dark-theme > nav a,
+body.dark-theme .user-pill,
+body.dark-theme .user-name {
+  color: #f7ead1;
+}
+
+body.dark-theme .site-brand-en {
+  color: #e0ae66;
+}
+
+body.dark-theme > nav a:hover,
+body.dark-theme > nav a.active {
+  color: #f1bc6c;
+  border-bottom-color: #d68e34;
+}
+
+body.dark-theme .lang-btn,
+body.dark-theme .theme-icon-btn,
+body.dark-theme .user-pill {
+  border-color: #675b51;
+  background: #252936;
+  color: #f7ead1;
+}
+
+body.dark-theme .theme-icon-btn:hover {
+  border-color: #d39a4e;
+  background: #313646;
+}
+
+body.dark-theme .mantra-breadcrumb,
+body.dark-theme .deity-breadcrumb,
+body.dark-theme .ritual-breadcrumb,
+body.dark-theme .paath-breadcrumb,
+body.dark-theme .ramayan-prayer-breadcrumb {
+  color: #cfc7bb;
+}
+
+body.dark-theme .mantra-breadcrumb button,
+body.dark-theme .mantra-breadcrumb strong,
+body.dark-theme .deity-breadcrumb button,
+body.dark-theme .deity-breadcrumb strong,
+body.dark-theme .ritual-breadcrumb button,
+body.dark-theme .ritual-breadcrumb strong,
+body.dark-theme .paath-breadcrumb button,
+body.dark-theme .paath-breadcrumb strong,
+body.dark-theme .ramayan-prayer-breadcrumb button,
+body.dark-theme .ramayan-prayer-breadcrumb strong {
+  color: #f5e8d2;
+}
+
+body.dark-theme .sfh-mobile-header-actions button {
+  color: #f7ead1;
+}
+
+body.dark-theme .sfh-mobile-header-actions i {
+  background: #efb869;
+}
+
+body.dark-theme .sfh-mobile-drawer {
+  border-color: #a66b2a;
+  background: linear-gradient(145deg, #252833, #20232d);
+  color: #f3e6d0;
+}
+
+body.dark-theme .sfh-mobile-drawer > header,
+body.dark-theme .sfh-mobile-drawer > header > button {
+  border-color: #514b4d;
+  color: #f3e6d0;
+}
+
+body.dark-theme .sfh-mobile-drawer > #sfh-drawer-profile > button,
+body.dark-theme .sfh-mobile-drawer nav > button,
+body.dark-theme .sfh-mobile-drawer nav details > summary,
+body.dark-theme .sfh-mobile-drawer nav details > div button,
+body.dark-theme .sfh-drawer-language button {
+  border-color: #514b4d;
+  background: #252833;
+  color: #f3e6d0;
+}
+
+body.dark-theme .sfh-mobile-drawer nav button span,
+body.dark-theme .sfh-mobile-drawer nav summary span,
+body.dark-theme .sfh-mobile-drawer nav summary i {
+  color: #efb869;
+}
+
+body.dark-theme .sfh-mobile-drawer nav details[open] > summary,
+body.dark-theme .sfh-drawer-language button.active {
+  border-color: #a96336;
+  background: #71303a;
+  color: #fff2dd;
+}
+
+body.dark-theme .sfh-mobile-drawer nav details > div {
+  border-color: #795f3f;
+}
+
+body.dark-theme .sfh-mobile-drawer > footer,
+body.dark-theme .sfh-mobile-drawer > footer a,
+body.dark-theme .sfh-mobile-drawer > footer small {
+  color: #d2ced0;
+}
+
+body.dark-theme .sanatan-hero h1,
+body.dark-theme .sanatan-hero h2 {
+  color: #f9edda;
+  text-shadow: 0 1px 18px rgba(0, 0, 0, .26);
+}
+
+body.dark-theme .sanatan-hero p {
+  color: #d5d0cb;
+}
+
+body.dark-theme .sanatan-hero .hero-kicker {
+  color: #efb869;
+}
+
+body.dark-theme .home-section-heading h2,
+body.dark-theme .home-card-label,
+body.dark-theme .home-panchang-tithi,
+body.dark-theme .home-festival-name,
+body.dark-theme .home-utility-header h2,
+body.dark-theme .home-timeline-item strong {
+  color: #f7ead1;
+}
+
+body.dark-theme .home-today-card,
+body.dark-theme .home-panchang-preview,
+body.dark-theme .home-festival-timeline,
+body.dark-theme .home-explore-card {
+  border-color: #514b4d;
+  background: linear-gradient(145deg, #272b37, #222630);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+}
+
+body.dark-theme .home-card-label small,
+body.dark-theme .home-shloka-meaning,
+body.dark-theme .home-festival-desc,
+body.dark-theme .home-explore-card small,
+body.dark-theme .home-panchang-meta,
+body.dark-theme .home-location,
+body.dark-theme .home-timeline-item small {
+  color: #c9c9cd;
+}
+
+body.dark-theme .home-shloka-sanskrit {
+  color: #fff0cf;
+}
+
+body.dark-theme .home-card-source,
+body.dark-theme .home-date-pill,
+body.dark-theme .home-utility-header button {
+  color: #efb869;
+}
+
+body.dark-theme .home-shloka-share {
+  border-color: #725f48;
+  background: #303441;
+  color: #f0b866;
+}
+
+body.dark-theme .home-shloka-share:hover {
+  background: #c77a23;
+  color: #fff;
+}
+
+body.dark-theme .home-shloka-share[data-state="done"] {
+  border-color: #607a58;
+  background: #2b3a2b;
+  color: #bfe0b5;
+}
+
+body.dark-theme .home-good-day {
+  border-color: #536d4e;
+  background: #29372a;
+  color: #bfe0b5;
+}
+
+body.dark-theme .mantra-toolbar-group {
+  border-color: #5c5352;
+}
+
+body.dark-theme .mantra-toolbar button,
+body.dark-theme .mantra-count-number,
+body.dark-theme .mantra-count-number span {
+  color: #f7ead0;
+}
+
+body.dark-theme .mantra-toolbar-label,
+body.dark-theme .mantra-practice-heading p,
+body.dark-theme .mantra-progress-label,
+body.dark-theme .mantra-practice-saved,
+body.dark-theme .mantra-info-card p,
+body.dark-theme .mantra-meaning-grid p,
+body.dark-theme .mantra-related-card small {
+  color: #cbc7c5;
+}
+
+body.dark-theme .mantra-progress-track {
+  background: #4b4d59;
+}
+
+body.dark-theme .home-timeline-item {
+  border-color: #47454a;
+}
+
+body.dark-theme footer {
+  border-color: #514b4d;
+  background: #20232d;
+  color: #eee1cb;
+}
+
+body.dark-theme footer a,
+body.dark-theme footer h3,
+body.dark-theme footer strong {
+  color: #f4e7cf;
+}
+
+body.dark-theme footer p,
+body.dark-theme footer small {
+  color: #c7c4c2;
+}
+
+/* Legacy content that still powers a few long-form collections. */
+body.dark-theme .card:not(.paath-library-card),
+body.dark-theme .text-content,
+body.dark-theme .quote-box,
+body.dark-theme .welcome-text,
+body.dark-theme .modal-content {
+  border-color: #514b4d;
+  background: #252833;
+  color: #f2e5d0;
+}
+
+body.dark-theme .text-content h1,
+body.dark-theme .text-content h2,
+body.dark-theme .text-content h3,
+body.dark-theme .text-content h4,
+body.dark-theme .text-content .verse {
+  color: #f7ead1;
+}
+
+body.dark-theme .text-content p,
+body.dark-theme .text-content li {
+  color: #cecccb;
+}
+
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme textarea {
+  border-color: #615a5b;
+  background-color: #222630;
+  color: #f5e8d1;
+}
+
+body.dark-theme input::placeholder,
+body.dark-theme textarea::placeholder {
+  color: #9e9da2;
+}
+
+/* Deities did not previously expose a dark palette. */
+body.dark-theme #deities.deity-library,
+body.dark-theme .deity-reader {
+  --deity-navy: #f6e8cf;
+  --deity-paper: #252833;
+  --deity-parchment: #222630;
+  --deity-border: #564f4e;
+  --deity-muted: #c8c7ca;
+  color: #f2e5d0;
+}
+
+body.dark-theme .deity-search-wrap input,
+body.dark-theme .deity-filter,
+body.dark-theme .deity-library-card,
+body.dark-theme .deity-featured-card,
+body.dark-theme .deity-guide-card,
+body.dark-theme .deity-source-note,
+body.dark-theme .deity-toolbar,
+body.dark-theme .deity-page-nav,
+body.dark-theme .deity-content-section,
+body.dark-theme .deity-story-list article,
+body.dark-theme .deity-festival-card,
+body.dark-theme .deity-source-card,
+body.dark-theme .deity-linked-grid button,
+body.dark-theme .deity-related-grid button,
+body.dark-theme .deity-mobile-nav {
+  border-color: #564f4e;
+  background: #252833;
+  color: #f6e8cf;
+}
+
+body.dark-theme .deity-card-copy h3,
+body.dark-theme .deity-featured-copy h3,
+body.dark-theme .deity-guide-card h2,
+body.dark-theme .deity-guide-card h3,
+body.dark-theme .deity-source-note h2,
+body.dark-theme .deity-page-nav h2,
+body.dark-theme .deity-content-section > summary,
+body.dark-theme .deity-story-list h3,
+body.dark-theme .deity-related-section h2 {
+  color: #f6e8cf;
+}
+
+body.dark-theme .deity-card-copy p,
+body.dark-theme .deity-featured-copy p,
+body.dark-theme .deity-featured-source,
+body.dark-theme .deity-guide-card > p,
+body.dark-theme .deity-source-note p,
+body.dark-theme .deity-overview-copy,
+body.dark-theme .deity-story-list p,
+body.dark-theme .deity-source-card p,
+body.dark-theme .deity-related-grid small,
+body.dark-theme .deity-saved-note p {
+  color: #c8c7ca;
+}
+
+/* Login and account pages now follow the same theme instead of staying white. */
+body.dark-theme .modal-overlay#loginModal,
+body.dark-theme #loginModal .auth-page {
+  background: #181b25;
+  color: #f3e6d0;
+}
+
+body.dark-theme #loginModal .auth-topbar,
+body.dark-theme #loginModal .auth-brand,
+body.dark-theme #loginModal .auth-back,
+body.dark-theme #loginModal .auth-footer,
+body.dark-theme #loginModal .auth-footer a,
+body.dark-theme #loginModal .auth-footer button {
+  color: #f3e6d0;
+}
+
+body.dark-theme #loginModal .auth-shell,
+body.dark-theme #loginModal .auth-panel {
+  border-color: #5d5046;
+  background: #252833;
+  color: #f3e6d0;
+}
+
+body.dark-theme #loginModal .auth-heading h1 {
+  color: #f1bd71;
+}
+
+body.dark-theme #loginModal .auth-heading p,
+body.dark-theme #loginModal .auth-field label,
+body.dark-theme #loginModal .auth-check,
+body.dark-theme #loginModal .auth-switch,
+body.dark-theme #loginModal .auth-privacy,
+body.dark-theme #loginModal .auth-help-list,
+body.dark-theme #loginModal .auth-confirm-copy {
+  color: #d2ced0;
+}
+
+body.dark-theme #loginModal .auth-google,
+body.dark-theme #loginModal .auth-secondary,
+body.dark-theme #loginModal .auth-input-wrap input,
+body.dark-theme #loginModal .auth-segment button,
+body.dark-theme #loginModal .auth-requirements {
+  border-color: #66564b;
+  background: #20242f;
+  color: #f3e6d0;
+}
+
+body.dark-theme #loginModal .password-toggle,
+body.dark-theme #loginModal .auth-link {
+  color: #efb86b;
+}
+
+body.dark-theme #account-profile.account-experience,
+body.dark-theme #account-profile .account-page-heading {
+  color: #f3e6d0;
+}
+
+body.dark-theme #account-profile .account-page-heading h1,
+body.dark-theme #account-profile .account-card h2,
+body.dark-theme #account-profile .account-card h3 {
+  color: #efbd76;
+}
+
+body.dark-theme #account-profile .account-breadcrumb,
+body.dark-theme #account-profile .account-breadcrumb button,
+body.dark-theme #account-profile .account-page-heading p,
+body.dark-theme #account-profile .account-card p,
+body.dark-theme #account-profile .account-sidebar > p,
+body.dark-theme #account-profile .account-field label,
+body.dark-theme #account-profile .account-setting small,
+body.dark-theme #account-profile .account-list button,
+body.dark-theme #account-profile .account-list a,
+body.dark-theme #account-profile .account-list span small {
+  color: #cbc9ca;
+}
+
+body.dark-theme #account-profile .account-sidebar,
+body.dark-theme #account-profile .account-card,
+body.dark-theme #account-profile .account-field input,
+body.dark-theme #account-profile .account-segment button,
+body.dark-theme #account-profile .account-outline,
+body.dark-theme #account-profile .account-danger {
+  border-color: #5a514f;
+  background: #252833;
+  color: #f3e6d0;
+}
+
+body.dark-theme #account-profile .account-menu,
+body.dark-theme #account-profile .account-menu button,
+body.dark-theme #account-profile .account-list button,
+body.dark-theme #account-profile .account-list a {
+  border-color: #514b4d;
+}
+
+body.dark-theme #account-profile .account-menu button {
+  color: #e9dfd0;
+}
+
+body.dark-theme #account-profile .account-menu button:hover {
+  background: #303441;
+  color: #efbd76;
+}
+
+/* Bajrang Baan receives the same composed reader treatment as newer paaths. */
+#bajrang-baan-experience .paath-bajrang-hero {
+  min-height: 360px;
+  background-color: #17130f;
+  background-image: linear-gradient(90deg, rgba(10, 13, 21, .99) 0%, rgba(13, 15, 23, .94) 40%, rgba(18, 18, 20, .48) 62%, rgba(18, 18, 20, .04) 100%), url("assets/paath-bajrang-baan.jpg");
+  background-position: center, 68% 42%;
+  background-size: 100% 100%, cover;
+  background-repeat: no-repeat;
+  box-shadow: 0 16px 36px rgba(61, 26, 4, .2);
+}
+
+#bajrang-baan-experience .paath-verse-card {
+  border-left: 3px solid #c8791e;
+}
+
+#bajrang-baan-experience .paath-verse-number b {
+  background: linear-gradient(145deg, #a44d12, #d18a2d);
+}
+
+body.dark-theme #bajrang-baan-experience .paath-verse-card {
+  border-left-color: #e5a34e;
+}
+
+@media (min-width: 761px) {
+  #text-display,
+  .paath-experience {
+    scroll-margin-top: 60px;
+  }
+}
+
+@media (max-width: 720px) {
+  .theme-icon-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    flex-basis: 36px;
+  }
+
+  .home-shloka-share {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .sfh-mobile-header-actions {
+    gap: 3px;
+  }
+
+  .sfh-mobile-header-actions button {
+    width: 32px;
+    height: 36px;
+  }
+
+  .sfh-mobile-theme .theme-glyph {
+    font-size: 1.05rem;
+  }
+
+  body.dark-theme .sanatan-hero {
+    background-image: linear-gradient(180deg, rgba(24, 27, 37, .98) 0%, rgba(24, 27, 37, .9) 55%, rgba(24, 27, 37, .2) 100%), url("assets/sanatan-hero-temple.jpg");
+  }
+
+  #bajrang-baan-experience .paath-bajrang-hero {
+    min-height: clamp(500px, 142vw, 560px);
+    background-image: linear-gradient(0deg, rgba(9, 12, 20, .99) 0%, rgba(11, 14, 22, .94) 43%, rgba(15, 14, 16, .2) 73%, rgba(15, 14, 16, .02) 100%), url("assets/paath-bajrang-baan.jpg");
+    background-position: center, 67% center;
+    background-size: 100% 100%, cover;
+    background-repeat: no-repeat;
+  }
+}

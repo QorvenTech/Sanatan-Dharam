@@ -178,10 +178,11 @@
     var saveLabel = hi ? 'लाइब्रेरी में सहेजें' : 'Save';
     var meaningLabel = hi ? 'अर्थ' : 'Meaning';
     var copyLabel = hi ? 'मंत्र कॉपी करें' : 'Copy mantra';
+    var heroImage = item.image || 'assets/mantra-hero.webp';
 
     return '<article class="mantra-reader" data-mantra-id="' + id + '">' +
       '<nav class="mantra-breadcrumb" aria-label="Breadcrumb"><button type="button" onclick="mantraReturnToLibrary()">' + (hi ? 'होम' : 'Home') + '</button><span>/</span><button type="button" onclick="mantraReturnToLibrary()">' + (hi ? 'मंत्र' : 'Mantras') + '</button><span>/</span><strong>' + (hi ? item.titleHi : item.title) + '</strong></nav>' +
-      '<section class="mantra-detail-hero" aria-labelledby="mantra-detail-title"><div class="mantra-detail-copy"><p class="mantra-kicker">' + text(item, 'tradition') + '</p><h1 id="mantra-detail-title">' + item.title + '<span>' + item.titleHi + '</span></h1><p>' + text(item, 'subtitle') + '</p>' +
+      '<section class="mantra-detail-hero" style="--mantra-detail-art:url(\'' + heroImage + '\')" aria-labelledby="mantra-detail-title"><div class="mantra-detail-copy"><p class="mantra-kicker">' + text(item, 'tradition') + '</p><h1 id="mantra-detail-title">' + item.title + '<span>' + item.titleHi + '</span></h1><p>' + text(item, 'subtitle') + '</p>' +
       '<div class="mantra-detail-meta"><span>' + icon('book') + text(item, 'source') + '</span><span>' + (hi ? 'केवल पाठ' : 'Text only') + '</span></div>' +
       '<div class="mantra-detail-actions"><button type="button" class="mantra-primary-action" onclick="mantraBeginPractice()">' + (hi ? 'अभ्यास आरंभ करें' : 'Begin practice') + '</button>' +
       favoriteButton(item, '', saveLabel) +

@@ -48,8 +48,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="gita-reader.css">
     <link rel="stylesheet" href="scripture-readers.css">
-    <link rel="stylesheet" href="ramayan-prayers.css?v=20260722-1">
-    <link rel="stylesheet" href="mantra-experience.css">
+    <link rel="stylesheet" href="ramayan-prayers.css?v=20260723-2">
+    <link rel="stylesheet" href="mantra-experience.css?v=20260723-2">
     <link rel="stylesheet" href="deity-experience.css?v=20260718-2">
     <link rel="stylesheet" href="ritual-experience.css">
     <link rel="stylesheet" href="aarti-experience.css?v=20260718-2">
@@ -59,6 +59,7 @@
     <link rel="stylesheet" href="account-profile-experience.css?v=20260718-1">
     <link rel="stylesheet" href="search-experience.css?v=20260722-1">
     <link rel="stylesheet" href="shared-shell-experience.css?v=20260722-1">
+    <link rel="stylesheet" href="theme-polish.css?v=20260723-2">
     <style>
         /* ========== YOUR EXISTING CSS (unchanged) ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -935,7 +936,7 @@ body.dark-theme .paath-library-intro, body.dark-theme .paath-library-card:not(.f
     <div class="header-top-bar">
         <div style="display:flex;gap:8px;align-items:center;">
             <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">Read in English</button>
-            <button class="theme-icon-btn" onclick="toggleTheme()" id="themeToggle" aria-label="Toggle theme">☾</button>
+            <button class="theme-icon-btn" onclick="toggleTheme()" id="themeToggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><span class="theme-glyph" aria-hidden="true">☾</span></button>
         </div>
         <div>
             <div id="headerLoginBtn"><button class="btn-login-header" onclick="openModal()">👤 <span data-en="Login" data-hi="लॉगिन">Login</span></button></div>
@@ -1004,7 +1005,7 @@ body.dark-theme .paath-library-intro, body.dark-theme .paath-library-card:not(.f
             <div class="home-section-heading"><h2 id="home-today-title" data-en="Today in Sanatan" data-hi="आज सनातन में">Today in Sanatan</h2><span>✦</span></div>
             <div class="home-today-grid">
                 <article class="home-today-card home-shloka-card">
-                    <div class="home-card-label"><span class="home-card-icon">ॐ</span><div><strong data-en="Shloka of the Day" data-hi="आज का श्लोक">Shloka of the Day</strong><small data-en="A moment of reflection" data-hi="आज का चिंतन">A moment of reflection</small></div></div>
+                    <div class="home-card-label"><span class="home-card-icon">ॐ</span><div><strong data-en="Shloka of the Day" data-hi="आज का श्लोक">Shloka of the Day</strong><small data-en="A moment of reflection" data-hi="आज का चिंतन">A moment of reflection</small></div><button type="button" class="home-shloka-share" id="home-shloka-share" onclick="shareHomeShloka(this)" aria-label="Share Shloka of the Day" title="Share as a status or story">⤴</button></div>
                     <p class="home-shloka-sanskrit" id="home-shloka-sanskrit">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।</p>
                     <p class="home-shloka-meaning" id="home-shloka-meaning"></p>
                     <span class="home-card-source" id="home-shloka-source">Bhagavad Gita</span>
@@ -4650,29 +4651,30 @@ function getFavoriteButtonText(isFavorited) {
 // ======================================
 // THEME TOGGLE (NEW)
 // ======================================
+function paintThemeToggle(isDark) {
+    const nextTheme = isDark ? 'light' : 'dark';
+    document.querySelectorAll('[data-theme-toggle]').forEach(function(toggleBtn) {
+        toggleBtn.innerHTML = '<span class="theme-glyph" aria-hidden="true">' + (isDark ? '☀' : '☾') + '</span>';
+        toggleBtn.setAttribute('aria-label', 'Switch to ' + nextTheme + ' mode');
+        toggleBtn.setAttribute('title', 'Switch to ' + nextTheme + ' mode');
+        toggleBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+    });
+}
+
 function toggleTheme() {
     const body = document.body;
-    const toggleBtn = document.getElementById('themeToggle');
-    
-    if (body.classList.contains('dark-theme')) {
-        body.classList.remove('dark-theme');
-        toggleBtn.innerHTML = '🌙 Dark Mode';
-        localStorage.setItem('siteTheme', 'light');
-    } else {
-        body.classList.add('dark-theme');
-        toggleBtn.innerHTML = '☀️ Light Mode';
-        localStorage.setItem('siteTheme', 'dark');
-    }
+    const isDark = !body.classList.contains('dark-theme');
+    body.classList.toggle('dark-theme', isDark);
+    paintThemeToggle(isDark);
+    localStorage.setItem('siteTheme', isDark ? 'dark' : 'light');
 }
 
 // Load saved theme
 window.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('siteTheme');
-    const toggleBtn = document.getElementById('themeToggle');
-    if (savedTheme === 'dark' && toggleBtn) {
-        document.body.classList.add('dark-theme');
-        toggleBtn.innerHTML = '☀️ Light Mode';
-    }
+    const isDark = savedTheme === 'dark';
+    document.body.classList.toggle('dark-theme', isDark);
+    paintThemeToggle(isDark);
 });
 
 // ======================================
@@ -11427,7 +11429,7 @@ function _renderPanchang(p,srMin,ssMin,srFmt,ssFmt,city,dateLabel,prevSS,solNoon
 }
 
 /* ── Trusted Panchang: pinned, local calculation engine + IANA time zones ── */
-var _pLat=28.6139,_pLng=77.2090,_pCity='New Delhi',_pTimeZone='Asia/Kolkata',_pTZ=5.5;
+var _pLat=28.63576,_pLng=77.22445,_pElevation=212,_pCity='New Delhi',_pTimeZone='Asia/Kolkata',_pTZ=5.5;
 var _pCalendar='purnimanta',_citySearchTimer=null,_panchangLast=null;
 var _panchangPartFormatters={};
 var _panchangTithiEn=['Pratipada','Dwitiya','Tritiya','Chaturthi','Panchami','Shashthi','Saptami','Ashtami','Navami','Dashami','Ekadashi','Dwadashi','Trayodashi','Chaturdashi','Purnima','Pratipada','Dwitiya','Tritiya','Chaturthi','Panchami','Shashthi','Saptami','Ashtami','Navami','Dashami','Ekadashi','Dwadashi','Trayodashi','Chaturdashi','Amavasya'];
@@ -11465,8 +11467,9 @@ function _panchangInputDate(Y,M,D){
 function _panchangTime(date,Y,M,D){
     if(!date)return '—';
     var isHi=(typeof currentLang!=='undefined'&&currentLang==='hi');
-    var time=new Intl.DateTimeFormat('en-US',{timeZone:_pTimeZone,hour:'numeric',minute:'2-digit',hour12:true}).format(date);
-    var p=_panchangParts(date,_pTimeZone);
+    var rounded=new Date(Math.round(date.getTime()/60000)*60000);
+    var time=new Intl.DateTimeFormat('en-US',{timeZone:_pTimeZone,hour:'numeric',minute:'2-digit',hour12:true}).format(rounded);
+    var p=_panchangParts(rounded,_pTimeZone);
     return time+(p.year!==Y||p.month!==M||p.day!==D?(isHi?' (अगले दिन)':' (next day)'):'');
 }
 function _panchangRange(period,Y,M,D){
@@ -11476,7 +11479,7 @@ function _panchangEsc(value){return String(value==null?'':value).replace(/[&<>"]
 function _trustedPanchang(Y,M,D){
     if(!window.SanatanPanchangEngine||!window.SanatanPanchangEngine.getPanchangam)throw new Error('The verified Panchang engine could not be loaded.');
     var engine=window.SanatanPanchangEngine;
-    return engine.getPanchangam(_panchangInputDate(Y,M,D),new engine.Observer(_pLat,_pLng,0),{timezoneOffset:Math.round(_pTZ*60),calendarType:_pCalendar});
+    return engine.getPanchangam(_panchangInputDate(Y,M,D),new engine.Observer(_pLat,_pLng,_pElevation),{timezoneOffset:Math.round(_pTZ*60),calendarType:_pCalendar});
 }
 function _panchangSummary(p){
     var tNum=p.tithi+1,weekday=p.vara;
@@ -11561,7 +11564,7 @@ function panchangCitySearch(val){
                     .then(function(tr){if(!tr.ok)throw new Error('Time zone lookup failed.');return tr.json();})
                     .then(function(td){
                         if(!td.timezone)throw new Error('The city time zone could not be confirmed.');
-                        _pLat=lat;_pLng=lng;_pCity=cityLabel;_pTimeZone=td.timezone;
+                        _pLat=lat;_pLng=lng;_pElevation=Number.isFinite(Number(td.elevation))?Number(td.elevation):0;_pCity=cityLabel;_pTimeZone=td.timezone;
                         document.getElementById('panchang-city-input').value=cityLabel;
                         var picker=document.getElementById('panchang-date-picker');loadPanchangForDate(picker&&picker.value?picker.value:'today');
                     }).catch(function(){_panchangShowError('We could not confirm this city\'s time zone. Please try another search result.');});
@@ -12817,6 +12820,150 @@ function sotdWhatsApp() {
   var text = header + '\n*' + d.src + '*\n\n' + d.sa + '\n\n_' + d.tr + '_\n\n' + mLabel + ' ' + meaning + '\n\n📿 sanatanforhumanity.com';
   var url = 'https://wa.me/?text=' + encodeURIComponent(text);
   window.open(url, '_blank');
+}
+
+function _homeShlokaDrawWrapped(context, value, x, y, maxWidth, lineHeight, maxLines) {
+  var paragraphs = String(value || '').split(/\n+/), lines = [];
+  paragraphs.forEach(function (paragraph) {
+    var words = paragraph.trim().split(/\s+/), line = '';
+    words.forEach(function (word) {
+      var test = line ? line + ' ' + word : word;
+      if (line && context.measureText(test).width > maxWidth) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = test;
+      }
+    });
+    if (line) lines.push(line);
+  });
+  if (maxLines && lines.length > maxLines) {
+    lines = lines.slice(0, maxLines);
+    lines[maxLines - 1] = lines[maxLines - 1].replace(/[.…]*$/, '') + '…';
+  }
+  lines.forEach(function (line, index) { context.fillText(line, x, y + index * lineHeight); });
+  return y + Math.max(1, lines.length) * lineHeight;
+}
+
+function _homeShlokaShareCard(d, isHi) {
+  return new Promise(function (resolve) {
+    var ready = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    ready.then(function () {
+      var canvas = document.createElement('canvas');
+      canvas.width = 1080;
+      canvas.height = 1920;
+      var context = canvas.getContext('2d');
+      if (!context) { resolve(null); return; }
+
+      var paper = context.createLinearGradient(0, 0, 1080, 1920);
+      paper.addColorStop(0, '#fffaf0');
+      paper.addColorStop(.58, '#f8ead1');
+      paper.addColorStop(1, '#efd3a3');
+      context.fillStyle = paper;
+      context.fillRect(0, 0, 1080, 1920);
+
+      context.strokeStyle = '#bd7726';
+      context.lineWidth = 5;
+      context.strokeRect(58, 58, 964, 1804);
+      context.strokeStyle = 'rgba(189,119,38,.34)';
+      context.lineWidth = 2;
+      context.strokeRect(77, 77, 926, 1766);
+
+      context.textAlign = 'center';
+      context.fillStyle = '#a55d18';
+      context.font = '700 38px "Crimson Pro", Georgia, serif';
+      context.fillText(isHi ? 'आज का श्लोक' : 'SHLOKA OF THE DAY', 540, 190);
+      context.font = '700 118px "Tiro Devanagari Sanskrit", serif';
+      context.fillStyle = '#b56a1c';
+      context.fillText('ॐ', 540, 340);
+
+      context.font = '600 32px "Crimson Pro", Georgia, serif';
+      context.fillStyle = '#7b4c22';
+      context.fillText(d.src, 540, 430);
+      context.fillStyle = 'rgba(181,106,28,.55)';
+      context.fillRect(220, 480, 640, 3);
+
+      context.fillStyle = '#16234a';
+      context.font = '700 58px "Tiro Devanagari Sanskrit", serif';
+      var nextY = _homeShlokaDrawWrapped(context, d.sa, 540, 610, 850, 96, 7);
+
+      context.fillStyle = 'rgba(181,106,28,.55)';
+      context.fillRect(300, nextY + 22, 480, 3);
+      context.font = '700 31px "Crimson Pro", Georgia, serif';
+      context.fillStyle = '#9a5b20';
+      context.fillText(isHi ? 'भावार्थ' : 'MEANING', 540, nextY + 105);
+
+      context.font = '500 39px "Crimson Pro", "Tiro Devanagari Sanskrit", Georgia, serif';
+      context.fillStyle = '#3f465a';
+      _homeShlokaDrawWrapped(context, isHi ? d.hi : d.en, 540, nextY + 175, 820, 62, 8);
+
+      context.fillStyle = '#791d2a';
+      context.font = '700 45px "Tiro Devanagari Sanskrit", serif';
+      context.fillText('सनातन धर्म', 540, 1680);
+      context.fillStyle = '#8a5725';
+      context.font = '600 32px "Crimson Pro", Georgia, serif';
+      context.fillText('Sanatan for Humanity', 540, 1740);
+      context.font = '500 25px system-ui, sans-serif';
+      context.fillText('sanatanforhumanity.com', 540, 1792);
+
+      canvas.toBlob(function (blob) { resolve(blob); }, 'image/png');
+    }).catch(function () { resolve(null); });
+  });
+}
+
+function _homeShlokaShareFeedback(button, symbol, label) {
+  if (!button) return;
+  button.textContent = symbol;
+  button.dataset.state = 'done';
+  button.setAttribute('aria-label', label);
+  window.setTimeout(function () {
+    button.textContent = '⤴';
+    button.removeAttribute('data-state');
+    button.setAttribute('aria-label', 'Share Shloka of the Day');
+  }, 2200);
+}
+
+async function shareHomeShloka(button) {
+  if (!Array.isArray(_sotdData) || !_sotdData.length) return;
+  var index = typeof _sotdDayIndex === 'function' ? _sotdDayIndex() : _sotdIndex;
+  var d = _sotdData[index], isHi = (typeof currentLang !== 'undefined') && currentLang === 'hi';
+  var meaningLabel = isHi ? 'भावार्थ' : 'Meaning';
+  var text = d.sa + '\n\n' + meaningLabel + ': ' + (isHi ? d.hi : d.en) + '\n\n— ' + d.src;
+  var blob = await _homeShlokaShareCard(d, isHi);
+  var shareData = { title: isHi ? 'आज का श्लोक' : 'Shloka of the Day', text: text, url: 'https://sanatanforhumanity.com/' };
+
+  try {
+    if (blob && typeof File === 'function' && navigator.share && navigator.canShare) {
+      var file = new File([blob], 'shloka-of-the-day.png', { type:'image/png' });
+      var fileShare = { files:[file], title:shareData.title, text:shareData.text };
+      if (navigator.canShare(fileShare)) {
+        await navigator.share(fileShare);
+        _homeShlokaShareFeedback(button, '✓', isHi ? 'श्लोक साझा किया गया' : 'Shloka shared');
+        return;
+      }
+    }
+    if (navigator.share) {
+      await navigator.share(shareData);
+      _homeShlokaShareFeedback(button, '✓', isHi ? 'श्लोक साझा किया गया' : 'Shloka shared');
+      return;
+    }
+  } catch (error) {
+    if (error && error.name === 'AbortError') return;
+  }
+
+  if (blob) {
+    var downloadUrl = URL.createObjectURL(blob), link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = 'shloka-of-the-day.png';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 1000);
+  }
+  if (navigator.clipboard) {
+    try { await navigator.clipboard.writeText(text + '\n\nhttps://sanatanforhumanity.com/'); } catch (error) {}
+  }
+  _homeShlokaShareFeedback(button, '↓', isHi ? 'स्टोरी चित्र सहेजा गया' : 'Story image saved');
 }
 
 /* Re-render shloka when language changes */
@@ -14129,7 +14276,7 @@ function searchSacredTexts() { _applySacredTextFilters(); }
 })();
 </script>
 
-<script src="paath-readers.js"></script>
+<script src="paath-readers.js?v=20260723-2"></script>
 <script src="gita-reader.js"></script>
 <script src="scripture-readers.js"></script>
 <script src="ramayan-prayers.js?v=20260722-1"></script>
@@ -14142,7 +14289,7 @@ function searchSacredTexts() { _applySacredTextFilters(); }
 <script src="auth-experience.js?v=20260718-1"></script>
 <script src="account-profile-experience.js?v=20260718-1"></script>
 <script src="search-experience.js?v=20260723-1"></script>
-<script src="shared-shell-experience.js?v=20260723-1"></script>
+<script src="shared-shell-experience.js?v=20260723-2"></script>
 
 </body>
 </html>

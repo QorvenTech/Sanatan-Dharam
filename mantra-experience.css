@@ -76,6 +76,13 @@
   align-items: center;
 }
 
+.mantra-detail-hero {
+  background-image: linear-gradient(90deg, rgba(7, 15, 28, 0.99) 0%, rgba(7, 15, 28, 0.94) 36%, rgba(7, 15, 28, 0.35) 64%, rgba(7, 15, 28, 0.08) 100%), var(--mantra-detail-art, url("assets/mantra-hero.webp"));
+  background-size: 100% 100%, min(58%, 760px) auto;
+  background-position: center, right center;
+  background-repeat: no-repeat;
+}
+
 .mantra-hero-copy {
   position: relative;
   z-index: 1;
@@ -1231,8 +1238,10 @@ body.dark-theme .mantra-card-art {
     min-height: 550px;
     padding: 270px 1rem 1rem;
     align-items: flex-end;
-    background-image: linear-gradient(180deg, rgba(7, 15, 28, 0.06) 0%, rgba(7, 15, 28, 0.18) 34%, rgba(7, 15, 28, 0.98) 53%, rgba(7, 15, 28, 1) 100%), url("assets/mantra-hero.webp");
-    background-position: 62% top;
+    background-image: linear-gradient(180deg, rgba(7, 15, 28, 0.04) 0%, rgba(7, 15, 28, 0.24) 38%, rgba(7, 15, 28, 0.98) 57%, rgba(7, 15, 28, 1) 100%), var(--mantra-detail-art, url("assets/mantra-hero.webp"));
+    background-size: 100% 100%, 100% auto;
+    background-position: center, center top;
+    background-repeat: no-repeat;
   }
 
   .mantra-detail-copy {
