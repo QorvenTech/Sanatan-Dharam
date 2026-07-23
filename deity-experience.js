@@ -252,7 +252,7 @@
   function relatedCards(d) {
     return '<div class="deity-related-grid">' + d.related.map(function (id) {
       var x = D[id];
-      return '<button type="button" onclick="showText(\'' + id + '\')"><img src="' + x.image + '" alt="" width="900" height="900"><span><strong>' + x.title + ' / ' + x.titleHi + '</strong><small>' + txt(x.subtitle) + '</small></span><b>›</b></button>';
+      return '<button type="button" onclick="showText(\'' + id + '\')"><img src="' + x.image + '" alt="" width="900" height="900" loading="lazy" decoding="async"><span><strong>' + x.title + ' / ' + x.titleHi + '</strong><small>' + txt(x.subtitle) + '</small></span><b>›</b></button>';
     }).join('') + '</div>';
   }
 

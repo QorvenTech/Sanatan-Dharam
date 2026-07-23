@@ -139,7 +139,7 @@
 
   function relatedCard(item) {
     var art = item.image
-      ? '<img src="' + item.image + '" alt="" width="52" height="48">'
+      ? '<img src="' + item.image + '" alt="" width="52" height="48" loading="lazy" decoding="async">'
       : '<span class="mantra-related-symbol" aria-hidden="true">ॐ</span>';
     return '<button type="button" class="mantra-related-card" onclick="showText(\'' + item.id + '\')">' + art +
       '<span><strong>' + item.shortTitle + '</strong><small>' + text(item, 'tradition') + '</small></span><i>›</i></button>';
@@ -200,7 +200,7 @@
       infoCard('book', 'Source & Tradition', 'स्रोत और परंपरा', text(item, 'sourceNote')) +
       '</section></div>' +
       '<section class="mantra-related-section"><h2>' + (hi ? 'संबंधित मंत्र और पाठ' : 'Explore Related') + '</h2><div class="mantra-related-grid">' + otherItems +
-      '<button type="button" class="mantra-related-card" onclick="showSection(\'paathmandir\')"><img src="assets/paath-hanuman-chalisa.png" alt="" width="52" height="48"><span><strong>Paath Mandir</strong><small>' + (hi ? 'भक्तिमय पाठ' : 'Devotional readings') + '</small></span><i>›</i></button></div></section>' +
+      '<button type="button" class="mantra-related-card" onclick="showSection(\'paathmandir\')"><img src="assets/paath-hanuman-chalisa.jpg" alt="" width="52" height="48" loading="lazy" decoding="async"><span><strong>Paath Mandir</strong><small>' + (hi ? 'भक्तिमय पाठ' : 'Devotional readings') + '</small></span><i>›</i></button></div></section>' +
       '<section class="mantra-trust-strip">' + icon('temple') + '<div><strong>' + (hi ? 'स्रोत और विश्वास' : 'Source & trust') + '</strong><p>' + (hi ? 'सामग्री को पारंपरिक ग्रंथों और सम्मानित संदर्भों से सावधानीपूर्वक जाँचा जाता है।' : 'Content is checked against traditional scriptures and respected references with careful cross-referencing.') + '</p></div><div><small>' + (hi ? 'अनुवाद अर्थ संप्रेषित करते हैं; वे संस्कृत का शब्दशः विकल्प नहीं हैं। परंपरा के अनुसार उच्चारण और विधि भिन्न हो सकती है।' : 'Translations communicate meaning rather than replace the Sanskrit word-for-word. Pronunciation and practice can vary by tradition.') + '</small></div></section>' +
       '</article>';
   };

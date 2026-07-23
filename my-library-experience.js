@@ -15,12 +15,12 @@
 
   var artwork = {
     'bhagavad-gita': 'assets/text-bhagavad-gita.webp',
-    sundarkand: 'assets/paath-sundar-kand.png',
-    'hanuman-chalisa': 'assets/paath-hanuman-chalisa.png',
-    'bajrang-baan': 'assets/paath-bajrang-baan.png',
-    'durga-chalisa': 'assets/paath-durga-chalisa.png',
-    'ram-raksha': 'assets/paath-ram-raksha.png',
-    'shiv-tandav': 'assets/paath-shiva-tandava.png',
+    sundarkand: 'assets/paath-sundar-kand.jpg',
+    'hanuman-chalisa': 'assets/paath-hanuman-chalisa.jpg',
+    'bajrang-baan': 'assets/paath-bajrang-baan.jpg',
+    'durga-chalisa': 'assets/paath-durga-chalisa.jpg',
+    'ram-raksha': 'assets/paath-ram-raksha.jpg',
+    'shiv-tandav': 'assets/paath-shiva-tandava.jpg',
     'ramayan-aavahan': 'assets/ramayan-aavahan.webp',
     'ramayan-visarjan': 'assets/ramayan-visarjan.webp',
     'gayatri-mantra': 'assets/mantra-gayatri.webp',
@@ -88,7 +88,7 @@
 
   function profileMarkup(user) {
     var name = user.displayName || (user.email ? user.email.split('@')[0] : 'Member');
-    var avatar = user.photoURL ? '<img src="' + esc(user.photoURL) + '" alt="">' : '<span>' + esc(name.charAt(0).toUpperCase()) + '</span>';
+    var avatar = user.photoURL ? '<img src="' + esc(user.photoURL) + '" alt="" loading="lazy" decoding="async">' : '<span>' + esc(name.charAt(0).toUpperCase()) + '</span>';
     return '<aside class="library-profile">' +
       '<div class="library-avatar">' + avatar + '</div>' +
       '<h2>' + esc(name) + '</h2><p>' + esc(user.email || '') + '</p>' +
