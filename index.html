@@ -50,7 +50,7 @@
     <link rel="stylesheet" href="scripture-readers.css">
     <link rel="stylesheet" href="ramayan-prayers.css?v=20260723-2">
     <link rel="stylesheet" href="mantra-experience.css?v=20260723-2">
-    <link rel="stylesheet" href="deity-experience.css?v=20260718-2">
+    <link rel="stylesheet" href="deity-experience.css?v=20260724-1">
     <link rel="stylesheet" href="ritual-experience.css">
     <link rel="stylesheet" href="aarti-experience.css?v=20260718-2">
     <link rel="stylesheet" href="divine-library-experience.css?v=20260718-1">
@@ -59,7 +59,7 @@
     <link rel="stylesheet" href="account-profile-experience.css?v=20260718-1">
     <link rel="stylesheet" href="search-experience.css?v=20260722-1">
     <link rel="stylesheet" href="shared-shell-experience.css?v=20260722-1">
-    <link rel="stylesheet" href="theme-polish.css?v=20260723-2">
+    <link rel="stylesheet" href="theme-polish.css?v=20260724-1">
     <style>
         /* ========== YOUR EXISTING CSS (unchanged) ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1005,7 +1005,7 @@ body.dark-theme .paath-library-intro, body.dark-theme .paath-library-card:not(.f
             <div class="home-section-heading"><h2 id="home-today-title" data-en="Today in Sanatan" data-hi="आज सनातन में">Today in Sanatan</h2><span>✦</span></div>
             <div class="home-today-grid">
                 <article class="home-today-card home-shloka-card">
-                    <div class="home-card-label"><span class="home-card-icon">ॐ</span><div><strong data-en="Shloka of the Day" data-hi="आज का श्लोक">Shloka of the Day</strong><small data-en="A moment of reflection" data-hi="आज का चिंतन">A moment of reflection</small></div><button type="button" class="home-shloka-share" id="home-shloka-share" onclick="shareHomeShloka(this)" aria-label="Share Shloka of the Day" title="Share as a status or story">⤴</button></div>
+                    <div class="home-card-label"><span class="home-card-icon">ॐ</span><div><strong data-en="Shloka of the Day" data-hi="आज का श्लोक">Shloka of the Day</strong><small data-en="A moment of reflection" data-hi="आज का चिंतन">A moment of reflection</small></div><button type="button" class="home-shloka-share" id="home-shloka-share" onclick="shareHomeShloka(this)" aria-label="Share Shloka of the Day" title="Share as a status or story"><img src="assets/shloka-share-icon.png" alt="" width="32" height="32" decoding="async"></button></div>
                     <p class="home-shloka-sanskrit" id="home-shloka-sanskrit">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।</p>
                     <p class="home-shloka-meaning" id="home-shloka-meaning"></p>
                     <span class="home-card-source" id="home-shloka-source">Bhagavad Gita</span>
@@ -10893,8 +10893,7 @@ function jumpToContent(contentId) {
     else if (contentId === 'bajrang-baan') {
         showSection('paathmandir');
         setTimeout(() => {
-            document.getElementById('paathGrid').style.display = 'none';
-            document.getElementById('bajrang-baan-text').style.display = 'block';
+            showPaath('bajrang-baan');
         }, 100);
     }
             // Durga Chalisa
@@ -10909,7 +10908,8 @@ function jumpToContent(contentId) {
     else if (contentId === 'durga-108names') {
         showText('durga');
         setTimeout(() => {
-            showDurgaSub('108names');
+            if (typeof deityOpenNames === 'function') deityOpenNames();
+            else showDurgaSub('108names');
         }, 200);
     }
         // Shiv Tandav 
@@ -10940,14 +10940,16 @@ function jumpToContent(contentId) {
     else if (contentId === 'vishnu-sahasranama') {
         showText('vishnu');
         setTimeout(() => {
-            showVishnuSub('sahasranama');
+            if (typeof deityOpenNames === 'function') deityOpenNames();
+            else showVishnuSub('sahasranama');
         }, 200);
     }
         // Inside jumpToContent function, after the Vishnu case
 else if (contentId === 'shiva-108names') {
     showText('shiva');
     setTimeout(() => {
-        showShivaSub('108names');
+        if (typeof deityOpenNames === 'function') deityOpenNames();
+        else showShivaSub('108names');
     }, 200);
 }
     // Add more mappings here as you add new content
@@ -12913,12 +12915,12 @@ function _homeShlokaShareCard(d, isHi) {
 
 function _homeShlokaShareFeedback(button, symbol, label) {
   if (!button) return;
-  button.textContent = symbol;
   button.dataset.state = 'done';
+  button.dataset.feedback = symbol;
   button.setAttribute('aria-label', label);
   window.setTimeout(function () {
-    button.textContent = '⤴';
     button.removeAttribute('data-state');
+    button.removeAttribute('data-feedback');
     button.setAttribute('aria-label', 'Share Shloka of the Day');
   }, 2200);
 }
@@ -14281,7 +14283,7 @@ function searchSacredTexts() { _applySacredTextFilters(); }
 <script src="scripture-readers.js"></script>
 <script src="ramayan-prayers.js?v=20260722-1"></script>
 <script src="mantra-experience.js?v=20260723-1"></script>
-<script src="deity-experience.js?v=20260723-1"></script>
+<script src="deity-experience.js?v=20260724-1"></script>
 <script src="ritual-experience.js?v=20260723-1"></script>
 <script src="aarti-experience.js?v=20260723-1"></script>
 <script src="divine-library-experience.js?v=20260718-1"></script>

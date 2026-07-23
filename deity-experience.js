@@ -219,6 +219,70 @@
     return '<details class="deity-content-section" id="deity-section-' + id + '" ' + (open ? 'open' : '') + '><summary><span>' + number + '. ' + (language() === 'hi' ? hi : en) + '</span><b>⌄</b></summary><div class="deity-section-body">' + body + '</div></details>';
   }
 
+  var NAME_COLLECTIONS = {
+    shiva: { sourceId: 'shiva-108names', savedId: 'shiva-108names', count: 108, title: '108 Names of Shiva', titleHi: 'शिव के 108 नाम' },
+    durga: { sourceId: 'durga-108names', savedId: 'durga-108names', count: 108, title: '108 Names of Durga', titleHi: 'दुर्गा के 108 नाम' },
+    vishnu: { sourceId: 'vishnu-sahasranama', savedId: 'vishnu-sahasranama', count: 1000, title: 'Vishnu Sahasranama', titleHi: 'विष्णु सहस्रनाम' }
+  };
+  var nameCollectionCache = {};
+
+  function splitNameLine(value, fallbackNumber) {
+    var line = String(value || '').replace(/\s+/g, ' ').trim();
+    var numbered = line.match(/^(\d+)\.\s*(.*)$/);
+    var number = numbered ? Number(numbered[1]) : fallbackNumber;
+    var body = numbered ? numbered[2] : line;
+    var separator = body.match(/:\s*|\s+[–—-]\s+|-\s+/);
+    if (!separator) return { number: number, name: body, meaning: '' };
+    return {
+      number: number,
+      name: body.slice(0, separator.index).trim(),
+      meaning: body.slice(separator.index + separator[0].length).trim()
+    };
+  }
+
+  function deityNameRows(id) {
+    if (nameCollectionCache[id]) return nameCollectionCache[id];
+    var meta = NAME_COLLECTIONS[id];
+    if (!meta || typeof getTextContent !== 'function') return [];
+    var template = document.createElement('template');
+    template.innerHTML = getTextContent(id);
+    var source = template.content.querySelector('#' + meta.sourceId);
+    if (!source) return [];
+    var rows = Array.prototype.map.call(source.querySelectorAll('.verse[data-en][data-hi]'), function (node, index) {
+      var en = splitNameLine(node.getAttribute('data-en'), index + 1);
+      var hi = splitNameLine(node.getAttribute('data-hi'), index + 1);
+      return {
+        number: en.number || hi.number || index + 1,
+        nameEn: en.name,
+        nameHi: hi.name,
+        meaningEn: en.meaning,
+        meaningHi: hi.meaning
+      };
+    });
+    nameCollectionCache[id] = rows;
+    return rows;
+  }
+
+  function namesBody(id) {
+    var meta = NAME_COLLECTIONS[id], rows = deityNameRows(id);
+    if (!meta || !rows.length) return '';
+    var initial = id === 'vishnu' ? 48 : 36;
+    var collection = { id: meta.savedId, title: meta.title, titleHi: meta.titleHi };
+    var cards = rows.map(function (row, index) {
+      var search = [row.number, row.nameEn, row.nameHi, row.meaningEn, row.meaningHi].join(' ').toLocaleLowerCase();
+      return '<article class="deity-name-card" data-deity-name-card data-name-search="' + esc(search) + '"' + (index >= initial ? ' hidden' : '') + '>' +
+        '<span class="deity-name-number">' + row.number + '</span><div class="deity-name-heading"><h3>' + esc(row.nameHi) + '</h3><strong>' + esc(row.nameEn) + '</strong></div>' +
+        '<div class="deity-name-meanings"><p><b>हिन्दी अर्थ</b>' + esc(row.meaningHi) + '</p><p><b>English meaning</b>' + esc(row.meaningEn) + '</p></div></article>';
+    }).join('');
+    var intro = id === 'vishnu'
+      ? pair('All 1000 sacred names from the preserved Vishnu Sahasranama collection, with the original name and meanings in Hindi and English.', 'स्रोत में सुरक्षित विष्णु सहस्रनाम के सभी 1000 पवित्र नाम—मूल नाम तथा हिन्दी और English अर्थ सहित।')
+      : pair('The complete preserved collection of 108 sacred names, with the original name and meanings in Hindi and English.', 'स्रोत में सुरक्षित सभी 108 पवित्र नाम—मूल नाम तथा हिन्दी और English अर्थ सहित।');
+    return '<div class="deity-names-shell" data-name-limit="' + initial + '" data-name-total="' + rows.length + '">' +
+      '<div class="deity-names-intro"><div><span>' + (id === 'vishnu' ? 'ॐ' : '❀') + '</span><div><h3>' + meta.title + '<small>' + meta.titleHi + '</small></h3><p>' + txt(intro) + '</p></div></div>' + favoriteButton(collection, false) + '</div>' +
+      '<div class="deity-names-tools"><label><span>⌕</span><input type="search" autocomplete="off" oninput="deityFilterNames(this)" placeholder="' + (language() === 'hi' ? 'नाम या अर्थ खोजें' : 'Search a name or meaning') + '" aria-label="' + (language() === 'hi' ? 'नाम या अर्थ खोजें' : 'Search a name or meaning') + '"></label><p data-name-status aria-live="polite"></p></div>' +
+      '<div class="deity-names-grid">' + cards + '</div><button type="button" class="deity-names-more" onclick="deityShowMoreNames(this)">' + (language() === 'hi' ? 'और नाम दिखाएँ' : 'Show more names') + ' <b>↓</b></button></div>';
+  }
+
   function overviewBody(d) {
     return '<p class="deity-overview-copy">' + txt(d.overview) + '</p>' + sectionCards([
       item('Name', 'नाम', d.honorific, d.honorificHi, 'lotus'),
@@ -256,10 +320,20 @@
     }).join('') + '</div>';
   }
 
-  function navLinks() {
-    var labels = [pair('Overview', 'परिचय'), pair('Meaning & Symbolism', 'अर्थ और प्रतीक'), pair('Iconography', 'स्वरूप-विज्ञान'), pair('Sacred Stories', 'पवित्र कथाएँ'), pair('Core Teachings', 'मुख्य शिक्षाएँ'), pair('Associated Festivals', 'संबद्ध उत्सव'), pair('Mantras & Aartis', 'मंत्र और आरती'), pair('Sources', 'स्रोत')];
-    return labels.map(function (label, index) {
-      return '<button type="button" onclick="deityScrollToSection(' + index + ')"><span>' + (index + 1) + '</span>' + txt(label) + '</button>';
+  function navLinks(d) {
+    var labels = [
+      { id: 'overview', label: pair('Overview', 'परिचय') },
+      { id: 'meaning', label: pair('Meaning & Symbolism', 'अर्थ और प्रतीक') },
+      { id: 'iconography', label: pair('Iconography', 'स्वरूप-विज्ञान') },
+      { id: 'stories', label: pair('Sacred Stories', 'पवित्र कथाएँ') },
+      { id: 'teachings', label: pair('Core Teachings', 'मुख्य शिक्षाएँ') },
+      { id: 'festivals', label: pair('Associated Festivals', 'संबद्ध उत्सव') },
+      { id: 'practice', label: pair('Mantras & Aartis', 'मंत्र और आरती') },
+      { id: 'sources', label: pair('Sources', 'स्रोत') }
+    ];
+    if (NAME_COLLECTIONS[d.id]) labels.splice(1, 0, { id: 'names', label: pair(NAME_COLLECTIONS[d.id].title, NAME_COLLECTIONS[d.id].titleHi) });
+    return labels.map(function (entry, index) {
+      return '<button type="button" onclick="deityScrollToId(\'' + entry.id + '\')"><span>' + (index + 1) + '</span>' + txt(entry.label) + '</button>';
     }).join('');
   }
 
@@ -269,20 +343,24 @@
     d.id = id;
     var hi = language() === 'hi';
     var hero = d.hero || d.image;
+    var hasNames = Boolean(NAME_COLLECTIONS[id]);
+    var sectionOffset = hasNames ? 1 : 0;
+    var sectionCount = 8 + sectionOffset;
     return '<article class="deity-reader" data-deity-id="' + id + '" style="--deity-hero-image:url(\'' + hero + '\')">' +
       '<nav class="deity-breadcrumb" aria-label="Breadcrumb"><button type="button" onclick="deityReturnToLibrary()">' + (hi ? 'होम' : 'Home') + '</button><span>/</span><button type="button" onclick="deityReturnToLibrary()">' + (hi ? 'देवी-देवता' : 'Deities') + '</button><span>/</span><strong>' + (hi ? d.titleHi : d.title) + '</strong></nav>' +
       '<section class="deity-detail-hero"><div class="deity-detail-copy"><p class="deity-kicker">' + txt(d.tradition) + '</p><h1>' + (hi ? d.honorificHi : d.honorific) + '<span>' + d.title + '</span></h1><p>' + txt(d.subtitle) + '</p><div class="deity-tags"><span>' + txt(d.categoryLabel) + '</span><span>' + txt(d.tradition) + '</span></div><div class="deity-detail-actions">' + favoriteButton(d, false) + '<button type="button" class="deity-secondary-action" onclick="deityShareCurrent()">' + icon('share') + '<span>' + (hi ? 'साझा करें' : 'Share') + '</span></button></div></div></section>' +
-      '<section class="deity-toolbar" aria-label="Reading preferences"><div><button type="button" class="' + (hi ? 'active' : '') + '" onclick="deitySetLanguage(\'hi\')">हिंदी</button><button type="button" class="' + (!hi ? 'active' : '') + '" onclick="deitySetLanguage(\'en\')">English</button></div><div><span>' + (hi ? 'अक्षर आकार' : 'Text size') + '</span><button type="button" onclick="deityChangeTextSize(-.08)">A−</button><button type="button" onclick="deityChangeTextSize(.08)">A+</button></div><button type="button" onclick="deityScrollToSection(7)">' + icon('book') + '<span>' + (hi ? 'स्रोत टिप्पणी' : 'Source note') + '</span></button></section>' +
-      '<div class="deity-reader-layout"><aside class="deity-page-nav"><h2>' + (hi ? 'इस पृष्ठ पर' : 'On this page') + '</h2>' + navLinks() + '<div class="deity-saved-note">' + icon('bookmark') + '<strong>' + (hi ? 'अपनी लाइब्रेरी में सहेजें' : 'Save to My Library') + '</strong><p>' + (hi ? 'इस परिचय को बाद में जल्दी खोलें।' : 'Return to this overview quickly.') + '</p></div></aside>' +
+      '<section class="deity-toolbar" aria-label="Reading preferences"><div><button type="button" class="' + (hi ? 'active' : '') + '" onclick="deitySetLanguage(\'hi\')">हिंदी</button><button type="button" class="' + (!hi ? 'active' : '') + '" onclick="deitySetLanguage(\'en\')">English</button></div><div><span>' + (hi ? 'अक्षर आकार' : 'Text size') + '</span><button type="button" onclick="deityChangeTextSize(-.08)">A−</button><button type="button" onclick="deityChangeTextSize(.08)">A+</button></div><button type="button" onclick="deityScrollToId(\'sources\')">' + icon('book') + '<span>' + (hi ? 'स्रोत टिप्पणी' : 'Source note') + '</span></button></section>' +
+      '<div class="deity-reader-layout"><aside class="deity-page-nav"><h2>' + (hi ? 'इस पृष्ठ पर' : 'On this page') + '</h2>' + navLinks(d) + '<div class="deity-saved-note">' + icon('bookmark') + '<strong>' + (hi ? 'अपनी लाइब्रेरी में सहेजें' : 'Save to My Library') + '</strong><p>' + (hi ? 'इस परिचय को बाद में जल्दी खोलें।' : 'Return to this overview quickly.') + '</p></div></aside>' +
       '<main class="deity-reader-main">' +
-      '<div class="deity-mobile-nav"><button type="button" onclick="deityToggleMobileNav(this)">☰ <span>' + (hi ? 'इस पृष्ठ पर · 8 अनुभाग' : 'On this page · 8 sections') + '</span><b>⌄</b></button><div>' + navLinks() + '</div></div>' +
+      '<div class="deity-mobile-nav"><button type="button" onclick="deityToggleMobileNav(this)">☰ <span>' + (hi ? 'इस पृष्ठ पर · ' + sectionCount + ' अनुभाग' : 'On this page · ' + sectionCount + ' sections') + '</span><b>⌄</b></button><div>' + navLinks(d) + '</div></div>' +
       readerSection('overview', 1, 'Overview', 'परिचय', overviewBody(d), true) +
-      readerSection('meaning', 2, 'Meaning & Symbolism', 'अर्थ और प्रतीक', sectionCards(d.themes), true) +
-      readerSection('iconography', 3, 'Iconography', 'स्वरूप और चिह्न', sectionCards(d.icons), true) +
-      '<div class="deity-reader-split">' + readerSection('stories', 4, 'Sacred Stories', 'पवित्र कथाएँ', storiesBody(d), true) + readerSection('teachings', 5, 'Core Teachings', 'मुख्य शिक्षाएँ', sectionCards(d.teachings), true) + '</div>' +
-      readerSection('festivals', 6, 'Associated Festivals', 'संबद्ध उत्सव', festivalBody(d), true) +
-      readerSection('practice', 7, 'Mantras & Aartis', 'मंत्र और आरती', mantraBody(d), true) +
-      readerSection('sources', 8, 'Sources & Tradition', 'स्रोत और परंपरा', sourceBody(d), true) +
+      (hasNames ? readerSection('names', 2, NAME_COLLECTIONS[id].title, NAME_COLLECTIONS[id].titleHi, namesBody(id), true) : '') +
+      readerSection('meaning', 2 + sectionOffset, 'Meaning & Symbolism', 'अर्थ और प्रतीक', sectionCards(d.themes), true) +
+      readerSection('iconography', 3 + sectionOffset, 'Iconography', 'स्वरूप और चिह्न', sectionCards(d.icons), true) +
+      '<div class="deity-reader-split">' + readerSection('stories', 4 + sectionOffset, 'Sacred Stories', 'पवित्र कथाएँ', storiesBody(d), true) + readerSection('teachings', 5 + sectionOffset, 'Core Teachings', 'मुख्य शिक्षाएँ', sectionCards(d.teachings), true) + '</div>' +
+      readerSection('festivals', 6 + sectionOffset, 'Associated Festivals', 'संबद्ध उत्सव', festivalBody(d), true) +
+      readerSection('practice', 7 + sectionOffset, 'Mantras & Aartis', 'मंत्र और आरती', mantraBody(d), true) +
+      readerSection('sources', 8 + sectionOffset, 'Sources & Tradition', 'स्रोत और परंपरा', sourceBody(d), true) +
       '<section class="deity-related-section"><h2>' + (hi ? 'संबंधित देवी-देवता' : 'Related Deities') + '</h2>' + relatedCards(d) + '</section></main></div>' +
       '<section class="deity-source-note"><span class="deity-source-icon">▤</span><div><h2>' + (hi ? 'परंपरा और स्रोत टिप्पणी' : 'Tradition & Source Note') + '</h2><p>' + (hi ? 'यह शैक्षिक परिचय है, किसी वंश या व्यक्तिगत साधना के मार्गदर्शन का विकल्प नहीं।' : 'This is an educational overview, not a substitute for lineage guidance or personal practice.') + '</p></div><a href="' + d.sourceUrl + '" target="_blank" rel="noopener">' + (hi ? 'स्रोत देखें ↗' : 'View reference ↗') + '</a></section></article>';
   };
@@ -345,6 +423,42 @@
     var target = sections[index];
     if (target) { target.open = true; target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   };
+  window.deityScrollToId = function (id) {
+    var reader = currentReader();
+    if (!reader) return;
+    var target = reader.querySelector('#deity-section-' + id);
+    if (target) { target.open = true; target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  };
+  window.deityOpenNames = function () { window.deityScrollToId('names'); };
+  function refreshNameShell(shell) {
+    if (!shell) return;
+    var input = shell.querySelector('input[type="search"]');
+    var query = (input ? input.value : '').trim().toLocaleLowerCase();
+    var limit = Number(shell.getAttribute('data-name-limit') || 36);
+    var matched = 0, shown = 0;
+    Array.prototype.forEach.call(shell.querySelectorAll('[data-deity-name-card]'), function (card) {
+      var matches = !query || (card.getAttribute('data-name-search') || '').indexOf(query) !== -1;
+      if (matches) matched += 1;
+      var visible = matches && (query || shown < limit);
+      card.hidden = !visible;
+      if (visible) shown += 1;
+    });
+    var total = Number(shell.getAttribute('data-name-total') || matched);
+    var status = shell.querySelector('[data-name-status]');
+    if (status) {
+      if (query) status.textContent = language() === 'hi' ? matched + ' नाम मिले' : matched + ' names found';
+      else status.textContent = language() === 'hi' ? total + ' में से ' + shown + ' नाम दिख रहे हैं' : 'Showing ' + shown + ' of ' + total + ' names';
+    }
+    var more = shell.querySelector('.deity-names-more');
+    if (more) more.hidden = Boolean(query) || shown >= matched;
+  }
+  window.deityFilterNames = function (input) { refreshNameShell(input && input.closest('.deity-names-shell')); };
+  window.deityShowMoreNames = function (button) {
+    var shell = button && button.closest('.deity-names-shell');
+    if (!shell) return;
+    shell.setAttribute('data-name-limit', String(Number(shell.getAttribute('data-name-limit') || 36) + 48));
+    refreshNameShell(shell);
+  };
   window.deityToggleMobileNav = function (button) {
     var nav = button && button.parentElement;
     if (nav) nav.classList.toggle('open');
@@ -363,6 +477,7 @@
     try { scale = Math.max(.86, Math.min(1.24, Number(localStorage.getItem('sanatan-deity-text-scale') || 1))); } catch (error) {}
     reader.style.setProperty('--deity-text-scale', String(scale));
     paintFavorites(reader);
+    Array.prototype.forEach.call(reader.querySelectorAll('.deity-names-shell'), refreshNameShell);
   };
   window.initDeityLibrary = renderLibrary;
 

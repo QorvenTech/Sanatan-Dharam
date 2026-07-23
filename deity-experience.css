@@ -696,10 +696,207 @@
 .deity-related-grid button { grid-template-columns: 58px 1fr auto; }
 .deity-related-grid img { width: 58px; height: 54px; border-radius: 6px; object-fit: cover; object-position: top center; background: #fbefd9; }
 
+.deity-names-shell {
+  display: grid;
+  gap: .72rem;
+}
+
+.deity-names-intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+  padding: .78rem;
+  border: 1px solid var(--deity-border);
+  border-radius: 10px;
+  background: linear-gradient(125deg, var(--deity-parchment), var(--deity-paper));
+}
+
+.deity-names-intro > div {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+}
+
+.deity-names-intro > div > span {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 42px;
+  border: 1px solid #d4a35c;
+  border-radius: 50%;
+  color: #a66117;
+  background: var(--deity-paper);
+  font-size: 1.25rem;
+}
+
+.deity-names-intro h3 {
+  margin: 0;
+  color: var(--deity-navy);
+  font: 700 1.08rem "Crimson Pro", serif;
+}
+
+.deity-names-intro h3 small {
+  display: block;
+  margin-top: .12rem;
+  color: #a66117;
+  font: 700 .75rem "Tiro Devanagari Sanskrit", serif;
+}
+
+.deity-names-intro p {
+  max-width: 610px;
+  margin: .24rem 0 0;
+  color: var(--deity-muted);
+  font-size: calc(.64rem * var(--deity-text-scale));
+  line-height: 1.42;
+}
+
+.deity-names-intro .deity-save-button {
+  flex: 0 0 auto;
+}
+
+.deity-names-tools {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) auto;
+  align-items: center;
+  gap: .7rem;
+}
+
+.deity-names-tools label {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  gap: .52rem;
+  padding: 0 .72rem;
+  border: 1px solid var(--deity-border);
+  border-radius: 9px;
+  background: var(--deity-paper);
+}
+
+.deity-names-tools label > span {
+  color: #9f621e;
+  font-size: 1.1rem;
+}
+
+.deity-names-tools input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: var(--deity-navy);
+  background: transparent;
+  font: 600 .72rem "Crimson Pro", serif;
+}
+
+.deity-names-tools input::placeholder {
+  color: var(--deity-muted);
+  opacity: .78;
+}
+
+.deity-names-tools p {
+  margin: 0;
+  color: var(--deity-muted);
+  font-size: .62rem;
+  white-space: nowrap;
+}
+
+.deity-names-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .48rem;
+}
+
+.deity-name-card {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 36px minmax(108px, .78fr) minmax(0, 1.45fr);
+  align-items: start;
+  gap: .55rem;
+  padding: .62rem;
+  border: 1px solid var(--deity-border);
+  border-radius: 9px;
+  background: var(--deity-paper);
+  box-shadow: 0 5px 14px rgba(77, 48, 16, .045);
+}
+
+.deity-name-card[hidden] {
+  display: none;
+}
+
+.deity-name-number {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff8eb;
+  background: linear-gradient(145deg, #9f5816, #ce8a2d);
+  font: 700 .61rem "Crimson Pro", serif;
+}
+
+.deity-name-heading h3 {
+  margin: .08rem 0 0;
+  color: var(--deity-navy);
+  overflow-wrap: anywhere;
+  font: 700 calc(.77rem * var(--deity-text-scale)) "Tiro Devanagari Sanskrit", serif;
+}
+
+.deity-name-heading strong {
+  display: block;
+  margin-top: .18rem;
+  color: #a66117;
+  overflow-wrap: anywhere;
+  font: 700 calc(.66rem * var(--deity-text-scale)) "Crimson Pro", serif;
+}
+
+.deity-name-meanings {
+  display: grid;
+  gap: .3rem;
+}
+
+.deity-name-meanings p {
+  margin: 0;
+  color: var(--deity-muted);
+  font-size: calc(.58rem * var(--deity-text-scale));
+  line-height: 1.38;
+}
+
+.deity-name-meanings b {
+  display: block;
+  margin-bottom: .06rem;
+  color: var(--deity-navy);
+  font-size: .52rem;
+  letter-spacing: .02em;
+}
+
+.deity-names-more {
+  min-height: 40px;
+  justify-self: center;
+  padding: .48rem 1.05rem;
+  border: 1px solid #c8832c;
+  border-radius: 999px;
+  color: #8d5014;
+  background: var(--deity-paper);
+  cursor: pointer;
+  font: 700 .7rem "Crimson Pro", serif;
+}
+
+.deity-names-more:hover {
+  color: #fff;
+  background: #af6719;
+}
+
+.deity-names-more[hidden] {
+  display: none;
+}
+
 @media (max-width: 1180px) {
   .deity-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .deity-library-layout { grid-template-columns: minmax(0, 1.55fr) minmax(290px, .75fr); }
   .deity-reader-split { grid-template-columns: 1fr; }
+  .deity-names-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 900px) {
@@ -786,6 +983,13 @@
   .deity-related-grid button { grid-template-columns: 52px 1fr auto; }
   .deity-related-grid img { width: 52px; height: 48px; }
   .deity-related-grid small { display: none; }
+  .deity-names-intro { align-items: flex-start; }
+  .deity-names-intro .deity-save-button { width: 36px; min-width: 36px; padding: 0; }
+  .deity-names-intro .deity-save-button span { display: none; }
+  .deity-names-tools { grid-template-columns: 1fr; gap: .35rem; }
+  .deity-names-tools p { padding-left: .12rem; }
+  .deity-name-card { grid-template-columns: 32px minmax(88px, .68fr) minmax(0, 1.25fr); gap: .42rem; padding: .5rem; }
+  .deity-name-number { width: 28px; height: 28px; }
   .deity-reader > .deity-source-note { margin-bottom: .6rem; }
 }
 
@@ -796,6 +1000,9 @@
   .deity-featured-copy .deity-tags span:nth-child(2) { display: none; }
   .deity-info-cards { grid-template-columns: 1fr; }
   .deity-related-grid { grid-template-columns: 1fr; }
+  .deity-names-intro > div > span { display: none; }
+  .deity-name-card { grid-template-columns: 30px 1fr; }
+  .deity-name-meanings { grid-column: 2; }
 }
 
 @media (prefers-reduced-motion: reduce) {
