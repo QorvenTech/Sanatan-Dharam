@@ -5,7 +5,15 @@
     return String(value == null ? '' : value).replace(/[&<>'"]/g, function (char) { return ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'})[char]; });
   }
   function hi() { return typeof currentLang !== 'undefined' && currentLang === 'hi'; }
-  function goSection(id) { closeMobileNav(); showSection(id); window.scrollTo({top:0,behavior:'smooth'}); }
+  function goSection(id) {
+    var target=document.getElementById(id);
+    closeMobileNav();
+    if(!target)return;
+    window.requestAnimationFrame(function(){
+      try{if(typeof window.showSection==='function')window.showSection(id);}
+      finally{window.scrollTo({top:0,left:0,behavior:'auto'});}
+    });
+  }
   window.sfhGoSection = goSection;
 
   function drawerMarkup() {

@@ -58,7 +58,7 @@
     <link rel="stylesheet" href="auth-experience.css?v=20260718-1">
     <link rel="stylesheet" href="account-profile-experience.css?v=20260718-1">
     <link rel="stylesheet" href="search-experience.css?v=20260722-1">
-    <link rel="stylesheet" href="shared-shell-experience.css?v=20260724-1">
+    <link rel="stylesheet" href="shared-shell-experience.css?v=20260724-2">
     <link rel="stylesheet" href="theme-polish.css?v=20260724-1">
     <style>
         /* ========== YOUR EXISTING CSS (unchanged) ========== */
@@ -1057,9 +1057,9 @@ body.dark-theme .paath-library-intro, body.dark-theme .paath-library-card:not(.f
         <section class="home-paath" aria-labelledby="home-paath-title">
             <div class="home-utility-header"><div><p data-en="Curated devotional reading" data-hi="चुनिंदा भक्तिमय पाठ">Curated devotional reading</p><h2 id="home-paath-title" data-en="Paath Mandir" data-hi="पाठ मंदिर">Paath Mandir</h2></div><button onclick="showSection('paathmandir')" data-en="View all Paath →" data-hi="सभी पाठ देखें →">View all Paath →</button></div>
             <div class="home-paath-grid">
-                <button class="home-paath-card paath-sundar" onclick="showText('sundarkand')"><span>हनुमान</span><strong data-en="Sundar Kand" data-hi="सुंदरकांड">Sundar Kand</strong><small data-en="Read with meaning" data-hi="भावार्थ सहित पढ़ें">Read with meaning</small><b data-en="Begin reading →" data-hi="पाठ आरंभ करें →">Begin reading →</b></button>
-                <button class="home-paath-card paath-chalisa" onclick="showText('hanuman-chalisa')"><span>ॐ</span><strong data-en="Hanuman Chalisa" data-hi="हनुमान चालीसा">Hanuman Chalisa</strong><small data-en="Daily recitation" data-hi="दैनिक पाठ">Daily recitation</small><b data-en="Begin reading →" data-hi="पाठ आरंभ करें →">Begin reading →</b></button>
-                <button class="home-paath-card paath-shiva" onclick="showText('shiva-tandava')"><span>🔱</span><strong data-en="Shiva Tandava Stotram" data-hi="शिव तांडव स्तोत्रम्">Shiva Tandava Stotram</strong><small data-en="Traditional chant" data-hi="पारंपरिक स्तोत्र">Traditional chant</small><b data-en="Begin reading →" data-hi="पाठ आरंभ करें →">Begin reading →</b></button>
+                <button class="home-paath-card paath-sundar" onclick="openPaathMandirReader('sundarkand')"><span>हनुमान</span><strong data-en="Sundar Kand" data-hi="सुंदरकांड">Sundar Kand</strong><small data-en="Read with meaning" data-hi="भावार्थ सहित पढ़ें">Read with meaning</small><b data-en="Begin reading →" data-hi="पाठ आरंभ करें →">Begin reading →</b></button>
+                <button class="home-paath-card paath-chalisa" onclick="openPaathMandirReader('hanuman-chalisa')"><span>ॐ</span><strong data-en="Hanuman Chalisa" data-hi="हनुमान चालीसा">Hanuman Chalisa</strong><small data-en="Daily recitation" data-hi="दैनिक पाठ">Daily recitation</small><b data-en="Begin reading →" data-hi="पाठ आरंभ करें →">Begin reading →</b></button>
+                <button class="home-paath-card paath-shiva" onclick="openPaathMandirReader('shiv-tandav')"><span>🔱</span><strong data-en="Shiva Tandava Stotram" data-hi="शिव तांडव स्तोत्रम्">Shiva Tandava Stotram</strong><small data-en="Traditional chant" data-hi="पारंपरिक स्तोत्र">Traditional chant</small><b data-en="Begin reading →" data-hi="पाठ आरंभ करें →">Begin reading →</b></button>
             </div>
         </section>
 
@@ -5580,6 +5580,13 @@ function showSection(id) {
 
     currentSection = id;
     setTimeout(() => renderComments(id), 100);
+}
+
+function openPaathMandirReader(id) {
+    showSection('paathmandir');
+    window.setTimeout(function () {
+        if (typeof window.showPaath === 'function') window.showPaath(id);
+    }, 0);
 }
 
 function goBack() {
@@ -10873,38 +10880,23 @@ function jumpToContent(contentId) {
     else if (contentId === 'bhagavad-gita') {
         showText('bhagavad-gita');
     }
-    // Sundarkand
+    // Paath Mandir readers
     else if (contentId === 'sundarkand') {
-        showSection('paathmandir');
-        setTimeout(() => {
-            document.getElementById('paathGrid').style.display = 'none';
-            document.getElementById('sundarkand-text').style.display = 'block';
-        }, 100);
+        openPaathMandirReader('sundarkand');
     }
-    // Hanuman Chalisa
     else if (contentId === 'hanuman-chalisa') {
-        showSection('paathmandir');
-        setTimeout(() => {
-            document.getElementById('paathGrid').style.display = 'none';
-            document.getElementById('hanuman-chalisa-text').style.display = 'block';
-        }, 100);
+        openPaathMandirReader('hanuman-chalisa');
     }
-    // Bajrang Baan
     else if (contentId === 'bajrang-baan') {
-        showSection('paathmandir');
-        setTimeout(() => {
-            showPaath('bajrang-baan');
-        }, 100);
+        openPaathMandirReader('bajrang-baan');
     }
-            // Durga Chalisa
     else if (contentId === 'durga-chalisa') {
-        showSection('paathmandir');
-        setTimeout(() => {
-            document.getElementById('paathGrid').style.display = 'none';
-            document.getElementById('durga-chalisa-text').style.display = 'block';
-        }, 100);
+        openPaathMandirReader('durga-chalisa');
     }
-            // Durga 108 Names
+    else if (contentId === 'ram-raksha') {
+        openPaathMandirReader('ram-raksha');
+    }
+    // Durga 108 Names
     else if (contentId === 'durga-108names') {
         showText('durga');
         setTimeout(() => {
@@ -10912,13 +10904,8 @@ function jumpToContent(contentId) {
             else showDurgaSub('108names');
         }, 200);
     }
-        // Shiv Tandav 
     else if (contentId === 'shiv-tandav') {
-        showSection('paathmandir');
-        setTimeout(() => {
-            document.getElementById('paathGrid').style.display = 'none';
-            document.getElementById('shiv-tandav-text').style.display = 'block';
-        }, 100);
+        openPaathMandirReader('shiv-tandav');
     }
     // Aartis
     else if (contentId.startsWith('aarti-')) {
@@ -14305,7 +14292,7 @@ function searchSacredTexts() { _applySacredTextFilters(); }
 <script src="auth-experience.js?v=20260718-1"></script>
 <script src="account-profile-experience.js?v=20260718-1"></script>
 <script src="search-experience.js?v=20260723-1"></script>
-<script src="shared-shell-experience.js?v=20260724-1"></script>
+<script src="shared-shell-experience.js?v=20260724-2"></script>
 
 </body>
 </html>

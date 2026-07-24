@@ -36,3 +36,8 @@ body.dark-theme .comments-section{background:linear-gradient(135deg,#252837,#2d2
   .sfh-mobile-header-actions i{width:23px}
 }
 body.dark-theme .sfh-mobile-header-actions .sfh-mobile-language{border-color:#d9a957;background:#252b39;color:#ffd98f}
+
+@media(max-width:760px){
+  .sfh-mobile-header-actions button,.sfh-mobile-drawer button,.sfh-mobile-drawer summary{touch-action:manipulation}
+  .sfh-mobile-drawer nav button{pointer-events:auto}
+}
