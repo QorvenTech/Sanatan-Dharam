@@ -58,7 +58,7 @@
     <link rel="stylesheet" href="auth-experience.css?v=20260718-1">
     <link rel="stylesheet" href="account-profile-experience.css?v=20260718-1">
     <link rel="stylesheet" href="search-experience.css?v=20260722-1">
-    <link rel="stylesheet" href="shared-shell-experience.css?v=20260722-1">
+    <link rel="stylesheet" href="shared-shell-experience.css?v=20260724-1">
     <link rel="stylesheet" href="theme-polish.css?v=20260724-1">
     <style>
         /* ========== YOUR EXISTING CSS (unchanged) ========== */
@@ -12899,14 +12899,27 @@ function _homeShlokaShareCard(d, isHi) {
       context.fillStyle = '#3f465a';
       _homeShlokaDrawWrapped(context, isHi ? d.hi : d.en, 540, nextY + 175, 820, 62, 8);
 
-      context.fillStyle = '#791d2a';
-      context.font = '700 45px "Tiro Devanagari Sanskrit", serif';
-      context.fillText('सनातन धर्म', 540, 1680);
+      context.fillStyle = 'rgba(255,250,239,.82)';
+      context.fillRect(140, 1515, 800, 310);
+      context.strokeStyle = 'rgba(181,106,28,.72)';
+      context.lineWidth = 3;
+      context.strokeRect(140, 1515, 800, 310);
+
       context.fillStyle = '#8a5725';
-      context.font = '600 32px "Crimson Pro", Georgia, serif';
-      context.fillText('Sanatan for Humanity', 540, 1740);
-      context.font = '500 25px system-ui, sans-serif';
-      context.fillText('sanatanforhumanity.com', 540, 1792);
+      context.font = '700 30px "Crimson Pro", "Tiro Devanagari Sanskrit", Georgia, serif';
+      context.fillText(isHi ? 'हर दिन एक नया श्लोक पढ़ें' : 'READ A NEW SHLOKA EVERY DAY', 540, 1583);
+      context.fillStyle = '#791d2a';
+      context.font = '700 48px "Tiro Devanagari Sanskrit", serif';
+      context.fillText('सनातन धर्म', 540, 1655);
+      context.fillStyle = '#8a5725';
+      context.font = '600 31px "Crimson Pro", Georgia, serif';
+      context.fillText('Sanatan for Humanity', 540, 1704);
+
+      context.fillStyle = '#791d2a';
+      context.fillRect(245, 1730, 590, 66);
+      context.fillStyle = '#fff8e9';
+      context.font = '700 34px system-ui, sans-serif';
+      context.fillText('sanatanforhumanity.com', 540, 1775);
 
       canvas.toBlob(function (blob) { resolve(blob); }, 'image/png');
     }).catch(function () { resolve(null); });
@@ -12931,8 +12944,9 @@ async function shareHomeShloka(button) {
   var d = _sotdData[index], isHi = (typeof currentLang !== 'undefined') && currentLang === 'hi';
   var meaningLabel = isHi ? 'भावार्थ' : 'Meaning';
   var text = d.sa + '\n\n' + meaningLabel + ': ' + (isHi ? d.hi : d.en) + '\n\n— ' + d.src;
+  var shareText = text + '\n\n' + (isHi ? 'हर दिन नया श्लोक पढ़ें: ' : 'Read a new shloka every day: ') + 'https://sanatanforhumanity.com/';
   var blob = await _homeShlokaShareCard(d, isHi);
-  var shareData = { title: isHi ? 'आज का श्लोक' : 'Shloka of the Day', text: text, url: 'https://sanatanforhumanity.com/' };
+  var shareData = { title: isHi ? 'आज का श्लोक' : 'Shloka of the Day', text: shareText, url: 'https://sanatanforhumanity.com/' };
 
   try {
     if (blob && typeof File === 'function' && navigator.share && navigator.canShare) {
@@ -12963,7 +12977,7 @@ async function shareHomeShloka(button) {
     window.setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 1000);
   }
   if (navigator.clipboard) {
-    try { await navigator.clipboard.writeText(text + '\n\nhttps://sanatanforhumanity.com/'); } catch (error) {}
+    try { await navigator.clipboard.writeText(shareText); } catch (error) {}
   }
   _homeShlokaShareFeedback(button, '↓', isHi ? 'स्टोरी चित्र सहेजा गया' : 'Story image saved');
 }
@@ -14291,7 +14305,7 @@ function searchSacredTexts() { _applySacredTextFilters(); }
 <script src="auth-experience.js?v=20260718-1"></script>
 <script src="account-profile-experience.js?v=20260718-1"></script>
 <script src="search-experience.js?v=20260723-1"></script>
-<script src="shared-shell-experience.js?v=20260723-2"></script>
+<script src="shared-shell-experience.js?v=20260724-1"></script>
 
 </body>
 </html>

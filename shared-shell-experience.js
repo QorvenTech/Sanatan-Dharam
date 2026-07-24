@@ -22,14 +22,30 @@
     if(user){var name=user.displayName||((user.email||'User').split('@')[0]);var avatar=user.photoURL?'<img src="'+esc(user.photoURL)+'" alt="" loading="lazy" decoding="async">':esc(name.charAt(0).toUpperCase());profile.innerHTML='<button type="button" onclick="closeMobileNav();showAccountProfile()"><span class="sfh-drawer-avatar">'+avatar+'</span><span><strong>'+esc(name)+'</strong><small>Signed in · View profile →</small></span></button>';account.innerHTML='<details><summary><span>◉</span><b>Account</b><i>⌄</i></summary><div><button onclick="closeMobileNav();showAccountProfile()">Account &amp; Profile</button><button onclick="closeMobileNav();logout()">Sign Out</button></div></details>';}else{profile.innerHTML='';account.innerHTML='<button type="button" onclick="closeMobileNav();openModal()"><span>♙</span><b>Login / Register</b></button>';}
     document.querySelectorAll('.sfh-drawer-language button').forEach(function(button){button.classList.toggle('active',button.dataset.lang===(typeof currentLang !== 'undefined'?currentLang:'hi'));});
   }
+  function syncMobileLanguageControl() {
+    var button=document.getElementById('sfh-mobile-language');
+    if(!button)return;
+    var hindi=hi();
+    button.textContent=hindi?'EN':'हि';
+    button.setAttribute('aria-label',hindi?'Switch to English':'हिंदी में बदलें');
+    button.setAttribute('title',hindi?'Switch to English':'हिंदी में बदलें');
+  }
+  window.sfhSyncMobileLanguageControl=syncMobileLanguageControl;
   function installMobileNavigation() {
     document.body.insertAdjacentHTML('beforeend',drawerMarkup());var header=document.querySelector('.site-header');if(!header)return;
     var brand=header.querySelector('.site-brand');if(brand&&!brand.querySelector('.sfh-header-lotus'))brand.insertAdjacentHTML('afterbegin','<span class="sfh-header-lotus" aria-hidden="true">❀</span>');
-    var actions=document.createElement('div');actions.className='sfh-mobile-header-actions';actions.innerHTML='<button type="button" onclick="openGlobalSearch()" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.8 4.8"></path></svg></button><button type="button" class="sfh-mobile-theme" data-theme-toggle onclick="toggleTheme()" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><span class="theme-glyph" aria-hidden="true">☾</span></button><button type="button" class="sfh-mobile-account" onclick="'+((typeof currentUser !== 'undefined' && currentUser)?'showAccountProfile()':'openModal()')+'" aria-label="Account"><span>♙</span></button><button type="button" onclick="openMobileNav()" aria-label="Open menu"><i></i><i></i><i></i></button>';header.appendChild(actions);if(typeof paintThemeToggle==='function')paintThemeToggle(document.body.classList.contains('dark-theme'));refreshDrawerUser();
+    var actions=document.createElement('div');actions.className='sfh-mobile-header-actions';actions.innerHTML='<button type="button" class="sfh-mobile-language" id="sfh-mobile-language" onclick="toggleLanguage()" aria-label="Switch to English" title="Switch to English">EN</button><button type="button" onclick="openGlobalSearch()" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.8 4.8"></path></svg></button><button type="button" class="sfh-mobile-theme" data-theme-toggle onclick="toggleTheme()" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><span class="theme-glyph" aria-hidden="true">☾</span></button><button type="button" class="sfh-mobile-account" onclick="'+((typeof currentUser !== 'undefined' && currentUser)?'showAccountProfile()':'openModal()')+'" aria-label="Account"><span>♙</span></button><button type="button" onclick="openMobileNav()" aria-label="Open menu"><i></i><i></i><i></i></button>';header.appendChild(actions);if(typeof paintThemeToggle==='function')paintThemeToggle(document.body.classList.contains('dark-theme'));syncMobileLanguageControl();refreshDrawerUser();
   }
   window.openMobileNav=function(){var drawer=document.getElementById('sfh-mobile-drawer');if(!drawer)return;document.body.classList.add('sfh-drawer-open');drawer.setAttribute('aria-hidden','false');refreshDrawerUser();};
   window.closeMobileNav=function(){var drawer=document.getElementById('sfh-mobile-drawer');document.body.classList.remove('sfh-drawer-open');if(drawer)drawer.setAttribute('aria-hidden','true');};
-  window.setDrawerLanguage=function(lang){if(typeof currentLang !== 'undefined'&&lang!==currentLang){currentLang=lang;if(typeof applyLanguage==='function')applyLanguage(lang);var button=document.getElementById('langBtn');if(button)button.textContent=lang==='en'?'हिंदी में पढ़ें':'Read in English';}refreshDrawerUser();};
+  window.setDrawerLanguage=function(lang){if(typeof currentLang !== 'undefined'&&lang!==currentLang){currentLang=lang;if(typeof applyLanguage==='function')applyLanguage(lang);var button=document.getElementById('langBtn');if(button)button.textContent=lang==='en'?'हिंदी में पढ़ें':'Read in English';}syncMobileLanguageControl();refreshDrawerUser();};
+
+  var priorLanguageToggle=window.toggleLanguage;
+  if(typeof priorLanguageToggle==='function'&&!priorLanguageToggle.sfhMobileSynced){
+    var syncedLanguageToggle=function(){var result=priorLanguageToggle.apply(this,arguments);window.setTimeout(function(){syncMobileLanguageControl();refreshDrawerUser();},0);return result;};
+    syncedLanguageToggle.sfhMobileSynced=true;
+    window.toggleLanguage=syncedLanguageToggle;
+  }
 
   function footerMarkup() {
     return '<div class="sfh-footer-inner"><section class="sfh-footer-brand"><span aria-hidden="true">❀</span><h2>सनातन धर्म</h2><h3>Sanatan for Humanity</h3><p>Making Sanatan knowledge accessible through respectful, educational resources.</p></section>' +

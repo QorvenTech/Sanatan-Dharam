@@ -16,3 +16,23 @@ body.dark-theme .comments-section{background:linear-gradient(135deg,#252837,#2d2
 
 .site-brand{display:grid!important;grid-template-columns:43px auto;grid-template-rows:auto auto;column-gap:9px}.sfh-header-lotus{grid-row:1/3;display:grid;place-items:center;color:#b56b1b;font-size:2.45rem;line-height:1}.site-brand-hi,.site-brand-en{grid-column:2}.site-brand-en{grid-row:2}.sfh-drawer-lotus{width:49px;height:49px;display:grid;place-items:center;color:#b56b1b;font-size:2.75rem;line-height:1}.sfh-footer-brand>span{display:block;color:#e0a042;font-size:3.5rem;line-height:.9}
 @media(max-width:760px){.site-brand{grid-template-columns:36px auto;column-gap:5px}.sfh-header-lotus{font-size:2.05rem}.site-header .site-brand-hi{font-size:1.32rem}.site-header .site-brand-en{font-size:.67rem}.sfh-mobile-header-actions{gap:5px}.sfh-mobile-header-actions button{width:34px}.sfh-footer-brand>span{font-size:3rem}}
+
+/* Compact language control remains visible beside the core mobile header actions. */
+@media(max-width:760px){
+  .site-brand{min-width:0}
+  .site-header .site-brand-hi,.site-header .site-brand-en{white-space:nowrap}
+  .sfh-mobile-header-actions{gap:3px}
+  .sfh-mobile-header-actions .sfh-mobile-language{border:1px solid #c78a38;border-radius:50%;background:#fffaf0;color:#7c311d;font:700 .72rem/1 "Crimson Pro","Tiro Devanagari Sanskrit",serif;letter-spacing:.01em}
+}
+@media(max-width:420px){
+  .site-header{padding-inline:9px!important}
+  .site-brand{grid-template-columns:30px auto;column-gap:4px}
+  .sfh-header-lotus{font-size:1.8rem}
+  .site-header .site-brand-hi{font-size:1.15rem}
+  .site-header .site-brand-en{font-size:.58rem}
+  .sfh-mobile-header-actions{gap:2px}
+  .sfh-mobile-header-actions button{width:34px;height:36px}
+  .sfh-mobile-header-actions svg{width:23px;height:23px}
+  .sfh-mobile-header-actions i{width:23px}
+}
+body.dark-theme .sfh-mobile-header-actions .sfh-mobile-language{border-color:#d9a957;background:#252b39;color:#ffd98f}
